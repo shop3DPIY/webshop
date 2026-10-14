@@ -1,26 +1,115 @@
 @import "tailwindcss";
 
+/*
+ * Design tokens for 3DPIY.
+ *
+ * Light mode is bright, white and colorful. Dark mode is deliberately
+ * darker and more sober/muted — the collection colors are toned down so
+ * dark mode reads as calm rather than loud.
+ *
+ * Keep in sync with src/lib/config/colors.ts, which is the reference for
+ * the *light-mode* hex values (used outside CSS, e.g. future OG images).
+ * Dark-mode values only live here.
+ *
+ * Toggling is class-based (`.dark` on <html>), driven by a server-read
+ * cookie — see src/components/providers/ThemeProvider.tsx.
+ *
+ * --accent is deliberately darker than the raw "hot pink" it started as:
+ * white button text on it needs to clear WCAG AA contrast (4.5:1), which
+ * ruled out anything much lighter than this in either theme.
+ */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --font-heading: var(--font-fredoka);
+  --font-body: var(--font-inter);
+
+  /* Brand neutrals — light mode: bright white, near-black text */
+  --ink: #14121a;
+  --paper: #ffffff;
+  --mist: #f6f4fa;
+  --line: #e7e3f0;
+  --accent: #db2777;
+
+  /* Collection accents — light mode: vivid */
+  --doll-mini: #ff4fa0;
+  --doll-mini-soft: #ffe3f2;
+  --home-living: #ff7a3d;
+  --home-living-soft: #ffe8da;
+  --ikea-hacks: #ffc93d;
+  --ikea-hacks-soft: #fff3d6;
+  --organize: #2fbf71;
+  --organize-soft: #dff6e8;
+  --tech-electronics: #2f8eff;
+  --tech-electronics-soft: #dceaff;
+  --serious-games: #8b5cf6;
+  --serious-games-soft: #eae1fc;
+}
+
+.dark {
+  /* Brand neutrals — dark mode: deep, sober, muted */
+  --ink: #e9e7ee;
+  --paper: #121016;
+  --mist: #1a1820;
+  --line: #2a2732;
+  --accent: #b23d68;
+
+  /* Collection accents — dark mode: desaturated, soft backgrounds */
+  --doll-mini: #c97da8;
+  --doll-mini-soft: #2a1f28;
+  --home-living: #c98f66;
+  --home-living-soft: #28211c;
+  --ikea-hacks: #c2a44f;
+  --ikea-hacks-soft: #28241a;
+  --organize: #5ea57c;
+  --organize-soft: #1b241f;
+  --tech-electronics: #6a93c4;
+  --tech-electronics-soft: #1b222c;
+  --serious-games: #9b85c9;
+  --serious-games-soft: #221f2c;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-mist: var(--mist);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-doll-mini: var(--doll-mini);
+  --color-doll-mini-soft: var(--doll-mini-soft);
+  --color-home-living: var(--home-living);
+  --color-home-living-soft: var(--home-living-soft);
+  --color-ikea-hacks: var(--ikea-hacks);
+  --color-ikea-hacks-soft: var(--ikea-hacks-soft);
+  --color-organize: var(--organize);
+  --color-organize-soft: var(--organize-soft);
+  --color-tech-electronics: var(--tech-electronics);
+  --color-tech-electronics-soft: var(--tech-electronics-soft);
+  --color-serious-games: var(--serious-games);
+  --color-serious-games-soft: var(--serious-games-soft);
+
+  --font-sans: var(--font-body);
+  --font-display: var(--font-heading);
+
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
 }

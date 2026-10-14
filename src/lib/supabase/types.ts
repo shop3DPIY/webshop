@@ -1,0 +1,114 @@
+/**
+ * Hand-written to match supabase/migrations/0001_init.sql.
+ *
+ * Once a real Supabase project exists, regenerate this from the live
+ * schema instead of maintaining it by hand:
+ *   npx supabase gen types typescript --project-id <id> > src/lib/supabase/types.ts
+ */
+
+export interface Database {
+  public: {
+    Tables: {
+      profiles: {
+        Row: {
+          id: string;
+          email: string;
+          full_name: string | null;
+          role: "customer" | "admin";
+          created_at: string;
+        };
+        Insert: Partial<Database["public"]["Tables"]["profiles"]["Row"]> & {
+          id: string;
+          email: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["profiles"]["Row"]>;
+        Relationships: [];
+      };
+      products: {
+        Row: {
+          id: string;
+          slug: string;
+          title: string;
+          description: string;
+          category: string;
+          tags: string[];
+          images: { src: string; alt: string }[];
+          download_files: { format: string; fileName: string; note?: string; storagePath?: string }[];
+          dimensions: { width: number; depth: number; height: number } | null;
+          print_settings: {
+            layerHeightMm?: number;
+            recommendedMaterials?: string[];
+            supportsRequired?: boolean;
+            instructions?: string;
+            compatiblePrinters?: string[];
+          } | null;
+          version: string;
+          last_updated: string;
+          license_type: "personal" | "commercial" | "enterprise" | "free";
+          is_free: boolean;
+          external_commerce_id: string | null;
+          publication_status: "draft" | "published" | "archived";
+          related_product_ids: string[] | null;
+          external_links: { printables?: string; makerWorld?: string } | null;
+          price_cents: number | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: Partial<Database["public"]["Tables"]["products"]["Row"]> & {
+          slug: string;
+          title: string;
+          description: string;
+          category: string;
+          license_type: "personal" | "commercial" | "enterprise" | "free";
+        };
+        Update: Partial<Database["public"]["Tables"]["products"]["Row"]>;
+      };
+      orders: {
+        Row: {
+          id: string;
+          payhip_order_id: string;
+          buyer_email: string;
+          customer_id: string | null;
+          total_cents: number | null;
+          currency: string | null;
+          raw_payload: Record<string, unknown>;
+          created_at: string;
+        };
+        Insert: Partial<Database["public"]["Tables"]["orders"]["Row"]> & {
+          payhip_order_id: string;
+          buyer_email: string;
+          raw_payload: Record<string, unknown>;
+        };
+        Update: Partial<Database["public"]["Tables"]["orders"]["Row"]>;
+      };
+      order_items: {
+        Row: {
+          id: string;
+          order_id: string;
+          product_id: string | null;
+          external_product_id: string | null;
+          title: string | null;
+          price_cents: number | null;
+        };
+        Insert: Partial<Database["public"]["Tables"]["order_items"]["Row"]> & {
+          order_id: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["order_items"]["Row"]>;
+      };
+      entitlements: {
+        Row: {
+          id: string;
+          customer_id: string;
+          product_id: string;
+          order_id: string | null;
+          granted_at: string;
+        };
+        Insert: Partial<Database["public"]["Tables"]["entitlements"]["Row"]> & {
+          customer_id: string;
+          product_id: string;
+        };
+        Update: Partial<Database["public"]["Tables"]["entitlements"]["Row"]>;
+      };
+    };
+  };
+}

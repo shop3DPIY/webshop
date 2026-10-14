@@ -1,0 +1,243 @@
+{
+  "nav": {
+    "skipToContent": "Skip to content",
+    "shop": "Shop",
+    "business": "Business",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "eyebrow": "Independent digital design studio",
+    "titleLine1": "Our Designs.",
+    "titleLine2": "Your Prints.",
+    "description": "Original STL and 3MF files for 3D printing — IKEA hacks, home decor, organization, electronics enclosures, doll & dollhouse miniatures and serious games.",
+    "ctaShop": "Browse the shop",
+    "ctaFree": "Get a free design"
+  },
+  "collections": {
+    "eyebrow": "Collections",
+    "title": "Find your next build",
+    "description": "Every collection has its own color, so you always know where you are.",
+    "items": {
+      "doll-mini": {
+        "name": "Doll & Mini",
+        "tagline": "1:6 doll furniture and 1:12 dollhouse miniatures"
+      },
+      "home-living": {
+        "name": "Home & Living",
+        "tagline": "Home decor and lighting designs"
+      },
+      "ikea-hacks": {
+        "name": "IKEA Hacks",
+        "tagline": "Smart accessories for IKEA furniture"
+      },
+      "organize": {
+        "name": "Organize",
+        "tagline": "Smart storage and organization solutions"
+      },
+      "tech-electronics": {
+        "name": "Tech & Electronics",
+        "tagline": "Enclosures and DIY electronics projects"
+      },
+      "serious-games": {
+        "name": "Serious Games",
+        "tagline": "Educational and professional serious-game designs"
+      }
+    }
+  },
+  "newAndPopular": {
+    "eyebrow": "New & popular",
+    "title": "Fresh off the plate",
+    "description": "A preview of the catalog — more designs are added as 3DPIY prepares for launch."
+  },
+  "about": {
+    "eyebrow": "About 3DPIY",
+    "title": "Print It Yourself",
+    "description": "3DPIY is an independent creative design brand. We design original digital files so you can print them yourself, at home, on your own printer — from clever IKEA accessories to dollhouse miniatures and serious-game materials."
+  },
+  "freeDownloads": {
+    "title": "Free downloads",
+    "description": "Try a free 3DPIY design before you buy — some are also available on Printables and MakerWorld.",
+    "cta": "See free designs"
+  },
+  "footer": {
+    "tagline": "Our Designs. Your Prints.",
+    "shopHeading": "Shop",
+    "shopAll": "All designs",
+    "shopFree": "Free designs",
+    "shopBusiness": "Business",
+    "legalHeading": "Legal",
+    "legalPrivacy": "Privacy",
+    "legalCookies": "Cookies",
+    "legalTerms": "Terms",
+    "legalDelivery": "Digital Delivery",
+    "legalLicense": "License Agreement",
+    "newsletterHeading": "Stay in the loop",
+    "newsletterDescription": "Newsletter signup coming soon.",
+    "newsletterPlaceholder": "you@email.com",
+    "copyright": "3DPIY — Print It Yourself",
+    "digitalOnly": "Digital products only. Physical items sold separately via Etsy."
+  },
+  "theme": {
+    "toLight": "Switch to light mode",
+    "toDark": "Switch to dark mode"
+  },
+  "language": {
+    "label": "Language"
+  },
+  "productCard": {
+    "free": "Free"
+  },
+  "licenseTypes": {
+    "personal": "Personal use",
+    "commercial": "Commercial use",
+    "enterprise": "Enterprise",
+    "free": "Free"
+  },
+  "shopPage": {
+    "eyebrow": "Shop",
+    "title": "Six collections, one printer",
+    "description": "Browse by collection to find the right design — each one has its own color so you always know where you are."
+  },
+  "collectionPage": {
+    "backToShop": "All collections",
+    "emptyTitle": "More designs coming soon",
+    "emptyDescription": "This collection is still filling up as 3DPIY prepares for launch — check back soon."
+  },
+  "productPage": {
+    "backToCollection": "Back to collection",
+    "specs": {
+      "category": "Collection",
+      "tags": "Tags",
+      "downloadFiles": "Download formats",
+      "dimensions": "Dimensions",
+      "recommendedMaterials": "Recommended materials",
+      "layerHeight": "Recommended layer height",
+      "supportsRequired": "Supports required",
+      "supportYes": "Yes",
+      "supportNo": "No",
+      "compatiblePrinters": "Compatible printers",
+      "license": "License",
+      "version": "Version",
+      "lastUpdated": "Last updated",
+      "relatedTitle": "You might also like"
+    },
+    "buy": {
+      "buyNow": "Buy now",
+      "getFree": "Download for free",
+      "comingSoon": "Checkout coming soon",
+      "comingSoonNote": "3DPIY is in development mode — checkout isn't active yet.",
+      "notListedNote": "This product hasn't been listed for sale yet."
+    }
+  },
+  "business": {
+    "eyebrow": "Business & commissions",
+    "title": "Work with 3DPIY",
+    "intro": "Need a commercial license for an existing design, or a brand-new design made just for you? Here's how that works.",
+    "licensingTitle": "Commercial licensing",
+    "licensingBody": "Most 3DPIY designs are sold under a personal-use license. A commercial license lets you use a design in a business context — for example selling printed items made from it. Licensing is available per design; get in touch to check availability and pricing.",
+    "commissionsTitle": "Custom design commissions",
+    "commissionsBody": "Have an idea for a product, accessory or organizational solution that doesn't exist yet? 3DPIY takes on a limited number of custom design commissions, from a single bespoke part to a full product line.",
+    "commissionsBullets": [
+      "Product accessories & IKEA-compatible add-ons",
+      "Organizational & storage solutions",
+      "Electronics enclosures",
+      "Serious-game props and educational materials"
+    ],
+    "cta": "Request a quote",
+    "legalNotice": "Licensing terms are finalized on a per-project basis and will be reviewed before 3DPIY launches commercially."
+  },
+  "aboutPage": {
+    "eyebrow": "About 3DPIY",
+    "title": "Print It Yourself",
+    "introTitle": "Why 3DPIY exists",
+    "introBody": "3DPIY started from a simple idea: if you own a 3D printer, you shouldn't have to settle for generic files. Every design here is modeled from scratch, test-printed, and refined before it's released — practical objects you'll actually use, not just things that look good in a render.",
+    "makerTitle": "Behind the designs",
+    "makerBody": "3DPIY is a one-person studio. I design, test-print and document every file myself before it goes live — from a quick IKEA fix to a full dollhouse miniature. I care about things that actually work on your printer, with clear instructions and no guesswork.",
+    "valuesTitle": "What 3DPIY stands for",
+    "values": [
+      "Designed and tested in-house — nothing published without a real test print",
+      "Clear, honest documentation — materials, settings and limitations, no surprises",
+      "Independent and small on purpose — direct contact, no faceless support queue"
+    ],
+    "cta": "Get in touch"
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Get in touch",
+    "description": "Questions about a design, a licensing request, or a custom commission? Send a message.",
+    "formNameLabel": "Name",
+    "formEmailLabel": "Email",
+    "formSubjectLabel": "Subject",
+    "formMessageLabel": "Message",
+    "formSubmit": "Send message",
+    "formNote": "This opens your email app with your message pre-filled — nothing is stored on this site.",
+    "emailFallbackLabel": "Or email directly:"
+  },
+  "legal": {
+    "noticeTitle": "Placeholder — pending legal review",
+    "noticeBody": "This page is a structural placeholder. The content below needs to be reviewed and finalized by a qualified professional before 3DPIY launches commercially.",
+    "placeholderBody": "Final text for this page will be added here before launch.",
+    "docs": {
+      "privacy": { "title": "Privacy Policy" },
+      "cookies": { "title": "Cookie Policy" },
+      "terms": { "title": "Terms & Conditions" },
+      "delivery": { "title": "Digital Delivery Policy" },
+      "license": { "title": "License Agreement" }
+    }
+  },
+  "freeDesignsPage": {
+    "eyebrow": "Free Designs",
+    "title": "Try before you print",
+    "description": "A selection of free 3DPIY designs — no account, no license fee.",
+    "emptyTitle": "No free designs published yet",
+    "emptyDescription": "Free designs will appear here as 3DPIY prepares for launch."
+  },
+  "notConnected": {
+    "title": "Not connected yet",
+    "body": "This area needs a Supabase project to work. It's fully built and ready — see SETUP.md for the activation steps."
+  },
+  "auth": {
+    "signUpTitle": "Create your account",
+    "signInTitle": "Sign in",
+    "forgotTitle": "Reset your password",
+    "resetTitle": "Choose a new password",
+    "nameLabel": "Name",
+    "emailLabel": "Email",
+    "passwordLabel": "Password",
+    "confirmPasswordLabel": "Confirm password",
+    "signUpSubmit": "Create account",
+    "signInSubmit": "Sign in",
+    "forgotSubmit": "Send reset link",
+    "resetSubmit": "Save new password",
+    "haveAccount": "Already have an account?",
+    "noAccount": "Don't have an account?",
+    "signInLink": "Sign in",
+    "signUpLink": "Create one",
+    "forgotLink": "Forgot your password?",
+    "backToSignIn": "Back to sign in",
+    "checkEmailTitle": "Check your inbox",
+    "checkEmailBody": "We've sent you a link — follow it to continue.",
+    "errorGeneric": "Something went wrong. Please try again."
+  },
+  "account": {
+    "eyebrow": "My 3DPIY",
+    "title": "Your account",
+    "libraryTab": "Library",
+    "ordersTab": "Orders",
+    "settingsTab": "Settings",
+    "libraryEmptyTitle": "No designs yet",
+    "libraryEmptyBody": "Designs you buy will show up here, ready to download.",
+    "ordersEmptyTitle": "No orders yet",
+    "ordersEmptyBody": "Your purchase history will appear here.",
+    "download": "Download",
+    "settingsNameLabel": "Name",
+    "settingsEmailLabel": "Email",
+    "settingsSave": "Save changes",
+    "signOut": "Sign out",
+    "signIn": "Sign in",
+    "adminBannerTitle": "You're signed in as an admin",
+    "adminBannerBody": "This is the customer view. To add products, upload files, and manage orders, use 3DPIY Studio instead.",
+    "adminBannerCta": "Open 3DPIY Studio"
+  }
+}

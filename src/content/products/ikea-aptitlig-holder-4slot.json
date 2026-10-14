@@ -1,0 +1,28 @@
+{
+  "id": "ikea-aptitlig-holder-4slot",
+  "slug": "ikea-aptitlig-holder-4slot",
+  "title": "IKEA APTITLIG Cutting Board Holder – 4 Slots",
+  "description": "A holder for four IKEA APTITLIG cutting boards.",
+  "category": "ikea-hacks",
+  "tags": ["ikea", "aptitlig", "kitchen", "cutting-board", "organizer"],
+  "images": [
+    {
+      "src": "/images/products/placeholder-ikea-hacks.svg",
+      "alt": "IKEA APTITLIG Cutting Board Holder – 4 Slots"
+    }
+  ],
+  "downloadFiles": [
+    { "format": "STL", "fileName": "aptitlig-holder-4slot.stl" }
+  ],
+  "dimensions": {
+    "width": 272,
+    "depth": 112,
+    "height": 86
+  },
+  "version": "1.0.0",
+  "lastUpdated": "2026-10-13",
+  "licenseType": "personal",
+  "isFree": false,
+  "externalCommerceId": null,
+  "publicationStatus": "draft"
+}

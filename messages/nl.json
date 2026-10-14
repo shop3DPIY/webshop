@@ -1,0 +1,243 @@
+{
+  "nav": {
+    "skipToContent": "Naar inhoud springen",
+    "shop": "Shop",
+    "business": "Zakelijk",
+    "about": "Over ons",
+    "contact": "Contact"
+  },
+  "hero": {
+    "eyebrow": "Onafhankelijke digitale designstudio",
+    "titleLine1": "Onze Designs.",
+    "titleLine2": "Jouw Prints.",
+    "description": "Originele STL- en 3MF-bestanden voor 3D-printen — IKEA hacks, woondecoratie, organisatie, behuizingen voor elektronica, pop- & poppenhuismeubels en serious games.",
+    "ctaShop": "Bekijk de shop",
+    "ctaFree": "Download een gratis design"
+  },
+  "collections": {
+    "eyebrow": "Collecties",
+    "title": "Vind je volgende project",
+    "description": "Elke collectie heeft zijn eigen kleur, zodat je altijd weet waar je bent.",
+    "items": {
+      "doll-mini": {
+        "name": "Doll & Mini",
+        "tagline": "1:6 poppenmeubels en 1:12 poppenhuisminiaturen"
+      },
+      "home-living": {
+        "name": "Home & Living",
+        "tagline": "Woondecoratie en verlichtingsontwerpen"
+      },
+      "ikea-hacks": {
+        "name": "IKEA Hacks",
+        "tagline": "Slimme accessoires voor IKEA-meubels"
+      },
+      "organize": {
+        "name": "Organize",
+        "tagline": "Slimme opberg- en organisatieoplossingen"
+      },
+      "tech-electronics": {
+        "name": "Tech & Electronics",
+        "tagline": "Behuizingen en DIY-elektronicaprojecten"
+      },
+      "serious-games": {
+        "name": "Serious Games",
+        "tagline": "Educatieve en professionele serious-game-ontwerpen"
+      }
+    }
+  },
+  "newAndPopular": {
+    "eyebrow": "Nieuw & populair",
+    "title": "Vers van de pers",
+    "description": "Een voorproefje van de catalogus — er komen meer designs bij terwijl 3DPIY zich voorbereidt op de lancering."
+  },
+  "about": {
+    "eyebrow": "Over 3DPIY",
+    "title": "Print It Yourself",
+    "description": "3DPIY is een onafhankelijk creatief designmerk. Wij ontwerpen originele digitale bestanden zodat jij ze zelf kunt printen, thuis, op je eigen printer — van slimme IKEA-accessoires tot poppenhuisminiaturen en materiaal voor serious games."
+  },
+  "freeDownloads": {
+    "title": "Gratis downloads",
+    "description": "Probeer een gratis 3DPIY-design voordat je koopt — sommige zijn ook te vinden op Printables en MakerWorld.",
+    "cta": "Bekijk gratis designs"
+  },
+  "footer": {
+    "tagline": "Onze Designs. Jouw Prints.",
+    "shopHeading": "Shop",
+    "shopAll": "Alle designs",
+    "shopFree": "Gratis designs",
+    "shopBusiness": "Zakelijk",
+    "legalHeading": "Juridisch",
+    "legalPrivacy": "Privacy",
+    "legalCookies": "Cookies",
+    "legalTerms": "Voorwaarden",
+    "legalDelivery": "Digitale levering",
+    "legalLicense": "Licentieovereenkomst",
+    "newsletterHeading": "Blijf op de hoogte",
+    "newsletterDescription": "Nieuwsbrief binnenkort beschikbaar.",
+    "newsletterPlaceholder": "jij@email.com",
+    "copyright": "3DPIY — Print It Yourself",
+    "digitalOnly": "Alleen digitale producten. Fysieke items apart verkocht via Etsy."
+  },
+  "theme": {
+    "toLight": "Schakel naar lichte modus",
+    "toDark": "Schakel naar donkere modus"
+  },
+  "language": {
+    "label": "Taal"
+  },
+  "productCard": {
+    "free": "Gratis"
+  },
+  "licenseTypes": {
+    "personal": "Persoonlijk gebruik",
+    "commercial": "Commercieel gebruik",
+    "enterprise": "Enterprise",
+    "free": "Gratis"
+  },
+  "shopPage": {
+    "eyebrow": "Shop",
+    "title": "Zes collecties, één printer",
+    "description": "Blader per collectie om het juiste design te vinden — elke collectie heeft zijn eigen kleur, zodat je altijd weet waar je bent."
+  },
+  "collectionPage": {
+    "backToShop": "Alle collecties",
+    "emptyTitle": "Binnenkort meer designs",
+    "emptyDescription": "Deze collectie wordt nog aangevuld terwijl 3DPIY zich voorbereidt op de lancering — kom snel nog eens kijken."
+  },
+  "productPage": {
+    "backToCollection": "Terug naar collectie",
+    "specs": {
+      "category": "Collectie",
+      "tags": "Tags",
+      "downloadFiles": "Downloadformaten",
+      "dimensions": "Afmetingen",
+      "recommendedMaterials": "Aanbevolen materialen",
+      "layerHeight": "Aanbevolen laaghoogte",
+      "supportsRequired": "Supports nodig",
+      "supportYes": "Ja",
+      "supportNo": "Nee",
+      "compatiblePrinters": "Compatibele printers",
+      "license": "Licentie",
+      "version": "Versie",
+      "lastUpdated": "Laatst bijgewerkt",
+      "relatedTitle": "Dit vind je misschien ook leuk"
+    },
+    "buy": {
+      "buyNow": "Nu kopen",
+      "getFree": "Gratis downloaden",
+      "comingSoon": "Checkout binnenkort beschikbaar",
+      "comingSoonNote": "3DPIY bevindt zich in ontwikkeling — de checkout is nog niet actief.",
+      "notListedNote": "Dit product staat nog niet te koop."
+    }
+  },
+  "business": {
+    "eyebrow": "Zakelijk & opdrachten",
+    "title": "Werk samen met 3DPIY",
+    "intro": "Heb je een commerciële licentie nodig voor een bestaand design, of wil je een gloednieuw design op maat? Zo werkt dat.",
+    "licensingTitle": "Commerciële licenties",
+    "licensingBody": "De meeste 3DPIY-designs worden verkocht onder een persoonlijke-gebruikslicentie. Met een commerciële licentie mag je een design zakelijk gebruiken — bijvoorbeeld door geprinte producten ervan te verkopen. Licenties zijn per design beschikbaar; neem contact op om beschikbaarheid en prijs te checken.",
+    "commissionsTitle": "Designs op maat",
+    "commissionsBody": "Heb je een idee voor een product, accessoire of opbergoplossing die nog niet bestaat? 3DPIY neemt een beperkt aantal opdrachten aan voor designs op maat, van één uniek onderdeel tot een volledige productlijn.",
+    "commissionsBullets": [
+      "Product-accessoires & IKEA-compatibele toevoegingen",
+      "Opberg- en organisatieoplossingen",
+      "Behuizingen voor elektronica",
+      "Serious-game-props en educatief materiaal"
+    ],
+    "cta": "Vraag een offerte aan",
+    "legalNotice": "Licentievoorwaarden worden per project vastgesteld en worden beoordeeld voordat 3DPIY commercieel lanceert."
+  },
+  "aboutPage": {
+    "eyebrow": "Over 3DPIY",
+    "title": "Print It Yourself",
+    "introTitle": "Waarom 3DPIY bestaat",
+    "introBody": "3DPIY ontstond uit een simpel idee: als je een 3D-printer hebt, zou je geen genoegen moeten hoeven nemen met generieke bestanden. Elk design hier wordt vanaf nul gemodelleerd, test-geprint en verfijnd voordat het wordt uitgebracht — praktische objecten die je echt gebruikt, niet alleen iets dat goed oogt in een render.",
+    "makerTitle": "Achter de designs",
+    "makerBody": "3DPIY is een eenmanszaak. Ik ontwerp, test-print en documenteer elk bestand zelf voordat het online komt — van een snelle IKEA-fix tot een complete poppenhuisminiatuur. Ik hecht veel waarde aan dingen die echt werken op jouw printer, met duidelijke instructies en zonder giswerk.",
+    "valuesTitle": "Waar 3DPIY voor staat",
+    "values": [
+      "In eigen beheer ontworpen en getest — niets wordt gepubliceerd zonder een echte testprint",
+      "Heldere, eerlijke documentatie — materialen, instellingen en beperkingen, geen verrassingen",
+      "Bewust onafhankelijk en klein — direct contact, geen anonieme supportwachtrij"
+    ],
+    "cta": "Neem contact op"
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Neem contact op",
+    "description": "Vragen over een design, een licentieaanvraag of een opdracht op maat? Stuur een bericht.",
+    "formNameLabel": "Naam",
+    "formEmailLabel": "E-mail",
+    "formSubjectLabel": "Onderwerp",
+    "formMessageLabel": "Bericht",
+    "formSubmit": "Verstuur bericht",
+    "formNote": "Dit opent je e-mailprogramma met je bericht al ingevuld — er wordt niets opgeslagen op deze site.",
+    "emailFallbackLabel": "Of mail direct:"
+  },
+  "legal": {
+    "noticeTitle": "Placeholder — juridische beoordeling volgt nog",
+    "noticeBody": "Deze pagina is een structurele placeholder. De inhoud hieronder moet nog worden beoordeeld en afgerond door een gekwalificeerde professional voordat 3DPIY commercieel lanceert.",
+    "placeholderBody": "De definitieve tekst voor deze pagina wordt hier toegevoegd vóór de lancering.",
+    "docs": {
+      "privacy": { "title": "Privacybeleid" },
+      "cookies": { "title": "Cookiebeleid" },
+      "terms": { "title": "Algemene voorwaarden" },
+      "delivery": { "title": "Beleid digitale levering" },
+      "license": { "title": "Licentieovereenkomst" }
+    }
+  },
+  "freeDesignsPage": {
+    "eyebrow": "Gratis designs",
+    "title": "Probeer het eerst",
+    "description": "Een selectie gratis 3DPIY-designs — geen account, geen licentiekosten.",
+    "emptyTitle": "Nog geen gratis designs gepubliceerd",
+    "emptyDescription": "Gratis designs verschijnen hier terwijl 3DPIY zich voorbereidt op de lancering."
+  },
+  "notConnected": {
+    "title": "Nog niet verbonden",
+    "body": "Dit onderdeel heeft een Supabase-project nodig om te werken. Het is volledig gebouwd en klaar — zie SETUP.md voor de activatiestappen."
+  },
+  "auth": {
+    "signUpTitle": "Maak je account aan",
+    "signInTitle": "Inloggen",
+    "forgotTitle": "Wachtwoord opnieuw instellen",
+    "resetTitle": "Kies een nieuw wachtwoord",
+    "nameLabel": "Naam",
+    "emailLabel": "E-mail",
+    "passwordLabel": "Wachtwoord",
+    "confirmPasswordLabel": "Bevestig wachtwoord",
+    "signUpSubmit": "Account aanmaken",
+    "signInSubmit": "Inloggen",
+    "forgotSubmit": "Stuur reset-link",
+    "resetSubmit": "Nieuw wachtwoord opslaan",
+    "haveAccount": "Heb je al een account?",
+    "noAccount": "Nog geen account?",
+    "signInLink": "Inloggen",
+    "signUpLink": "Maak er een aan",
+    "forgotLink": "Wachtwoord vergeten?",
+    "backToSignIn": "Terug naar inloggen",
+    "checkEmailTitle": "Check je inbox",
+    "checkEmailBody": "We hebben je een link gestuurd — volg deze om verder te gaan.",
+    "errorGeneric": "Er ging iets mis. Probeer het opnieuw."
+  },
+  "account": {
+    "eyebrow": "My 3DPIY",
+    "title": "Jouw account",
+    "libraryTab": "Bibliotheek",
+    "ordersTab": "Bestellingen",
+    "settingsTab": "Instellingen",
+    "libraryEmptyTitle": "Nog geen designs",
+    "libraryEmptyBody": "Designs die je koopt verschijnen hier, klaar om te downloaden.",
+    "ordersEmptyTitle": "Nog geen bestellingen",
+    "ordersEmptyBody": "Je aankoophistorie verschijnt hier.",
+    "download": "Downloaden",
+    "settingsNameLabel": "Naam",
+    "settingsEmailLabel": "E-mail",
+    "settingsSave": "Wijzigingen opslaan",
+    "signOut": "Uitloggen",
+    "signIn": "Inloggen",
+    "adminBannerTitle": "Je bent ingelogd als admin",
+    "adminBannerBody": "Dit is de klantweergave. Om producten toe te voegen, bestanden te uploaden en bestellingen te beheren, gebruik je 3DPIY Studio.",
+    "adminBannerCta": "Open 3DPIY Studio"
+  }
+}
