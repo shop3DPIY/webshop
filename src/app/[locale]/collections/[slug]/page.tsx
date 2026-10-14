@@ -50,14 +50,19 @@ export default async function CollectionPage({
     <>
       <section className={classes.bgSoft}>
         <Container className="flex flex-col gap-4 py-16 sm:py-20">
-          <Link href="/shop" className="text-ink/60 hover:text-ink text-sm font-medium">
+          <Link
+            href="/shop"
+            className="text-brand-purple hover:text-brand-periwinkle text-sm font-medium"
+          >
             ← {tPage("backToShop")}
           </Link>
           <span
             className={`inline-flex h-12 w-12 items-center justify-center rounded-full ${classes.bg}`}
             aria-hidden
           />
-          <h1 className="font-display text-3xl font-bold sm:text-5xl">{t("name")}</h1>
+          <h1 className={`font-display ${classes.text} text-3xl font-bold sm:text-5xl`}>
+            {t("name")}
+          </h1>
           <p className="text-ink/70 max-w-xl text-lg">{t("tagline")}</p>
         </Container>
       </section>
@@ -71,7 +76,7 @@ export default async function CollectionPage({
           </div>
         ) : (
           <div className="border-line rounded-3xl border border-dashed p-12 text-center">
-            <h2 className="font-display text-xl font-semibold">
+            <h2 className="font-display text-brand-purple text-xl font-semibold">
               {tPage("emptyTitle")}
             </h2>
             <p className="text-ink/60 mt-2 text-sm">{tPage("emptyDescription")}</p>

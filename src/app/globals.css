@@ -32,6 +32,13 @@
   --line: #e7e3f0;
   --accent: #db2777;
 
+  /* Logo/banner brand palette — fixed across light & dark, used for
+     headings, button text and nav instead of plain black. */
+  --brand-cyan: #5ce1e6;
+  --brand-purple: #8c52ff;
+  --brand-pink: #ff66c4;
+  --brand-periwinkle: #739df3;
+
   /* Collection accents — light mode: vivid */
   --doll-mini: #ff4fa0;
   --doll-mini-soft: #ffe3f2;
@@ -76,6 +83,11 @@
   --color-mist: var(--mist);
   --color-line: var(--line);
   --color-accent: var(--accent);
+
+  --color-brand-cyan: var(--brand-cyan);
+  --color-brand-purple: var(--brand-purple);
+  --color-brand-pink: var(--brand-pink);
+  --color-brand-periwinkle: var(--brand-periwinkle);
 
   --color-doll-mini: var(--doll-mini);
   --color-doll-mini-soft: var(--doll-mini-soft);

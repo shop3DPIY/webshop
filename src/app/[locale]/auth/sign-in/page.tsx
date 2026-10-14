@@ -21,7 +21,9 @@ export default async function SignInPage({
   return (
     <Container className="flex flex-col gap-8 py-16 sm:py-24">
       <div className="mx-auto w-full max-w-sm">
-        <h1 className="font-display text-center text-2xl font-bold">{t("signInTitle")}</h1>
+        <h1 className="font-display text-brand-pink text-center text-2xl font-bold">
+          {t("signInTitle")}
+        </h1>
 
         <div className="mt-8">
           {isSupabaseConfigured() ? (

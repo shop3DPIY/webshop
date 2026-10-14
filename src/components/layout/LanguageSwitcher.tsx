@@ -27,8 +27,8 @@ export function LanguageSwitcher() {
           aria-current={loc === locale}
           className={`rounded-full px-2.5 py-1 text-xs font-semibold transition-colors ${
             loc === locale
-              ? "bg-accent text-white"
-              : "text-ink/60 hover:bg-mist"
+              ? "bg-brand-pink text-white"
+              : "text-brand-purple hover:bg-brand-purple/10"
           }`}
         >
           {LABELS[loc] ?? loc.toUpperCase()}

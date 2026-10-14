@@ -28,6 +28,13 @@ export interface CollectionTheme {
   colorSoft: string;
   /** Which text color reads best on top of `color` */
   textOn: "light" | "dark";
+  /**
+   * false hides this collection from homepage/shop browsing grids while
+   * keeping it fully defined — existing products keep their category,
+   * their collection page still exists, and Studio's product form still
+   * offers it. Defaults to true when omitted.
+   */
+  enabled?: boolean;
 }
 
 export const BRAND_COLORS = {
@@ -62,6 +69,7 @@ export const COLLECTIONS: Record<CollectionSlug, CollectionTheme> = {
     color: "#FF7A3D",
     colorSoft: "#FFE8DA",
     textOn: "dark",
+    enabled: false,
   },
   "ikea-hacks": {
     slug: "ikea-hacks",
@@ -70,6 +78,7 @@ export const COLLECTIONS: Record<CollectionSlug, CollectionTheme> = {
     color: "#FFC93D",
     colorSoft: "#FFF3D6",
     textOn: "dark",
+    enabled: false,
   },
   organize: {
     slug: "organize",
@@ -78,6 +87,7 @@ export const COLLECTIONS: Record<CollectionSlug, CollectionTheme> = {
     color: "#2FBF71",
     colorSoft: "#DFF6E8",
     textOn: "dark",
+    enabled: false,
   },
   "tech-electronics": {
     slug: "tech-electronics",
@@ -86,6 +96,7 @@ export const COLLECTIONS: Record<CollectionSlug, CollectionTheme> = {
     color: "#2F8EFF",
     colorSoft: "#DCEAFF",
     textOn: "dark",
+    enabled: false,
   },
   "serious-games": {
     slug: "serious-games",
@@ -98,6 +109,11 @@ export const COLLECTIONS: Record<CollectionSlug, CollectionTheme> = {
 };
 
 export const COLLECTION_LIST: CollectionTheme[] = Object.values(COLLECTIONS);
+
+/** Collections shown in homepage/shop browsing grids — see `enabled` above. */
+export const ACTIVE_COLLECTION_LIST: CollectionTheme[] = COLLECTION_LIST.filter(
+  (c) => c.enabled !== false,
+);
 
 export function getCollection(slug: CollectionSlug): CollectionTheme {
   return COLLECTIONS[slug];

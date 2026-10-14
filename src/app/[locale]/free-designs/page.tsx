@@ -28,7 +28,9 @@ export default async function FreeDesignsPage() {
         </div>
       ) : (
         <div className="border-line rounded-3xl border border-dashed p-12 text-center">
-          <h2 className="font-display text-xl font-semibold">{t("emptyTitle")}</h2>
+          <h2 className="font-display text-brand-purple text-xl font-semibold">
+            {t("emptyTitle")}
+          </h2>
           <p className="text-ink/60 mt-2 text-sm">{t("emptyDescription")}</p>
         </div>
       )}

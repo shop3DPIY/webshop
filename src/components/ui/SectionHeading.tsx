@@ -15,11 +15,13 @@ export function SectionHeading({
   return (
     <div className={align === "center" ? "text-center" : "text-left"}>
       {eyebrow && (
-        <p className="text-accent mb-2 text-sm font-semibold tracking-wide uppercase">
+        <p className="text-brand-purple mb-2 text-sm font-semibold tracking-wide uppercase">
           {eyebrow}
         </p>
       )}
-      <Heading className="font-display text-3xl font-semibold sm:text-4xl">{title}</Heading>
+      <Heading className="font-display text-brand-pink text-3xl font-semibold sm:text-4xl">
+        {title}
+      </Heading>
       {description && (
         <p className="text-ink/70 mt-3 max-w-2xl text-base sm:text-lg">
           {description}

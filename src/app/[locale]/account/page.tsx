@@ -75,14 +75,16 @@ export default async function AccountPage() {
       {profile?.role === "admin" && (
         <div className="border-accent/30 bg-accent/5 flex flex-wrap items-center justify-between gap-4 rounded-3xl border p-6">
           <div>
-            <p className="font-display text-base font-semibold">{t("adminBannerTitle")}</p>
+            <p className="font-display text-brand-pink text-base font-semibold">
+              {t("adminBannerTitle")}
+            </p>
             <p className="text-ink/70 mt-1 text-sm">{t("adminBannerBody")}</p>
           </div>
           {/* Plain <a>, not the i18n-aware Button/Link: /studio lives
               outside the [locale] route tree entirely. */}
           <a
             href="/studio"
-            className="bg-accent inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white hover:bg-accent/90"
+            className="bg-brand-pink hover:bg-brand-purple inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white"
           >
             {t("adminBannerCta")}
           </a>
@@ -90,7 +92,9 @@ export default async function AccountPage() {
       )}
 
       <section className="flex flex-col gap-6">
-        <h2 className="font-display text-xl font-semibold">{t("libraryTab")}</h2>
+        <h2 className="font-display text-brand-purple text-xl font-semibold">
+          {t("libraryTab")}
+        </h2>
         {libraryProducts && libraryProducts.length > 0 ? (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {libraryProducts.map((product) => {
@@ -98,7 +102,9 @@ export default async function AccountPage() {
               return (
                 <div key={product.id} className="border-line rounded-3xl border p-5">
                   <span className={`inline-flex h-3 w-3 rounded-full ${classes?.bg ?? "bg-ink"}`} />
-                  <h3 className="font-display mt-3 text-base font-semibold">{product.title}</h3>
+                  <h3 className="font-display text-brand-purple mt-3 text-base font-semibold">
+                    {product.title}
+                  </h3>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {product.download_files.map((file: { format: string }) => (
                       <Button
@@ -119,7 +125,7 @@ export default async function AccountPage() {
           <div className="border-line rounded-3xl border border-dashed p-10 text-center">
             <p className="font-medium">{t("libraryEmptyTitle")}</p>
             <p className="text-ink/60 mt-1 text-sm">{t("libraryEmptyBody")}</p>
-            <Link href="/shop" className="text-accent mt-4 inline-block text-sm font-medium">
+            <Link href="/shop" className="text-brand-pink mt-4 inline-block text-sm font-medium">
               {tHero("ctaShop")}
             </Link>
           </div>
@@ -127,7 +133,9 @@ export default async function AccountPage() {
       </section>
 
       <section className="flex flex-col gap-6">
-        <h2 className="font-display text-xl font-semibold">{t("ordersTab")}</h2>
+        <h2 className="font-display text-brand-purple text-xl font-semibold">
+          {t("ordersTab")}
+        </h2>
         {orders && orders.length > 0 ? (
           <div className="divide-line border-line divide-y rounded-3xl border">
             {orders.map((order) => (
@@ -153,7 +161,9 @@ export default async function AccountPage() {
       </section>
 
       <section className="flex flex-col gap-6">
-        <h2 className="font-display text-xl font-semibold">{t("settingsTab")}</h2>
+        <h2 className="font-display text-brand-purple text-xl font-semibold">
+          {t("settingsTab")}
+        </h2>
         <ProfileSettingsForm
           userId={user.id}
           email={profile?.email ?? user.email ?? ""}

@@ -27,7 +27,9 @@ export function CollectionCard({
         aria-hidden
       />
       <div>
-        <Heading className="font-display text-xl font-semibold">{t("name")}</Heading>
+        <Heading className="font-display text-brand-purple text-xl font-semibold">
+          {t("name")}
+        </Heading>
         <p className="text-ink/70 mt-1 text-sm">{t("tagline")}</p>
       </div>
     </Link>

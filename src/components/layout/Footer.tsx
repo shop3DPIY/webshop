@@ -24,8 +24,8 @@ export async function Footer() {
         </div>
 
         <div>
-          <h4 className="mb-3 text-sm font-semibold">{t("shopHeading")}</h4>
-          <ul className="text-ink/70 space-y-2 text-sm">
+          <h4 className="text-brand-pink mb-3 text-sm font-semibold">{t("shopHeading")}</h4>
+          <ul className="text-brand-purple space-y-2 text-sm">
             <li><Link href="/shop">{t("shopAll")}</Link></li>
             <li><Link href="/free-designs">{t("shopFree")}</Link></li>
             <li><Link href="/business">{t("shopBusiness")}</Link></li>
@@ -33,8 +33,8 @@ export async function Footer() {
         </div>
 
         <div>
-          <h4 className="mb-3 text-sm font-semibold">{t("legalHeading")}</h4>
-          <ul className="text-ink/70 space-y-2 text-sm">
+          <h4 className="text-brand-pink mb-3 text-sm font-semibold">{t("legalHeading")}</h4>
+          <ul className="text-brand-purple space-y-2 text-sm">
             {LEGAL_LINKS.map((link) => (
               <li key={link.href}>
                 <Link href={link.href}>{t(link.key)}</Link>
@@ -44,7 +44,7 @@ export async function Footer() {
         </div>
 
         <div>
-          <h4 className="mb-3 text-sm font-semibold">{t("newsletterHeading")}</h4>
+          <h4 className="text-brand-pink mb-3 text-sm font-semibold">{t("newsletterHeading")}</h4>
           <p className="text-ink/70 mb-3 text-sm">{t("newsletterDescription")}</p>
           <div className="flex gap-2">
             <input

@@ -21,17 +21,23 @@ export default async function AboutPage() {
 
       <div className="grid gap-10 lg:grid-cols-2">
         <div>
-          <h2 className="font-display text-xl font-semibold">{t("introTitle")}</h2>
+          <h2 className="font-display text-brand-purple text-xl font-semibold">
+            {t("introTitle")}
+          </h2>
           <p className="text-ink/70 mt-3 text-base sm:text-lg">{t("introBody")}</p>
         </div>
         <div>
-          <h2 className="font-display text-xl font-semibold">{t("makerTitle")}</h2>
+          <h2 className="font-display text-brand-purple text-xl font-semibold">
+            {t("makerTitle")}
+          </h2>
           <p className="text-ink/70 mt-3 text-base sm:text-lg">{t("makerBody")}</p>
         </div>
       </div>
 
-      <div className="bg-mist rounded-3xl p-8 sm:p-10">
-        <h2 className="font-display text-xl font-semibold">{t("valuesTitle")}</h2>
+      <div className="bg-brand-pink/5 rounded-3xl p-8 sm:p-10">
+        <h2 className="font-display text-brand-purple text-xl font-semibold">
+          {t("valuesTitle")}
+        </h2>
         <ul className="mt-5 grid gap-4 sm:grid-cols-3">
           {values.map((value) => (
             <li key={value} className="border-line bg-paper rounded-2xl border p-5 text-sm">

@@ -21,12 +21,16 @@ export default async function BusinessPage() {
 
       <div className="grid gap-8 lg:grid-cols-2">
         <div className="border-line rounded-3xl border p-8">
-          <h2 className="font-display text-xl font-semibold">{t("licensingTitle")}</h2>
+          <h2 className="font-display text-brand-purple text-xl font-semibold">
+            {t("licensingTitle")}
+          </h2>
           <p className="text-ink/70 mt-3 text-sm sm:text-base">{t("licensingBody")}</p>
         </div>
 
         <div className="border-line rounded-3xl border p-8">
-          <h2 className="font-display text-xl font-semibold">{t("commissionsTitle")}</h2>
+          <h2 className="font-display text-brand-purple text-xl font-semibold">
+            {t("commissionsTitle")}
+          </h2>
           <p className="text-ink/70 mt-3 text-sm sm:text-base">{t("commissionsBody")}</p>
           <ul className="text-ink/70 mt-4 space-y-2 text-sm">
             {bullets.map((bullet) => (

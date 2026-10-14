@@ -144,7 +144,9 @@ export default async function ProductPage({
 
         <div className="flex flex-col gap-6">
           <div>
-            <h1 className="font-display text-3xl font-bold sm:text-4xl">{product.title}</h1>
+            <h1 className="font-display text-brand-pink text-3xl font-bold sm:text-4xl">
+              {product.title}
+            </h1>
             <p className="text-ink/70 mt-3 text-base sm:text-lg">{product.description}</p>
           </div>
 
@@ -175,7 +177,9 @@ export default async function ProductPage({
 
       {related.length > 0 && (
         <div className="flex flex-col gap-6">
-          <h2 className="font-display text-2xl font-semibold">{tSpecs("relatedTitle")}</h2>
+          <h2 className="font-display text-brand-purple text-2xl font-semibold">
+            {tSpecs("relatedTitle")}
+          </h2>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {related.map((relatedProduct) => (
               <ProductCard key={relatedProduct.id} product={relatedProduct} />

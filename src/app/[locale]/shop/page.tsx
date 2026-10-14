@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CollectionCard } from "@/components/product/CollectionCard";
-import { COLLECTION_LIST } from "@/lib/config/colors";
+import { ACTIVE_COLLECTION_LIST } from "@/lib/config/colors";
 
 export async function generateMetadata() {
   const t = await getTranslations("shopPage");
@@ -24,7 +24,7 @@ export default async function ShopPage() {
         description={t("description")}
       />
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {COLLECTION_LIST.map((collection) => (
+        {ACTIVE_COLLECTION_LIST.map((collection) => (
           <CollectionCard key={collection.slug} slug={collection.slug} headingLevel="h2" />
         ))}
       </div>

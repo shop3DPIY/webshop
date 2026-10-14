@@ -1,54 +1,44 @@
+import Image from "next/image";
+import { Quicksand } from "next/font/google";
 import { getSiteMode } from "@/lib/config/siteMode";
+
+const quicksand = Quicksand({ subsets: ["latin"], weight: "700" });
 
 export default function ComingSoonPage() {
   const mode = getSiteMode();
   const showWaitlist = mode === "waitlist";
 
   return (
-    <div className="bg-mist relative flex min-h-full items-center justify-center overflow-hidden px-6 py-20">
-      <div
-        className="bg-doll-mini absolute -top-24 -left-24 h-72 w-72 rounded-full opacity-20 blur-3xl"
-        aria-hidden
-      />
-      <div
-        className="bg-tech-electronics absolute top-10 -right-20 h-80 w-80 rounded-full opacity-20 blur-3xl"
-        aria-hidden
-      />
-      <div
-        className="bg-ikea-hacks absolute bottom-[-6rem] left-1/3 h-64 w-64 rounded-full opacity-20 blur-3xl"
+    <div className="relative h-screen w-full overflow-hidden">
+      <Image
+        src="/images/banner/Banner_3DPIY.png"
+        alt=""
+        fill
+        priority
+        className="object-cover"
         aria-hidden
       />
 
-      <div className="relative flex max-w-xl flex-col items-center gap-6 text-center">
-        <span className="font-display flex items-baseline gap-1 text-2xl font-bold">
-          <span>3D</span>
-          <span className="text-accent">PIY</span>
-        </span>
+      <div className="relative flex h-full w-full flex-col items-center justify-center gap-6 px-6">
+        <div className="flex min-h-[20vh] w-full max-w-3xl flex-col items-center justify-center gap-4 rounded-3xl border border-white/30 bg-white/15 px-8 py-6 text-center shadow-xl backdrop-blur-lg">
+          <Image
+            src="/images/logo/Logo_3DPIY-transparent.png"
+            alt="3DPIY"
+            width={334}
+            height={216}
+            priority
+            className="h-28 w-auto sm:h-36"
+          />
 
-        <h1 className="font-display text-3xl font-bold sm:text-5xl">
-          Something new is coming.
-          <br />
-          <span className="text-ink/60 text-xl font-normal sm:text-2xl">
-            Er komt iets moois aan.
-          </span>
-        </h1>
-
-        <p className="text-ink/70 text-base sm:text-lg">
-          3DPIY is an independent design studio for 3D-printable files — launching soon.
-          <br />
-          <span className="text-ink/60">
-            3DPIY is een onafhankelijke designstudio voor 3D-printbare bestanden — binnenkort
-            live.
-          </span>
-        </p>
+          <h1 className={`${quicksand.className} text-3xl text-white sm:text-5xl`}>
+            Something new is coming
+            <span className="text-[#ff66c4] text-4xl sm:text-6xl">.</span>
+          </h1>
+        </div>
 
         {showWaitlist && (
-          <div className="border-line bg-paper mt-4 flex flex-col items-center gap-3 rounded-3xl border p-6">
-            <p className="text-sm font-medium">
-              Want to be first to know? Create an account now.
-              <br />
-              <span className="text-ink/60">Wil je als eerste weten? Maak nu een account.</span>
-            </p>
+          <div className="flex flex-col items-center gap-3 rounded-3xl border border-white/30 bg-white/15 p-6 text-center shadow-xl backdrop-blur-lg">
+            <p className="text-sm font-medium">Want to be first to know? Create an account now.</p>
             <div className="flex flex-wrap items-center justify-center gap-3">
               <a
                 href="/auth/sign-up"

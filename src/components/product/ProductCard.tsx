@@ -37,7 +37,7 @@ export function ProductCard({ product }: { product: Product }) {
         )}
       </div>
       <div className="flex flex-1 flex-col p-4">
-        <h3 className="font-display text-base font-semibold">{product.title}</h3>
+        <h3 className="font-display text-brand-purple text-base font-semibold">{product.title}</h3>
         <p className="text-ink/60 mt-1 line-clamp-2 text-sm">{product.description}</p>
       </div>
     </Link>

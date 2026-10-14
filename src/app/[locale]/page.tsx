@@ -1,11 +1,15 @@
+import Image from "next/image";
+import { Quicksand } from "next/font/google";
 import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CollectionCard } from "@/components/product/CollectionCard";
 import { ProductCard } from "@/components/product/ProductCard";
-import { COLLECTION_LIST } from "@/lib/config/colors";
+import { ACTIVE_COLLECTION_LIST } from "@/lib/config/colors";
 import { getPublishedProducts } from "@/lib/products";
+
+const quicksand = Quicksand({ subsets: ["latin"], weight: "700" });
 
 export default async function Home() {
   const tHero = await getTranslations("hero");
@@ -17,33 +21,33 @@ export default async function Home() {
 
   return (
     <>
-      <section className="bg-mist relative overflow-hidden">
-        <div
-          className="bg-doll-mini absolute -top-24 -left-24 h-72 w-72 rounded-full opacity-20 blur-3xl"
-          aria-hidden
-        />
-        <div
-          className="bg-tech-electronics absolute top-10 -right-20 h-80 w-80 rounded-full opacity-20 blur-3xl"
-          aria-hidden
-        />
-        <div
-          className="bg-ikea-hacks absolute bottom-[-6rem] left-1/3 h-64 w-64 rounded-full opacity-20 blur-3xl"
+      <section className="relative overflow-hidden">
+        <Image
+          src="/images/banner/Banner_3DPIY.png"
+          alt=""
+          fill
+          priority
+          className="object-cover"
           aria-hidden
         />
 
-        <Container className="relative flex flex-col items-center gap-6 py-20 text-center sm:py-28">
-          <span className="border-line bg-paper inline-flex rounded-full border px-4 py-1.5 text-sm font-medium">
-            {tHero("eyebrow")}
-          </span>
-          <h1 className="font-display max-w-3xl text-4xl font-bold sm:text-6xl">
-            {tHero("titleLine1")} <span className="text-accent">{tHero("titleLine2")}</span>
-          </h1>
-          <p className="text-ink/70 max-w-xl text-lg">{tHero("description")}</p>
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <Button href="/shop" size="lg">{tHero("ctaShop")}</Button>
-            <Button href="/free-designs" variant="secondary" size="lg">
-              {tHero("ctaFree")}
-            </Button>
+        <Container className="relative flex flex-col items-center py-20 text-center sm:py-28">
+          <div className="flex max-w-4xl flex-col items-center gap-6 rounded-3xl border border-white/30 bg-white/15 px-8 py-10 shadow-xl backdrop-blur-lg sm:px-12">
+            <span className="inline-flex rounded-full border border-white/30 bg-white/20 px-4 py-1.5 text-sm font-medium text-white">
+              {tHero("eyebrow")}
+            </span>
+            <h1
+              className={`${quicksand.className} text-4xl text-white sm:whitespace-nowrap sm:text-5xl lg:text-6xl`}
+            >
+              {tHero("titleLine1")} <span className="text-brand-pink">{tHero("titleLine2")}</span>
+            </h1>
+            <p className="max-w-xl text-lg text-white/80">{tHero("description")}</p>
+            <div className="flex flex-wrap items-center justify-center gap-3">
+              <Button href="/shop" size="lg">{tHero("ctaShop")}</Button>
+              <Button href="/free-designs" variant="secondary" size="lg">
+                {tHero("ctaFree")}
+              </Button>
+            </div>
           </div>
         </Container>
       </section>
@@ -56,14 +60,14 @@ export default async function Home() {
             description={tCollections("description")}
           />
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {COLLECTION_LIST.map((collection) => (
+            {ACTIVE_COLLECTION_LIST.map((collection) => (
               <CollectionCard key={collection.slug} slug={collection.slug} />
             ))}
           </div>
         </Container>
       </section>
 
-      <section className="bg-mist py-16 sm:py-24">
+      <section className="bg-brand-cyan/5 py-16 sm:py-24">
         <Container className="flex flex-col gap-10">
           <SectionHeading
             eyebrow={tNewAndPopular("eyebrow")}
@@ -86,8 +90,8 @@ export default async function Home() {
               {tAbout("description")}
             </p>
           </div>
-          <div className="border-line bg-mist rounded-3xl border p-8">
-            <h3 className="font-display text-lg font-semibold">
+          <div className="border-line bg-brand-purple/5 rounded-3xl border p-8">
+            <h3 className="font-display text-brand-pink text-lg font-semibold">
               {tFreeDownloads("title")}
             </h3>
             <p className="text-ink/70 mt-2 text-sm">{tFreeDownloads("description")}</p>
