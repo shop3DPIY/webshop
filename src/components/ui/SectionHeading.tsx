@@ -4,6 +4,7 @@ export function SectionHeading({
   description,
   align = "left",
   as: Heading = "h2",
+  tone = "pink",
 }: {
   eyebrow?: string;
   title: string;
@@ -11,7 +12,11 @@ export function SectionHeading({
   align?: "left" | "center";
   /** Use "h1" when this is a page's main heading (there is no other h1 on the page). */
   as?: "h1" | "h2";
+  /** "purple" drops pink entirely — used on the Serious Games track. */
+  tone?: "pink" | "purple";
 }) {
+  const titleColor = tone === "purple" ? "text-brand-purple" : "text-brand-pink";
+
   return (
     <div className={align === "center" ? "text-center" : "text-left"}>
       {eyebrow && (
@@ -19,7 +24,7 @@ export function SectionHeading({
           {eyebrow}
         </p>
       )}
-      <Heading className="font-display text-brand-pink text-3xl font-semibold sm:text-4xl">
+      <Heading className={`font-display ${titleColor} text-3xl font-semibold sm:text-4xl`}>
         {title}
       </Heading>
       {description && (

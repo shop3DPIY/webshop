@@ -1,7 +1,7 @@
 import { Link } from "@/i18n/navigation";
 import type { ReactNode } from "react";
 
-type Variant = "primary" | "secondary" | "ghost";
+type Variant = "primary" | "secondary" | "ghost" | "primaryAlt" | "secondaryAlt";
 type Size = "md" | "lg";
 
 const base =
@@ -12,6 +12,10 @@ const variants: Record<Variant, string> = {
   secondary:
     "bg-paper text-brand-pink border border-brand-pink/40 hover:bg-brand-pink/10",
   ghost: "bg-transparent text-brand-purple hover:bg-brand-purple/10",
+  // No-pink variants for the Serious Games track (cyan/periwinkle/purple/white only).
+  primaryAlt: "bg-brand-purple text-white hover:bg-brand-periwinkle",
+  secondaryAlt:
+    "bg-paper text-brand-purple border border-brand-purple/40 hover:bg-brand-purple/10",
 };
 
 const sizes: Record<Size, string> = {

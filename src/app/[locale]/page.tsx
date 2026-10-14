@@ -1,106 +1,89 @@
 import Image from "next/image";
-import { Quicksand } from "next/font/google";
-import { getTranslations } from "next-intl/server";
-import { Container } from "@/components/ui/Container";
-import { Button } from "@/components/ui/Button";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { CollectionCard } from "@/components/product/CollectionCard";
-import { ProductCard } from "@/components/product/ProductCard";
-import { ACTIVE_COLLECTION_LIST } from "@/lib/config/colors";
-import { getPublishedProducts } from "@/lib/products";
+import { cookies } from "next/headers";
+import { getLocale, getTranslations } from "next-intl/server";
+import { Link, redirect } from "@/i18n/navigation";
+import { TRACK_COOKIE, isTrack } from "@/lib/config/track";
 
-const quicksand = Quicksand({ subsets: ["latin"], weight: "700" });
+/**
+ * The site's entry point is a choice, not a storefront — Dolls & Mini and
+ * Serious Games are different audiences with a different "vibe" and (for
+ * Serious Games) a different commercial license, so they get their own
+ * landing pages instead of being mixed into one generic homepage. A
+ * returning visitor skips straight to their track (see proxy.ts, which sets
+ * this cookie on any /dolls or /serious-games request) — ?pick=1 (used by
+ * the logo, see Logo.tsx) always forces this chooser back open.
+ */
+export default async function TrackChooserPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ pick?: string }>;
+}) {
+  const { pick } = await searchParams;
+  if (!pick) {
+    const cookieStore = await cookies();
+    const track = cookieStore.get(TRACK_COOKIE)?.value;
+    if (isTrack(track)) {
+      redirect({ href: `/${track}`, locale: await getLocale() });
+    }
+  }
 
-export default async function Home() {
-  const tHero = await getTranslations("hero");
-  const tCollections = await getTranslations("collections");
-  const tNewAndPopular = await getTranslations("newAndPopular");
-  const tAbout = await getTranslations("about");
-  const tFreeDownloads = await getTranslations("freeDownloads");
-  const products = await getPublishedProducts();
+  const t = await getTranslations("trackChooser");
 
   return (
-    <>
-      <section className="relative overflow-hidden">
-        <Image
-          src="/images/banner/Banner_3DPIY.png"
-          alt=""
-          fill
-          priority
-          className="object-cover"
-          aria-hidden
-        />
+    <div className="relative h-screen w-full overflow-hidden">
+      <Image
+        src="/images/banner/Banner_3DPIY.png"
+        alt=""
+        fill
+        priority
+        className="object-cover"
+        aria-hidden
+      />
 
-        <Container className="relative flex flex-col items-center py-20 text-center sm:py-28">
-          <div className="flex max-w-4xl flex-col items-center gap-6 rounded-3xl border border-white/30 bg-white/15 px-8 py-10 shadow-xl backdrop-blur-lg sm:px-12">
-            <span className="inline-flex rounded-full border border-white/30 bg-white/20 px-4 py-1.5 text-sm font-medium text-white">
-              {tHero("eyebrow")}
+      <div className="relative flex h-full w-full flex-col items-center justify-center gap-10 px-6 py-12">
+        <div className="flex flex-col items-center gap-3 text-center">
+          <Image
+            src="/images/logo/Logo_3DPIY-transparent.png"
+            alt="3DPIY"
+            width={334}
+            height={216}
+            priority
+            className="h-20 w-auto sm:h-24"
+          />
+          <h1 className="font-display text-xl font-bold text-white sm:text-2xl">{t("title")}</h1>
+          <p className="max-w-md text-sm text-white/80 sm:text-base">{t("description")}</p>
+        </div>
+
+        <div className="grid w-full max-w-3xl gap-5 sm:grid-cols-2">
+          <Link
+            href="/dolls"
+            className="group border-brand-pink/50 hover:border-brand-pink flex flex-col items-start gap-3 rounded-3xl border bg-white/15 p-8 text-left shadow-xl backdrop-blur-lg transition-colors"
+          >
+            <span className="bg-brand-pink inline-flex h-10 w-10 items-center justify-center rounded-full" />
+            <h2 className="font-display text-brand-pink text-2xl font-semibold">
+              {t("dollsTitle")}
+            </h2>
+            <p className="text-sm text-white/80">{t("dollsDescription")}</p>
+            <span className="text-brand-pink mt-2 text-sm font-semibold group-hover:text-white">
+              {t("dollsCta")} →
             </span>
-            <h1
-              className={`${quicksand.className} text-4xl text-white sm:whitespace-nowrap sm:text-5xl lg:text-6xl`}
-            >
-              {tHero("titleLine1")} <span className="text-brand-pink">{tHero("titleLine2")}</span>
-            </h1>
-            <p className="max-w-xl text-lg text-white/80">{tHero("description")}</p>
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <Button href="/shop" size="lg">{tHero("ctaShop")}</Button>
-              <Button href="/free-designs" variant="secondary" size="lg">
-                {tHero("ctaFree")}
-              </Button>
-            </div>
-          </div>
-        </Container>
-      </section>
+          </Link>
 
-      <section className="py-16 sm:py-24">
-        <Container className="flex flex-col gap-10">
-          <SectionHeading
-            eyebrow={tCollections("eyebrow")}
-            title={tCollections("title")}
-            description={tCollections("description")}
-          />
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {ACTIVE_COLLECTION_LIST.map((collection) => (
-              <CollectionCard key={collection.slug} slug={collection.slug} />
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="bg-brand-cyan/5 py-16 sm:py-24">
-        <Container className="flex flex-col gap-10">
-          <SectionHeading
-            eyebrow={tNewAndPopular("eyebrow")}
-            title={tNewAndPopular("title")}
-            description={tNewAndPopular("description")}
-          />
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="py-16 sm:py-24">
-        <Container className="grid gap-10 lg:grid-cols-2 lg:items-center">
-          <div>
-            <SectionHeading eyebrow={tAbout("eyebrow")} title={tAbout("title")} />
-            <p className="text-ink/70 mt-4 text-base sm:text-lg">
-              {tAbout("description")}
-            </p>
-          </div>
-          <div className="border-line bg-brand-purple/5 rounded-3xl border p-8">
-            <h3 className="font-display text-brand-pink text-lg font-semibold">
-              {tFreeDownloads("title")}
-            </h3>
-            <p className="text-ink/70 mt-2 text-sm">{tFreeDownloads("description")}</p>
-            <Button href="/free-designs" variant="secondary" className="mt-4">
-              {tFreeDownloads("cta")}
-            </Button>
-          </div>
-        </Container>
-      </section>
-    </>
+          <Link
+            href="/serious-games"
+            className="group border-brand-periwinkle/50 hover:border-brand-periwinkle flex flex-col items-start gap-3 rounded-3xl border bg-white/15 p-8 text-left shadow-xl backdrop-blur-lg transition-colors"
+          >
+            <span className="bg-brand-purple inline-flex h-10 w-10 items-center justify-center rounded-full" />
+            <h2 className="font-display text-brand-cyan text-2xl font-semibold">
+              {t("seriousGamesTitle")}
+            </h2>
+            <p className="text-sm text-white/80">{t("seriousGamesDescription")}</p>
+            <span className="text-brand-cyan mt-2 text-sm font-semibold group-hover:text-white">
+              {t("seriousGamesCta")} →
+            </span>
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }

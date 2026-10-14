@@ -1,4 +1,5 @@
-import { useTranslations } from "next-intl";
+import { cookies } from "next/headers";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "./Logo";
 import { Container } from "@/components/ui/Container";
@@ -7,9 +8,17 @@ import { ThemeToggle } from "./ThemeToggle";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { AccountLink } from "./AccountLink";
 import { MobileMenu } from "./MobileMenu";
+import { TRACK_COOKIE, isTrack } from "@/lib/config/track";
 
-export function Header() {
-  const t = useTranslations("nav");
+export async function Header() {
+  const t = await getTranslations("nav");
+  const cookieStore = await cookies();
+  const track = cookieStore.get(TRACK_COOKIE)?.value;
+  const otherTrack = isTrack(track)
+    ? track === "dolls"
+      ? { href: "/serious-games", label: t("switchToSeriousGames") }
+      : { href: "/dolls", label: t("switchToDolls") }
+    : null;
 
   const navLinks = [
     { href: "/shop", label: t("shop") },
@@ -33,6 +42,14 @@ export function Header() {
           ))}
         </nav>
         <div className="flex items-center gap-3">
+          {otherTrack && (
+            <Link
+              href={otherTrack.href}
+              className="border-brand-purple/40 text-brand-purple hover:bg-brand-purple/10 hidden rounded-full border px-3 py-1.5 text-xs font-semibold sm:inline-flex"
+            >
+              {otherTrack.label}
+            </Link>
+          )}
           <LanguageSwitcher />
           <ThemeToggle />
           <AccountLink />

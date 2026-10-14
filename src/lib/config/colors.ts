@@ -35,6 +35,13 @@ export interface CollectionTheme {
    * offers it. Defaults to true when omitted.
    */
   enabled?: boolean;
+  /**
+   * Which customer-facing track (see src/lib/track.ts) this collection
+   * belongs to. undefined = not assigned to a track yet (stays out of
+   * both /dolls and /serious-games browsing until it's enabled and
+   * assigned).
+   */
+  track?: "dolls" | "serious-games";
 }
 
 export const BRAND_COLORS = {
@@ -61,6 +68,7 @@ export const COLLECTIONS: Record<CollectionSlug, CollectionTheme> = {
     color: "#FF4FA0",
     colorSoft: "#FFE3F2",
     textOn: "dark",
+    track: "dolls",
   },
   "home-living": {
     slug: "home-living",
@@ -105,6 +113,7 @@ export const COLLECTIONS: Record<CollectionSlug, CollectionTheme> = {
     color: "#8B5CF6",
     colorSoft: "#EAE1FC",
     textOn: "dark",
+    track: "serious-games",
   },
 };
 
@@ -114,6 +123,11 @@ export const COLLECTION_LIST: CollectionTheme[] = Object.values(COLLECTIONS);
 export const ACTIVE_COLLECTION_LIST: CollectionTheme[] = COLLECTION_LIST.filter(
   (c) => c.enabled !== false,
 );
+
+/** Active collections belonging to one track — see src/lib/config/track.ts. */
+export function getTrackCollections(track: "dolls" | "serious-games"): CollectionTheme[] {
+  return ACTIVE_COLLECTION_LIST.filter((c) => c.track === track);
+}
 
 export function getCollection(slug: CollectionSlug): CollectionTheme {
   return COLLECTIONS[slug];

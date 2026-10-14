@@ -4,7 +4,9 @@
     "shop": "Shop",
     "business": "Business",
     "about": "About",
-    "contact": "Contact"
+    "contact": "Contact",
+    "switchToDolls": "Switch to: Dolls",
+    "switchToSeriousGames": "Switch to: Serious Games"
   },
   "hero": {
     "eyebrow": "Independent digital design studio",
@@ -179,11 +181,21 @@
     "noticeBody": "This page is a structural placeholder. The content below needs to be reviewed and finalized by a qualified professional before 3DPIY launches commercially.",
     "placeholderBody": "Final text for this page will be added here before launch.",
     "docs": {
-      "privacy": { "title": "Privacy Policy" },
-      "cookies": { "title": "Cookie Policy" },
-      "terms": { "title": "Terms & Conditions" },
-      "delivery": { "title": "Digital Delivery Policy" },
-      "license": { "title": "License Agreement" }
+      "privacy": {
+        "title": "Privacy Policy"
+      },
+      "cookies": {
+        "title": "Cookie Policy"
+      },
+      "terms": {
+        "title": "Terms & Conditions"
+      },
+      "delivery": {
+        "title": "Digital Delivery Policy"
+      },
+      "license": {
+        "title": "License Agreement"
+      }
     }
   },
   "freeDesignsPage": {
@@ -239,5 +251,35 @@
     "adminBannerTitle": "You're signed in as an admin",
     "adminBannerBody": "This is the customer view. To add products, upload files, and manage orders, use 3DPIY Studio instead.",
     "adminBannerCta": "Open 3DPIY Studio"
+  },
+  "trackChooser": {
+    "eyebrow": "Independent digital design studio",
+    "title": "Two worlds, one printer.",
+    "description": "Choose where you'd like to start — you can switch anytime.",
+    "dollsTitle": "Doll World",
+    "dollsDescription": "Playful 1:6 doll furniture and 1:12 dollhouse miniatures, for personal printing at home.",
+    "dollsCta": "Browse Dolls",
+    "seriousGamesTitle": "Serious Games",
+    "seriousGamesDescription": "Professional, educational design files for businesses — commercial resale license required.",
+    "seriousGamesCta": "Explore Serious Games"
+  },
+  "dollsLanding": {
+    "eyebrow": "Dolls & Miniatures",
+    "titleLine1": "Tiny worlds,",
+    "titleLine2": "big detail.",
+    "description": "1:6 doll furniture and 1:12 dollhouse miniatures, designed to print beautifully on your own printer.",
+    "cta": "Browse the shop",
+    "switchCta": "Looking for business licensing? Serious Games →"
+  },
+  "seriousGamesLanding": {
+    "eyebrow": "For businesses",
+    "titleLine1": "Serious Games,",
+    "titleLine2": "seriously made.",
+    "description": "Professional and educational design files, licensed for commercial print-and-resell use.",
+    "cta": "View the catalog",
+    "licenseNote": "Reselling printed output requires a commercial license — contact us for pricing.",
+    "switchCta": "← Looking for dolls & miniatures instead?",
+    "contactSalesCta": "Contact sales",
+    "emptyCatalogNote": "The Serious Games catalog is being prepared — check back soon."
   }
 }

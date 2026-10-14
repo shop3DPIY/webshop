@@ -4,7 +4,9 @@
     "shop": "Shop",
     "business": "Zakelijk",
     "about": "Over ons",
-    "contact": "Contact"
+    "contact": "Contact",
+    "switchToDolls": "Wissel naar: Dolls",
+    "switchToSeriousGames": "Wissel naar: Serious Games"
   },
   "hero": {
     "eyebrow": "Onafhankelijke digitale designstudio",
@@ -179,11 +181,21 @@
     "noticeBody": "Deze pagina is een structurele placeholder. De inhoud hieronder moet nog worden beoordeeld en afgerond door een gekwalificeerde professional voordat 3DPIY commercieel lanceert.",
     "placeholderBody": "De definitieve tekst voor deze pagina wordt hier toegevoegd vóór de lancering.",
     "docs": {
-      "privacy": { "title": "Privacybeleid" },
-      "cookies": { "title": "Cookiebeleid" },
-      "terms": { "title": "Algemene voorwaarden" },
-      "delivery": { "title": "Beleid digitale levering" },
-      "license": { "title": "Licentieovereenkomst" }
+      "privacy": {
+        "title": "Privacybeleid"
+      },
+      "cookies": {
+        "title": "Cookiebeleid"
+      },
+      "terms": {
+        "title": "Algemene voorwaarden"
+      },
+      "delivery": {
+        "title": "Beleid digitale levering"
+      },
+      "license": {
+        "title": "Licentieovereenkomst"
+      }
     }
   },
   "freeDesignsPage": {
@@ -239,5 +251,35 @@
     "adminBannerTitle": "Je bent ingelogd als admin",
     "adminBannerBody": "Dit is de klantweergave. Om producten toe te voegen, bestanden te uploaden en bestellingen te beheren, gebruik je 3DPIY Studio.",
     "adminBannerCta": "Open 3DPIY Studio"
+  },
+  "trackChooser": {
+    "eyebrow": "Onafhankelijke digitale designstudio",
+    "title": "Twee werelden, één printer.",
+    "description": "Kies waar je wilt beginnen — je kunt altijd wisselen.",
+    "dollsTitle": "Doll World",
+    "dollsDescription": "Speelse 1:6 popmeubels en 1:12 poppenhuisminiaturen, voor persoonlijk printen thuis.",
+    "dollsCta": "Bekijk Dolls",
+    "seriousGamesTitle": "Serious Games",
+    "seriousGamesDescription": "Professionele, educatieve designbestanden voor bedrijven — commerciële herverkooplicentie vereist.",
+    "seriousGamesCta": "Ontdek Serious Games"
+  },
+  "dollsLanding": {
+    "eyebrow": "Dolls & Miniaturen",
+    "titleLine1": "Kleine werelden,",
+    "titleLine2": "groot detail.",
+    "description": "1:6 popmeubels en 1:12 poppenhuisminiaturen, ontworpen om prachtig te printen op je eigen printer.",
+    "cta": "Bekijk de shop",
+    "switchCta": "Op zoek naar zakelijke licenties? Serious Games →"
+  },
+  "seriousGamesLanding": {
+    "eyebrow": "Voor bedrijven",
+    "titleLine1": "Serious Games,",
+    "titleLine2": "serieus gemaakt.",
+    "description": "Professionele en educatieve designbestanden, gelicentieerd voor commercieel print-en-verkoop gebruik.",
+    "cta": "Bekijk de catalogus",
+    "licenseNote": "Het doorverkopen van geprinte producten vereist een commerciële licentie — neem contact op voor prijzen.",
+    "switchCta": "← Op zoek naar dolls & miniaturen?",
+    "contactSalesCta": "Neem contact op",
+    "emptyCatalogNote": "De Serious Games-catalogus wordt voorbereid — kom snel nog eens terug."
   }
 }
