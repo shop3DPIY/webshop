@@ -2,17 +2,18 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { requireAdmin } from "./guard";
 
 /**
  * All admin writes go through this file — nowhere else touches the
- * `products` table for writes. That matters for the future local
- * publishing assistant (see the original project brief, section 8): once
- * it exists, it can call `saveProduct` directly (e.g. from a small script
- * using the same server action, or by hitting an equivalent API route)
- * instead of duplicating this logic.
+ * `products` table for writes. persistProduct() is the shared core used by
+ * both the Studio form (saveProduct, session-authenticated via
+ * requireAdmin) and the local ingest script's API route
+ * (src/app/api/studio/ingest/route.ts, shared-secret-authenticated) — both
+ * callers have already verified the request is trusted before calling it,
+ * so it writes via the admin client (bypasses RLS) rather than depending
+ * on a user session existing.
  */
 
 function slugify(value: string) {
@@ -50,17 +51,21 @@ async function uploadIfPresent(
   return path;
 }
 
-export async function saveProduct(formData: FormData) {
-  await requireAdmin();
-  const supabase = await createClient();
-  if (!supabase) throw new Error("Supabase not configured");
+/**
+ * Core product writer — assumes the caller has already authorized the
+ * request. Returns the product id so callers can redirect, respond with
+ * JSON, etc. as appropriate for their own context.
+ */
+export async function persistProduct(formData: FormData): Promise<{ id: string }> {
+  const admin = createAdminClient();
+  if (!admin) throw new Error("Supabase admin client not configured");
 
   const id = String(formData.get("id") ?? "");
   const titleInput = String(formData.get("title") ?? "");
   const slug = String(formData.get("slug") ?? "") || slugify(titleInput);
 
   const existing = id
-    ? (await supabase.from("products").select("download_files, images").eq("id", id).single())
+    ? (await admin.from("products").select("download_files, images").eq("id", id).single())
         .data
     : null;
 
@@ -86,8 +91,7 @@ export async function saveProduct(formData: FormData) {
   let images = existing?.images ?? [];
   const imagePath = await uploadIfPresent("product-images", slug, formData.get("imageFile"));
   if (imagePath) {
-    const admin = createAdminClient();
-    const publicUrl = admin?.storage.from("product-images").getPublicUrl(imagePath).data.publicUrl;
+    const publicUrl = admin.storage.from("product-images").getPublicUrl(imagePath).data.publicUrl;
     if (publicUrl) images = [{ src: publicUrl, alt: titleInput }];
   }
 
@@ -125,17 +129,26 @@ export async function saveProduct(formData: FormData) {
     is_free: formData.get("isFree") === "on",
     external_commerce_id: String(formData.get("externalCommerceId") ?? "") || null,
     publication_status: String(formData.get("publicationStatus") ?? "draft"),
+    source_filename: String(formData.get("sourceFilename") ?? "") || null,
     updated_at: new Date().toISOString(),
   };
 
   if (id) {
-    const { error } = await supabase.from("products").update(payload).eq("id", id);
+    const { error } = await admin.from("products").update(payload).eq("id", id);
     if (error) throw error;
-  } else {
-    const { error } = await supabase.from("products").insert(payload);
-    if (error) throw error;
+    revalidatePath("/studio/products");
+    return { id };
   }
 
+  const { data, error } = await admin.from("products").insert(payload).select("id").single();
+  if (error) throw error;
   revalidatePath("/studio/products");
+  return { id: data.id };
+}
+
+/** Studio form action — session-authenticated via requireAdmin(). */
+export async function saveProduct(formData: FormData) {
+  await requireAdmin();
+  await persistProduct(formData);
   redirect("/studio/products");
 }

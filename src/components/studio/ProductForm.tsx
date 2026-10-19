@@ -1,6 +1,11 @@
 import { saveProduct } from "@/lib/studio/actions";
 import { COLLECTION_LIST } from "@/lib/config/colors";
 
+const TRACK_GROUPS = [
+  { track: "dolls" as const, label: "Dolls & Mini" },
+  { track: "serious-games" as const, label: "Serious Games" },
+];
+
 interface ExistingProduct {
   id: string;
   slug: string;
@@ -22,6 +27,7 @@ interface ExistingProduct {
     compatiblePrinters?: string[];
   } | null;
   download_files: { format: string; fileName: string }[];
+  source_filename: string | null;
 }
 
 const FIELD = "border-line bg-paper w-full rounded-2xl border px-4 py-2.5 text-sm";
@@ -60,11 +66,22 @@ export function ProductForm({ product }: { product?: ExistingProduct }) {
         <label className={LABEL}>
           Collection
           <select name="category" defaultValue={p?.category} required className={FIELD}>
-            {COLLECTION_LIST.map((c) => (
-              <option key={c.slug} value={c.slug}>
-                {c.name}
-              </option>
+            {TRACK_GROUPS.map((group) => (
+              <optgroup key={group.track} label={group.label}>
+                {COLLECTION_LIST.filter((c) => c.track === group.track).map((c) => (
+                  <option key={c.slug} value={c.slug}>
+                    {c.name}
+                  </option>
+                ))}
+              </optgroup>
             ))}
+            <optgroup label="Unassigned">
+              {COLLECTION_LIST.filter((c) => !c.track).map((c) => (
+                <option key={c.slug} value={c.slug}>
+                  {c.name}
+                </option>
+              ))}
+            </optgroup>
           </select>
         </label>
         <label className={LABEL}>
@@ -104,6 +121,17 @@ export function ProductForm({ product }: { product?: ExistingProduct }) {
           Free design
         </label>
       </section>
+
+      <label className={LABEL}>
+        Internal notes — original filename in your design software (never shown to customers)
+        <input
+          type="text"
+          name="sourceFilename"
+          defaultValue={p?.source_filename ?? ""}
+          className={FIELD}
+          placeholder="e.g. storage-box-v2-final-ACTUALFINAL.f3d"
+        />
+      </label>
 
       <label className={LABEL}>
         Payhip product ID / permalink (leave empty until listed)
