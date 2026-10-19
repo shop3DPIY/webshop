@@ -141,42 +141,63 @@ export function getCollection(slug: CollectionSlug): CollectionTheme {
  */
 export const COLLECTION_CLASSNAMES: Record<
   CollectionSlug,
-  { bg: string; bgSoft: string; text: string; border: string }
+  {
+    bg: string;
+    bgSoft: string;
+    text: string;
+    border: string;
+    /** 15%-tint translucent fill, for the glassmorphism tile treatment (see CollectionCard). */
+    wash: string;
+    /** 45%-tint translucent fill, the tile's hover state. */
+    washHover: string;
+  }
 > = {
   "doll-mini": {
     bg: "bg-doll-mini",
     bgSoft: "bg-doll-mini-soft",
     text: "text-doll-mini",
     border: "border-doll-mini",
+    wash: "bg-doll-mini/15",
+    washHover: "hover:bg-doll-mini/45",
   },
   "home-living": {
     bg: "bg-home-living",
     bgSoft: "bg-home-living-soft",
     text: "text-home-living",
     border: "border-home-living",
+    wash: "bg-home-living/15",
+    washHover: "hover:bg-home-living/45",
   },
   "ikea-hacks": {
     bg: "bg-ikea-hacks",
     bgSoft: "bg-ikea-hacks-soft",
     text: "text-ikea-hacks",
     border: "border-ikea-hacks",
+    wash: "bg-ikea-hacks/15",
+    washHover: "hover:bg-ikea-hacks/45",
   },
   organize: {
     bg: "bg-organize",
     bgSoft: "bg-organize-soft",
     text: "text-organize",
     border: "border-organize",
+    wash: "bg-organize/15",
+    washHover: "hover:bg-organize/45",
   },
   "tech-electronics": {
     bg: "bg-tech-electronics",
     bgSoft: "bg-tech-electronics-soft",
     text: "text-tech-electronics",
     border: "border-tech-electronics",
+    wash: "bg-tech-electronics/15",
+    washHover: "hover:bg-tech-electronics/45",
   },
   "serious-games": {
     bg: "bg-serious-games",
     bgSoft: "bg-serious-games-soft",
     text: "text-serious-games",
     border: "border-serious-games",
+    wash: "bg-serious-games/15",
+    washHover: "hover:bg-serious-games/45",
   },
 };

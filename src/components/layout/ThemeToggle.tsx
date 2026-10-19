@@ -13,7 +13,7 @@ export function ThemeToggle() {
       type="button"
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label={isDark ? t("toLight") : t("toDark")}
-      className="border-line text-brand-purple hover:bg-brand-purple/10 flex h-9 w-9 items-center justify-center rounded-full border transition-colors"
+      className="text-brand-purple hover:bg-brand-purple/10 flex h-9 w-9 items-center justify-center rounded-full transition-colors"
     >
       {isDark ? (
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

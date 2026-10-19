@@ -2,13 +2,17 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 
 const NAV_KEYS = ["shop", "business", "about"] as const;
 
 export function MobileMenu() {
   const t = useTranslations("nav");
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  // Business/commercial licensing only exists for Serious Games today — see
+  // src/app/[locale]/(site)/business/page.tsx's Dolls placeholder.
+  const isDolls = pathname === "/dolls" || pathname.startsWith("/dolls/");
 
   return (
     <div className="md:hidden">
@@ -33,7 +37,7 @@ export function MobileMenu() {
       {open && (
         <div className="border-line bg-paper absolute inset-x-0 top-16 z-30 border-b p-4 shadow-lg">
           <nav className="flex flex-col gap-1">
-            {NAV_KEYS.map((key) => (
+            {NAV_KEYS.filter((key) => key !== "business" || !isDolls).map((key) => (
               <Link
                 key={key}
                 href={`/${key}`}

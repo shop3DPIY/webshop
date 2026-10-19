@@ -3,6 +3,7 @@
     "skipToContent": "Skip to content",
     "shop": "Shop",
     "business": "Business",
+    "businessComingSoon": "Coming soon",
     "about": "About",
     "contact": "Contact",
     "switchToDolls": "Switch to: Dolls",
@@ -147,7 +148,10 @@
       "Serious-game props and educational materials"
     ],
     "cta": "Request a quote",
-    "legalNotice": "Licensing terms are finalized on a per-project basis and will be reviewed before 3DPIY launches commercially."
+    "legalNotice": "Licensing terms are finalized on a per-project basis and will be reviewed before 3DPIY launches commercially.",
+    "dollsComingSoonEyebrow": "Coming soon",
+    "dollsComingSoonTitle": "Business for Dolls & Mini is on its way",
+    "dollsComingSoonBody": "Want to sell your own printed doll furniture or miniatures? A commercial license for the Dolls collection is in the works — feel free to reach out if you're already interested."
   },
   "aboutPage": {
     "eyebrow": "About 3DPIY",
@@ -255,7 +259,7 @@
   "trackChooser": {
     "eyebrow": "Independent digital design studio",
     "title": "Two worlds, one printer.",
-    "description": "Choose where you'd like to start — you can switch anytime.",
+    "description": "Choose where you'd like to start — you can always switch using the switch icon in the top left.",
     "dollsTitle": "Doll World",
     "dollsDescription": "Playful 1:6 doll furniture and 1:12 dollhouse miniatures, for personal printing at home.",
     "dollsCta": "Browse Dolls",

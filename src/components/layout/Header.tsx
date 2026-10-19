@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "./Logo";
@@ -8,40 +9,60 @@ import { LanguageSwitcher } from "./LanguageSwitcher";
 import { AccountLink } from "./AccountLink";
 import { MobileMenu } from "./MobileMenu";
 import { TrackSwitcher } from "./TrackSwitcher";
+import { TRACK_COOKIE } from "@/lib/config/track";
 
 export async function Header() {
   const t = await getTranslations("nav");
-
-  const navLinks = [
-    { href: "/shop", label: t("shop") },
-    { href: "/business", label: t("business") },
-    { href: "/about", label: t("about") },
-  ];
+  const cookieStore = await cookies();
+  const track = cookieStore.get(TRACK_COOKIE)?.value;
+  // Serious Games is the no-pink B2B track (see Button.tsx's "Alt" variants) —
+  // the Contact button follows the same rule.
+  const isSeriousGames = track === "serious-games";
+  // Business/commercial licensing only exists for Serious Games today — see
+  // src/app/[locale]/(site)/business/page.tsx's Dolls placeholder.
+  const isDolls = track === "dolls";
 
   return (
     <header className="border-line bg-paper/90 sticky top-0 z-40 border-b backdrop-blur">
       <Container className="flex h-16 items-center justify-between gap-4">
-        <Logo />
+        <div className="flex items-center gap-5">
+          <TrackSwitcher />
+          <Logo />
+        </div>
         <nav className="hidden items-center gap-6 md:flex">
-          {navLinks.map((link) => (
+          <Link
+            href="/shop"
+            className="text-brand-purple hover:text-brand-periwinkle text-sm font-medium"
+          >
+            {t("shop")}
+          </Link>
+          {!isDolls && (
             <Link
-              key={link.href}
-              href={link.href}
+              href="/business"
               className="text-brand-purple hover:text-brand-periwinkle text-sm font-medium"
             >
-              {link.label}
+              {t("business")}
             </Link>
-          ))}
+          )}
+          <Link
+            href="/about"
+            className="text-brand-purple hover:text-brand-periwinkle text-sm font-medium"
+          >
+            {t("about")}
+          </Link>
         </nav>
-        <div className="flex items-center gap-3">
-          <TrackSwitcher />
-          <LanguageSwitcher />
-          <ThemeToggle />
-          <AccountLink />
-          <div className="hidden md:block">
-            <Button href="/contact" size="md">
-              {t("contact")}
-            </Button>
+        <div className="flex items-center gap-8">
+          <div className="flex items-center gap-2">
+            <AccountLink />
+            <div className="hidden md:block">
+              <Button href="/contact" size="md" variant={isSeriousGames ? "accentAlt" : "primary"}>
+                {t("contact")}
+              </Button>
+            </div>
+          </div>
+          <div className="border-line bg-mist/60 flex items-center gap-1 rounded-full border p-1">
+            <LanguageSwitcher />
+            <ThemeToggle />
           </div>
           <MobileMenu />
         </div>

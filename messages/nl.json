@@ -3,6 +3,7 @@
     "skipToContent": "Naar inhoud springen",
     "shop": "Shop",
     "business": "Zakelijk",
+    "businessComingSoon": "Binnenkort beschikbaar",
     "about": "Over ons",
     "contact": "Contact",
     "switchToDolls": "Wissel naar: Dolls",
@@ -147,7 +148,10 @@
       "Serious-game-props en educatief materiaal"
     ],
     "cta": "Vraag een offerte aan",
-    "legalNotice": "Licentievoorwaarden worden per project vastgesteld en worden beoordeeld voordat 3DPIY commercieel lanceert."
+    "legalNotice": "Licentievoorwaarden worden per project vastgesteld en worden beoordeeld voordat 3DPIY commercieel lanceert.",
+    "dollsComingSoonEyebrow": "Binnenkort beschikbaar",
+    "dollsComingSoonTitle": "Zakelijk voor Dolls & Mini komt eraan",
+    "dollsComingSoonBody": "Wil je zelf geprinte popmeubels of miniaturen verkopen? Een commerciële licentie voor de Dolls-collectie is in voorbereiding — neem gerust contact op als je nu al interesse hebt."
   },
   "aboutPage": {
     "eyebrow": "Over 3DPIY",
@@ -255,7 +259,7 @@
   "trackChooser": {
     "eyebrow": "Onafhankelijke digitale designstudio",
     "title": "Twee werelden, één printer.",
-    "description": "Kies waar je wilt beginnen — je kunt altijd wisselen.",
+    "description": "Kies waar je wilt beginnen — je kunt altijd wisselen via het wisselsymbool linksboven.",
     "dollsTitle": "Doll World",
     "dollsDescription": "Speelse 1:6 popmeubels en 1:12 poppenhuisminiaturen, voor persoonlijk printen thuis.",
     "dollsCta": "Bekijk Dolls",

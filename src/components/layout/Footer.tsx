@@ -1,7 +1,9 @@
+import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Logo } from "./Logo";
 import { Container } from "@/components/ui/Container";
+import { TRACK_COOKIE } from "@/lib/config/track";
 
 const LEGAL_LINKS = [
   { href: "/legal/privacy", key: "legalPrivacy" },
@@ -14,6 +16,14 @@ const LEGAL_LINKS = [
 export async function Footer() {
   const year = new Date().getFullYear();
   const t = await getTranslations("footer");
+  const cookieStore = await cookies();
+  // Serious Games is the no-pink B2B track (see Button.tsx's "Alt" variants
+  // and src/app/[locale]/(site)/serious-games/page.tsx) — the footer follows
+  // the same rule via the track cookie proxy.ts sets on /serious-games visits.
+  const headingColor =
+    cookieStore.get(TRACK_COOKIE)?.value === "serious-games"
+      ? "text-brand-cyan"
+      : "text-brand-pink";
 
   return (
     <footer className="border-line bg-mist border-t">
@@ -24,7 +34,7 @@ export async function Footer() {
         </div>
 
         <div>
-          <h4 className="text-brand-pink mb-3 text-sm font-semibold">{t("shopHeading")}</h4>
+          <h4 className={`${headingColor} mb-3 text-sm font-semibold`}>{t("shopHeading")}</h4>
           <ul className="text-brand-purple space-y-2 text-sm">
             <li><Link href="/shop">{t("shopAll")}</Link></li>
             <li><Link href="/free-designs">{t("shopFree")}</Link></li>
@@ -33,7 +43,7 @@ export async function Footer() {
         </div>
 
         <div>
-          <h4 className="text-brand-pink mb-3 text-sm font-semibold">{t("legalHeading")}</h4>
+          <h4 className={`${headingColor} mb-3 text-sm font-semibold`}>{t("legalHeading")}</h4>
           <ul className="text-brand-purple space-y-2 text-sm">
             {LEGAL_LINKS.map((link) => (
               <li key={link.href}>
@@ -44,7 +54,7 @@ export async function Footer() {
         </div>
 
         <div>
-          <h4 className="text-brand-pink mb-3 text-sm font-semibold">{t("newsletterHeading")}</h4>
+          <h4 className={`${headingColor} mb-3 text-sm font-semibold`}>{t("newsletterHeading")}</h4>
           <p className="text-ink/70 mb-3 text-sm">{t("newsletterDescription")}</p>
           <div className="flex gap-2">
             <input

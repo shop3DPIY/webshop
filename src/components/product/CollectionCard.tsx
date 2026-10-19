@@ -17,17 +17,14 @@ export function CollectionCard({
   return (
     <Link
       href={`/collections/${slug}`}
-      className="group border-line hover:-translate-y-1 relative flex flex-col justify-between overflow-hidden rounded-3xl border p-6 transition-transform"
+      className={`group flex flex-col justify-between gap-6 rounded-3xl border-2 p-6 shadow-xl backdrop-blur-lg transition-colors ${classes.border} ${classes.wash} ${classes.washHover}`}
     >
-      <div
-        className={`absolute inset-0 -z-10 opacity-0 transition-opacity group-hover:opacity-100 ${classes.bgSoft}`}
-      />
       <span
-        className={`mb-6 inline-flex h-10 w-10 items-center justify-center rounded-full ${classes.bg}`}
+        className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${classes.bg}`}
         aria-hidden
       />
       <div>
-        <Heading className="font-display text-brand-purple text-xl font-semibold">
+        <Heading className={`font-display text-xl font-semibold ${classes.text}`}>
           {t("name")}
         </Heading>
         <p className="text-ink/70 mt-1 text-sm">{t("tagline")}</p>
