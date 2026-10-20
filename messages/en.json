@@ -42,6 +42,10 @@
         "name": "Tech & Electronics",
         "tagline": "Enclosures and DIY electronics projects"
       },
+      "other": {
+        "name": "Other",
+        "tagline": "Anything that doesn't fit the other collections yet"
+      },
       "serious-games": {
         "name": "Serious Games",
         "tagline": "Educational and professional serious-game designs"

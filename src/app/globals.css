@@ -50,6 +50,8 @@
   --organize-soft: #dff6e8;
   --tech-electronics: #2f8eff;
   --tech-electronics-soft: #dceaff;
+  --other: #6b7280;
+  --other-soft: #e8e9ec;
   --serious-games: #8b5cf6;
   --serious-games-soft: #eae1fc;
 }
@@ -73,6 +75,8 @@
   --organize-soft: #1b241f;
   --tech-electronics: #6a93c4;
   --tech-electronics-soft: #1b222c;
+  --other: #9ca3af;
+  --other-soft: #22252b;
   --serious-games: #9b85c9;
   --serious-games-soft: #221f2c;
 }
@@ -99,6 +103,8 @@
   --color-organize-soft: var(--organize-soft);
   --color-tech-electronics: var(--tech-electronics);
   --color-tech-electronics-soft: var(--tech-electronics-soft);
+  --color-other: var(--other);
+  --color-other-soft: var(--other-soft);
   --color-serious-games: var(--serious-games);
   --color-serious-games-soft: var(--serious-games-soft);
 

@@ -42,6 +42,10 @@
         "name": "Tech & Electronics",
         "tagline": "Behuizingen en DIY-elektronicaprojecten"
       },
+      "other": {
+        "name": "Overig",
+        "tagline": "Alles wat nog niet in de andere collecties past"
+      },
       "serious-games": {
         "name": "Serious Games",
         "tagline": "Educatieve en professionele serious-game-ontwerpen"

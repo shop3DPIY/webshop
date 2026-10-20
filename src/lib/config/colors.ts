@@ -16,6 +16,7 @@ export type CollectionSlug =
   | "ikea-hacks"
   | "organize"
   | "tech-electronics"
+  | "other"
   | "serious-games";
 
 export interface CollectionTheme {
@@ -78,6 +79,7 @@ export const COLLECTIONS: Record<CollectionSlug, CollectionTheme> = {
     colorSoft: "#FFE8DA",
     textOn: "dark",
     enabled: false,
+    track: "dolls",
   },
   "ikea-hacks": {
     slug: "ikea-hacks",
@@ -87,6 +89,7 @@ export const COLLECTIONS: Record<CollectionSlug, CollectionTheme> = {
     colorSoft: "#FFF3D6",
     textOn: "dark",
     enabled: false,
+    track: "dolls",
   },
   organize: {
     slug: "organize",
@@ -96,6 +99,7 @@ export const COLLECTIONS: Record<CollectionSlug, CollectionTheme> = {
     colorSoft: "#DFF6E8",
     textOn: "dark",
     enabled: false,
+    track: "dolls",
   },
   "tech-electronics": {
     slug: "tech-electronics",
@@ -105,6 +109,17 @@ export const COLLECTIONS: Record<CollectionSlug, CollectionTheme> = {
     colorSoft: "#DCEAFF",
     textOn: "dark",
     enabled: false,
+    track: "dolls",
+  },
+  other: {
+    slug: "other",
+    name: "Other",
+    tagline: "Anything that doesn't fit the other collections yet",
+    color: "#6B7280",
+    colorSoft: "#E8E9EC",
+    textOn: "dark",
+    enabled: false,
+    track: "dolls",
   },
   "serious-games": {
     slug: "serious-games",
@@ -191,6 +206,14 @@ export const COLLECTION_CLASSNAMES: Record<
     border: "border-tech-electronics",
     wash: "bg-tech-electronics/15",
     washHover: "hover:bg-tech-electronics/45",
+  },
+  other: {
+    bg: "bg-other",
+    bgSoft: "bg-other-soft",
+    text: "text-other",
+    border: "border-other",
+    wash: "bg-other/15",
+    washHover: "hover:bg-other/45",
   },
   "serious-games": {
     bg: "bg-serious-games",
