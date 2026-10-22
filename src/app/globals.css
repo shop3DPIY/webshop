@@ -282,10 +282,42 @@ h4 {
   font-family: var(--font-heading);
 }
 
-/* No browser focus outline after clicking a link or button. Keyboard focus
-   still gets a ring (see Button.tsx's focus-visible:ring-*). */
+/* No browser focus outline after clicking a link or button — but keyboard
+   users (:focus-visible) get a clean ring with some breathing room. Outline
+   follows each element's border-radius, so pills stay pills. */
 a:focus,
 button:focus,
-[role="button"]:focus {
+[role="button"]:focus,
+input:focus,
+select:focus,
+textarea:focus {
   outline: none;
+}
+
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 1.5px solid #ffffff;
+  outline-offset: 4px;
+  border-radius: 0.5rem;
+  /* drop-shadow (unlike box-shadow) also traces the outline itself, so
+     the white glow sits on the outside of the ring. */
+  filter: drop-shadow(0 0 6px rgb(255 255 255 / 0.85));
+}
+
+/* Elements that are already rounded keep their own shape. */
+.rounded-full:focus-visible {
+  border-radius: 9999px;
+}
+.rounded-xl:focus-visible {
+  border-radius: 1rem;
+}
+.rounded-2xl:focus-visible {
+  border-radius: 1.5rem;
+}
+.rounded-3xl:focus-visible {
+  border-radius: 2rem;
 }

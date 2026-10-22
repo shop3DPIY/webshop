@@ -17,7 +17,7 @@ export function LanguageSwitcher() {
   const pathname = usePathname();
   const router = useRouter();
   // --action follows the track (purple on the Shop, cyan on Serious Games).
-  const activeClasses = "bg-action text-on-action";
+  const activeClasses = "border border-action bg-action text-on-action";
 
   return (
     <div className="flex items-center gap-1" aria-label={t("label")}>
@@ -28,7 +28,7 @@ export function LanguageSwitcher() {
           onClick={() => router.replace(pathname, { locale: loc })}
           aria-current={loc === locale}
           className={`flex h-9 min-w-9 items-center justify-center rounded-full px-3 text-xs font-semibold transition-colors ${
-            loc === locale ? activeClasses : "text-ink hover:bg-brand-purple/10"
+            loc === locale ? activeClasses : "border border-transparent text-ink hover:border-brand-purple hover:bg-brand-purple/45 hover:text-white"
           }`}
         >
           {LABELS[loc] ?? loc.toUpperCase()}

@@ -45,7 +45,7 @@ export function TrackSwitcher() {
       href={`/${target}`}
       aria-label={label}
       title={label}
-      className="border-line bg-mist text-ink hover:bg-paper flex h-9 w-9 items-center justify-center rounded-full border transition-colors"
+      className="border-line bg-mist text-ink hover:border-brand-purple hover:bg-brand-purple/45 hover:text-white flex h-9 w-9 items-center justify-center rounded-full border transition-colors"
     >
       <SwitchIcon />
     </Link>
