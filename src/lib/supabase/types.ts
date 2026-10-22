@@ -51,7 +51,18 @@ export interface Database {
           publication_status: "draft" | "published" | "archived";
           related_product_ids: string[] | null;
           external_links: { printables?: string; makerWorld?: string } | null;
+          /** Chosen Persoonlijk price (see migration 0008) */
           price_cents: number | null;
+          complexity: "simple" | "standard" | "complex";
+          is_set: boolean;
+          part_count: number;
+          includes_step: boolean;
+          price_personal_calc_cents: number | null;
+          price_small_cents: number | null;
+          price_small_calc_cents: number | null;
+          price_unlimited_cents: number | null;
+          price_unlimited_calc_cents: number | null;
+          price_overrides: ("personal" | "small" | "unlimited")[];
           created_at: string;
           updated_at: string;
         };

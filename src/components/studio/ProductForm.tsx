@@ -1,5 +1,7 @@
 import { saveProduct } from "@/lib/studio/actions";
-import { COLLECTION_LIST } from "@/lib/config/colors";
+import { COLLECTION_LIST, type CollectionSlug } from "@/lib/config/colors";
+import type { Complexity, PriceTier, PricingSettings } from "@/lib/pricing/calculate";
+import { PricingFields } from "./PricingFields";
 
 const TRACK_GROUPS = [
   { track: "dolls" as const, label: "Dolls & Mini" },
@@ -29,13 +31,30 @@ interface ExistingProduct {
   } | null;
   download_files: { format: string; fileName: string }[];
   source_filename: string | null;
+  complexity: Complexity;
+  is_set: boolean;
+  part_count: number;
+  includes_step: boolean;
+  price_cents: number | null;
+  price_small_cents: number | null;
+  price_unlimited_cents: number | null;
+  price_overrides: PriceTier[] | null;
 }
 
 const FIELD = "border-line bg-paper w-full rounded-2xl border px-4 py-2.5 text-sm";
 const LABEL = "flex flex-col gap-1.5 text-sm font-medium";
 
-export function ProductForm({ product }: { product?: ExistingProduct }) {
+export function ProductForm({
+  product,
+  pricingSettings,
+}: {
+  product?: ExistingProduct;
+  pricingSettings: PricingSettings;
+}) {
   const p = product;
+  // Same default the Collection select shows for a new product (its first option).
+  const initialCategory = (p?.category ??
+    COLLECTION_LIST.find((c) => c.track === TRACK_GROUPS[0].track)!.slug) as CollectionSlug;
 
   return (
     <form action={saveProduct} className="flex flex-col gap-8">
@@ -66,7 +85,7 @@ export function ProductForm({ product }: { product?: ExistingProduct }) {
       <section className="grid gap-4 sm:grid-cols-3">
         <label className={LABEL}>
           Collection
-          <select name="category" defaultValue={p?.category} required className={FIELD}>
+          <select name="category" defaultValue={initialCategory} required className={FIELD}>
             {TRACK_GROUPS.map((group) => (
               <optgroup key={group.track} label={group.label}>
                 {COLLECTION_LIST.filter((c) => c.track === group.track).map((c) => (
@@ -107,6 +126,25 @@ export function ProductForm({ product }: { product?: ExistingProduct }) {
           </select>
         </label>
       </section>
+
+      <PricingFields
+        settings={pricingSettings}
+        initialCategory={initialCategory}
+        existing={
+          p && {
+            complexity: p.complexity,
+            isSet: p.is_set,
+            partCount: p.part_count,
+            includesStep: p.includes_step,
+            chosen: {
+              personal: p.price_cents,
+              small: p.price_small_cents,
+              unlimited: p.price_unlimited_cents,
+            },
+            overridden: p.price_overrides ?? [],
+          }
+        }
+      />
 
       <fieldset className="flex flex-col gap-3">
         <legend className="text-sm font-medium">Also show in</legend>

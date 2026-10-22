@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import { formatEuro } from "@/lib/pricing/calculate";
 
 export default async function StudioProductsPage() {
   const supabase = await createClient();
   const { data: products } = await supabase!
     .from("products")
-    .select("id, title, category, publication_status, version, updated_at")
+    .select("*")
     .order("updated_at", { ascending: false });
 
   return (
@@ -33,6 +34,15 @@ export default async function StudioProductsPage() {
                 <p className="text-ink/60">
                   {product.category} · v{product.version}
                 </p>
+                {product.price_cents != null && (
+                  <p className="text-ink/60 text-xs">
+                    P {formatEuro(product.price_cents)} · S{" "}
+                    {product.price_small_cents != null ? formatEuro(product.price_small_cents) : "—"} · U{" "}
+                    {product.price_unlimited_cents != null
+                      ? formatEuro(product.price_unlimited_cents)
+                      : "—"}
+                  </p>
+                )}
               </div>
               <span className="border-line rounded-full border px-3 py-1 text-xs capitalize">
                 {product.publication_status}

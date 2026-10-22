@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { ProductForm } from "@/components/studio/ProductForm";
+import { getPricingSettings } from "@/lib/pricing/settings";
 
 export default async function EditProductPage({
   params,
@@ -17,7 +18,7 @@ export default async function EditProductPage({
     <div className="flex flex-col gap-6">
       <h1 className="font-display text-2xl font-bold">Edit product</h1>
       <div className="max-w-2xl">
-        <ProductForm product={product} />
+        <ProductForm product={product} pricingSettings={await getPricingSettings()} />
       </div>
     </div>
   );

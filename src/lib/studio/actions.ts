@@ -4,6 +4,23 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { COLLECTIONS, type CollectionSlug } from "@/lib/config/colors";
 import { createAdminClient } from "@/lib/supabase/admin";
+import {
+  PRICE_TIERS,
+  calculatePrices,
+  tierCents,
+  validateSettings,
+  withDefaults,
+  type Complexity,
+  type PriceTier,
+  type PricingSettings,
+} from "@/lib/pricing/calculate";
+import {
+  COLLECTION_NAMES,
+  getPricingSettings,
+  priceColumns,
+  productPricingFromForm,
+  storedPrices,
+} from "@/lib/pricing/settings";
 import { requireAdmin } from "./guard";
 
 /**
@@ -83,7 +100,7 @@ export async function persistProduct(formData: FormData): Promise<{ id: string }
   const slug = String(formData.get("slug") ?? "") || slugify(titleInput);
 
   const existing = id
-    ? (await admin.from("products").select("download_files, images").eq("id", id).single())
+    ? (await admin.from("products").select("*").eq("id", id).single())
         .data
     : null;
 
@@ -133,6 +150,12 @@ export async function persistProduct(formData: FormData): Promise<{ id: string }
   };
 
   const category = String(formData.get("category") ?? "");
+  const pricing = productPricingFromForm(
+    formData,
+    category,
+    await getPricingSettings(),
+    existing ? storedPrices(existing) : undefined,
+  );
 
   const payload = {
     slug,
@@ -151,6 +174,7 @@ export async function persistProduct(formData: FormData): Promise<{ id: string }
     external_commerce_id: String(formData.get("externalCommerceId") ?? "") || null,
     publication_status: String(formData.get("publicationStatus") ?? "draft"),
     source_filename: String(formData.get("sourceFilename") ?? "") || null,
+    ...pricing,
     updated_at: new Date().toISOString(),
   };
 
@@ -172,4 +196,77 @@ export async function saveProduct(formData: FormData) {
   await requireAdmin();
   await persistProduct(formData);
   redirect("/studio/products");
+}
+
+/**
+ * Studio → Pricing. Takes the whole settings object (as JSON,
+ * already parsed from Dutch notation on the client), re-validates it here
+ * and stores it. Existing product prices are deliberately left alone —
+ * see applyRecalculation for that.
+ */
+export async function savePricingSettings(
+  json: string,
+): Promise<{ ok: true } | { ok: false; errors: string[] }> {
+  await requireAdmin();
+  const admin = createAdminClient();
+  if (!admin) return { ok: false, errors: ["Supabase is not configured"] };
+
+  let settings: PricingSettings;
+  try {
+    settings = withDefaults(JSON.parse(json) as Partial<PricingSettings>);
+  } catch {
+    return { ok: false, errors: ["Invalid input"] };
+  }
+  const errors = validateSettings(settings, COLLECTION_NAMES);
+  if (errors.length > 0) return { ok: false, errors };
+
+  const { error } = await admin
+    .from("pricing_settings")
+    .upsert({ id: 1, settings, updated_at: new Date().toISOString() });
+  if (error) return { ok: false, errors: [error.message] };
+
+  revalidatePath("/studio/pricing");
+  return { ok: true };
+}
+
+/**
+ * Studio → Recalculate prices: for each selected product, recalculate
+ * with the current settings and make the calculated prices the chosen
+ * ones (clearing any hand-typed overrides on that product).
+ */
+export async function applyRecalculation(formData: FormData) {
+  await requireAdmin();
+  const admin = createAdminClient();
+  if (!admin) throw new Error("Supabase admin client not configured");
+
+  const ids = formData.getAll("productId").map(String);
+  if (ids.length === 0) redirect("/studio/pricing/recalculate");
+
+  const settings = await getPricingSettings();
+  const { data: products, error } = await admin
+    .from("products")
+    .select("id, category, complexity, is_set, part_count, includes_step")
+    .in("id", ids);
+  if (error) throw error;
+
+  for (const p of products ?? []) {
+    const result = calculatePrices(settings, {
+      category: (p.category in COLLECTIONS ? p.category : "other") as CollectionSlug,
+      complexity: p.complexity as Complexity,
+      isSet: p.is_set,
+      partCount: p.part_count,
+      includesStep: p.includes_step,
+    });
+    const calc = Object.fromEntries(
+      PRICE_TIERS.map((tier) => [tier, tierCents(result, tier)]),
+    ) as Record<PriceTier, number>;
+    const { error: updateError } = await admin
+      .from("products")
+      .update({ ...priceColumns(calc, calc), updated_at: new Date().toISOString() })
+      .eq("id", p.id);
+    if (updateError) throw updateError;
+  }
+
+  revalidatePath("/studio/products");
+  redirect(`/studio/pricing/recalculate?updated=${products?.length ?? 0}`);
 }

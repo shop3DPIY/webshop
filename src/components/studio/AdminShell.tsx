@@ -4,6 +4,7 @@ import { StudioSignOutButton } from "./StudioSignOutButton";
 const NAV = [
   { href: "/studio", label: "Dashboard" },
   { href: "/studio/products", label: "Products" },
+  { href: "/studio/pricing", label: "Pricing" },
   { href: "/studio/orders", label: "Orders" },
   { href: "/studio/customers", label: "Customers" },
 ];
