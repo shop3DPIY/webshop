@@ -23,7 +23,7 @@ export function LogoImage({
         className={`dark:hidden ${className}`}
       />
       <Image
-        src="/images/logo/Logo_3dpiy_dark_sg-transparent.png"
+        src="/images/logo/Logo_3dpiy_dark_v2-transparent.png"
         alt="3DPIY"
         width={349}
         height={237}
