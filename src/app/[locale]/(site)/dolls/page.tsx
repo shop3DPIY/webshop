@@ -1,4 +1,3 @@
-import { Quicksand } from "next/font/google";
 import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
@@ -9,10 +8,7 @@ import { TrackMarker } from "@/components/system/TrackMarker";
 import { getTrackCollections, getCollection } from "@/lib/config/colors";
 import { getPublishedProducts } from "@/lib/products";
 
-const quicksand = Quicksand({ subsets: ["latin"], weight: "700" });
-
 export default async function DollsPage() {
-  const tHero = await getTranslations("dollsLanding");
   const tCollections = await getTranslations("collections");
   const tNewAndPopular = await getTranslations("newAndPopular");
   const tAbout = await getTranslations("about");
@@ -27,35 +23,10 @@ export default async function DollsPage() {
   return (
     <>
       <TrackMarker track="dolls" />
-      <section>
-        <Container className="relative flex flex-col items-center py-20 text-center sm:py-28">
-          <div className="flex max-w-4xl flex-col items-center gap-6 rounded-xl px-8 py-10 sm:px-12 glass">
-            <span className="inline-flex rounded-full border border-line bg-mist px-4 py-1.5 text-sm font-medium text-ink">
-              {tHero("eyebrow")}
-            </span>
-            <h1
-              className={`${quicksand.className} text-4xl text-ink sm:whitespace-nowrap sm:text-5xl lg:text-6xl`}
-            >
-              {tHero("titleLine1")}{" "}
-              <span className="text-ink">{tHero("titleLine2")}</span>
-            </h1>
-            <p className="max-w-xl text-lg text-ink/80">
-              {tHero("description")}
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <Button href="/shop" size="lg">
-                {tHero("cta")}
-              </Button>
-              <Button href="/free-designs" variant="secondary" size="lg">
-                {tFreeDownloads("cta")}
-              </Button>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      <section className="py-16 sm:py-24">
-        <Container panel className="flex flex-col gap-10">
+      {/* The page opens on the categories, centred in the first screen
+          (viewport minus the h-20 header). */}
+      <section className="flex min-h-[calc(100svh-5rem)] items-center py-8">
+        <Container panel className="py-0 flex flex-col gap-10">
           <SectionHeading
             eyebrow={tCollections("eyebrow")}
             title={tCollections("title")}
