@@ -25,8 +25,8 @@ export function LogoImage({
       <Image
         src="/images/logo/Logo_3dpiy_dark_sg-transparent.png"
         alt="3DPIY"
-        width={346}
-        height={228}
+        width={349}
+        height={237}
         priority={priority}
         className={`hidden dark:block ${className}`}
       />
