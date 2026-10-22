@@ -30,7 +30,7 @@ export default async function SeriousGamesPage() {
       <TrackMarker track="serious-games" />
       <section>
         <Container className="py-20 sm:py-28">
-          <div className="glass flex flex-col items-start gap-6 rounded-3xl px-8 py-10 text-left sm:px-12">
+          <div className="glass flex flex-col items-start gap-6 rounded-xl px-8 py-10 text-left sm:px-12">
             <span className="border-brand-periwinkle/40 bg-mist inline-flex rounded-full border px-4 py-1.5 text-sm font-medium text-ink">
               {tHero("eyebrow")}
             </span>
@@ -59,7 +59,7 @@ export default async function SeriousGamesPage() {
             <p className="text-ink text-sm font-medium sm:text-base">
               {tHero("licenseNote")}
             </p>
-            <Button href="/contact" variant="ghost">
+            <Button href="/contact" className="shrink-0">
               {tHero("contactSalesCta")} →
             </Button>
           </div>

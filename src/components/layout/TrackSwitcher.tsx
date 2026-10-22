@@ -1,9 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useSyncExternalStore } from "react";
-import { Link, usePathname } from "@/i18n/navigation";
-import { TRACK_COOKIE, isTrack, type Track } from "@/lib/config/track";
+import { Link } from "@/i18n/navigation";
+import { useCurrentTrack } from "@/hooks/useCurrentTrack";
 
 /**
  * Shown on every page, pointing to the *other* track. The current track
@@ -18,7 +17,14 @@ import { TRACK_COOKIE, isTrack, type Track } from "@/lib/config/track";
  * layout rendered).
  */
 const SwitchIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+  >
     <path d="M21 2v6h-6" />
     <path d="M3 12a9 9 0 0 1 15-6.7L21 8" />
     <path d="M3 22v-6h6" />
@@ -26,29 +32,13 @@ const SwitchIcon = () => (
   </svg>
 );
 
-const noSubscribe = () => () => {};
-
-function readCookieTrack(): Track | undefined {
-  const match = document.cookie.match(new RegExp(`(?:^|; )${TRACK_COOKIE}=([^;]*)`));
-  const value = match?.[1];
-  return isTrack(value) ? value : undefined;
-}
-
-function trackFromPath(pathname: string): Track | undefined {
-  if (pathname === "/dolls" || pathname.startsWith("/dolls/")) return "dolls";
-  if (pathname === "/serious-games" || pathname.startsWith("/serious-games/")) {
-    return "serious-games";
-  }
-  return undefined;
-}
-
 export function TrackSwitcher() {
   const t = useTranslations("nav");
-  const pathname = usePathname();
-  const cookieTrack = useSyncExternalStore(noSubscribe, readCookieTrack, () => undefined);
-  const current = trackFromPath(pathname) ?? cookieTrack ?? "dolls";
+  const current = useCurrentTrack() ?? "dolls";
   const target = current === "dolls" ? "serious-games" : "dolls";
-  const label = t(target === "serious-games" ? "switchToSeriousGames" : "switchToDolls");
+  const label = t(
+    target === "serious-games" ? "switchToSeriousGames" : "switchToDolls",
+  );
 
   return (
     <Link

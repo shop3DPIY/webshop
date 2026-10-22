@@ -42,7 +42,7 @@ export default function ComingSoonPage() {
             <div className="flex flex-wrap items-center justify-center gap-3">
               <a
                 href="/auth/sign-up"
-                className="bg-action text-on-action hover:bg-action-hover hover:text-on-action-hover transition-colors inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold"
+                className="border border-action bg-action text-on-action hover:border-action-hover-border hover:bg-action-hover hover:text-on-action-hover backdrop-blur-lg transition-colors inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold"
               >
                 Create account
               </a>

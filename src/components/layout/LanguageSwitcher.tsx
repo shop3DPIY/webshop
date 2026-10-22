@@ -27,7 +27,7 @@ export function LanguageSwitcher() {
           type="button"
           onClick={() => router.replace(pathname, { locale: loc })}
           aria-current={loc === locale}
-          className={`rounded-full px-2.5 py-1 text-xs font-semibold transition-colors ${
+          className={`flex h-9 min-w-9 items-center justify-center rounded-full px-3 text-xs font-semibold transition-colors ${
             loc === locale ? activeClasses : "text-ink hover:bg-brand-purple/10"
           }`}
         >

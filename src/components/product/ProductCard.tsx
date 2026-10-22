@@ -14,7 +14,7 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/product/${product.slug}`}
-      className={`group flex flex-col overflow-hidden rounded-3xl glass ${classes.border}`}
+      className={`group flex flex-col overflow-hidden rounded-3xl glass transition-colors ${classes.border} ${classes.wash} ${classes.washHover}`}
     >
       <div className={`relative aspect-square border-b ${classes.border} ${classes.wash}`}>
         {cover && (

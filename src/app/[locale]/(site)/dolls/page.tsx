@@ -29,7 +29,7 @@ export default async function DollsPage() {
       <TrackMarker track="dolls" />
       <section>
         <Container className="relative flex flex-col items-center py-20 text-center sm:py-28">
-          <div className="flex max-w-4xl flex-col items-center gap-6 rounded-3xl px-8 py-10 sm:px-12 glass">
+          <div className="flex max-w-4xl flex-col items-center gap-6 rounded-xl px-8 py-10 sm:px-12 glass">
             <span className="inline-flex rounded-full border border-line bg-mist px-4 py-1.5 text-sm font-medium text-ink">
               {tHero("eyebrow")}
             </span>
@@ -102,7 +102,7 @@ export default async function DollsPage() {
             <p className="text-ink/70 mt-2 text-sm">
               {tFreeDownloads("description")}
             </p>
-            <Button href="/free-designs" variant="secondary" className="mt-4">
+            <Button href="/free-designs" className="mt-4">
               {tFreeDownloads("cta")}
             </Button>
           </div>

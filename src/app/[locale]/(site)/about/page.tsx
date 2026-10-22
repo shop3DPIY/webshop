@@ -1,9 +1,7 @@
-import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
-import { TRACK_COOKIE } from "@/lib/config/track";
 
 export async function generateMetadata() {
   const t = await getTranslations("aboutPage");
@@ -16,49 +14,37 @@ export async function generateMetadata() {
 export default async function AboutPage() {
   const t = await getTranslations("aboutPage");
   const values = t.raw("values") as string[];
-  const cookieStore = await cookies();
-  // Same copy on both tracks, but the Serious Games "no pink" rule (see
-  // Button.tsx's "Alt" variants) still applies to the styling here.
-  const isSeriousGames = cookieStore.get(TRACK_COOKIE)?.value === "serious-games";
-  const tilesClasses = isSeriousGames
-    ? "border-brand-purple/40 bg-brand-purple/10"
-    : "border-brand-cyan/40 bg-brand-cyan/10";
-  const valuesWashClasses = isSeriousGames ? "bg-brand-cyan/10" : "bg-brand-cyan/5";
 
   return (
     <Container panel className="flex flex-col gap-14 py-16 sm:py-24">
-      <SectionHeading
-        as="h1"
-        eyebrow={t("eyebrow")}
-        title={t("title")}
-        tone={isSeriousGames ? "purple" : "pink"}
-      />
+      <SectionHeading as="h1" eyebrow={t("eyebrow")} title={t("title")} />
 
       <div className="grid gap-10 lg:grid-cols-2">
         <div>
           <h2 className="font-display text-ink text-xl font-semibold">
             {t("introTitle")}
           </h2>
-          <p className="text-ink/70 mt-3 text-base sm:text-lg">{t("introBody")}</p>
+          <p className="text-ink/70 mt-3 text-base sm:text-lg">
+            {t("introBody")}
+          </p>
         </div>
         <div>
           <h2 className="font-display text-ink text-xl font-semibold">
             {t("makerTitle")}
           </h2>
-          <p className="text-ink/70 mt-3 text-base sm:text-lg">{t("makerBody")}</p>
+          <p className="text-ink/70 mt-3 text-base sm:text-lg">
+            {t("makerBody")}
+          </p>
         </div>
       </div>
 
-      <div className={`${valuesWashClasses} rounded-3xl p-8 sm:p-10`}>
+      <div className="glass rounded-2xl p-8 sm:p-10">
         <h2 className="font-display text-ink text-xl font-semibold">
           {t("valuesTitle")}
         </h2>
         <ul className="mt-5 grid gap-4 sm:grid-cols-3">
           {values.map((value) => (
-            <li
-              key={value}
-              className={`rounded-2xl border p-5 text-sm shadow-xl backdrop-blur-lg ${tilesClasses}`}
-            >
+            <li key={value} className="rounded-2xl border border-brand-purple bg-brand-purple/15 p-5 text-sm shadow-xl backdrop-blur-lg">
               {value}
             </li>
           ))}
@@ -66,7 +52,7 @@ export default async function AboutPage() {
       </div>
 
       <div>
-        <Button href="/contact" size="lg" variant={isSeriousGames ? "accentAlt" : "primary"}>
+        <Button href="/contact" size="lg">
           {t("cta")}
         </Button>
       </div>

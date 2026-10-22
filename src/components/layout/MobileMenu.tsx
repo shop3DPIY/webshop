@@ -2,17 +2,16 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Link, usePathname } from "@/i18n/navigation";
+import { Link } from "@/i18n/navigation";
+import { useCurrentTrack } from "@/hooks/useCurrentTrack";
 
 const NAV_KEYS = ["shop", "business", "about"] as const;
 
 export function MobileMenu() {
   const t = useTranslations("nav");
   const [open, setOpen] = useState(false);
-  const pathname = usePathname();
-  // Business/commercial licensing only exists for Serious Games today — see
-  // src/app/[locale]/(site)/business/page.tsx's Dolls placeholder.
-  const isDolls = pathname === "/dolls" || pathname.startsWith("/dolls/");
+  // Business/commercial licensing only exists for Serious Games.
+  const isSeriousGames = useCurrentTrack() === "serious-games";
 
   return (
     <div className="md:hidden">
@@ -24,11 +23,25 @@ export function MobileMenu() {
         className="border-line text-ink flex h-9 w-9 items-center justify-center rounded-full border"
       >
         {open ? (
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
             <path d="M18 6 6 18M6 6l12 12" />
           </svg>
         ) : (
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
             <path d="M3 6h18M3 12h18M3 18h18" />
           </svg>
         )}
@@ -37,16 +50,18 @@ export function MobileMenu() {
       {open && (
         <div className="border-line bg-paper absolute inset-x-0 top-16 z-30 border-b p-4 shadow-lg">
           <nav className="flex flex-col gap-1">
-            {NAV_KEYS.filter((key) => key !== "business" || !isDolls).map((key) => (
-              <Link
-                key={key}
-                href={`/${key}`}
-                onClick={() => setOpen(false)}
-                className="text-ink hover:bg-brand-purple/10 rounded-xl px-3 py-3 text-base font-medium"
-              >
-                {t(key)}
-              </Link>
-            ))}
+            {NAV_KEYS.filter((key) => key !== "business" || isSeriousGames).map(
+              (key) => (
+                <Link
+                  key={key}
+                  href={`/${key}`}
+                  onClick={() => setOpen(false)}
+                  className="text-ink hover:bg-brand-purple/10 rounded-xl px-3 py-3 text-base font-medium"
+                >
+                  {t(key)}
+                </Link>
+              ),
+            )}
             <Link
               href="/contact"
               onClick={() => setOpen(false)}

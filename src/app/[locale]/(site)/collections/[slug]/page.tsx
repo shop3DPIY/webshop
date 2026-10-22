@@ -53,11 +53,11 @@ export default async function CollectionPage({
       <section>
         <Container className="pt-16 sm:pt-20">
           <div
-            className={`glass flex flex-col gap-4 rounded-3xl px-8 py-10 sm:px-12 ${classes.border}`}
+            className={`glass flex flex-col gap-4 rounded-xl px-8 py-10 sm:px-12 ${classes.border}`}
           >
             <Link
               href="/shop"
-              className="text-ink hover:text-ink/70 text-sm font-medium"
+              className="text-ink hover:text-brand-purple text-sm font-medium"
             >
               ← {tPage("backToShop")}
             </Link>

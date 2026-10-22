@@ -1,9 +1,8 @@
-import { cookies } from "next/headers";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { BusinessNavLink } from "./BusinessNavLink";
 import { Logo } from "./Logo";
 import { Container } from "@/components/ui/Container";
-import { TRACK_COOKIE } from "@/lib/config/track";
 
 const LEGAL_LINKS = [
   { href: "/legal/privacy", key: "legalPrivacy" },
@@ -16,14 +15,9 @@ const LEGAL_LINKS = [
 export async function Footer() {
   const year = new Date().getFullYear();
   const t = await getTranslations("footer");
-  const cookieStore = await cookies();
-  // Serious Games is the no-pink B2B track (see Button.tsx's "Alt" variants
-  // and src/app/[locale]/(site)/serious-games/page.tsx) — the footer follows
-  // the same rule via the track cookie proxy.ts sets on /serious-games visits.
-  const headingColor =
-    cookieStore.get(TRACK_COOKIE)?.value === "serious-games"
-      ? "text-brand-cyan"
-      : "text-ink";
+  // Purple on the Shop, cyan on Serious Games — follows the track via
+  // the --heading token (globals.css), so it stays right on client-side nav.
+  const headingColor = "text-heading";
 
   return (
     <footer className="border-line bg-paper border-t shadow-xl backdrop-blur-lg">
@@ -34,16 +28,24 @@ export async function Footer() {
         </div>
 
         <div>
-          <h4 className={`${headingColor} mb-3 text-sm font-semibold`}>{t("shopHeading")}</h4>
+          <h4 className={`${headingColor} mb-3 text-sm font-semibold`}>
+            {t("shopHeading")}
+          </h4>
           <ul className="text-ink space-y-2 text-sm">
-            <li><Link href="/shop">{t("shopAll")}</Link></li>
-            <li><Link href="/free-designs">{t("shopFree")}</Link></li>
-            <li><Link href="/business">{t("shopBusiness")}</Link></li>
+            <li>
+              <Link href="/shop">{t("shopAll")}</Link>
+            </li>
+            <li>
+              <Link href="/free-designs">{t("shopFree")}</Link>
+            </li>
+            <BusinessNavLink asListItem label={t("shopBusiness")} />
           </ul>
         </div>
 
         <div>
-          <h4 className={`${headingColor} mb-3 text-sm font-semibold`}>{t("legalHeading")}</h4>
+          <h4 className={`${headingColor} mb-3 text-sm font-semibold`}>
+            {t("legalHeading")}
+          </h4>
           <ul className="text-ink space-y-2 text-sm">
             {LEGAL_LINKS.map((link) => (
               <li key={link.href}>
@@ -54,8 +56,12 @@ export async function Footer() {
         </div>
 
         <div>
-          <h4 className={`${headingColor} mb-3 text-sm font-semibold`}>{t("newsletterHeading")}</h4>
-          <p className="text-ink/70 mb-3 text-sm">{t("newsletterDescription")}</p>
+          <h4 className={`${headingColor} mb-3 text-sm font-semibold`}>
+            {t("newsletterHeading")}
+          </h4>
+          <p className="text-ink/70 mb-3 text-sm">
+            {t("newsletterDescription")}
+          </p>
           <div className="flex gap-2">
             <input
               type="email"
@@ -68,7 +74,9 @@ export async function Footer() {
       </Container>
 
       <Container className="border-line text-ink/60 flex flex-col gap-2 border-t py-6 text-xs sm:flex-row sm:justify-between">
-        <span>© {year} {t("copyright")}</span>
+        <span>
+          © {year} {t("copyright")}
+        </span>
         <span>{t("digitalOnly")}</span>
       </Container>
     </footer>

@@ -94,6 +94,8 @@
   --color-on-action: var(--action-text);
   --color-action-hover: var(--action-hover);
   --color-on-action-hover: var(--action-hover-text);
+  --color-action-hover-border: var(--action-hover-border);
+  --color-heading: var(--heading);
   --color-paper: var(--paper);
   --color-mist: var(--mist);
   --color-line: var(--line);
@@ -147,8 +149,8 @@ body {
  *   banner — Serious Games: the banner gradient (public/images/banner/
  *            Banner_3DPIY.png), mirrored: cyan top-left, purple bottom-right
  *
- * --action is the primary button color: purple on the Shop side, cyan on
- * Serious Games.
+ * --action is the primary button color: purple everywhere; on hover it
+ * turns purple glass on the Shop side and cyan on Serious Games.
  */
 :root {
   --backdrop-banner: linear-gradient(
@@ -161,35 +163,77 @@ body {
     radial-gradient(60% 55% at 0% 0%, rgb(255 79 160 / 0.5), transparent 75%),
     radial-gradient(50% 50% at 45% 0%, rgb(255 122 61 / 0.4), transparent 75%),
     radial-gradient(50% 50% at 90% 10%, rgb(255 201 61 / 0.5), transparent 75%),
-    radial-gradient(55% 55% at 100% 60%, rgb(47 142 255 / 0.4), transparent 75%),
+    radial-gradient(
+      55% 55% at 100% 60%,
+      rgb(47 142 255 / 0.4),
+      transparent 75%
+    ),
     radial-gradient(60% 55% at 0% 100%, rgb(47 191 113 / 0.4), transparent 75%),
-    radial-gradient(60% 60% at 65% 100%, rgb(139 92 246 / 0.4), transparent 75%),
-    radial-gradient(65% 55% at 50% 50%, rgb(186 104 255 / 0.18), transparent 80%),
+    radial-gradient(
+      60% 60% at 65% 100%,
+      rgb(139 92 246 / 0.4),
+      transparent 75%
+    ),
+    radial-gradient(
+      65% 55% at 50% 50%,
+      rgb(186 104 255 / 0.18),
+      transparent 80%
+    ),
     linear-gradient(135deg, #fde6f2 0%, #f1e8ff 50%, #e4efff 100%);
   --backdrop-glow:
     radial-gradient(60% 55% at 0% 0%, rgb(255 79 160 / 0.85), transparent 75%),
     radial-gradient(50% 50% at 45% 0%, rgb(255 122 61 / 0.75), transparent 75%),
-    radial-gradient(50% 50% at 90% 10%, rgb(255 201 61 / 0.85), transparent 75%),
-    radial-gradient(55% 55% at 100% 60%, rgb(47 142 255 / 0.75), transparent 75%),
-    radial-gradient(60% 55% at 0% 100%, rgb(47 191 113 / 0.75), transparent 75%),
-    radial-gradient(60% 60% at 65% 100%, rgb(139 92 246 / 0.75), transparent 75%),
-    radial-gradient(65% 55% at 50% 50%, rgb(186 104 255 / 0.4), transparent 80%),
-    radial-gradient(45% 40% at 30% 40%, rgb(255 79 160 / 0.28), transparent 80%),
+    radial-gradient(
+      50% 50% at 90% 10%,
+      rgb(255 201 61 / 0.85),
+      transparent 75%
+    ),
+    radial-gradient(
+      55% 55% at 100% 60%,
+      rgb(47 142 255 / 0.75),
+      transparent 75%
+    ),
+    radial-gradient(
+      60% 55% at 0% 100%,
+      rgb(47 191 113 / 0.75),
+      transparent 75%
+    ),
+    radial-gradient(
+      60% 60% at 65% 100%,
+      rgb(139 92 246 / 0.75),
+      transparent 75%
+    ),
+    radial-gradient(
+      65% 55% at 50% 50%,
+      rgb(186 104 255 / 0.4),
+      transparent 80%
+    ),
+    radial-gradient(
+      45% 40% at 30% 40%,
+      rgb(255 79 160 / 0.28),
+      transparent 80%
+    ),
     linear-gradient(135deg, #f8b8da 0%, #d9bfff 50%, #b2d0ff 100%);
   --backdrop: var(--backdrop-glow);
 
   --action: #8c52ff;
   --action-text: #ffffff;
-  --action-hover: #6f35e8;
+  /* Hover = purple glass, like the purple glass tiles */
+  --action-hover: rgb(140 82 255 / 0.45);
+  --action-hover-border: #8c52ff;
   --action-hover-text: #ffffff;
+  /* Accent text (footer headings, bullets): purple here, cyan on SG */
+  --heading: #8c52ff;
 }
 
 :root[data-track="serious-games"]:not(:has([data-track-page="dolls"])),
 :root:has([data-track-page="serious-games"]) {
   --backdrop: var(--backdrop-banner);
-  --action: #5ce1e6;
-  --action-text: #14121a;
-  --action-hover: #8c52ff;
+  /* Serious Games: purple buttons that turn cyan on hover */
+  --action: #8c52ff;
+  --action-text: #ffffff;
+  --action-hover: #5ce1e6;
+  --action-hover-border: #5ce1e6;
   --action-hover-text: #ffffff;
 }
 
@@ -210,8 +254,15 @@ body::before {
 @utility glass {
   border-width: 1px;
   border-color: var(--line);
-  background-color: var(--paper);
+  background-color: var(--glass-fill, var(--paper));
   @apply shadow-xl backdrop-blur-lg;
+}
+
+/* Glass inside glass (a tile on a panel) is clearer, so the white doesn't
+   stack up. Only the fallback fill changes — tiles with their own
+   bg-* class (collection washes, hovers) keep it. */
+.glass .glass {
+  --glass-fill: rgb(255 255 255 / 0.06);
 }
 
 /* Native dropdown lists render on an opaque light surface. */
@@ -229,4 +280,12 @@ h2,
 h3,
 h4 {
   font-family: var(--font-heading);
+}
+
+/* No browser focus outline after clicking a link or button. Keyboard focus
+   still gets a ring (see Button.tsx's focus-visible:ring-*). */
+a:focus,
+button:focus,
+[role="button"]:focus {
+  outline: none;
 }

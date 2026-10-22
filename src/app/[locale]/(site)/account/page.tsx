@@ -84,7 +84,7 @@ export default async function AccountPage() {
               outside the [locale] route tree entirely. */}
           <a
             href="/studio"
-            className="bg-action text-on-action hover:bg-action-hover hover:text-on-action-hover inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold"
+            className="border border-action bg-action text-on-action hover:border-action-hover-border hover:bg-action-hover hover:text-on-action-hover backdrop-blur-lg inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold"
           >
             {t("adminBannerCta")}
           </a>

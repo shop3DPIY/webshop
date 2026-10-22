@@ -38,7 +38,7 @@ export default async function TrackChooserPage({
   return (
     <div className="relative h-screen w-full overflow-hidden">
       <div className="relative flex h-full w-full flex-col items-center justify-center px-6 py-8">
-        <div className="flex w-full max-w-4xl flex-col items-center gap-6 rounded-[2.5rem] p-8 text-center sm:p-10 glass">
+        <div className="flex w-full max-w-4xl flex-col items-center gap-6 rounded-xl p-8 text-center sm:p-10 glass">
           <div className="flex flex-col items-center gap-3">
             <Image
               src="/images/logo/Logo_3DPIY-transparent.png"
@@ -51,7 +51,7 @@ export default async function TrackChooserPage({
             <h1 className="font-display text-xl font-bold text-ink sm:text-2xl">
               {t("title")}
             </h1>
-            <p className="max-w-md text-sm text-ink/80 sm:text-base">
+            <p className="text-sm text-ink/80 sm:text-base">
               {t("description")}
             </p>
           </div>
@@ -59,7 +59,7 @@ export default async function TrackChooserPage({
           <div className="grid w-full gap-5 sm:grid-cols-3">
             <Link
               href="/dolls"
-              className="group sm:col-span-2 border-brand-cyan hover:bg-brand-cyan/45 bg-brand-cyan/15 flex flex-col items-start gap-3 rounded-3xl border p-8 text-left shadow-xl backdrop-blur-lg transition-colors"
+              className="group glass hover:bg-white/25 flex flex-col items-start gap-3 rounded-3xl p-8 text-left transition-colors sm:col-span-2"
             >
               <h2 className="font-display text-2xl font-semibold text-ink">
                 {t("dollsTitle")}
@@ -69,7 +69,11 @@ export default async function TrackChooserPage({
                 {shopCollections.map((c) => (
                   <li
                     key={c.slug}
-                    className="flex min-w-0 items-center gap-2 rounded-xl bg-mist px-3 py-2 text-xs font-medium text-ink"
+                    className="flex min-w-0 items-center gap-2 rounded-xl border px-3 py-2 text-xs font-medium text-ink backdrop-blur-lg"
+                    style={{
+                      borderColor: c.color,
+                      backgroundColor: `${c.color}33`,
+                    }}
                   >
                     <span
                       className="h-2.5 w-2.5 shrink-0 rounded-full"
@@ -82,23 +86,22 @@ export default async function TrackChooserPage({
                   </li>
                 ))}
               </ul>
-              <span className="mt-2 text-sm font-semibold text-ink">
+              <span className="mt-auto text-sm font-semibold text-ink">
                 {t("dollsCta")} →
               </span>
             </Link>
 
             <Link
               href="/serious-games"
-              className="group border-brand-purple hover:bg-brand-purple/45 bg-brand-purple/15 flex flex-col items-start gap-3 rounded-3xl border p-8 text-left shadow-xl backdrop-blur-lg transition-colors"
+              className="group border-brand-purple bg-brand-purple/15 hover:bg-brand-purple/45 flex flex-col items-start gap-3 rounded-3xl border p-8 text-left shadow-xl backdrop-blur-lg transition-colors"
             >
-              <span className="bg-brand-purple inline-flex h-10 w-10 items-center justify-center rounded-full" />
               <h2 className="font-display text-2xl font-semibold text-ink">
                 {t("seriousGamesTitle")}
               </h2>
               <p className="text-sm text-ink/80">
                 {t("seriousGamesDescription")}
               </p>
-              <span className="mt-2 text-sm font-semibold text-ink">
+              <span className="mt-auto text-sm font-semibold text-ink">
                 {t("seriousGamesCta")} →
               </span>
             </Link>

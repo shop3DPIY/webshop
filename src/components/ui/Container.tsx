@@ -28,7 +28,7 @@ export function Container({
 
   return (
     <div className={`${BASE} ${outer || "py-8 sm:py-12"}`}>
-      <div className={`glass rounded-3xl p-6 sm:p-10 ${inner}`}>{children}</div>
+      <div className={`glass relative rounded-xl p-6 sm:p-10 ${inner}`}>{children}</div>
     </div>
   );
 }

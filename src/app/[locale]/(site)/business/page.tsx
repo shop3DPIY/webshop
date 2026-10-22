@@ -24,39 +24,55 @@ export default async function BusinessPage() {
   // landing page) — Dolls gets a placeholder until that's built out.
   if (isDolls) {
     return (
-      <Container panel className="flex flex-col items-start gap-4 py-16 text-left sm:py-24">
+      <Container
+        panel
+        className="flex flex-col items-start gap-4 py-16 text-left sm:py-24"
+      >
         <SectionHeading
           as="h1"
           eyebrow={t("dollsComingSoonEyebrow")}
           title={t("dollsComingSoonTitle")}
           description={t("dollsComingSoonBody")}
         />
-        <Button href="/contact" size="lg">{t("cta")}</Button>
+        <Button href="/contact" size="lg">
+          {t("cta")}
+        </Button>
       </Container>
     );
   }
 
   return (
     <Container panel className="flex flex-col gap-12 py-16 sm:py-24">
-      <SectionHeading as="h1" eyebrow={t("eyebrow")} title={t("title")} description={t("intro")} />
+      <SectionHeading
+        as="h1"
+        eyebrow={t("eyebrow")}
+        title={t("title")}
+        description={t("intro")}
+      />
 
       <div className="grid gap-8 lg:grid-cols-2">
         <div className="rounded-3xl p-8 glass">
           <h2 className="font-display text-ink text-xl font-semibold">
             {t("licensingTitle")}
           </h2>
-          <p className="text-ink/70 mt-3 text-sm sm:text-base">{t("licensingBody")}</p>
+          <p className="text-ink/70 mt-3 text-sm sm:text-base">
+            {t("licensingBody")}
+          </p>
         </div>
 
         <div className="rounded-3xl p-8 glass">
           <h2 className="font-display text-ink text-xl font-semibold">
             {t("commissionsTitle")}
           </h2>
-          <p className="text-ink/70 mt-3 text-sm sm:text-base">{t("commissionsBody")}</p>
+          <p className="text-ink/70 mt-3 text-sm sm:text-base">
+            {t("commissionsBody")}
+          </p>
           <ul className="text-ink/70 mt-4 space-y-2 text-sm">
             {bullets.map((bullet) => (
               <li key={bullet} className="flex gap-2">
-                <span className="text-brand-cyan" aria-hidden>•</span>
+                <span className="text-heading" aria-hidden>
+                  •
+                </span>
                 {bullet}
               </li>
             ))}
@@ -64,10 +80,16 @@ export default async function BusinessPage() {
         </div>
       </div>
 
-      <div className="flex flex-col items-start gap-3">
-        <Button href="/contact" size="lg">{t("cta")}</Button>
-        <p className="text-ink/60 text-xs">{t("legalNotice")}</p>
+      <div>
+        <Button href="/contact" size="lg">
+          {t("cta")}
+        </Button>
       </div>
+      {/* Pinned to the panel's bottom-right corner on wider screens, out of
+          the flow so the button's spacing doesn't depend on it. */}
+      <p className="text-ink/60 text-xs sm:absolute sm:right-6 sm:bottom-4 sm:whitespace-nowrap">
+        {t("legalNotice")}
+      </p>
     </Container>
   );
 }

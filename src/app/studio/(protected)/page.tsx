@@ -43,7 +43,7 @@ export default async function StudioDashboardPage() {
 
       <Link
         href="/studio/products/new"
-        className="bg-action text-on-action hover:bg-action-hover hover:text-on-action-hover transition-colors inline-flex w-fit items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold"
+        className="border border-action bg-action text-on-action hover:border-action-hover-border hover:bg-action-hover hover:text-on-action-hover backdrop-blur-lg transition-colors inline-flex w-fit items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold"
       >
         + New product
       </Link>
