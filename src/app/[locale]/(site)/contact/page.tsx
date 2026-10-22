@@ -17,7 +17,7 @@ export default async function ContactPage() {
   const t = await getTranslations("contact");
 
   return (
-    <Container className="flex flex-col gap-10 py-16 sm:py-24">
+    <Container panel className="flex flex-col gap-10 py-16 sm:py-24">
       <SectionHeading as="h1" eyebrow={t("eyebrow")} title={t("title")} description={t("description")} />
 
       <div className="max-w-xl">

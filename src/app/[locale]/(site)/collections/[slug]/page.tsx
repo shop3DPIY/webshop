@@ -1,3 +1,4 @@
+import { TrackMarker } from "@/components/system/TrackMarker";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/ui/Container";
@@ -48,6 +49,7 @@ export default async function CollectionPage({
 
   return (
     <>
+      <TrackMarker track={COLLECTIONS[slug].track} />
       <section>
         <Container className="pt-16 sm:pt-20">
           <div
@@ -73,7 +75,7 @@ export default async function CollectionPage({
         </Container>
       </section>
 
-      <Container className="py-16 sm:py-24">
+      <Container panel className="py-16 sm:py-24">
         {products.length > 0 ? (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {products.map((product) => (

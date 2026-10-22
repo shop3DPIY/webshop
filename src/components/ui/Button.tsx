@@ -8,7 +8,7 @@ const base =
   "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-purple focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-brand-cyan text-night hover:bg-brand-purple hover:text-white",
+  primary: "bg-action text-on-action hover:bg-action-hover hover:text-on-action-hover",
   secondary:
     "bg-paper text-ink border border-white hover:bg-brand-periwinkle hover:text-white hover:border-brand-cyan",
   ghost: "bg-transparent text-ink hover:bg-brand-purple/10",

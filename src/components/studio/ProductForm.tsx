@@ -294,7 +294,7 @@ export function ProductForm({ product }: { product?: ExistingProduct }) {
 
       <button
         type="submit"
-        className="bg-brand-cyan text-night hover:bg-brand-purple hover:text-white transition-colors mt-4 w-fit rounded-full px-6 py-3 text-sm font-semibold"
+        className="bg-action text-on-action hover:bg-action-hover hover:text-on-action-hover transition-colors mt-4 w-fit rounded-full px-6 py-3 text-sm font-semibold"
       >
         {p ? "Save changes" : "Create product"}
       </button>

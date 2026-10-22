@@ -90,6 +90,10 @@
 @theme inline {
   --color-ink: var(--ink);
   --color-night: var(--night);
+  --color-action: var(--action);
+  --color-on-action: var(--action-text);
+  --color-action-hover: var(--action-hover);
+  --color-on-action-hover: var(--action-hover-text);
   --color-paper: var(--paper);
   --color-mist: var(--mist);
   --color-line: var(--line);
@@ -132,62 +136,61 @@ body {
 /*
  * Site backdrop — a fixed layer behind everything (a pseudo-element
  * instead of background-attachment: fixed, which iOS Safari ignores).
+ * Each track has its own, picked from <html data-track> (set from the
+ * track cookie in src/app/[locale]/layout.tsx), or from a page's own
+ * <TrackMarker> when it knows its track (first visit, before the cookie):
  *
- * Several candidates live side by side while the look is being decided;
- * <html data-bg="…"> picks one (see BackdropPicker.tsx, dev only). The
- * bare :root value is what production shows.
+ *   glow   — the 3DPIY Shop and everything outside a track: bright glows
+ *            of every collection color over a pink → lilac → blue base.
+ *            (glow-light is a much paler try-out; white text doesn't read
+ *            on it, so it would need dark text — kept for reference.)
+ *   banner — Serious Games: the banner gradient (public/images/banner/
+ *            Banner_3DPIY.png), mirrored: cyan top-left, purple bottom-right
  *
- *   banner   — the original purple → cyan banner gradient (Banner_3DPIY.png)
- *   night    — deep indigo with soft purple/cyan/pink glows
- *   graphite — neutral warm charcoal; no hue of its own, so every
- *              collection color reads true
- *   spectrum — charcoal with faint glows in the collection colors
- *              themselves (pink, orange, yellow, green, blue)
- *   plum     — deep warm aubergine; sits well with pink/orange/yellow
- *   slate    — cool blue-grey, calm and neutral-leaning
+ * --action is the primary button color: purple on the Shop side, cyan on
+ * Serious Games.
  */
 :root {
-  --backdrop-banner: linear-gradient(135deg, #8c52ff 0%, #739df3 50%, #5ce1e6 100%);
-  --backdrop-night:
-    radial-gradient(60% 50% at 10% 0%, rgb(140 82 255 / 0.55), transparent 70%),
-    radial-gradient(50% 45% at 100% 100%, rgb(92 225 230 / 0.35), transparent 70%),
-    radial-gradient(35% 30% at 90% 15%, rgb(255 102 196 / 0.25), transparent 70%),
-    linear-gradient(160deg, #1b1438 0%, #120f26 55%, #0d1a2b 100%);
-  --backdrop-graphite:
-    radial-gradient(70% 60% at 50% 0%, rgb(255 255 255 / 0.06), transparent 70%),
-    linear-gradient(160deg, #2a2730 0%, #1d1b22 60%, #17161b 100%);
-  --backdrop-spectrum:
-    radial-gradient(35% 35% at 0% 10%, rgb(255 79 160 / 0.35), transparent 70%),
-    radial-gradient(30% 30% at 35% 0%, rgb(255 122 61 / 0.25), transparent 70%),
-    radial-gradient(30% 30% at 70% 5%, rgb(255 201 61 / 0.2), transparent 70%),
-    radial-gradient(35% 35% at 100% 45%, rgb(47 142 255 / 0.3), transparent 70%),
-    radial-gradient(40% 35% at 10% 100%, rgb(47 191 113 / 0.25), transparent 70%),
-    radial-gradient(40% 40% at 85% 100%, rgb(139 92 246 / 0.3), transparent 70%),
-    linear-gradient(160deg, #211f27 0%, #1a1820 100%);
-  --backdrop-plum:
-    radial-gradient(55% 45% at 0% 0%, rgb(255 79 160 / 0.25), transparent 70%),
-    radial-gradient(50% 45% at 100% 100%, rgb(255 122 61 / 0.18), transparent 70%),
-    linear-gradient(160deg, #3a1d3a 0%, #2a1630 55%, #1f1428 100%);
-  --backdrop-slate:
-    radial-gradient(60% 50% at 100% 0%, rgb(255 255 255 / 0.07), transparent 70%),
-    linear-gradient(160deg, #3a4354 0%, #2c3443 55%, #232a37 100%);
-  --backdrop: var(--backdrop-banner);
+  --backdrop-banner: linear-gradient(
+    135deg,
+    #5ce1e6 0%,
+    #739df3 50%,
+    #8c52ff 100%
+  );
+  --backdrop-glow-light:
+    radial-gradient(60% 55% at 0% 0%, rgb(255 79 160 / 0.5), transparent 75%),
+    radial-gradient(50% 50% at 45% 0%, rgb(255 122 61 / 0.4), transparent 75%),
+    radial-gradient(50% 50% at 90% 10%, rgb(255 201 61 / 0.5), transparent 75%),
+    radial-gradient(55% 55% at 100% 60%, rgb(47 142 255 / 0.4), transparent 75%),
+    radial-gradient(60% 55% at 0% 100%, rgb(47 191 113 / 0.4), transparent 75%),
+    radial-gradient(60% 60% at 65% 100%, rgb(139 92 246 / 0.4), transparent 75%),
+    radial-gradient(65% 55% at 50% 50%, rgb(186 104 255 / 0.18), transparent 80%),
+    linear-gradient(135deg, #fde6f2 0%, #f1e8ff 50%, #e4efff 100%);
+  --backdrop-glow:
+    radial-gradient(60% 55% at 0% 0%, rgb(255 79 160 / 0.85), transparent 75%),
+    radial-gradient(50% 50% at 45% 0%, rgb(255 122 61 / 0.75), transparent 75%),
+    radial-gradient(50% 50% at 90% 10%, rgb(255 201 61 / 0.85), transparent 75%),
+    radial-gradient(55% 55% at 100% 60%, rgb(47 142 255 / 0.75), transparent 75%),
+    radial-gradient(60% 55% at 0% 100%, rgb(47 191 113 / 0.75), transparent 75%),
+    radial-gradient(60% 60% at 65% 100%, rgb(139 92 246 / 0.75), transparent 75%),
+    radial-gradient(65% 55% at 50% 50%, rgb(186 104 255 / 0.4), transparent 80%),
+    radial-gradient(45% 40% at 30% 40%, rgb(255 79 160 / 0.28), transparent 80%),
+    linear-gradient(135deg, #f8b8da 0%, #d9bfff 50%, #b2d0ff 100%);
+  --backdrop: var(--backdrop-glow);
+
+  --action: #8c52ff;
+  --action-text: #ffffff;
+  --action-hover: #6f35e8;
+  --action-hover-text: #ffffff;
 }
 
-:root[data-bg="night"] {
-  --backdrop: var(--backdrop-night);
-}
-:root[data-bg="graphite"] {
-  --backdrop: var(--backdrop-graphite);
-}
-:root[data-bg="spectrum"] {
-  --backdrop: var(--backdrop-spectrum);
-}
-:root[data-bg="plum"] {
-  --backdrop: var(--backdrop-plum);
-}
-:root[data-bg="slate"] {
-  --backdrop: var(--backdrop-slate);
+:root[data-track="serious-games"]:not(:has([data-track-page="dolls"])),
+:root:has([data-track-page="serious-games"]) {
+  --backdrop: var(--backdrop-banner);
+  --action: #5ce1e6;
+  --action-text: #14121a;
+  --action-hover: #8c52ff;
+  --action-hover-text: #ffffff;
 }
 
 body::before {
@@ -200,8 +203,7 @@ body::before {
 
 .dark body::before {
   background:
-    linear-gradient(rgb(0 0 0 / 0.35), rgb(0 0 0 / 0.35)),
-    var(--backdrop);
+    linear-gradient(rgb(0 0 0 / 0.35), rgb(0 0 0 / 0.35)), var(--backdrop);
 }
 
 /* The start screen's panel treatment — use for every panel, card and tile. */
@@ -219,7 +221,7 @@ optgroup {
 }
 
 ::placeholder {
-  color: rgb(255 255 255 / 0.6);
+  color: color-mix(in srgb, var(--ink) 55%, transparent);
 }
 
 h1,

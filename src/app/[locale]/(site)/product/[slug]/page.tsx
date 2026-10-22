@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { SpecList } from "@/components/product/SpecList";
 import { ProductCard } from "@/components/product/ProductCard";
 import { Link } from "@/i18n/navigation";
+import { TrackMarker } from "@/components/system/TrackMarker";
 import { COLLECTION_CLASSNAMES, getCollection } from "@/lib/config/colors";
 import {
   getAllProducts,
@@ -112,7 +113,8 @@ export default async function ProductPage({
   };
 
   return (
-    <Container className="flex flex-col gap-12 py-12 sm:py-16">
+    <Container panel className="flex flex-col gap-12 py-12 sm:py-16">
+      <TrackMarker track={collection.track} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

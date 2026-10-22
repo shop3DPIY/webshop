@@ -16,10 +16,8 @@ export function LanguageSwitcher() {
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
-  // Serious Games is the no-pink B2B track (see Button.tsx's "Alt" variants) —
-  // the active-locale pill follows the same rule.
-  const isSeriousGames = pathname === "/serious-games" || pathname.startsWith("/serious-games/");
-  const activeClasses = isSeriousGames ? "bg-brand-cyan text-night" : "bg-brand-cyan text-night";
+  // --action follows the track (purple on the Shop, cyan on Serious Games).
+  const activeClasses = "bg-action text-on-action";
 
   return (
     <div className="flex items-center gap-1" aria-label={t("label")}>

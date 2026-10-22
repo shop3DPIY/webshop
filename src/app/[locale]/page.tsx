@@ -48,10 +48,10 @@ export default async function TrackChooserPage({
               priority
               className="h-16 w-auto sm:h-20"
             />
-            <h1 className="font-display text-xl font-bold text-white sm:text-2xl">
+            <h1 className="font-display text-xl font-bold text-ink sm:text-2xl">
               {t("title")}
             </h1>
-            <p className="max-w-md text-sm text-white/80 sm:text-base">
+            <p className="max-w-md text-sm text-ink/80 sm:text-base">
               {t("description")}
             </p>
           </div>
@@ -61,15 +61,15 @@ export default async function TrackChooserPage({
               href="/dolls"
               className="group sm:col-span-2 border-brand-cyan hover:bg-brand-cyan/45 bg-brand-cyan/15 flex flex-col items-start gap-3 rounded-3xl border p-8 text-left shadow-xl backdrop-blur-lg transition-colors"
             >
-              <h2 className="font-display text-2xl font-semibold text-white">
+              <h2 className="font-display text-2xl font-semibold text-ink">
                 {t("dollsTitle")}
               </h2>
-              <p className="text-sm text-white/80">{t("dollsDescription")}</p>
+              <p className="text-sm text-ink/80">{t("dollsDescription")}</p>
               <ul className="grid w-full grid-cols-2 gap-2">
                 {shopCollections.map((c) => (
                   <li
                     key={c.slug}
-                    className="flex min-w-0 items-center gap-2 rounded-xl bg-white/20 px-3 py-2 text-xs font-medium text-white"
+                    className="flex min-w-0 items-center gap-2 rounded-xl bg-mist px-3 py-2 text-xs font-medium text-ink"
                   >
                     <span
                       className="h-2.5 w-2.5 shrink-0 rounded-full"
@@ -82,7 +82,7 @@ export default async function TrackChooserPage({
                   </li>
                 ))}
               </ul>
-              <span className="mt-2 text-sm font-semibold text-white">
+              <span className="mt-2 text-sm font-semibold text-ink">
                 {t("dollsCta")} →
               </span>
             </Link>
@@ -92,13 +92,13 @@ export default async function TrackChooserPage({
               className="group border-brand-purple hover:bg-brand-purple/45 bg-brand-purple/15 flex flex-col items-start gap-3 rounded-3xl border p-8 text-left shadow-xl backdrop-blur-lg transition-colors"
             >
               <span className="bg-brand-purple inline-flex h-10 w-10 items-center justify-center rounded-full" />
-              <h2 className="font-display text-2xl font-semibold text-white">
+              <h2 className="font-display text-2xl font-semibold text-ink">
                 {t("seriousGamesTitle")}
               </h2>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-ink/80">
                 {t("seriousGamesDescription")}
               </p>
-              <span className="mt-2 text-sm font-semibold text-white">
+              <span className="mt-2 text-sm font-semibold text-ink">
                 {t("seriousGamesCta")} →
               </span>
             </Link>

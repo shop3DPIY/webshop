@@ -26,7 +26,7 @@ export default async function ShopPage() {
     : ACTIVE_COLLECTION_LIST;
 
   return (
-    <Container className="flex flex-col gap-10 py-16 sm:py-24">
+    <Container panel className="flex flex-col gap-10 py-16 sm:py-24">
       <SectionHeading
         as="h1"
         eyebrow={t("eyebrow")}

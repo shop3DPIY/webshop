@@ -21,7 +21,7 @@ export default async function AccountPage() {
 
   if (!isSupabaseConfigured()) {
     return (
-      <Container className="py-16 sm:py-24">
+      <Container panel className="py-16 sm:py-24">
         <BackendNotConnected />
       </Container>
     );
@@ -34,7 +34,7 @@ export default async function AccountPage() {
 
   if (!user) {
     return (
-      <Container className="flex flex-col items-center gap-6 py-24 text-center">
+      <Container panel className="flex flex-col items-center gap-6 py-24 text-center">
         <SectionHeading as="h1" title={t("title")} />
         <Button href="/auth/sign-in" size="lg">{t("signIn")}</Button>
       </Container>
@@ -66,7 +66,7 @@ export default async function AccountPage() {
       : { data: [] };
 
   return (
-    <Container className="flex flex-col gap-14 py-16 sm:py-24">
+    <Container panel className="flex flex-col gap-14 py-16 sm:py-24">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <SectionHeading as="h1" eyebrow={t("eyebrow")} title={t("title")} />
         <SignOutButton />
@@ -84,7 +84,7 @@ export default async function AccountPage() {
               outside the [locale] route tree entirely. */}
           <a
             href="/studio"
-            className="bg-brand-cyan text-night hover:bg-brand-purple hover:text-white inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold"
+            className="bg-action text-on-action hover:bg-action-hover hover:text-on-action-hover inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold"
           >
             {t("adminBannerCta")}
           </a>

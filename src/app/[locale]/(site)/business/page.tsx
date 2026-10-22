@@ -24,7 +24,7 @@ export default async function BusinessPage() {
   // landing page) — Dolls gets a placeholder until that's built out.
   if (isDolls) {
     return (
-      <Container className="flex flex-col items-start gap-4 py-16 text-left sm:py-24">
+      <Container panel className="flex flex-col items-start gap-4 py-16 text-left sm:py-24">
         <SectionHeading
           as="h1"
           eyebrow={t("dollsComingSoonEyebrow")}
@@ -37,7 +37,7 @@ export default async function BusinessPage() {
   }
 
   return (
-    <Container className="flex flex-col gap-12 py-16 sm:py-24">
+    <Container panel className="flex flex-col gap-12 py-16 sm:py-24">
       <SectionHeading as="h1" eyebrow={t("eyebrow")} title={t("title")} description={t("intro")} />
 
       <div className="grid gap-8 lg:grid-cols-2">

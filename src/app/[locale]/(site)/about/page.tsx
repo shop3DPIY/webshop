@@ -26,7 +26,7 @@ export default async function AboutPage() {
   const valuesWashClasses = isSeriousGames ? "bg-brand-cyan/10" : "bg-brand-cyan/5";
 
   return (
-    <Container className="flex flex-col gap-14 py-16 sm:py-24">
+    <Container panel className="flex flex-col gap-14 py-16 sm:py-24">
       <SectionHeading
         as="h1"
         eyebrow={t("eyebrow")}

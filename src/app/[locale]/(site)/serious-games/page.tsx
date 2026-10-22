@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CollectionCard } from "@/components/product/CollectionCard";
 import { ProductCard } from "@/components/product/ProductCard";
+import { TrackMarker } from "@/components/system/TrackMarker";
 import { getTrackCollections, getCollection } from "@/lib/config/colors";
 import { getPublishedProducts } from "@/lib/products";
 
@@ -26,17 +27,18 @@ export default async function SeriousGamesPage() {
 
   return (
     <>
+      <TrackMarker track="serious-games" />
       <section>
         <Container className="py-20 sm:py-28">
           <div className="glass flex flex-col items-start gap-6 rounded-3xl px-8 py-10 text-left sm:px-12">
-            <span className="border-brand-periwinkle/40 bg-white/10 inline-flex rounded-full border px-4 py-1.5 text-sm font-medium text-white">
+            <span className="border-brand-periwinkle/40 bg-mist inline-flex rounded-full border px-4 py-1.5 text-sm font-medium text-ink">
               {tHero("eyebrow")}
             </span>
-            <h1 className="font-display max-w-2xl text-4xl font-bold text-white sm:text-5xl">
+            <h1 className="font-display max-w-2xl text-4xl font-bold text-ink sm:text-5xl">
               {tHero("titleLine1")}{" "}
-              <span className="text-brand-cyan">{tHero("titleLine2")}</span>
+              <span className="text-brand-purple">{tHero("titleLine2")}</span>
             </h1>
-            <p className="max-w-xl text-lg text-white/70">
+            <p className="max-w-xl text-lg text-ink/70">
               {tHero("description")}
             </p>
             <div className="flex flex-wrap items-center gap-3">
@@ -65,7 +67,7 @@ export default async function SeriousGamesPage() {
       </section>
 
       <section className="py-16 sm:py-24">
-        <Container className="flex flex-col gap-10">
+        <Container panel className="flex flex-col gap-10">
           <SectionHeading
             eyebrow={tCollections("eyebrow")}
             title={tCollections("title")}
@@ -81,7 +83,7 @@ export default async function SeriousGamesPage() {
       </section>
 
       <section className="py-16 sm:py-24">
-        <Container className="flex flex-col gap-10">
+        <Container panel className="flex flex-col gap-10">
           <SectionHeading
             eyebrow={tNewAndPopular("eyebrow")}
             title={tNewAndPopular("title")}

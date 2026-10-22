@@ -17,7 +17,7 @@ export default async function FreeDesignsPage() {
   const products = await getFreeProducts();
 
   return (
-    <Container className="flex flex-col gap-10 py-16 sm:py-24">
+    <Container panel className="flex flex-col gap-10 py-16 sm:py-24">
       <SectionHeading as="h1" eyebrow={t("eyebrow")} title={t("title")} description={t("description")} />
 
       {products.length > 0 ? (

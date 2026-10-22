@@ -36,7 +36,7 @@ export default async function LegalDocPage({
   const tLegal = await getTranslations("legal");
 
   return (
-    <Container className="flex flex-col gap-6 py-16 sm:py-24">
+    <Container panel className="flex flex-col gap-6 py-16 sm:py-24">
       <h1 className="font-display text-ink text-3xl font-bold sm:text-4xl">
         {tDoc("title")}
       </h1>

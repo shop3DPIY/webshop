@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CollectionCard } from "@/components/product/CollectionCard";
 import { ProductCard } from "@/components/product/ProductCard";
+import { TrackMarker } from "@/components/system/TrackMarker";
 import { getTrackCollections, getCollection } from "@/lib/config/colors";
 import { getPublishedProducts } from "@/lib/products";
 
@@ -25,19 +26,20 @@ export default async function DollsPage() {
 
   return (
     <>
+      <TrackMarker track="dolls" />
       <section>
         <Container className="relative flex flex-col items-center py-20 text-center sm:py-28">
           <div className="flex max-w-4xl flex-col items-center gap-6 rounded-3xl px-8 py-10 sm:px-12 glass">
-            <span className="inline-flex rounded-full border border-white/30 bg-white/20 px-4 py-1.5 text-sm font-medium text-white">
+            <span className="inline-flex rounded-full border border-line bg-mist px-4 py-1.5 text-sm font-medium text-ink">
               {tHero("eyebrow")}
             </span>
             <h1
-              className={`${quicksand.className} text-4xl text-white sm:whitespace-nowrap sm:text-5xl lg:text-6xl`}
+              className={`${quicksand.className} text-4xl text-ink sm:whitespace-nowrap sm:text-5xl lg:text-6xl`}
             >
               {tHero("titleLine1")}{" "}
               <span className="text-ink">{tHero("titleLine2")}</span>
             </h1>
-            <p className="max-w-xl text-lg text-white/80">
+            <p className="max-w-xl text-lg text-ink/80">
               {tHero("description")}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
@@ -53,7 +55,7 @@ export default async function DollsPage() {
       </section>
 
       <section className="py-16 sm:py-24">
-        <Container className="flex flex-col gap-10">
+        <Container panel className="flex flex-col gap-10">
           <SectionHeading
             eyebrow={tCollections("eyebrow")}
             title={tCollections("title")}
@@ -68,7 +70,7 @@ export default async function DollsPage() {
       </section>
 
       <section className="py-16 sm:py-24">
-        <Container className="flex flex-col gap-10">
+        <Container panel className="flex flex-col gap-10">
           <SectionHeading
             eyebrow={tNewAndPopular("eyebrow")}
             title={tNewAndPopular("title")}
@@ -83,7 +85,7 @@ export default async function DollsPage() {
       </section>
 
       <section className="py-16 sm:py-24">
-        <Container className="grid gap-10 lg:grid-cols-2 lg:items-center">
+        <Container panel className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
             <SectionHeading
               eyebrow={tAbout("eyebrow")}

@@ -4,9 +4,10 @@ import { getMessages } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
+import { TRACK_COOKIE, isTrack } from "@/lib/config/track";
 import "../globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { BackdropPicker } from "@/components/system/BackdropPicker";
+import { TrackSync } from "@/components/system/TrackSync";
 import { routing, type Locale } from "@/i18n/routing";
 import { fontHeading, fontBody } from "@/lib/config/fonts";
 
@@ -49,18 +50,21 @@ export default async function LocaleLayout({
   const messages = await getMessages();
   const cookieStore = await cookies();
   const isDark = cookieStore.get("theme")?.value === "dark";
+  // Drives the per-track backdrop and button color (see globals.css).
+  const track = cookieStore.get(TRACK_COOKIE)?.value;
 
   return (
     <html
       lang={locale}
+      data-track={isTrack(track) ? track : undefined}
       className={`${fontHeading.variable} ${fontBody.variable} h-full antialiased ${isDark ? "dark" : ""}`}
     >
       <body className="min-h-full flex flex-col bg-paper text-ink">
         <NextIntlClientProvider locale={locale as Locale} messages={messages}>
           <ThemeProvider initialTheme={isDark ? "dark" : "light"}>
             {children}
+            <TrackSync />
           </ThemeProvider>
-          <BackdropPicker />
         </NextIntlClientProvider>
       </body>
     </html>

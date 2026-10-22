@@ -19,7 +19,7 @@ export default async function SignInPage({
   const { next } = await searchParams;
 
   return (
-    <Container className="flex flex-col gap-8 py-16 sm:py-24">
+    <Container panel className="flex flex-col gap-8 py-16 sm:py-24">
       <div className="mx-auto w-full max-w-sm">
         <h1 className="font-display text-ink text-center text-2xl font-bold">
           {t("signInTitle")}
