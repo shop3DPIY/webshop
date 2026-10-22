@@ -73,9 +73,9 @@ export default async function AccountPage() {
       </div>
 
       {profile?.role === "admin" && (
-        <div className="border-accent/30 bg-accent/5 flex flex-wrap items-center justify-between gap-4 rounded-3xl border p-6">
+        <div className="flex flex-wrap items-center justify-between gap-4 rounded-3xl p-6 glass">
           <div>
-            <p className="font-display text-brand-pink text-base font-semibold">
+            <p className="font-display text-ink text-base font-semibold">
               {t("adminBannerTitle")}
             </p>
             <p className="text-ink/70 mt-1 text-sm">{t("adminBannerBody")}</p>
@@ -84,7 +84,7 @@ export default async function AccountPage() {
               outside the [locale] route tree entirely. */}
           <a
             href="/studio"
-            className="bg-brand-pink hover:bg-brand-purple inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white"
+            className="bg-brand-cyan text-night hover:bg-brand-purple hover:text-white inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold"
           >
             {t("adminBannerCta")}
           </a>
@@ -92,7 +92,7 @@ export default async function AccountPage() {
       )}
 
       <section className="flex flex-col gap-6">
-        <h2 className="font-display text-brand-purple text-xl font-semibold">
+        <h2 className="font-display text-ink text-xl font-semibold">
           {t("libraryTab")}
         </h2>
         {libraryProducts && libraryProducts.length > 0 ? (
@@ -100,9 +100,9 @@ export default async function AccountPage() {
             {libraryProducts.map((product) => {
               const classes = COLLECTION_CLASSNAMES[product.category as CollectionSlug];
               return (
-                <div key={product.id} className="border-line rounded-3xl border p-5">
+                <div key={product.id} className="rounded-3xl p-5 glass">
                   <span className={`inline-flex h-3 w-3 rounded-full ${classes?.bg ?? "bg-ink"}`} />
-                  <h3 className="font-display text-brand-purple mt-3 text-base font-semibold">
+                  <h3 className="font-display text-ink mt-3 text-base font-semibold">
                     {product.title}
                   </h3>
                   <div className="mt-4 flex flex-wrap gap-2">
@@ -122,10 +122,10 @@ export default async function AccountPage() {
             })}
           </div>
         ) : (
-          <div className="border-line rounded-3xl border border-dashed p-10 text-center">
+          <div className="rounded-3xl p-10 text-center glass">
             <p className="font-medium">{t("libraryEmptyTitle")}</p>
             <p className="text-ink/60 mt-1 text-sm">{t("libraryEmptyBody")}</p>
-            <Link href="/shop" className="text-brand-pink mt-4 inline-block text-sm font-medium">
+            <Link href="/shop" className="text-ink mt-4 inline-block text-sm font-medium">
               {tHero("ctaShop")}
             </Link>
           </div>
@@ -133,11 +133,11 @@ export default async function AccountPage() {
       </section>
 
       <section className="flex flex-col gap-6">
-        <h2 className="font-display text-brand-purple text-xl font-semibold">
+        <h2 className="font-display text-ink text-xl font-semibold">
           {t("ordersTab")}
         </h2>
         {orders && orders.length > 0 ? (
-          <div className="divide-line border-line divide-y rounded-3xl border">
+          <div className="divide-line divide-y rounded-3xl glass">
             {orders.map((order) => (
               <div key={order.id} className="flex items-center justify-between p-5 text-sm">
                 <div>
@@ -153,7 +153,7 @@ export default async function AccountPage() {
             ))}
           </div>
         ) : (
-          <div className="border-line rounded-3xl border border-dashed p-10 text-center">
+          <div className="rounded-3xl p-10 text-center glass">
             <p className="font-medium">{t("ordersEmptyTitle")}</p>
             <p className="text-ink/60 mt-1 text-sm">{t("ordersEmptyBody")}</p>
           </div>
@@ -161,7 +161,7 @@ export default async function AccountPage() {
       </section>
 
       <section className="flex flex-col gap-6">
-        <h2 className="font-display text-brand-purple text-xl font-semibold">
+        <h2 className="font-display text-ink text-xl font-semibold">
           {t("settingsTab")}
         </h2>
         <ProfileSettingsForm

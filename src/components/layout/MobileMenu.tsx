@@ -21,7 +21,7 @@ export function MobileMenu() {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-label={open ? "Close menu" : "Open menu"}
-        className="border-line text-brand-purple flex h-9 w-9 items-center justify-center rounded-full border"
+        className="border-line text-ink flex h-9 w-9 items-center justify-center rounded-full border"
       >
         {open ? (
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -42,7 +42,7 @@ export function MobileMenu() {
                 key={key}
                 href={`/${key}`}
                 onClick={() => setOpen(false)}
-                className="text-brand-purple hover:bg-brand-purple/10 rounded-xl px-3 py-3 text-base font-medium"
+                className="text-ink hover:bg-brand-purple/10 rounded-xl px-3 py-3 text-base font-medium"
               >
                 {t(key)}
               </Link>

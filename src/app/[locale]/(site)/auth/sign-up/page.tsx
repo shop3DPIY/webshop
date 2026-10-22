@@ -16,7 +16,7 @@ export default async function SignUpPage() {
   return (
     <Container className="flex flex-col gap-8 py-16 sm:py-24">
       <div className="mx-auto w-full max-w-sm">
-        <h1 className="font-display text-brand-pink text-center text-2xl font-bold">
+        <h1 className="font-display text-ink text-center text-2xl font-bold">
           {t("signUpTitle")}
         </h1>
 
@@ -26,7 +26,7 @@ export default async function SignUpPage() {
 
         <p className="text-ink/60 mt-6 text-center text-sm">
           {t("haveAccount")}{" "}
-          <Link href="/auth/sign-in" className="text-accent font-medium">
+          <Link href="/auth/sign-in" className="text-ink font-semibold underline underline-offset-2">
             {t("signInLink")}
           </Link>
         </p>

@@ -26,6 +26,7 @@ interface ProductRow {
   title: string;
   description: string;
   category: string;
+  extra_categories: string[] | null;
   tags: string[];
   images: { src: string; alt: string }[];
   download_files: { format: "STL" | "3MF"; fileName: string; note?: string }[];
@@ -48,6 +49,7 @@ function mapRow(row: ProductRow): Product {
     title: row.title,
     description: row.description,
     category: row.category as CollectionSlug,
+    extraCategories: (row.extra_categories ?? []) as CollectionSlug[],
     tags: row.tags ?? [],
     images: row.images ?? [],
     downloadFiles: row.download_files ?? [],
@@ -65,7 +67,7 @@ function mapRow(row: ProductRow): Product {
 }
 
 const PRODUCT_COLUMNS =
-  "id, slug, title, description, category, tags, images, download_files, dimensions, print_settings, version, last_updated, license_type, is_free, external_commerce_id, publication_status, related_product_ids, external_links";
+  "id, slug, title, description, category, extra_categories, tags, images, download_files, dimensions, print_settings, version, last_updated, license_type, is_free, external_commerce_id, publication_status, related_product_ids, external_links";
 
 export async function getAllProducts(): Promise<Product[]> {
   if (!isSupabaseConfigured()) return FALLBACK_PRODUCTS;
@@ -101,13 +103,18 @@ export async function getProductBySlug(slug: string): Promise<Product | undefine
 
 export async function getProductsByCategory(category: CollectionSlug): Promise<Product[]> {
   if (!isSupabaseConfigured()) {
-    return FALLBACK_PRODUCTS.filter((p) => p.category === category && p.publicationStatus === "published");
+    return FALLBACK_PRODUCTS.filter(
+      (p) =>
+        (p.category === category || p.extraCategories?.includes(category)) &&
+        p.publicationStatus === "published",
+    );
   }
   const supabase = createPublicClient();
   const { data } = await supabase!
     .from("products")
     .select(PRODUCT_COLUMNS)
-    .eq("category", category)
+    // Primary category, or listed as one of the extra categories.
+    .or(`category.eq.${category},extra_categories.cs.{${category}}`)
     .eq("publication_status", "published");
   return (data as ProductRow[] | null)?.map(mapRow) ?? [];
 }

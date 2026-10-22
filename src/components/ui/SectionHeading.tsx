@@ -15,12 +15,12 @@ export function SectionHeading({
   /** "purple" drops pink entirely — used on the Serious Games track. */
   tone?: "pink" | "purple";
 }) {
-  const titleColor = tone === "purple" ? "text-brand-purple" : "text-brand-pink";
+  const titleColor = tone === "purple" ? "text-ink" : "text-ink";
 
   return (
     <div className={align === "center" ? "text-center" : "text-left"}>
       {eyebrow && (
-        <p className="text-brand-purple mb-2 text-sm font-semibold tracking-wide uppercase">
+        <p className="text-ink mb-2 text-sm font-semibold tracking-wide uppercase">
           {eyebrow}
         </p>
       )}

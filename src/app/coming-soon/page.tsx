@@ -20,7 +20,7 @@ export default function ComingSoonPage() {
       />
 
       <div className="relative flex h-full w-full flex-col items-center justify-center gap-6 px-6">
-        <div className="flex min-h-[20vh] w-full max-w-3xl flex-col items-center justify-center gap-4 rounded-3xl border border-white/30 bg-white/15 px-8 py-6 text-center shadow-xl backdrop-blur-lg">
+        <div className="flex min-h-[20vh] w-full max-w-3xl flex-col items-center justify-center gap-4 rounded-3xl px-8 py-6 text-center glass">
           <Image
             src="/images/logo/Logo_3DPIY-transparent.png"
             alt="3DPIY"
@@ -37,12 +37,12 @@ export default function ComingSoonPage() {
         </div>
 
         {showWaitlist && (
-          <div className="flex flex-col items-center gap-3 rounded-3xl border border-white/30 bg-white/15 p-6 text-center shadow-xl backdrop-blur-lg">
+          <div className="flex flex-col items-center gap-3 rounded-3xl p-6 text-center glass">
             <p className="text-sm font-medium">Want to be first to know? Create an account now.</p>
             <div className="flex flex-wrap items-center justify-center gap-3">
               <a
                 href="/auth/sign-up"
-                className="bg-accent inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white hover:bg-accent/90"
+                className="bg-brand-cyan text-night hover:bg-brand-purple hover:text-white transition-colors inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold"
               >
                 Create account
               </a>

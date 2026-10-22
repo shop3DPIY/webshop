@@ -11,7 +11,7 @@ export default async function StudioOrdersPage() {
     <div className="flex flex-col gap-6">
       <h1 className="font-display text-2xl font-bold">Orders</h1>
 
-      <div className="border-line divide-line divide-y rounded-3xl border">
+      <div className="divide-line divide-y rounded-3xl glass">
         {orders && orders.length > 0 ? (
           orders.map((order) => (
             <div key={order.id} className="flex items-center justify-between gap-4 p-5 text-sm">

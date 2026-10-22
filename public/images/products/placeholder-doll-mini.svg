@@ -1,7 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
-  <rect width="800" height="800" fill="#FFE3F2"/>
-  <rect x="160" y="300" width="480" height="200" rx="24" fill="#FF4FA0" opacity="0.35"/>
-  <text x="400" y="420" font-family="Arial, sans-serif" font-size="28" fill="#14121A" text-anchor="middle">
+  <rect x="160" y="300" width="480" height="200" rx="24" fill="#FFFFFF" fill-opacity="0.2" stroke="#FFFFFF" stroke-opacity="0.4" stroke-width="2"/>
+  <text x="400" y="420" font-family="Arial, sans-serif" font-size="28" fill="#FFFFFF" text-anchor="middle">
     Product photo placeholder
   </text>
 </svg>

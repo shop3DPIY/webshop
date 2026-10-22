@@ -63,8 +63,10 @@ export interface Product {
   slug: string;
   title: string;
   description: string;
-  /** Primary collection this product belongs to */
+  /** Primary collection this product belongs to — decides card color and license track */
   category: CollectionSlug;
+  /** Other collections (same track as `category`) this product also appears in */
+  extraCategories?: CollectionSlug[];
   /** Freeform tags for search/filtering */
   tags: string[];
   images: ProductImage[];

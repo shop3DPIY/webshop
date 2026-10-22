@@ -29,7 +29,7 @@ export function TrackSwitcher() {
         href="/serious-games"
         aria-label={t("switchToSeriousGames")}
         title={t("switchToSeriousGames")}
-        className="border-brand-purple/40 text-brand-purple hover:bg-brand-purple/10 flex h-9 w-9 items-center justify-center rounded-full border transition-colors"
+        className="border-brand-purple/40 text-ink hover:bg-brand-purple/10 flex h-9 w-9 items-center justify-center rounded-full border transition-colors"
       >
         <SwitchIcon />
       </Link>
@@ -42,7 +42,7 @@ export function TrackSwitcher() {
         href="/dolls"
         aria-label={t("switchToDolls")}
         title={t("switchToDolls")}
-        className="border-brand-purple/40 text-brand-purple hover:bg-brand-purple/10 flex h-9 w-9 items-center justify-center rounded-full border transition-colors"
+        className="border-brand-purple/40 text-ink hover:bg-brand-purple/10 flex h-9 w-9 items-center justify-center rounded-full border transition-colors"
       >
         <SwitchIcon />
       </Link>

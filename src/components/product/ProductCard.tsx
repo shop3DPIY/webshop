@@ -14,9 +14,9 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/product/${product.slug}`}
-      className="border-line bg-paper group flex flex-col overflow-hidden rounded-3xl border transition-shadow hover:shadow-lg"
+      className={`group flex flex-col overflow-hidden rounded-3xl glass ${classes.border}`}
     >
-      <div className={`relative aspect-square ${classes.bgSoft}`}>
+      <div className={`relative aspect-square border-b ${classes.border} ${classes.wash}`}>
         {cover && (
           <Image
             src={cover.src}
@@ -26,18 +26,18 @@ export function ProductCard({ product }: { product: Product }) {
             sizes="(min-width: 1024px) 25vw, 50vw"
           />
         )}
-        <Badge className="bg-paper/95 text-ink border-line absolute top-3 left-3 gap-1.5 border">
+        <Badge className="bg-white/90 text-night border-white absolute top-3 left-3 gap-1.5 border">
           <span className={`h-2 w-2 rounded-full ${classes.bg}`} aria-hidden />
           {tCollections(`${product.category}.name`)}
         </Badge>
         {product.isFree && (
-          <Badge className="absolute top-3 right-3 bg-paper text-ink border border-line">
+          <Badge className="absolute top-3 right-3 bg-white/90 text-night border border-white">
             {tProductCard("free")}
           </Badge>
         )}
       </div>
       <div className="flex flex-1 flex-col p-4">
-        <h3 className="font-display text-brand-purple text-base font-semibold">{product.title}</h3>
+        <h3 className="font-display text-ink text-base font-semibold">{product.title}</h3>
         <p className="text-ink/60 mt-1 line-clamp-2 text-sm">{product.description}</p>
       </div>
     </Link>

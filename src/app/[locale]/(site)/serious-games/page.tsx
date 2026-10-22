@@ -26,28 +26,37 @@ export default async function SeriousGamesPage() {
 
   return (
     <>
-      <section className="bg-gradient-to-br from-[#140b29] via-[#2a1b55] to-[#8c52ff]">
-        <Container className="flex flex-col items-start gap-6 py-20 text-left sm:py-28">
-          <span className="border-brand-periwinkle/40 bg-white/10 inline-flex rounded-full border px-4 py-1.5 text-sm font-medium text-white">
-            {tHero("eyebrow")}
-          </span>
-          <h1 className="font-display max-w-2xl text-4xl font-bold text-white sm:text-5xl">
-            {tHero("titleLine1")} <span className="text-brand-cyan">{tHero("titleLine2")}</span>
-          </h1>
-          <p className="max-w-xl text-lg text-white/70">{tHero("description")}</p>
-          <div className="flex flex-wrap items-center gap-3">
-            <Button href="/shop" variant="primaryAlt" size="lg">{tHero("cta")}</Button>
-            <Button href="/contact" variant="secondaryAlt" size="lg">
-              {tHero("contactSalesCta")}
-            </Button>
+      <section>
+        <Container className="py-20 sm:py-28">
+          <div className="glass flex flex-col items-start gap-6 rounded-3xl px-8 py-10 text-left sm:px-12">
+            <span className="border-brand-periwinkle/40 bg-white/10 inline-flex rounded-full border px-4 py-1.5 text-sm font-medium text-white">
+              {tHero("eyebrow")}
+            </span>
+            <h1 className="font-display max-w-2xl text-4xl font-bold text-white sm:text-5xl">
+              {tHero("titleLine1")}{" "}
+              <span className="text-brand-cyan">{tHero("titleLine2")}</span>
+            </h1>
+            <p className="max-w-xl text-lg text-white/70">
+              {tHero("description")}
+            </p>
+            <div className="flex flex-wrap items-center gap-3">
+              <Button href="/shop" variant="primaryAlt" size="lg">
+                {tHero("cta")}
+              </Button>
+              <Button href="/contact" variant="secondaryAlt" size="lg">
+                {tHero("contactSalesCta")}
+              </Button>
+            </div>
           </div>
         </Container>
       </section>
 
       <section className="py-10">
         <Container>
-          <div className="border-brand-purple/30 bg-brand-purple/5 flex flex-col gap-2 rounded-3xl border p-6 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-ink text-sm font-medium sm:text-base">{tHero("licenseNote")}</p>
+          <div className="flex flex-col gap-2 rounded-3xl p-6 sm:flex-row sm:items-center sm:justify-between glass">
+            <p className="text-ink text-sm font-medium sm:text-base">
+              {tHero("licenseNote")}
+            </p>
             <Button href="/contact" variant="ghost">
               {tHero("contactSalesCta")} →
             </Button>
@@ -71,7 +80,7 @@ export default async function SeriousGamesPage() {
         </Container>
       </section>
 
-      <section className="bg-mist py-16 sm:py-24">
+      <section className="py-16 sm:py-24">
         <Container className="flex flex-col gap-10">
           <SectionHeading
             eyebrow={tNewAndPopular("eyebrow")}
@@ -86,7 +95,7 @@ export default async function SeriousGamesPage() {
               ))}
             </div>
           ) : (
-            <div className="border-line rounded-3xl border border-dashed p-12 text-center">
+            <div className="rounded-3xl p-12 text-center glass">
               <p className="text-ink/60 text-sm">{tHero("emptyCatalogNote")}</p>
             </div>
           )}

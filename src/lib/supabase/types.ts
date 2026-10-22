@@ -31,6 +31,7 @@ export interface Database {
           title: string;
           description: string;
           category: string;
+          extra_categories: string[];
           tags: string[];
           images: { src: string; alt: string }[];
           download_files: { format: string; fileName: string; note?: string; storagePath?: string }[];

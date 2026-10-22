@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import "../globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { BackdropPicker } from "@/components/system/BackdropPicker";
 import { routing, type Locale } from "@/i18n/routing";
 import { fontHeading, fontBody } from "@/lib/config/fonts";
 
@@ -56,7 +57,10 @@ export default async function LocaleLayout({
     >
       <body className="min-h-full flex flex-col bg-paper text-ink">
         <NextIntlClientProvider locale={locale as Locale} messages={messages}>
-          <ThemeProvider initialTheme={isDark ? "dark" : "light"}>{children}</ThemeProvider>
+          <ThemeProvider initialTheme={isDark ? "dark" : "light"}>
+            {children}
+          </ThemeProvider>
+          <BackdropPicker />
         </NextIntlClientProvider>
       </body>
     </html>

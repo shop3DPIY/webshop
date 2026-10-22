@@ -3,10 +3,11 @@ import { cookies } from "next/headers";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
 import { TRACK_COOKIE, isTrack } from "@/lib/config/track";
+import { getTrackCollections } from "@/lib/config/colors";
 
 /**
- * The site's entry point is a choice, not a storefront — Dolls & Mini and
- * Serious Games are different audiences with a different "vibe" and (for
+ * The site's entry point is a choice, not a storefront — the 3DPIY Shop
+ * (every Dolls-track collection) and Serious Games are different audiences with a different "vibe" and (for
  * Serious Games) a different commercial license, so they get their own
  * landing pages instead of being mixed into one generic homepage. This page
  * has no navbar/footer at all (see the (site) route group next to it) —
@@ -31,20 +32,13 @@ export default async function TrackChooserPage({
   }
 
   const t = await getTranslations("trackChooser");
+  const tCollections = await getTranslations("collections.items");
+  const shopCollections = getTrackCollections("dolls");
 
   return (
     <div className="relative h-screen w-full overflow-hidden">
-      <Image
-        src="/images/banner/Banner_3DPIY.png"
-        alt=""
-        fill
-        priority
-        className="object-cover"
-        aria-hidden
-      />
-
       <div className="relative flex h-full w-full flex-col items-center justify-center px-6 py-8">
-        <div className="flex w-full max-w-3xl flex-col items-center gap-6 rounded-[2.5rem] border border-white/30 bg-white/15 p-8 text-center shadow-xl backdrop-blur-lg sm:p-10">
+        <div className="flex w-full max-w-4xl flex-col items-center gap-6 rounded-[2.5rem] p-8 text-center sm:p-10 glass">
           <div className="flex flex-col items-center gap-3">
             <Image
               src="/images/logo/Logo_3DPIY-transparent.png"
@@ -54,30 +48,56 @@ export default async function TrackChooserPage({
               priority
               className="h-16 w-auto sm:h-20"
             />
-            <h1 className="font-display text-xl font-bold text-white sm:text-2xl">{t("title")}</h1>
-            <p className="max-w-md text-sm text-white/80 sm:text-base">{t("description")}</p>
+            <h1 className="font-display text-xl font-bold text-white sm:text-2xl">
+              {t("title")}
+            </h1>
+            <p className="max-w-md text-sm text-white/80 sm:text-base">
+              {t("description")}
+            </p>
           </div>
 
-          <div className="grid w-full gap-5 sm:grid-cols-2">
+          <div className="grid w-full gap-5 sm:grid-cols-3">
             <Link
               href="/dolls"
-              className="group border-brand-pink hover:bg-brand-pink/45 bg-brand-pink/15 flex flex-col items-start gap-3 rounded-3xl border-2 p-8 text-left shadow-xl backdrop-blur-lg transition-colors"
+              className="group sm:col-span-2 border-brand-cyan hover:bg-brand-cyan/45 bg-brand-cyan/15 flex flex-col items-start gap-3 rounded-3xl border p-8 text-left shadow-xl backdrop-blur-lg transition-colors"
             >
-              <span className="bg-brand-pink inline-flex h-10 w-10 items-center justify-center rounded-full" />
-              <h2 className="font-display text-2xl font-semibold text-white">{t("dollsTitle")}</h2>
+              <h2 className="font-display text-2xl font-semibold text-white">
+                {t("dollsTitle")}
+              </h2>
               <p className="text-sm text-white/80">{t("dollsDescription")}</p>
-              <span className="mt-2 text-sm font-semibold text-white">{t("dollsCta")} →</span>
+              <ul className="grid w-full grid-cols-2 gap-2">
+                {shopCollections.map((c) => (
+                  <li
+                    key={c.slug}
+                    className="flex min-w-0 items-center gap-2 rounded-xl bg-white/20 px-3 py-2 text-xs font-medium text-white"
+                  >
+                    <span
+                      className="h-2.5 w-2.5 shrink-0 rounded-full"
+                      style={{ backgroundColor: c.color }}
+                      aria-hidden
+                    />
+                    <span className="truncate">
+                      {tCollections(`${c.slug}.name`)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <span className="mt-2 text-sm font-semibold text-white">
+                {t("dollsCta")} →
+              </span>
             </Link>
 
             <Link
               href="/serious-games"
-              className="group border-brand-purple hover:bg-brand-purple/45 bg-brand-purple/15 flex flex-col items-start gap-3 rounded-3xl border-2 p-8 text-left shadow-xl backdrop-blur-lg transition-colors"
+              className="group border-brand-purple hover:bg-brand-purple/45 bg-brand-purple/15 flex flex-col items-start gap-3 rounded-3xl border p-8 text-left shadow-xl backdrop-blur-lg transition-colors"
             >
               <span className="bg-brand-purple inline-flex h-10 w-10 items-center justify-center rounded-full" />
               <h2 className="font-display text-2xl font-semibold text-white">
                 {t("seriousGamesTitle")}
               </h2>
-              <p className="text-sm text-white/80">{t("seriousGamesDescription")}</p>
+              <p className="text-sm text-white/80">
+                {t("seriousGamesDescription")}
+              </p>
               <span className="mt-2 text-sm font-semibold text-white">
                 {t("seriousGamesCta")} →
               </span>

@@ -58,7 +58,7 @@ export const BRAND_COLORS = {
    * Signature brand accent — reserved for logo, focus rings, nav highlights,
    * and primary buttons (white text on this needs to clear 4.5:1 contrast).
    */
-  accent: "#DB2777",
+  accent: "#0B7F86",
 } as const;
 
 export const COLLECTIONS: Record<CollectionSlug, CollectionTheme> = {
@@ -78,7 +78,7 @@ export const COLLECTIONS: Record<CollectionSlug, CollectionTheme> = {
     color: "#FF7A3D",
     colorSoft: "#FFE8DA",
     textOn: "dark",
-    enabled: false,
+    enabled: true,
     track: "dolls",
   },
   "ikea-hacks": {
@@ -88,7 +88,7 @@ export const COLLECTIONS: Record<CollectionSlug, CollectionTheme> = {
     color: "#FFC93D",
     colorSoft: "#FFF3D6",
     textOn: "dark",
-    enabled: false,
+    enabled: true,
     track: "dolls",
   },
   organize: {
@@ -98,7 +98,7 @@ export const COLLECTIONS: Record<CollectionSlug, CollectionTheme> = {
     color: "#2FBF71",
     colorSoft: "#DFF6E8",
     textOn: "dark",
-    enabled: false,
+    enabled: true,
     track: "dolls",
   },
   "tech-electronics": {
@@ -108,7 +108,7 @@ export const COLLECTIONS: Record<CollectionSlug, CollectionTheme> = {
     color: "#2F8EFF",
     colorSoft: "#DCEAFF",
     textOn: "dark",
-    enabled: false,
+    enabled: true,
     track: "dolls",
   },
   other: {
@@ -118,7 +118,7 @@ export const COLLECTIONS: Record<CollectionSlug, CollectionTheme> = {
     color: "#6B7280",
     colorSoft: "#E8E9EC",
     textOn: "dark",
-    enabled: false,
+    enabled: true,
     track: "dolls",
   },
   "serious-games": {

@@ -14,13 +14,13 @@ export default async function StudioProductsPage() {
         <h1 className="font-display text-2xl font-bold">Products</h1>
         <Link
           href="/studio/products/new"
-          className="bg-accent rounded-full px-5 py-2.5 text-sm font-semibold text-white"
+          className="bg-brand-cyan text-night hover:bg-brand-purple hover:text-white transition-colors rounded-full px-5 py-2.5 text-sm font-semibold"
         >
           + New product
         </Link>
       </div>
 
-      <div className="border-line divide-line divide-y rounded-3xl border">
+      <div className="divide-line divide-y rounded-3xl glass">
         {products && products.length > 0 ? (
           products.map((product) => (
             <Link

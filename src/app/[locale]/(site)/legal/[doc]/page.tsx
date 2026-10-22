@@ -37,11 +37,11 @@ export default async function LegalDocPage({
 
   return (
     <Container className="flex flex-col gap-6 py-16 sm:py-24">
-      <h1 className="font-display text-brand-pink text-3xl font-bold sm:text-4xl">
+      <h1 className="font-display text-ink text-3xl font-bold sm:text-4xl">
         {tDoc("title")}
       </h1>
 
-      <div className="border-accent/30 bg-accent/5 rounded-2xl border p-5">
+      <div className="glass rounded-2xl p-5">
         <p className="text-sm font-semibold">{tLegal("noticeTitle")}</p>
         <p className="text-ink/70 mt-1 text-sm">{tLegal("noticeBody")}</p>
       </div>

@@ -21,7 +21,7 @@ export default async function SignInPage({
   return (
     <Container className="flex flex-col gap-8 py-16 sm:py-24">
       <div className="mx-auto w-full max-w-sm">
-        <h1 className="font-display text-brand-pink text-center text-2xl font-bold">
+        <h1 className="font-display text-ink text-center text-2xl font-bold">
           {t("signInTitle")}
         </h1>
 
@@ -34,12 +34,12 @@ export default async function SignInPage({
         </div>
 
         <div className="mt-6 flex flex-col items-center gap-2 text-sm">
-          <Link href="/auth/forgot-password" className="text-accent font-medium">
+          <Link href="/auth/forgot-password" className="text-ink font-semibold underline underline-offset-2">
             {t("forgotLink")}
           </Link>
           <p className="text-ink/60">
             {t("noAccount")}{" "}
-            <Link href="/auth/sign-up" className="text-accent font-medium">
+            <Link href="/auth/sign-up" className="text-ink font-semibold underline underline-offset-2">
               {t("signUpLink")}
             </Link>
           </p>

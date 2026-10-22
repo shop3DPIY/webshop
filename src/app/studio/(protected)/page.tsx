@@ -33,7 +33,7 @@ export default async function StudioDashboardPage() {
           <Link
             key={stat.label}
             href={stat.href}
-            className="border-line hover:bg-mist rounded-3xl border p-6"
+            className="hover:bg-mist rounded-3xl p-6 glass"
           >
             <p className="text-ink/60 text-sm">{stat.label}</p>
             <p className="font-display mt-1 text-3xl font-bold">{stat.value}</p>
@@ -43,7 +43,7 @@ export default async function StudioDashboardPage() {
 
       <Link
         href="/studio/products/new"
-        className="bg-accent inline-flex w-fit items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-white"
+        className="bg-brand-cyan text-night hover:bg-brand-purple hover:text-white transition-colors inline-flex w-fit items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold"
       >
         + New product
       </Link>

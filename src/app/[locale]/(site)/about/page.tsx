@@ -22,8 +22,8 @@ export default async function AboutPage() {
   const isSeriousGames = cookieStore.get(TRACK_COOKIE)?.value === "serious-games";
   const tilesClasses = isSeriousGames
     ? "border-brand-purple/40 bg-brand-purple/10"
-    : "border-brand-pink/40 bg-brand-pink/10";
-  const valuesWashClasses = isSeriousGames ? "bg-brand-cyan/10" : "bg-brand-pink/5";
+    : "border-brand-cyan/40 bg-brand-cyan/10";
+  const valuesWashClasses = isSeriousGames ? "bg-brand-cyan/10" : "bg-brand-cyan/5";
 
   return (
     <Container className="flex flex-col gap-14 py-16 sm:py-24">
@@ -36,13 +36,13 @@ export default async function AboutPage() {
 
       <div className="grid gap-10 lg:grid-cols-2">
         <div>
-          <h2 className="font-display text-brand-purple text-xl font-semibold">
+          <h2 className="font-display text-ink text-xl font-semibold">
             {t("introTitle")}
           </h2>
           <p className="text-ink/70 mt-3 text-base sm:text-lg">{t("introBody")}</p>
         </div>
         <div>
-          <h2 className="font-display text-brand-purple text-xl font-semibold">
+          <h2 className="font-display text-ink text-xl font-semibold">
             {t("makerTitle")}
           </h2>
           <p className="text-ink/70 mt-3 text-base sm:text-lg">{t("makerBody")}</p>
@@ -50,14 +50,14 @@ export default async function AboutPage() {
       </div>
 
       <div className={`${valuesWashClasses} rounded-3xl p-8 sm:p-10`}>
-        <h2 className="font-display text-brand-purple text-xl font-semibold">
+        <h2 className="font-display text-ink text-xl font-semibold">
           {t("valuesTitle")}
         </h2>
         <ul className="mt-5 grid gap-4 sm:grid-cols-3">
           {values.map((value) => (
             <li
               key={value}
-              className={`rounded-2xl border-2 p-5 text-sm shadow-xl backdrop-blur-lg ${tilesClasses}`}
+              className={`rounded-2xl border p-5 text-sm shadow-xl backdrop-blur-lg ${tilesClasses}`}
             >
               {value}
             </li>

@@ -48,22 +48,28 @@ export default async function CollectionPage({
 
   return (
     <>
-      <section className={classes.bgSoft}>
-        <Container className="flex flex-col gap-4 py-16 sm:py-20">
-          <Link
-            href="/shop"
-            className="text-brand-purple hover:text-brand-periwinkle text-sm font-medium"
+      <section>
+        <Container className="pt-16 sm:pt-20">
+          <div
+            className={`glass flex flex-col gap-4 rounded-3xl px-8 py-10 sm:px-12 ${classes.border}`}
           >
-            ← {tPage("backToShop")}
-          </Link>
-          <span
-            className={`inline-flex h-12 w-12 items-center justify-center rounded-full ${classes.bg}`}
-            aria-hidden
-          />
-          <h1 className={`font-display ${classes.text} text-3xl font-bold sm:text-5xl`}>
-            {t("name")}
-          </h1>
-          <p className="text-ink/70 max-w-xl text-lg">{t("tagline")}</p>
+            <Link
+              href="/shop"
+              className="text-ink hover:text-ink/70 text-sm font-medium"
+            >
+              ← {tPage("backToShop")}
+            </Link>
+            <span
+              className={`inline-flex h-12 w-12 items-center justify-center rounded-full ${classes.bg}`}
+              aria-hidden
+            />
+            <h1
+              className={`font-display text-ink text-3xl font-bold sm:text-5xl`}
+            >
+              {t("name")}
+            </h1>
+            <p className="text-ink/70 max-w-xl text-lg">{t("tagline")}</p>
+          </div>
         </Container>
       </section>
 
@@ -75,11 +81,13 @@ export default async function CollectionPage({
             ))}
           </div>
         ) : (
-          <div className="border-line rounded-3xl border border-dashed p-12 text-center">
-            <h2 className="font-display text-brand-purple text-xl font-semibold">
+          <div className="rounded-3xl p-12 text-center glass">
+            <h2 className="font-display text-ink text-xl font-semibold">
               {tPage("emptyTitle")}
             </h2>
-            <p className="text-ink/60 mt-2 text-sm">{tPage("emptyDescription")}</p>
+            <p className="text-ink/60 mt-2 text-sm">
+              {tPage("emptyDescription")}
+            </p>
           </div>
         )}
       </Container>

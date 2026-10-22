@@ -23,7 +23,7 @@ export async function Header() {
   const isDolls = track === "dolls";
 
   return (
-    <header className="border-line bg-paper/90 sticky top-0 z-40 border-b backdrop-blur">
+    <header className="border-line bg-paper sticky top-0 z-40 border-b shadow-xl backdrop-blur-lg">
       <Container className="flex h-16 items-center justify-between gap-4">
         <div className="flex items-center gap-5">
           <TrackSwitcher />
@@ -32,21 +32,21 @@ export async function Header() {
         <nav className="hidden items-center gap-6 md:flex">
           <Link
             href="/shop"
-            className="text-brand-purple hover:text-brand-periwinkle text-sm font-medium"
+            className="text-ink hover:text-ink/70 text-sm font-medium"
           >
             {t("shop")}
           </Link>
           {!isDolls && (
             <Link
               href="/business"
-              className="text-brand-purple hover:text-brand-periwinkle text-sm font-medium"
+              className="text-ink hover:text-ink/70 text-sm font-medium"
             >
               {t("business")}
             </Link>
           )}
           <Link
             href="/about"
-            className="text-brand-purple hover:text-brand-periwinkle text-sm font-medium"
+            className="text-ink hover:text-ink/70 text-sm font-medium"
           >
             {t("about")}
           </Link>

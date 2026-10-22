@@ -3,9 +3,13 @@
 /*
  * Design tokens for 3DPIY.
  *
- * Light mode is bright, white and colorful. Dark mode is deliberately
- * darker and more sober/muted — the collection colors are toned down so
- * dark mode reads as calm rather than loud.
+ * The whole site uses the start screen's look: the purple → cyan banner
+ * gradient as a fixed backdrop (body::before), with every surface a sheet
+ * of white glass on top of it. So --paper/--mist/--line are translucent
+ * white and --ink is white; --night is the fixed dark text color for the
+ * few places that sit on an opaque light fill (cyan buttons, badges).
+ * Dark mode only dims the glass. Use the `glass` utility for any panel,
+ * card or tile — it is the start screen's exact panel treatment.
  *
  * Keep in sync with src/lib/config/colors.ts, which is the reference for
  * the *light-mode* hex values (used outside CSS, e.g. future OG images).
@@ -14,7 +18,7 @@
  * Toggling is class-based (`.dark` on <html>), driven by a server-read
  * cookie — see src/components/providers/ThemeProvider.tsx.
  *
- * --accent is deliberately darker than the raw "hot pink" it started as:
+ * --accent is deliberately darker than the raw brand cyan it's based on:
  * white button text on it needs to clear WCAG AA contrast (4.5:1), which
  * ruled out anything much lighter than this in either theme.
  */
@@ -25,12 +29,13 @@
   --font-heading: var(--font-fredoka);
   --font-body: var(--font-inter);
 
-  /* Brand neutrals — light mode: bright white, near-black text */
-  --ink: #14121a;
-  --paper: #ffffff;
-  --mist: #f6f4fa;
-  --line: #e7e3f0;
-  --accent: #db2777;
+  /* Glass neutrals — white text on white glass over the banner gradient */
+  --ink: #ffffff;
+  --night: #14121a;
+  --paper: rgb(255 255 255 / 0.15);
+  --mist: rgb(255 255 255 / 0.08);
+  --line: rgb(255 255 255 / 0.3);
+  --accent: #0b7f86;
 
   /* Logo/banner brand palette — fixed across light & dark, used for
      headings, button text and nav instead of plain black. */
@@ -38,6 +43,9 @@
   --brand-purple: #8c52ff;
   --brand-pink: #ff66c4;
   --brand-periwinkle: #739df3;
+  /* Darker cyan for text/links on white — raw cyan only reaches ~1.6:1
+     there. Lightens back to raw cyan in dark mode (see .dark below). */
+  --brand-cyan-deep: #0b7f86;
 
   /* Collection accents — light mode: vivid */
   --doll-mini: #ff4fa0;
@@ -57,12 +65,10 @@
 }
 
 .dark {
-  /* Brand neutrals — dark mode: deep, sober, muted */
-  --ink: #e9e7ee;
-  --paper: #121016;
-  --mist: #1a1820;
-  --line: #2a2732;
-  --accent: #b23d68;
+  /* Dark mode: same glass, dimmed */
+  --paper: rgb(18 16 22 / 0.35);
+  --mist: rgb(18 16 22 / 0.2);
+  --line: rgb(255 255 255 / 0.2);
 
   /* Collection accents — dark mode: desaturated, soft backgrounds */
   --doll-mini: #c97da8;
@@ -83,6 +89,7 @@
 
 @theme inline {
   --color-ink: var(--ink);
+  --color-night: var(--night);
   --color-paper: var(--paper);
   --color-mist: var(--mist);
   --color-line: var(--line);
@@ -92,6 +99,7 @@
   --color-brand-purple: var(--brand-purple);
   --color-brand-pink: var(--brand-pink);
   --color-brand-periwinkle: var(--brand-periwinkle);
+  --color-brand-cyan-deep: var(--brand-cyan-deep);
 
   --color-doll-mini: var(--doll-mini);
   --color-doll-mini-soft: var(--doll-mini-soft);
@@ -117,12 +125,101 @@
 }
 
 body {
-  background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-body);
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease;
+}
+
+/*
+ * Site backdrop — a fixed layer behind everything (a pseudo-element
+ * instead of background-attachment: fixed, which iOS Safari ignores).
+ *
+ * Several candidates live side by side while the look is being decided;
+ * <html data-bg="…"> picks one (see BackdropPicker.tsx, dev only). The
+ * bare :root value is what production shows.
+ *
+ *   banner   — the original purple → cyan banner gradient (Banner_3DPIY.png)
+ *   night    — deep indigo with soft purple/cyan/pink glows
+ *   graphite — neutral warm charcoal; no hue of its own, so every
+ *              collection color reads true
+ *   spectrum — charcoal with faint glows in the collection colors
+ *              themselves (pink, orange, yellow, green, blue)
+ *   plum     — deep warm aubergine; sits well with pink/orange/yellow
+ *   slate    — cool blue-grey, calm and neutral-leaning
+ */
+:root {
+  --backdrop-banner: linear-gradient(135deg, #8c52ff 0%, #739df3 50%, #5ce1e6 100%);
+  --backdrop-night:
+    radial-gradient(60% 50% at 10% 0%, rgb(140 82 255 / 0.55), transparent 70%),
+    radial-gradient(50% 45% at 100% 100%, rgb(92 225 230 / 0.35), transparent 70%),
+    radial-gradient(35% 30% at 90% 15%, rgb(255 102 196 / 0.25), transparent 70%),
+    linear-gradient(160deg, #1b1438 0%, #120f26 55%, #0d1a2b 100%);
+  --backdrop-graphite:
+    radial-gradient(70% 60% at 50% 0%, rgb(255 255 255 / 0.06), transparent 70%),
+    linear-gradient(160deg, #2a2730 0%, #1d1b22 60%, #17161b 100%);
+  --backdrop-spectrum:
+    radial-gradient(35% 35% at 0% 10%, rgb(255 79 160 / 0.35), transparent 70%),
+    radial-gradient(30% 30% at 35% 0%, rgb(255 122 61 / 0.25), transparent 70%),
+    radial-gradient(30% 30% at 70% 5%, rgb(255 201 61 / 0.2), transparent 70%),
+    radial-gradient(35% 35% at 100% 45%, rgb(47 142 255 / 0.3), transparent 70%),
+    radial-gradient(40% 35% at 10% 100%, rgb(47 191 113 / 0.25), transparent 70%),
+    radial-gradient(40% 40% at 85% 100%, rgb(139 92 246 / 0.3), transparent 70%),
+    linear-gradient(160deg, #211f27 0%, #1a1820 100%);
+  --backdrop-plum:
+    radial-gradient(55% 45% at 0% 0%, rgb(255 79 160 / 0.25), transparent 70%),
+    radial-gradient(50% 45% at 100% 100%, rgb(255 122 61 / 0.18), transparent 70%),
+    linear-gradient(160deg, #3a1d3a 0%, #2a1630 55%, #1f1428 100%);
+  --backdrop-slate:
+    radial-gradient(60% 50% at 100% 0%, rgb(255 255 255 / 0.07), transparent 70%),
+    linear-gradient(160deg, #3a4354 0%, #2c3443 55%, #232a37 100%);
+  --backdrop: var(--backdrop-banner);
+}
+
+:root[data-bg="night"] {
+  --backdrop: var(--backdrop-night);
+}
+:root[data-bg="graphite"] {
+  --backdrop: var(--backdrop-graphite);
+}
+:root[data-bg="spectrum"] {
+  --backdrop: var(--backdrop-spectrum);
+}
+:root[data-bg="plum"] {
+  --backdrop: var(--backdrop-plum);
+}
+:root[data-bg="slate"] {
+  --backdrop: var(--backdrop-slate);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--backdrop);
+}
+
+.dark body::before {
+  background:
+    linear-gradient(rgb(0 0 0 / 0.35), rgb(0 0 0 / 0.35)),
+    var(--backdrop);
+}
+
+/* The start screen's panel treatment — use for every panel, card and tile. */
+@utility glass {
+  border-width: 1px;
+  border-color: var(--line);
+  background-color: var(--paper);
+  @apply shadow-xl backdrop-blur-lg;
+}
+
+/* Native dropdown lists render on an opaque light surface. */
+option,
+optgroup {
+  color: var(--night);
+}
+
+::placeholder {
+  color: rgb(255 255 255 / 0.6);
 }
 
 h1,

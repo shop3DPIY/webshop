@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { fontHeading, fontBody } from "@/lib/config/fonts";
 import "../globals.css";
+import { BackdropPicker } from "@/components/system/BackdropPicker";
 
 /**
  * 3DPIY Studio is a deliberately separate root (own <html>/<body>, no
@@ -13,10 +14,20 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function StudioLayout({ children }: { children: React.ReactNode }) {
+export default function StudioLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" className={`${fontHeading.variable} ${fontBody.variable} h-full antialiased`}>
-      <body className="bg-paper text-ink min-h-full">{children}</body>
+    <html
+      lang="en"
+      className={`${fontHeading.variable} ${fontBody.variable} h-full antialiased`}
+    >
+      <body className="bg-paper text-ink min-h-full">
+        {children}
+        <BackdropPicker />
+      </body>
     </html>
   );
 }

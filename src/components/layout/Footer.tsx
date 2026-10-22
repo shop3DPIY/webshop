@@ -23,7 +23,7 @@ export async function Footer() {
   const headingColor =
     cookieStore.get(TRACK_COOKIE)?.value === "serious-games"
       ? "text-brand-cyan"
-      : "text-brand-pink";
+      : "text-ink";
 
   return (
     <footer className="border-line bg-mist border-t">
@@ -35,7 +35,7 @@ export async function Footer() {
 
         <div>
           <h4 className={`${headingColor} mb-3 text-sm font-semibold`}>{t("shopHeading")}</h4>
-          <ul className="text-brand-purple space-y-2 text-sm">
+          <ul className="text-ink space-y-2 text-sm">
             <li><Link href="/shop">{t("shopAll")}</Link></li>
             <li><Link href="/free-designs">{t("shopFree")}</Link></li>
             <li><Link href="/business">{t("shopBusiness")}</Link></li>
@@ -44,7 +44,7 @@ export async function Footer() {
 
         <div>
           <h4 className={`${headingColor} mb-3 text-sm font-semibold`}>{t("legalHeading")}</h4>
-          <ul className="text-brand-purple space-y-2 text-sm">
+          <ul className="text-ink space-y-2 text-sm">
             {LEGAL_LINKS.map((link) => (
               <li key={link.href}>
                 <Link href={link.href}>{t(link.key)}</Link>

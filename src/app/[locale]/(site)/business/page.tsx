@@ -41,22 +41,22 @@ export default async function BusinessPage() {
       <SectionHeading as="h1" eyebrow={t("eyebrow")} title={t("title")} description={t("intro")} />
 
       <div className="grid gap-8 lg:grid-cols-2">
-        <div className="border-line rounded-3xl border p-8">
-          <h2 className="font-display text-brand-purple text-xl font-semibold">
+        <div className="rounded-3xl p-8 glass">
+          <h2 className="font-display text-ink text-xl font-semibold">
             {t("licensingTitle")}
           </h2>
           <p className="text-ink/70 mt-3 text-sm sm:text-base">{t("licensingBody")}</p>
         </div>
 
-        <div className="border-line rounded-3xl border p-8">
-          <h2 className="font-display text-brand-purple text-xl font-semibold">
+        <div className="rounded-3xl p-8 glass">
+          <h2 className="font-display text-ink text-xl font-semibold">
             {t("commissionsTitle")}
           </h2>
           <p className="text-ink/70 mt-3 text-sm sm:text-base">{t("commissionsBody")}</p>
           <ul className="text-ink/70 mt-4 space-y-2 text-sm">
             {bullets.map((bullet) => (
               <li key={bullet} className="flex gap-2">
-                <span className="text-accent" aria-hidden>•</span>
+                <span className="text-brand-cyan" aria-hidden>•</span>
                 {bullet}
               </li>
             ))}

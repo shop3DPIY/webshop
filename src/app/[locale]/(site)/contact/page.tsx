@@ -24,7 +24,7 @@ export default async function ContactPage() {
         <ContactForm />
         <p className="text-ink/60 mt-6 text-sm">
           {t("emailFallbackLabel")}{" "}
-          <a href={`mailto:${CONTACT_EMAIL}`} className="text-accent font-medium">
+          <a href={`mailto:${CONTACT_EMAIL}`} className="text-ink font-semibold underline underline-offset-2">
             {CONTACT_EMAIL}
           </a>
         </p>

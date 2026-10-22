@@ -21,20 +21,29 @@ export function AdminShell({
     <div className="flex min-h-full flex-col">
       <a
         href="#main-content"
-        className="bg-accent focus:top-4 focus:left-4 fixed -top-20 left-4 z-50 rounded-full px-4 py-2 text-sm font-semibold text-white focus:outline-none"
+        className="bg-brand-cyan text-night hover:bg-brand-purple hover:text-white transition-colors focus:top-4 focus:left-4 fixed -top-20 left-4 z-50 rounded-full px-4 py-2 text-sm font-semibold focus:outline-none"
       >
         Skip to content
       </a>
-      <header className="border-line bg-paper sticky top-0 z-40 border-b">
+      <header className="border-line bg-paper sticky top-0 z-40 border-b shadow-xl backdrop-blur-lg">
         <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <span className="font-display text-lg font-bold">3DPIY Studio</span>
-              <span className="bg-ink text-paper rounded-full px-2.5 py-0.5 text-xs font-bold tracking-wide uppercase">
+              <span className="bg-white text-night rounded-full px-2.5 py-0.5 text-xs font-bold tracking-wide uppercase">
                 Admin
               </span>
             </div>
             <div className="flex items-center gap-3">
+              {/* Plain <a>: the customer site lives in a different root
+                  layout ([locale]), so this is a full navigation. "/" lands
+                  on the last-picked track, or the chooser. */}
+              <a
+                href="/"
+                className="border-line bg-mist hover:bg-paper rounded-full border px-4 py-1.5 text-sm font-medium transition-colors"
+              >
+                ← View site
+              </a>
               <span className="text-ink/60 hidden text-sm sm:inline">
                 Signed in as {adminName || adminEmail}
               </span>

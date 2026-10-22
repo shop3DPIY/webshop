@@ -16,7 +16,7 @@ export default async function ForgotPasswordPage() {
   return (
     <Container className="flex flex-col gap-8 py-16 sm:py-24">
       <div className="mx-auto w-full max-w-sm">
-        <h1 className="font-display text-brand-pink text-center text-2xl font-bold">
+        <h1 className="font-display text-ink text-center text-2xl font-bold">
           {t("forgotTitle")}
         </h1>
 
@@ -25,7 +25,7 @@ export default async function ForgotPasswordPage() {
         </div>
 
         <p className="text-ink/60 mt-6 text-center text-sm">
-          <Link href="/auth/sign-in" className="text-accent font-medium">
+          <Link href="/auth/sign-in" className="text-ink font-semibold underline underline-offset-2">
             {t("backToSignIn")}
           </Link>
         </p>

@@ -15,7 +15,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
     <>
       <a
         href="#main-content"
-        className="bg-accent focus:top-4 focus:left-4 fixed -top-20 left-4 z-50 rounded-full px-4 py-2 text-sm font-semibold text-white focus:outline-none"
+        className="bg-brand-cyan text-night hover:bg-brand-purple hover:text-white transition-colors focus:top-4 focus:left-4 fixed -top-20 left-4 z-50 rounded-full px-4 py-2 text-sm font-semibold focus:outline-none"
       >
         {tNav("skipToContent")}
       </a>

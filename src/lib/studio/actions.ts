@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { COLLECTIONS, type CollectionSlug } from "@/lib/config/colors";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { requireAdmin } from "./guard";
 
@@ -49,6 +50,23 @@ async function uploadIfPresent(
   if (error) throw error;
 
   return path;
+}
+
+/**
+ * Extra collections from the form's checkboxes, limited to the primary
+ * category's track (a product can't be both personal- and commercial-
+ * licensed) and never repeating the primary category itself.
+ */
+function extraCategoriesFor(formData: FormData, category: string): CollectionSlug[] {
+  const primary = COLLECTIONS[category as CollectionSlug];
+  if (!primary) return [];
+  return formData
+    .getAll("extraCategories")
+    .map(String)
+    .filter((slug): slug is CollectionSlug => {
+      const c = COLLECTIONS[slug as CollectionSlug];
+      return !!c && slug !== category && c.track === primary.track;
+    });
 }
 
 /**
@@ -114,11 +132,14 @@ export async function persistProduct(formData: FormData): Promise<{ id: string }
     compatiblePrinters: splitList(formData.get("compatiblePrinters")),
   };
 
+  const category = String(formData.get("category") ?? "");
+
   const payload = {
     slug,
     title: titleInput,
     description: String(formData.get("description") ?? ""),
-    category: String(formData.get("category") ?? ""),
+    category,
+    extra_categories: extraCategoriesFor(formData, category),
     tags: splitList(formData.get("tags")),
     images,
     download_files: downloadFiles,

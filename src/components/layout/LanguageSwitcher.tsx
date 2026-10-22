@@ -19,7 +19,7 @@ export function LanguageSwitcher() {
   // Serious Games is the no-pink B2B track (see Button.tsx's "Alt" variants) —
   // the active-locale pill follows the same rule.
   const isSeriousGames = pathname === "/serious-games" || pathname.startsWith("/serious-games/");
-  const activeClasses = isSeriousGames ? "bg-brand-cyan text-ink" : "bg-brand-pink text-white";
+  const activeClasses = isSeriousGames ? "bg-brand-cyan text-night" : "bg-brand-cyan text-night";
 
   return (
     <div className="flex items-center gap-1" aria-label={t("label")}>
@@ -30,7 +30,7 @@ export function LanguageSwitcher() {
           onClick={() => router.replace(pathname, { locale: loc })}
           aria-current={loc === locale}
           className={`rounded-full px-2.5 py-1 text-xs font-semibold transition-colors ${
-            loc === locale ? activeClasses : "text-brand-purple hover:bg-brand-purple/10"
+            loc === locale ? activeClasses : "text-ink hover:bg-brand-purple/10"
           }`}
         >
           {LABELS[loc] ?? loc.toUpperCase()}

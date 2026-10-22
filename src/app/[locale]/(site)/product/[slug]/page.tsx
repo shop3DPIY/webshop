@@ -125,7 +125,7 @@ export default async function ProductPage({
       </Link>
 
       <div className="grid gap-10 lg:grid-cols-2">
-        <div className={`relative aspect-square overflow-hidden rounded-3xl ${classes.bgSoft}`}>
+        <div className={`glass relative aspect-square overflow-hidden rounded-3xl ${classes.border} ${classes.wash}`}>
           {cover && (
             <Image
               src={cover.src}
@@ -136,7 +136,7 @@ export default async function ProductPage({
               priority
             />
           )}
-          <Badge className="bg-paper/95 text-ink border-line absolute top-4 left-4 gap-1.5 border">
+          <Badge className="bg-white/90 text-night border-white absolute top-4 left-4 gap-1.5 border">
             <span className={`h-2 w-2 rounded-full ${classes.bg}`} aria-hidden />
             {collection.name}
           </Badge>
@@ -144,7 +144,7 @@ export default async function ProductPage({
 
         <div className="flex flex-col gap-6">
           <div>
-            <h1 className="font-display text-brand-pink text-3xl font-bold sm:text-4xl">
+            <h1 className="font-display text-ink text-3xl font-bold sm:text-4xl">
               {product.title}
             </h1>
             <p className="text-ink/70 mt-3 text-base sm:text-lg">{product.description}</p>
@@ -154,7 +154,7 @@ export default async function ProductPage({
             <p className="text-ink/70 text-sm">{product.printSettings.instructions}</p>
           )}
 
-          <div className="border-line rounded-3xl border p-6">
+          <div className="rounded-3xl p-6 glass">
             {checkout.mode === "redirect" && checkout.url ? (
               <Button href={checkout.url} size="lg" className="w-full">
                 {product.isFree ? tBuy("getFree") : tBuy("buyNow")}
@@ -177,7 +177,7 @@ export default async function ProductPage({
 
       {related.length > 0 && (
         <div className="flex flex-col gap-6">
-          <h2 className="font-display text-brand-purple text-2xl font-semibold">
+          <h2 className="font-display text-ink text-2xl font-semibold">
             {tSpecs("relatedTitle")}
           </h2>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
