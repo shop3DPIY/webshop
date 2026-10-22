@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { cookies } from "next/headers";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link, redirect } from "@/i18n/navigation";
+import { LogoImage } from "@/components/layout/LogoImage";
 import { TRACK_COOKIE, isTrack } from "@/lib/config/track";
 import { getTrackCollections } from "@/lib/config/colors";
 
@@ -40,14 +40,7 @@ export default async function TrackChooserPage({
       <div className="relative flex h-full w-full flex-col items-center justify-center px-6 py-8">
         <div className="flex w-full max-w-4xl flex-col items-center gap-6 rounded-xl p-8 text-center sm:p-10 glass">
           <div className="flex flex-col items-center gap-3">
-            <Image
-              src="/images/logo/Logo_3DPIY-transparent.png"
-              alt="3DPIY"
-              width={334}
-              height={216}
-              priority
-              className="h-16 w-auto sm:h-20"
-            />
+            <LogoImage priority className="h-16 w-auto sm:h-20" />
             <h1 className="font-display text-xl font-bold text-ink sm:text-2xl">
               {t("title")}
             </h1>

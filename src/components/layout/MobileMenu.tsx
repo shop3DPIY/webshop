@@ -48,7 +48,7 @@ export function MobileMenu() {
       </button>
 
       {open && (
-        <div className="border-line bg-paper absolute inset-x-0 top-16 z-30 border-b p-4 shadow-lg">
+        <div className="border-line bg-paper absolute inset-x-0 top-20 z-30 border-b p-4 shadow-lg">
           <nav className="flex flex-col gap-1">
             {NAV_KEYS.filter((key) => key !== "business" || isSeriousGames).map(
               (key) => (

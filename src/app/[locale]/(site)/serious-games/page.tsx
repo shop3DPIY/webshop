@@ -31,7 +31,7 @@ export default async function SeriousGamesPage() {
       <section>
         <Container className="py-20 sm:py-28">
           <div className="glass flex flex-col items-start gap-6 rounded-xl px-8 py-10 text-left sm:px-12">
-            <span className="border-brand-periwinkle/40 bg-mist inline-flex rounded-full border px-4 py-1.5 text-sm font-medium text-ink">
+            <span className="border-brand-purple bg-brand-purple/15 inline-flex rounded-full border backdrop-blur-lg px-4 py-1.5 text-sm font-medium text-ink">
               {tHero("eyebrow")}
             </span>
             <h1 className="font-display max-w-2xl text-4xl font-bold text-ink sm:text-5xl">

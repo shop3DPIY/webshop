@@ -60,31 +60,55 @@
   --tech-electronics-soft: #dceaff;
   --other: #6b7280;
   --other-soft: #e8e9ec;
-  --serious-games: #8b5cf6;
+  --serious-games: #8c52ff;
   --serious-games-soft: #eae1fc;
+
+  /* Tile fills: a tint of the collection color (light mode) */
+  --doll-mini-wash: color-mix(in srgb, var(--doll-mini) 15%, transparent);
+  --doll-mini-wash-hover: color-mix(in srgb, var(--doll-mini) 45%, transparent);
+  --home-living-wash: color-mix(in srgb, var(--home-living) 15%, transparent);
+  --home-living-wash-hover: color-mix(
+    in srgb,
+    var(--home-living) 45%,
+    transparent
+  );
+  --ikea-hacks-wash: color-mix(in srgb, var(--ikea-hacks) 15%, transparent);
+  --ikea-hacks-wash-hover: color-mix(
+    in srgb,
+    var(--ikea-hacks) 45%,
+    transparent
+  );
+  --organize-wash: color-mix(in srgb, var(--organize) 15%, transparent);
+  --organize-wash-hover: color-mix(in srgb, var(--organize) 45%, transparent);
+  --tech-electronics-wash: color-mix(
+    in srgb,
+    var(--tech-electronics) 15%,
+    transparent
+  );
+  --tech-electronics-wash-hover: color-mix(
+    in srgb,
+    var(--tech-electronics) 45%,
+    transparent
+  );
+  --other-wash: color-mix(in srgb, var(--other) 15%, transparent);
+  --other-wash-hover: color-mix(in srgb, var(--other) 45%, transparent);
+  --serious-games-wash: color-mix(
+    in srgb,
+    var(--serious-games) 15%,
+    transparent
+  );
+  --serious-games-wash-hover: color-mix(
+    in srgb,
+    var(--serious-games) 45%,
+    transparent
+  );
 }
 
 .dark {
-  /* Dark mode: same glass, dimmed */
-  --paper: rgb(18 16 22 / 0.35);
-  --mist: rgb(18 16 22 / 0.2);
-  --line: rgb(255 255 255 / 0.2);
-
-  /* Collection accents — dark mode: desaturated, soft backgrounds */
-  --doll-mini: #c97da8;
-  --doll-mini-soft: #2a1f28;
-  --home-living: #c98f66;
-  --home-living-soft: #28211c;
-  --ikea-hacks: #c2a44f;
-  --ikea-hacks-soft: #28241a;
-  --organize: #5ea57c;
-  --organize-soft: #1b241f;
-  --tech-electronics: #6a93c4;
-  --tech-electronics-soft: #1b222c;
-  --other: #9ca3af;
-  --other-soft: #22252b;
-  --serious-games: #9b85c9;
-  --serious-games-soft: #221f2c;
+  /* Dark mode: light white glass on the near-black backdrop */
+  --paper: rgb(255 255 255 / 0.07);
+  --mist: rgb(255 255 255 / 0.04);
+  --line: rgb(255 255 255 / 0.18);
 }
 
 @theme inline {
@@ -121,6 +145,20 @@
   --color-other-soft: var(--other-soft);
   --color-serious-games: var(--serious-games);
   --color-serious-games-soft: var(--serious-games-soft);
+  --color-doll-mini-wash: var(--doll-mini-wash);
+  --color-doll-mini-wash-hover: var(--doll-mini-wash-hover);
+  --color-home-living-wash: var(--home-living-wash);
+  --color-home-living-wash-hover: var(--home-living-wash-hover);
+  --color-ikea-hacks-wash: var(--ikea-hacks-wash);
+  --color-ikea-hacks-wash-hover: var(--ikea-hacks-wash-hover);
+  --color-organize-wash: var(--organize-wash);
+  --color-organize-wash-hover: var(--organize-wash-hover);
+  --color-tech-electronics-wash: var(--tech-electronics-wash);
+  --color-tech-electronics-wash-hover: var(--tech-electronics-wash-hover);
+  --color-other-wash: var(--other-wash);
+  --color-other-wash-hover: var(--other-wash-hover);
+  --color-serious-games-wash: var(--serious-games-wash);
+  --color-serious-games-wash-hover: var(--serious-games-wash-hover);
 
   --font-sans: var(--font-body);
   --font-display: var(--font-heading);
@@ -245,9 +283,40 @@ body::before {
   background: var(--backdrop);
 }
 
+/* Dark mode: same look on both tracks — near-black with a few faint, deep
+   glows so the glass has something to blur (on pure black it vanishes).
+   Only button and heading colors still differ per track (--action,
+   --heading). */
 .dark body::before {
   background:
-    linear-gradient(rgb(0 0 0 / 0.35), rgb(0 0 0 / 0.35)), var(--backdrop);
+    radial-gradient(75% 70% at 0% 0%, rgb(140 82 255 / 0.24), transparent 85%),
+    radial-gradient(
+      65% 60% at 100% 15%,
+      rgb(255 79 160 / 0.14),
+      transparent 85%
+    ),
+    radial-gradient(
+      80% 75% at 100% 100%,
+      rgb(47 142 255 / 0.19),
+      transparent 85%
+    ),
+    radial-gradient(
+      65% 60% at 0% 100%,
+      rgb(92 225 230 / 0.11),
+      transparent 85%
+    ),
+    #050408;
+}
+
+/* Serious Games in dark mode: the same near-black, but with its own
+   cyan-green + purple glows (the banner's colors). */
+.dark:where([data-track="serious-games"]:not(:has([data-track-page="dolls"])), :has([data-track-page="serious-games"])) body::before {
+  background:
+    radial-gradient(80% 75% at 0% 0%, rgb(92 225 230 / 0.2), transparent 85%),
+    radial-gradient(65% 60% at 0% 100%, rgb(47 191 160 / 0.12), transparent 85%),
+    radial-gradient(80% 75% at 100% 100%, rgb(140 82 255 / 0.24), transparent 85%),
+    radial-gradient(65% 60% at 100% 10%, rgb(140 82 255 / 0.12), transparent 85%),
+    #050408;
 }
 
 /* The start screen's panel treatment — use for every panel, card and tile. */
@@ -263,6 +332,9 @@ body::before {
    bg-* class (collection washes, hovers) keep it. */
 .glass .glass {
   --glass-fill: rgb(255 255 255 / 0.06);
+}
+.dark .glass .glass {
+  --glass-fill: rgb(0 0 0 / 0.08);
 }
 
 /* Native dropdown lists render on an opaque light surface. */
