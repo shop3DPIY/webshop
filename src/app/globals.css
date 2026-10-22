@@ -289,20 +289,20 @@ body::before {
    --heading). */
 .dark body::before {
   background:
-    radial-gradient(75% 70% at 0% 0%, rgb(140 82 255 / 0.24), transparent 85%),
+    radial-gradient(95% 90% at 0% 0%, rgb(140 82 255 / 0.34), transparent 85%),
     radial-gradient(
-      65% 60% at 100% 15%,
-      rgb(255 79 160 / 0.14),
+      85% 80% at 100% 15%,
+      rgb(255 79 160 / 0.22),
       transparent 85%
     ),
     radial-gradient(
-      80% 75% at 100% 100%,
-      rgb(47 142 255 / 0.19),
+      100% 95% at 100% 100%,
+      rgb(47 142 255 / 0.28),
       transparent 85%
     ),
     radial-gradient(
-      65% 60% at 0% 100%,
-      rgb(92 225 230 / 0.11),
+      85% 80% at 0% 100%,
+      rgb(92 225 230 / 0.18),
       transparent 85%
     ),
     #050408;
