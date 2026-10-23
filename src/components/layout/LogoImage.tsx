@@ -15,10 +15,10 @@ export function LogoImage({
   return (
     <>
       <Image
-        src="/images/logo/Logo_3DPIY-transparent.png"
+        src="/images/logo/Logo_3DPIY_v2-transparent.png"
         alt="3DPIY"
-        width={334}
-        height={216}
+        width={345}
+        height={237}
         priority={priority}
         className={`dark:hidden ${className}`}
       />
