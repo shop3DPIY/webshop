@@ -93,6 +93,28 @@ npx supabase gen types typescript --project-id <your-project-id> > src/lib/supab
    permalink** (Studio → Products → edit a product) so purchases can be
    matched to the right product.
 
+## 6b. Auth emails and redirects
+
+In Supabase → **Authentication** → **URL Configuration**:
+
+- **Site URL:** `https://3dpiy.com`
+- **Redirect URLs:** `https://3dpiy.com/**` and `http://localhost:3000/**`
+
+Without these, password-reset and confirmation links fall back to the
+Site URL — they land on the homepage instead of the reset form.
+
+**Sign in with an email code:** in **Authentication** → **Emails** →
+**Magic Link**, the template must contain `{{ .Token }}` (the code), e.g.
+`<p>Your 3DPIY sign-in code: <strong>{{ .Token }}</strong></p>`.
+
+Supabase's built-in mailer only sends a few emails per hour — fine for
+testing, but connect your own SMTP (Authentication → Emails → SMTP
+Settings) before real customers sign in.
+
+**Preview the gated site:** set `SITE_PREVIEW_SECRET` (8+ characters) in
+Netlify's environment variables, deploy, then open
+`https://3dpiy.com/?preview=<secret>`; `?preview=off` ends it.
+
 ## 7. Deploy
 
 Any Next.js host works (Vercel is the simplest fit — zero-config, free
