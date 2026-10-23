@@ -32,30 +32,47 @@ export default async function RecalculatePage({
 
   const rows = (products ?? []).map((p) => {
     const result = calculatePrices(settings, {
-      category: (p.category in COLLECTIONS ? p.category : "other") as CollectionSlug,
+      category: (p.category in COLLECTIONS
+        ? p.category
+        : "other") as CollectionSlug,
       complexity: p.complexity as Complexity,
       isSet: p.is_set,
       partCount: p.part_count,
       includesStep: p.includes_step,
     });
     const current = storedPrices(p).chosen;
-    const next = Object.fromEntries(PRICE_TIERS.map((t) => [t, tierCents(result, t)]));
+    const next = Object.fromEntries(
+      PRICE_TIERS.map((t) => [t, tierCents(result, t)]),
+    );
     const changed = PRICE_TIERS.some((t) => current[t] !== next[t]);
     const overridden = (p.price_overrides ?? []).length > 0;
-    return { id: p.id as string, title: p.title as string, current, next, changed, overridden };
+    return {
+      id: p.id as string,
+      title: p.title as string,
+      current,
+      next,
+      changed,
+      overridden,
+    };
   });
 
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <Link href="/studio/pricing" className="text-ink/60 hover:text-ink text-sm">
+        <Link
+          href="/studio/pricing"
+          className="text-ink/60 hover:text-ink text-sm"
+        >
           ← Pricing
         </Link>
-        <h1 className="font-display mt-2 text-2xl font-bold">Recalculate prices</h1>
+        <h1 className="font-display mt-2 text-2xl font-bold">
+          Recalculate prices
+        </h1>
         <p className="text-ink/60 mt-1 max-w-2xl text-sm">
-          Current price → new price from the saved price table (P = Personal, S = Small,
-          U = Unlimited). Ticked products get the new prices; hand-typed prices on them are
-          replaced too. Don&apos;t forget to update Payhip.
+          Current price → new price from the saved price table (P = Personal, S
+          = Small, U = Unlimited). Ticked products get the new prices;
+          hand-typed prices on them are replaced too. Don&apos;t forget to
+          update Payhip.
         </p>
       </div>
 
@@ -68,10 +85,15 @@ export default async function RecalculatePage({
       <form action={applyRecalculation} className="flex flex-col gap-6">
         <div className="divide-line divide-y rounded-3xl glass">
           {rows.length === 0 && (
-            <p className="text-ink/60 p-8 text-center text-sm">No products yet.</p>
+            <p className="text-ink/60 p-8 text-center text-sm">
+              No products yet.
+            </p>
           )}
           {rows.map((r) => (
-            <label key={r.id} className="hover:bg-mist flex flex-wrap items-center gap-4 p-5 text-sm">
+            <label
+              key={r.id}
+              className="hover:bg-mist flex flex-wrap items-center gap-4 p-5 text-sm"
+            >
               <input
                 type="checkbox"
                 name="productId"
@@ -86,7 +108,9 @@ export default async function RecalculatePage({
                     overridden
                   </span>
                 )}
-                {!r.changed && <span className="text-ink/60 ml-2 text-xs">unchanged</span>}
+                {!r.changed && (
+                  <span className="text-ink/60 ml-2 text-xs">unchanged</span>
+                )}
               </span>
               <span className="text-ink/80 flex flex-wrap gap-4">
                 {PRICE_TIERS.map((t) => (
@@ -94,7 +118,10 @@ export default async function RecalculatePage({
                     {TIER_SHORT[t]}:{" "}
                     {r.current[t] == null ? "—" : formatEuro(r.current[t]!)}
                     {r.current[t] !== r.next[t] && (
-                      <span className="font-semibold"> → {formatEuro(r.next[t])}</span>
+                      <span className="font-semibold">
+                        {" "}
+                        → {formatEuro(r.next[t])}
+                      </span>
                     )}
                   </span>
                 ))}

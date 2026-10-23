@@ -18,21 +18,38 @@ const INPUT = "border-line bg-paper w-24 rounded-xl border px-3 py-2 text-sm";
 const BUTTON_SECONDARY =
   "border-line bg-mist hover:border-brand-purple hover:bg-brand-purple/45 rounded-full border px-5 py-2.5 text-sm font-semibold transition-colors";
 
-type CategoryRow = { base: string; min: string; max: string; inSubscription: boolean };
+type CategoryRow = {
+  base: string;
+  min: string;
+  max: string;
+  inSubscription: boolean;
+};
 
 /** The general settings, in display order: key, label, and money vs factor. */
 const GENERAL: { key: GeneralKey; label: string; money: boolean }[] = [
   { key: "simple", label: "Simple factor", money: false },
   { key: "standard", label: "Standard factor", money: false },
   { key: "complex", label: "Complex factor", money: false },
-  { key: "setFactorPerExtraPart", label: "Set factor per extra part", money: false },
+  {
+    key: "setFactorPerExtraPart",
+    label: "Set factor per extra part",
+    money: false,
+  },
   { key: "setFactorMax", label: "Maximum set factor", money: false },
   { key: "stepSurchargeCents", label: "STEP surcharge", money: true },
   { key: "smallFactor", label: "Small factor", money: false },
   { key: "smallMinimumCents", label: "Small minimum", money: true },
   { key: "unlimitedFactor", label: "Unlimited factor", money: false },
-  { key: "subscriptionMonthlyCents", label: "Subscription per month", money: true },
-  { key: "subscriptionYearlyCents", label: "Subscription per year", money: true },
+  {
+    key: "subscriptionMonthlyCents",
+    label: "Subscription per month",
+    money: true,
+  },
+  {
+    key: "subscriptionYearlyCents",
+    label: "Subscription per year",
+    money: true,
+  },
   { key: "customFromCents", label: "Custom work from", money: true },
 ];
 
@@ -98,7 +115,10 @@ function fromForm(
   };
 
   const cats = {} as PricingSettings["categories"];
-  for (const [slug, row] of Object.entries(categories) as [CollectionSlug, CategoryRow][]) {
+  for (const [slug, row] of Object.entries(categories) as [
+    CollectionSlug,
+    CategoryRow,
+  ][]) {
     const name = names[slug] ?? slug;
     cats[slug] = {
       baseCents: money(`${name} base price`, row.base),
@@ -116,7 +136,11 @@ function fromForm(
 
   const settings: PricingSettings = {
     categories: cats,
-    complexityFactors: { simple: g.simple, standard: g.standard, complex: g.complex },
+    complexityFactors: {
+      simple: g.simple,
+      standard: g.standard,
+      complex: g.complex,
+    },
     setFactorPerExtraPart: g.setFactorPerExtraPart,
     setFactorMax: g.setFactorMax,
     stepSurchargeCents: g.stepSurchargeCents,
@@ -152,7 +176,10 @@ export function PricingSettingsForm({
     setMessage(null);
     setForm((f) => ({
       ...f,
-      categories: { ...f.categories, [slug]: { ...f.categories[slug], ...patch } },
+      categories: {
+        ...f.categories,
+        [slug]: { ...f.categories[slug], ...patch },
+      },
     }));
   };
   const setGeneral = (key: GeneralKey, value: string) => {
@@ -186,66 +213,73 @@ export function PricingSettingsForm({
             </tr>
           </thead>
           <tbody className="divide-line divide-y">
-            {(Object.entries(form.categories) as [CollectionSlug, CategoryRow][]).map(
-              ([slug, row]) => {
-                const preview = valid
-                  ? calculatePrices(settings, {
-                      category: slug,
-                      complexity: "standard",
-                      isSet: false,
-                      partCount: 1,
-                      includesStep: false,
-                    })
-                  : null;
-                return (
-                  <tr key={slug}>
-                    <td className="p-4 font-medium">
-                      <span className="flex items-center gap-2">
-                        <span
-                          className="h-2.5 w-2.5 shrink-0 rounded-full"
-                          style={{ backgroundColor: colors[slug] }}
-                          aria-hidden
-                        />
-                        {names[slug] ?? slug}
-                      </span>
-                    </td>
-                    {(["base", "min", "max"] as const).map((field) => (
-                      <td key={field} className="p-4">
-                        <input
-                          type="text"
-                          inputMode="decimal"
-                          value={row[field]}
-                          onChange={(e) => setCategory(slug, { [field]: e.target.value })}
-                          aria-label={`${names[slug]} ${field}`}
-                          className={INPUT}
-                        />
-                      </td>
-                    ))}
-                    <td className="p-4">
+            {(
+              Object.entries(form.categories) as [CollectionSlug, CategoryRow][]
+            ).map(([slug, row]) => {
+              const preview = valid
+                ? calculatePrices(settings, {
+                    category: slug,
+                    complexity: "standard",
+                    isSet: false,
+                    partCount: 1,
+                    includesStep: false,
+                  })
+                : null;
+              return (
+                <tr key={slug}>
+                  <td className="p-4 font-medium">
+                    <span className="flex items-center gap-2">
+                      <span
+                        className="h-2.5 w-2.5 shrink-0 rounded-full"
+                        style={{ backgroundColor: colors[slug] }}
+                        aria-hidden
+                      />
+                      {names[slug] ?? slug}
+                    </span>
+                  </td>
+                  {(["base", "min", "max"] as const).map((field) => (
+                    <td key={field} className="p-4">
                       <input
-                        type="checkbox"
-                        checked={row.inSubscription}
-                        onChange={(e) => setCategory(slug, { inSubscription: e.target.checked })}
-                        aria-label={`${names[slug]} in subscription`}
-                        className="h-4 w-4"
+                        type="text"
+                        inputMode="decimal"
+                        value={row[field]}
+                        onChange={(e) =>
+                          setCategory(slug, { [field]: e.target.value })
+                        }
+                        aria-label={`${names[slug]} ${field}`}
+                        className={INPUT}
                       />
                     </td>
-                    <td className="text-ink/80 p-4 whitespace-nowrap">
-                      {preview
-                        ? `${formatEuro(preview.personalCents)} / ${formatEuro(preview.smallCents)} / ${formatEuro(preview.unlimitedCents)}`
-                        : "—"}
-                    </td>
-                  </tr>
-                );
-              },
-            )}
+                  ))}
+                  <td className="p-4">
+                    <input
+                      type="checkbox"
+                      checked={row.inSubscription}
+                      onChange={(e) =>
+                        setCategory(slug, { inSubscription: e.target.checked })
+                      }
+                      aria-label={`${names[slug]} in subscription`}
+                      className="h-4 w-4"
+                    />
+                  </td>
+                  <td className="text-ink/80 p-4 whitespace-nowrap">
+                    {preview
+                      ? `${formatEuro(preview.personalCents)} / ${formatEuro(preview.smallCents)} / ${formatEuro(preview.unlimitedCents)}`
+                      : "—"}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
 
       <div className="grid gap-4 rounded-3xl p-6 sm:grid-cols-2 lg:grid-cols-3 glass">
         {GENERAL.map(({ key, label, money }) => (
-          <label key={key} className="flex items-center justify-between gap-3 text-sm font-medium">
+          <label
+            key={key}
+            className="flex items-center justify-between gap-3 text-sm font-medium"
+          >
             {label}
             <span className="flex items-center gap-2">
               {money && <span className="text-ink/60">€</span>}

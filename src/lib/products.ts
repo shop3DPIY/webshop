@@ -25,6 +25,8 @@ interface ProductRow {
   slug: string;
   title: string;
   description: string;
+  title_nl: string | null;
+  description_nl: string | null;
   category: string;
   extra_categories: string[] | null;
   tags: string[];
@@ -49,6 +51,8 @@ function mapRow(row: ProductRow): Product {
     slug: row.slug,
     title: row.title,
     description: row.description,
+    titleNl: row.title_nl ?? undefined,
+    descriptionNl: row.description_nl ?? undefined,
     category: row.category as CollectionSlug,
     extraCategories: (row.extra_categories ?? []) as CollectionSlug[],
     tags: row.tags ?? [],
@@ -69,7 +73,7 @@ function mapRow(row: ProductRow): Product {
 }
 
 const PRODUCT_COLUMNS =
-  "id, slug, title, description, category, extra_categories, tags, images, timelapse_url, download_files, dimensions, print_settings, version, last_updated, license_type, is_free, external_commerce_id, publication_status, related_product_ids, external_links";
+  "id, slug, title, description, title_nl, description_nl, category, extra_categories, tags, images, timelapse_url, download_files, dimensions, print_settings, version, last_updated, license_type, is_free, external_commerce_id, publication_status, related_product_ids, external_links";
 
 export async function getAllProducts(): Promise<Product[]> {
   if (!isSupabaseConfigured()) return FALLBACK_PRODUCTS;

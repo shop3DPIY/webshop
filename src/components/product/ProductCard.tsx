@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import type { Product } from "@/types/product";
+import { productText, type Product } from "@/types/product";
 import { COLLECTION_CLASSNAMES } from "@/lib/config/colors";
 import { Badge } from "@/components/ui/Badge";
 
@@ -10,6 +10,7 @@ export function ProductCard({ product }: { product: Product }) {
   const tProductCard = useTranslations("productCard");
   const classes = COLLECTION_CLASSNAMES[product.category];
   const cover = product.images[0];
+  const text = productText(product, useLocale());
 
   return (
     <Link
@@ -37,8 +38,8 @@ export function ProductCard({ product }: { product: Product }) {
         )}
       </div>
       <div className="flex flex-1 flex-col p-4">
-        <h3 className="font-display text-ink text-base font-semibold">{product.title}</h3>
-        <p className="text-ink/60 mt-1 line-clamp-2 text-sm">{product.description}</p>
+        <h3 className="font-display text-ink text-base font-semibold">{text.title}</h3>
+        <p className="text-ink/60 mt-1 line-clamp-2 text-sm">{text.description}</p>
       </div>
     </Link>
   );

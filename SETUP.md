@@ -143,6 +143,14 @@ the sign-in mail can show a code): Supabase → Authentication → Emails →
 **SMTP Settings**: host `smtp.resend.com`, port `465`, username `resend`,
 password = the API key, sender = the same address as `MAIL_FROM`.
 
+## 6d. AI product texts
+
+"✨ Text with AI" in Studio and the ingest script both write product texts
+(English + Dutch) in one house style, defined in
+`src/lib/ai/productText.ts`. Needs `ANTHROPIC_API_KEY` in Netlify and
+`.env.local` (the same key the ingest script uses). Run migration
+`0011_product_text_nl.sql` for the Dutch columns.
+
 ## 7. Deploy
 
 Any Next.js host works (Vercel is the simplest fit — zero-config, free

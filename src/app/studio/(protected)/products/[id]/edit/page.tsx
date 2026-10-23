@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { ProductForm } from "@/components/studio/ProductForm";
 import { getPricingSettings } from "@/lib/pricing/settings";
+import { isAiConfigured } from "@/lib/ai/productText";
 
 export default async function EditProductPage({
   params,
@@ -10,7 +11,11 @@ export default async function EditProductPage({
 }) {
   const { id } = await params;
   const supabase = await createClient();
-  const { data: product } = await supabase!.from("products").select("*").eq("id", id).single();
+  const { data: product } = await supabase!
+    .from("products")
+    .select("*")
+    .eq("id", id)
+    .single();
 
   if (!product) notFound();
 
@@ -18,7 +23,11 @@ export default async function EditProductPage({
     <div className="flex flex-col gap-6">
       <h1 className="font-display text-2xl font-bold">Edit product</h1>
       <div className="max-w-2xl">
-        <ProductForm product={product} pricingSettings={await getPricingSettings()} />
+        <ProductForm
+          product={product}
+          pricingSettings={await getPricingSettings()}
+          aiAvailable={isAiConfigured()}
+        />
       </div>
     </div>
   );

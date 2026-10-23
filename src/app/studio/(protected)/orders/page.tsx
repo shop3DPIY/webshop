@@ -4,7 +4,9 @@ export default async function StudioOrdersPage() {
   const supabase = await createClient();
   const { data: orders } = await supabase!
     .from("orders")
-    .select("id, payhip_order_id, buyer_email, total_cents, currency, customer_id, created_at")
+    .select(
+      "id, payhip_order_id, buyer_email, total_cents, currency, customer_id, created_at",
+    )
     .order("created_at", { ascending: false });
 
   return (
@@ -14,7 +16,10 @@ export default async function StudioOrdersPage() {
       <div className="divide-line divide-y rounded-3xl glass">
         {orders && orders.length > 0 ? (
           orders.map((order) => (
-            <div key={order.id} className="flex items-center justify-between gap-4 p-5 text-sm">
+            <div
+              key={order.id}
+              className="flex items-center justify-between gap-4 p-5 text-sm"
+            >
               <div>
                 <p className="font-medium">{order.payhip_order_id}</p>
                 <p className="text-ink/60">
@@ -37,7 +42,8 @@ export default async function StudioOrdersPage() {
           ))
         ) : (
           <p className="text-ink/60 p-8 text-center text-sm">
-            No orders yet — these sync in automatically from the Payhip webhook once it&apos;s configured.
+            No orders yet — these sync in automatically from the Payhip webhook
+            once it&apos;s configured.
           </p>
         )}
       </div>

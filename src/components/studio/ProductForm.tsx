@@ -7,6 +7,7 @@ import type {
 } from "@/lib/pricing/calculate";
 import { PricingFields } from "./PricingFields";
 import { MediaFields } from "./MediaFields";
+import { ProductTextFields } from "./ProductTextFields";
 
 const TRACK_GROUPS = [
   { track: "dolls" as const, label: "Dolls & Mini" },
@@ -18,6 +19,8 @@ interface ExistingProduct {
   slug: string;
   title: string;
   description: string;
+  title_nl: string | null;
+  description_nl: string | null;
   category: string;
   extra_categories: string[] | null;
   tags: string[];
@@ -55,9 +58,12 @@ const LABEL = "flex flex-col gap-1.5 text-sm font-medium";
 export function ProductForm({
   product,
   pricingSettings,
+  aiAvailable,
 }: {
   product?: ExistingProduct;
   pricingSettings: PricingSettings;
+  /** ANTHROPIC_API_KEY is set, so "Text with AI" works */
+  aiAvailable: boolean;
 }) {
   const p = product;
   // Same default the Collection select shows for a new product (its first option).
@@ -69,38 +75,20 @@ export function ProductForm({
     <form action={saveProduct} className="flex flex-col gap-8">
       {p && <input type="hidden" name="id" value={p.id} />}
 
-      <section className="grid gap-4 sm:grid-cols-2">
-        <label className={LABEL}>
-          Title
-          <input
-            type="text"
-            name="title"
-            defaultValue={p?.title}
-            required
-            className={FIELD}
-          />
-        </label>
-        <label className={LABEL}>
-          Slug (leave empty to auto-generate)
-          <input
-            type="text"
-            name="slug"
-            defaultValue={p?.slug}
-            className={FIELD}
-          />
-        </label>
-      </section>
-
-      <label className={LABEL}>
-        Description
-        <textarea
-          name="description"
-          defaultValue={p?.description}
-          required
-          rows={3}
-          className={FIELD}
-        />
-      </label>
+      <ProductTextFields
+        initial={{
+          title: p?.title ?? "",
+          description: p?.description ?? "",
+          titleNl: p?.title_nl ?? "",
+          descriptionNl: p?.description_nl ?? "",
+        }}
+        slug={p?.slug}
+        collectionNames={Object.fromEntries(
+          COLLECTION_LIST.map((c) => [c.slug, c.name]),
+        )}
+        initialCategory={initialCategory}
+        aiAvailable={aiAvailable}
+      />
 
       <section className="grid gap-4 sm:grid-cols-3">
         <label className={LABEL}>

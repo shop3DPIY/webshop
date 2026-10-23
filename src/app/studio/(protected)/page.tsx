@@ -6,16 +6,27 @@ export default async function StudioDashboardPage() {
   const { profile } = await requireAdmin();
   const supabase = await createClient();
 
-  const [{ count: productCount }, { count: orderCount }, { count: customerCount }] = await Promise.all([
+  const [
+    { count: productCount },
+    { count: orderCount },
+    { count: customerCount },
+  ] = await Promise.all([
     supabase!.from("products").select("id", { count: "exact", head: true }),
     supabase!.from("orders").select("id", { count: "exact", head: true }),
-    supabase!.from("profiles").select("id", { count: "exact", head: true }).eq("role", "customer"),
+    supabase!
+      .from("profiles")
+      .select("id", { count: "exact", head: true })
+      .eq("role", "customer"),
   ]);
 
   const stats = [
     { label: "Products", value: productCount ?? 0, href: "/studio/products" },
     { label: "Orders", value: orderCount ?? 0, href: "/studio/orders" },
-    { label: "Customers", value: customerCount ?? 0, href: "/studio/customers" },
+    {
+      label: "Customers",
+      value: customerCount ?? 0,
+      href: "/studio/customers",
+    },
   ];
 
   return (
@@ -23,8 +34,9 @@ export default async function StudioDashboardPage() {
       <div>
         <h1 className="font-display text-2xl font-bold">Dashboard</h1>
         <p className="text-ink/60 mt-1 text-sm">
-          Welcome back{profile?.full_name ? `, ${profile.full_name}` : ""} — you&apos;re managing
-          3DPIY as an admin. This is not what customers see.
+          Welcome back{profile?.full_name ? `, ${profile.full_name}` : ""} —
+          you&apos;re managing 3DPIY as an admin. This is not what customers
+          see.
         </p>
       </div>
 

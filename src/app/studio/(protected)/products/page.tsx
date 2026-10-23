@@ -37,7 +37,10 @@ export default async function StudioProductsPage() {
                 {product.price_cents != null && (
                   <p className="text-ink/60 text-xs">
                     P {formatEuro(product.price_cents)} · S{" "}
-                    {product.price_small_cents != null ? formatEuro(product.price_small_cents) : "—"} · U{" "}
+                    {product.price_small_cents != null
+                      ? formatEuro(product.price_small_cents)
+                      : "—"}{" "}
+                    · U{" "}
                     {product.price_unlimited_cents != null
                       ? formatEuro(product.price_unlimited_cents)
                       : "—"}
@@ -50,7 +53,9 @@ export default async function StudioProductsPage() {
             </Link>
           ))
         ) : (
-          <p className="text-ink/60 p-8 text-center text-sm">No products yet.</p>
+          <p className="text-ink/60 p-8 text-center text-sm">
+            No products yet.
+          </p>
         )}
       </div>
     </div>

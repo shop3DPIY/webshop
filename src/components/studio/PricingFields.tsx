@@ -14,7 +14,8 @@ import {
   type PricingSettings,
 } from "@/lib/pricing/calculate";
 
-const FIELD = "border-line bg-paper w-full rounded-2xl border px-4 py-2.5 text-sm";
+const FIELD =
+  "border-line bg-paper w-full rounded-2xl border px-4 py-2.5 text-sm";
 const LABEL = "flex flex-col gap-1.5 text-sm font-medium";
 
 const TIER_LABEL: Record<PriceTier, string> = {
@@ -63,10 +64,14 @@ export function PricingFields({
 }) {
   const ref = useRef<HTMLFieldSetElement>(null);
   const [category, setCategory] = useState(initialCategory);
-  const [complexity, setComplexity] = useState<Complexity>(existing?.complexity ?? "standard");
+  const [complexity, setComplexity] = useState<Complexity>(
+    existing?.complexity ?? "standard",
+  );
   const [isSet, setIsSet] = useState(existing?.isSet ?? false);
   const [partCount, setPartCount] = useState(existing?.partCount ?? 2);
-  const [includesStep, setIncludesStep] = useState(existing?.includesStep ?? false);
+  const [includesStep, setIncludesStep] = useState(
+    existing?.includesStep ?? false,
+  );
   const [modes, setModes] = useState<Record<PriceTier, Mode>>(() => {
     const initial = calculatePrices(settings, {
       category: initialCategory,
@@ -97,10 +102,14 @@ export function PricingFields({
   // Changing what the price is based on means the old stored price no
   // longer applies — those tiers follow the calculation again.
   const dropKept = () =>
-    setModes((m) =>
-      Object.fromEntries(
-        PRICE_TIERS.map((tier) => [tier, m[tier] === "keep" ? "calc" : m[tier]]),
-      ) as Record<PriceTier, Mode>,
+    setModes(
+      (m) =>
+        Object.fromEntries(
+          PRICE_TIERS.map((tier) => [
+            tier,
+            m[tier] === "keep" ? "calc" : m[tier],
+          ]),
+        ) as Record<PriceTier, Mode>,
     );
 
   useEffect(() => {
@@ -130,7 +139,8 @@ export function PricingFields({
       ? tierCents(result, tier)
       : (parseEuroToCents(typed[tier] ?? "") ?? tierCents(result, tier));
 
-  const setMode = (tier: PriceTier, mode: Mode) => setModes((m) => ({ ...m, [tier]: mode }));
+  const setMode = (tier: PriceTier, mode: Mode) =>
+    setModes((m) => ({ ...m, [tier]: mode }));
 
   const copy = async (tier: PriceTier) => {
     try {
@@ -144,7 +154,9 @@ export function PricingFields({
 
   return (
     <fieldset ref={ref} className="flex flex-col gap-4">
-      <legend className="font-display mb-2 text-lg font-semibold">Prices</legend>
+      <legend className="font-display mb-2 text-lg font-semibold">
+        Prices
+      </legend>
 
       <section className="grid gap-4 sm:grid-cols-3">
         <label className={LABEL}>
@@ -216,11 +228,16 @@ export function PricingFields({
         {PRICE_TIERS.map((tier) => {
           const calc = tierCents(result, tier);
           const mode = modes[tier];
-          const value = mode === "calc" ? centsToInput(calc) : (typed[tier] ?? "");
+          const value =
+            mode === "calc" ? centsToInput(calc) : (typed[tier] ?? "");
           const invalid = mode === "manual" && parseEuroToCents(value) === null;
-          const overridden = mode === "manual" && !invalid && parseEuroToCents(value) !== calc;
+          const overridden =
+            mode === "manual" && !invalid && parseEuroToCents(value) !== calc;
           return (
-            <div key={tier} className="flex flex-wrap items-center gap-3 p-4 text-sm">
+            <div
+              key={tier}
+              className="flex flex-wrap items-center gap-3 p-4 text-sm"
+            >
               <input type="hidden" name={`price_${tier}_mode`} value={mode} />
               <div className="min-w-40 flex-1">
                 <p className="font-medium">{TIER_LABEL[tier]}</p>
@@ -239,7 +256,8 @@ export function PricingFields({
                 )}
                 {tier === "unlimited" && result.customFromCents !== null && (
                   <p className="text-ink/60 text-xs">
-                    Businesses: custom work from {formatEuro(result.customFromCents)} via contact
+                    Businesses: custom work from{" "}
+                    {formatEuro(result.customFromCents)} via contact
                   </p>
                 )}
               </div>
@@ -284,8 +302,8 @@ export function PricingFields({
         {result.inSubscription
           ? "Included in the All-Access subscription."
           : "Not included in the All-Access subscription."}{" "}
-        Payhip has no API for updating prices — copy the amounts above into Payhip with the
-        Copy buttons.
+        Payhip has no API for updating prices — copy the amounts above into
+        Payhip with the Copy buttons.
       </p>
     </fieldset>
   );

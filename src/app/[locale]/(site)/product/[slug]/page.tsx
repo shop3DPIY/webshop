@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Container } from "@/components/ui/Container";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -16,6 +16,7 @@ import {
   getRelatedProducts,
 } from "@/lib/products";
 import { commerceProvider } from "@/lib/commerce";
+import { productText } from "@/types/product";
 
 export async function generateStaticParams() {
   const products = await getAllProducts();
@@ -30,9 +31,10 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = await getProductBySlug(slug);
   if (!product) return {};
+  const text = productText(product, await getLocale());
   return {
-    title: product.title,
-    description: product.description,
+    title: text.title,
+    description: text.description,
   };
 }
 
@@ -46,6 +48,7 @@ export default async function ProductPage({
   if (!product) notFound();
 
   const t = await getTranslations("productPage");
+  const text = productText(product, await getLocale());
   const tSpecs = await getTranslations("productPage.specs");
   const tBuy = await getTranslations("productPage.buy");
   const tLicense = await getTranslations("licenseTypes");
@@ -101,8 +104,8 @@ export default async function ProductPage({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
-    name: product.title,
-    description: product.description,
+    name: text.title,
+    description: text.description,
     sku: product.slug,
     category: collection.name,
     ...(cover && { image: `https://3dpiy.com${cover.src}` }),
@@ -198,10 +201,10 @@ export default async function ProductPage({
         <div className="flex flex-col gap-6">
           <div>
             <h1 className="font-display text-ink text-3xl font-bold sm:text-4xl">
-              {product.title}
+              {text.title}
             </h1>
             <p className="text-ink/70 mt-3 text-base sm:text-lg">
-              {product.description}
+              {text.description}
             </p>
           </div>
 
@@ -252,7 +255,7 @@ export default async function ProductPage({
         </div>
       )}
 
-      <FeedbackCta productTitle={product.title} />
+      <FeedbackCta productTitle={text.title} />
     </Container>
   );
 }

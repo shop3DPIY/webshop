@@ -63,6 +63,9 @@ export interface Product {
   slug: string;
   title: string;
   description: string;
+  /** Dutch title/description for the /nl site (falls back to the English one) */
+  titleNl?: string;
+  descriptionNl?: string;
   /** Primary collection this product belongs to — decides card color and license track */
   category: CollectionSlug;
   /** Other collections (same track as `category`) this product also appears in */
@@ -96,5 +99,14 @@ export interface Product {
   externalLinks?: {
     printables?: string;
     makerWorld?: string;
+  };
+}
+
+/** The product's title and description in the visitor's language. */
+export function productText(product: Product, locale: string) {
+  const nl = locale === "nl";
+  return {
+    title: (nl && product.titleNl) || product.title,
+    description: (nl && product.descriptionNl) || product.description,
   };
 }

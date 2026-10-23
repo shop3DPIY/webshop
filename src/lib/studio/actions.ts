@@ -21,6 +21,7 @@ import {
   productPricingFromForm,
   storedPrices,
 } from "@/lib/pricing/settings";
+import { generateProductText, type ProductText } from "@/lib/ai/productText";
 import { requireAdmin } from "./guard";
 
 /**
@@ -297,6 +298,13 @@ export async function persistProduct(
     slug,
     title: titleInput,
     description: String(formData.get("description") ?? ""),
+    ...(formData.has("titleNl") && {
+      title_nl: String(formData.get("titleNl") ?? "").trim() || null,
+    }),
+    ...(formData.has("descriptionNl") && {
+      description_nl:
+        String(formData.get("descriptionNl") ?? "").trim() || null,
+    }),
     category,
     extra_categories: extraCategoriesFor(formData, category),
     tags: splitList(formData.get("tags")),
@@ -416,4 +424,28 @@ export async function applyRecalculation(formData: FormData) {
 
   revalidatePath("/studio/products");
   redirect(`/studio/pricing/recalculate?updated=${products?.length ?? 0}`);
+}
+
+/** Studio's "Text with AI" button — house-style English + Dutch texts. */
+export async function generateProductTextAction(input: {
+  title?: string;
+  description?: string;
+  categoryName?: string;
+}): Promise<{ ok: true; text: ProductText } | { ok: false; error: string }> {
+  await requireAdmin();
+  try {
+    const text = await generateProductText({
+      title: input.title?.slice(0, 300),
+      description: input.description?.slice(0, 4000),
+      categoryName: input.categoryName?.slice(0, 100),
+    });
+    return { ok: true, text };
+  } catch (error) {
+    console.error("[studio] text with AI failed", error);
+    return {
+      ok: false,
+      error:
+        "The AI couldn't write the texts right now. Try again in a moment.",
+    };
+  }
 }

@@ -31,7 +31,9 @@ export function AdminShell({
         <div className="mx-auto flex w-full max-w-7xl flex-col gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-3">
-              <span className="font-display text-lg font-bold">3DPIY Studio</span>
+              <span className="font-display text-lg font-bold">
+                3DPIY Studio
+              </span>
               <span className="bg-white text-night rounded-full px-2.5 py-0.5 text-xs font-bold tracking-wide uppercase">
                 Admin
               </span>
