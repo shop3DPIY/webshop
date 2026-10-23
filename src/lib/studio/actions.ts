@@ -122,6 +122,52 @@ function parseUploaded(formData: FormData) {
   };
 }
 
+/** Public URLs of files in our own product-images bucket — nothing else is accepted. */
+function isOwnImageUrl(url: unknown): url is string {
+  const base = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/product-images/`;
+  return typeof url === "string" && url.startsWith(base) && !url.includes("..");
+}
+
+/**
+ * The Studio form's media fields (MediaFields.tsx). Each is only applied
+ * when present, so other callers (the ingest route) are unaffected.
+ */
+function parseStudioMedia(formData: FormData) {
+  const json = <T>(key: string): T | undefined => {
+    const raw = formData.get(key);
+    if (raw === null) return undefined;
+    try {
+      return JSON.parse(String(raw)) as T;
+    } catch {
+      return undefined;
+    }
+  };
+  const downloads = (
+    json<{ format: string; fileName: string; path: string }[]>(
+      "studioDownloads",
+    ) ?? []
+  ).filter(
+    (d) =>
+      ["STL", "3MF", "ZIP", "PDF"].includes(d?.format) &&
+      typeof d.fileName === "string" &&
+      STORAGE_PATH_RE.test(d.path),
+  );
+  const imageList = json<unknown[]>("studioImages");
+  const rawTimelapse = formData.get("studioTimelapse");
+  let timelapse: string | null | undefined;
+  if (rawTimelapse !== null) {
+    const value = String(rawTimelapse);
+    timelapse = value === "" ? null : isOwnImageUrl(value) ? value : undefined;
+  }
+  return {
+    downloads,
+    images: Array.isArray(imageList)
+      ? imageList.filter(isOwnImageUrl)
+      : undefined,
+    timelapse,
+  };
+}
+
 /**
  * Core product writer — assumes the caller has already authorized the
  * request. Returns the product id so callers can redirect, respond with
@@ -199,10 +245,24 @@ export async function persistProduct(
       alt: titleInput,
     }));
   }
-  const timelapseUrl = uploaded.timelapse
+  let timelapseUrl: string | null = uploaded.timelapse
     ? admin.storage.from("product-images").getPublicUrl(uploaded.timelapse).data
         .publicUrl
     : (existing?.timelapse_url ?? null);
+
+  // Studio form (MediaFields.tsx): files were uploaded from the browser;
+  // the form sends new downloads, the full ordered photo list and the
+  // timelapse URL ("" = removed).
+  const studio = parseStudioMedia(formData);
+  for (const d of studio.downloads) {
+    const next = downloadFiles.filter((f) => f.format !== d.format);
+    next.push({ format: d.format, fileName: d.fileName, storagePath: d.path });
+    downloadFiles.length = 0;
+    downloadFiles.push(...next);
+  }
+  if (studio.images)
+    images = studio.images.map((src) => ({ src, alt: titleInput }));
+  if (studio.timelapse !== undefined) timelapseUrl = studio.timelapse;
 
   const dimensions =
     formData.get("dimWidth") &&

@@ -1,7 +1,12 @@
 import { saveProduct } from "@/lib/studio/actions";
 import { COLLECTION_LIST, type CollectionSlug } from "@/lib/config/colors";
-import type { Complexity, PriceTier, PricingSettings } from "@/lib/pricing/calculate";
+import type {
+  Complexity,
+  PriceTier,
+  PricingSettings,
+} from "@/lib/pricing/calculate";
 import { PricingFields } from "./PricingFields";
+import { MediaFields } from "./MediaFields";
 
 const TRACK_GROUPS = [
   { track: "dolls" as const, label: "Dolls & Mini" },
@@ -30,6 +35,8 @@ interface ExistingProduct {
     compatiblePrinters?: string[];
   } | null;
   download_files: { format: string; fileName: string }[];
+  images: { src: string; alt: string }[] | null;
+  timelapse_url: string | null;
   source_filename: string | null;
   complexity: Complexity;
   is_set: boolean;
@@ -41,7 +48,8 @@ interface ExistingProduct {
   price_overrides: PriceTier[] | null;
 }
 
-const FIELD = "border-line bg-paper w-full rounded-2xl border px-4 py-2.5 text-sm";
+const FIELD =
+  "border-line bg-paper w-full rounded-2xl border px-4 py-2.5 text-sm";
 const LABEL = "flex flex-col gap-1.5 text-sm font-medium";
 
 export function ProductForm({
@@ -54,7 +62,8 @@ export function ProductForm({
   const p = product;
   // Same default the Collection select shows for a new product (its first option).
   const initialCategory = (p?.category ??
-    COLLECTION_LIST.find((c) => c.track === TRACK_GROUPS[0].track)!.slug) as CollectionSlug;
+    COLLECTION_LIST.find((c) => c.track === TRACK_GROUPS[0].track)!
+      .slug) as CollectionSlug;
 
   return (
     <form action={saveProduct} className="flex flex-col gap-8">
@@ -63,11 +72,22 @@ export function ProductForm({
       <section className="grid gap-4 sm:grid-cols-2">
         <label className={LABEL}>
           Title
-          <input type="text" name="title" defaultValue={p?.title} required className={FIELD} />
+          <input
+            type="text"
+            name="title"
+            defaultValue={p?.title}
+            required
+            className={FIELD}
+          />
         </label>
         <label className={LABEL}>
           Slug (leave empty to auto-generate)
-          <input type="text" name="slug" defaultValue={p?.slug} className={FIELD} />
+          <input
+            type="text"
+            name="slug"
+            defaultValue={p?.slug}
+            className={FIELD}
+          />
         </label>
       </section>
 
@@ -85,14 +105,21 @@ export function ProductForm({
       <section className="grid gap-4 sm:grid-cols-3">
         <label className={LABEL}>
           Collection
-          <select name="category" defaultValue={initialCategory} required className={FIELD}>
+          <select
+            name="category"
+            defaultValue={initialCategory}
+            required
+            className={FIELD}
+          >
             {TRACK_GROUPS.map((group) => (
               <optgroup key={group.track} label={group.label}>
-                {COLLECTION_LIST.filter((c) => c.track === group.track).map((c) => (
-                  <option key={c.slug} value={c.slug}>
-                    {c.name}
-                  </option>
-                ))}
+                {COLLECTION_LIST.filter((c) => c.track === group.track).map(
+                  (c) => (
+                    <option key={c.slug} value={c.slug}>
+                      {c.name}
+                    </option>
+                  ),
+                )}
               </optgroup>
             ))}
             <optgroup label="Unassigned">
@@ -106,7 +133,11 @@ export function ProductForm({
         </label>
         <label className={LABEL}>
           License
-          <select name="licenseType" defaultValue={p?.license_type ?? "personal"} className={FIELD}>
+          <select
+            name="licenseType"
+            defaultValue={p?.license_type ?? "personal"}
+            className={FIELD}
+          >
             <option value="personal">Personal use</option>
             <option value="commercial">Commercial use</option>
             <option value="enterprise">Enterprise</option>
@@ -149,32 +180,37 @@ export function ProductForm({
       <fieldset className="flex flex-col gap-3">
         <legend className="text-sm font-medium">Also show in</legend>
         <p className="text-ink/60 text-xs">
-          Extra collections this product appears in, next to the main Collection above. Only
-          collections on the same track as the main one are saved (Serious Games stays separate).
+          Extra collections this product appears in, next to the main Collection
+          above. Only collections on the same track as the main one are saved
+          (Serious Games stays separate).
         </p>
         {TRACK_GROUPS.map((group) => (
           <div key={group.track} className="flex flex-col gap-2">
-            <span className="text-ink/60 text-xs font-semibold uppercase">{group.label}</span>
+            <span className="text-ink/60 text-xs font-semibold uppercase">
+              {group.label}
+            </span>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-              {COLLECTION_LIST.filter((c) => c.track === group.track).map((c) => (
-                <label
-                  key={c.slug}
-                  className="flex items-center gap-2 rounded-xl bg-white/20 px-3 py-2 text-sm"
-                >
-                  <input
-                    type="checkbox"
-                    name="extraCategories"
-                    value={c.slug}
-                    defaultChecked={p?.extra_categories?.includes(c.slug)}
-                  />
-                  <span
-                    className="h-2.5 w-2.5 shrink-0 rounded-full"
-                    style={{ backgroundColor: c.color }}
-                    aria-hidden
-                  />
-                  {c.name}
-                </label>
-              ))}
+              {COLLECTION_LIST.filter((c) => c.track === group.track).map(
+                (c) => (
+                  <label
+                    key={c.slug}
+                    className="flex items-center gap-2 rounded-xl bg-white/20 px-3 py-2 text-sm"
+                  >
+                    <input
+                      type="checkbox"
+                      name="extraCategories"
+                      value={c.slug}
+                      defaultChecked={p?.extra_categories?.includes(c.slug)}
+                    />
+                    <span
+                      className="h-2.5 w-2.5 shrink-0 rounded-full"
+                      style={{ backgroundColor: c.color }}
+                      aria-hidden
+                    />
+                    {c.name}
+                  </label>
+                ),
+              )}
             </div>
           </div>
         ))}
@@ -183,20 +219,36 @@ export function ProductForm({
       <section className="grid gap-4 sm:grid-cols-3">
         <label className={LABEL}>
           Version
-          <input type="text" name="version" defaultValue={p?.version ?? "1.0.0"} className={FIELD} />
+          <input
+            type="text"
+            name="version"
+            defaultValue={p?.version ?? "1.0.0"}
+            className={FIELD}
+          />
         </label>
         <label className={LABEL}>
           Tags (comma separated)
-          <input type="text" name="tags" defaultValue={p?.tags?.join(", ")} className={FIELD} />
+          <input
+            type="text"
+            name="tags"
+            defaultValue={p?.tags?.join(", ")}
+            className={FIELD}
+          />
         </label>
         <label className="flex items-end gap-2 pb-2.5 text-sm font-medium">
-          <input type="checkbox" name="isFree" defaultChecked={p?.is_free} className="h-4 w-4" />
+          <input
+            type="checkbox"
+            name="isFree"
+            defaultChecked={p?.is_free}
+            className="h-4 w-4"
+          />
           Free design
         </label>
       </section>
 
       <label className={LABEL}>
-        Internal notes — original filename in your design software (never shown to customers)
+        Internal notes — original filename in your design software (never shown
+        to customers)
         <input
           type="text"
           name="sourceFilename"
@@ -216,7 +268,9 @@ export function ProductForm({
         />
       </label>
 
-      <h2 className="font-display text-lg font-semibold">Dimensions &amp; printing</h2>
+      <h2 className="font-display text-lg font-semibold">
+        Dimensions &amp; printing
+      </h2>
       <section className="grid gap-4 sm:grid-cols-3">
         <label className={LABEL}>
           Width (mm)
@@ -290,7 +344,8 @@ export function ProductForm({
       </label>
 
       <label className={LABEL}>
-        Printing instructions — this is the explanation shown on the product page
+        Printing instructions — this is the explanation shown on the product
+        page
         <textarea
           name="instructions"
           defaultValue={p?.print_settings?.instructions}
@@ -300,35 +355,11 @@ export function ProductForm({
         />
       </label>
 
-      <h2 className="font-display text-lg font-semibold">Files</h2>
-      <p className="text-ink/60 -mt-4 text-sm">
-        {p?.download_files && p.download_files.length > 0
-          ? `Currently uploaded: ${p.download_files.map((f) => `${f.format} (${f.fileName})`).join(", ")}. Uploading a new file of the same format replaces it.`
-          : "Upload at least one file. Stored privately — only entitled customers get a signed download link."}
-      </p>
-      <section className="grid gap-4 sm:grid-cols-2">
-        <label className={LABEL}>
-          STL file
-          <input type="file" name="stlFile" accept=".stl" className={FIELD} />
-        </label>
-        <label className={LABEL}>
-          3MF file
-          <input type="file" name="threeMfFile" accept=".3mf" className={FIELD} />
-        </label>
-        <label className={LABEL}>
-          ZIP file
-          <input type="file" name="zipFile" accept=".zip" className={FIELD} />
-        </label>
-        <label className={LABEL}>
-          Instructions PDF
-          <input type="file" name="pdfFile" accept=".pdf" className={FIELD} />
-        </label>
-      </section>
-
-      <label className={LABEL}>
-        Product photo
-        <input type="file" name="imageFile" accept="image/*" className={FIELD} />
-      </label>
+      <MediaFields
+        existingDownloads={p?.download_files ?? []}
+        existingImages={p?.images ?? []}
+        existingTimelapse={p?.timelapse_url ?? null}
+      />
 
       <button
         type="submit"
