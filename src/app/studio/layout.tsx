@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { fontHeading, fontBody } from "@/lib/config/fonts";
 import "../globals.css";
+import { InputModality } from "@/components/system/InputModality";
 
 /**
  * 3DPIY Studio is a deliberately separate root (own <html>/<body>, no
@@ -23,7 +24,10 @@ export default function StudioLayout({
       lang="en"
       className={`${fontHeading.variable} ${fontBody.variable} h-full antialiased`}
     >
-      <body className="bg-paper text-ink min-h-full">{children}</body>
+      <body className="bg-paper text-ink min-h-full">
+        <InputModality />
+        {children}
+      </body>
     </html>
   );
 }

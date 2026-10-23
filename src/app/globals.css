@@ -513,3 +513,10 @@ label.flex-col
   margin-left: -1rem;
   width: calc(100% + 1rem);
 }
+
+/* After a mouse/touch interaction no focus ring at all, even if the
+   browser still reports :focus-visible (see InputModality.tsx). */
+:root[data-input="mouse"] :focus-visible {
+  outline: none !important;
+  filter: none !important;
+}

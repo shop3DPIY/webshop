@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { fontHeading, fontBody } from "@/lib/config/fonts";
 import "../globals.css";
+import { InputModality } from "@/components/system/InputModality";
 
 /**
  * Deliberately separate root (own <html>/<body>, no Header/Footer, no nav)
@@ -14,10 +15,20 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function ComingSoonLayout({ children }: { children: React.ReactNode }) {
+export default function ComingSoonLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" className={`${fontHeading.variable} ${fontBody.variable} h-full antialiased`}>
-      <body className="bg-paper text-ink min-h-full">{children}</body>
+    <html
+      lang="en"
+      className={`${fontHeading.variable} ${fontBody.variable} h-full antialiased`}
+    >
+      <body className="bg-paper text-ink min-h-full">
+        <InputModality />
+        {children}
+      </body>
     </html>
   );
 }

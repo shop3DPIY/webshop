@@ -10,6 +10,7 @@ import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { TrackSync } from "@/components/system/TrackSync";
 import { routing, type Locale } from "@/i18n/routing";
 import { fontHeading, fontBody } from "@/lib/config/fonts";
+import { InputModality } from "@/components/system/InputModality";
 
 const siteUrl = "https://3dpiy.com";
 
@@ -60,6 +61,7 @@ export default async function LocaleLayout({
       className={`${fontHeading.variable} ${fontBody.variable} h-full antialiased ${isDark ? "dark" : ""}`}
     >
       <body className="min-h-full flex flex-col bg-paper text-ink">
+        <InputModality />
         <NextIntlClientProvider locale={locale as Locale} messages={messages}>
           <ThemeProvider initialTheme={isDark ? "dark" : "light"}>
             {children}
