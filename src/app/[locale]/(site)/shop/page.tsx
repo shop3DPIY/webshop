@@ -25,19 +25,27 @@ export default async function ShopPage() {
     ? ACTIVE_COLLECTION_LIST.filter((c) => c.track === track)
     : ACTIVE_COLLECTION_LIST;
 
+  // Centred in the first screen (viewport minus the h-20 header), like the
+  // Shop landing page.
   return (
-    <Container panel className="flex flex-col gap-10 py-16 sm:py-24">
-      <SectionHeading
-        as="h1"
-        eyebrow={t("eyebrow")}
-        title={t("title")}
-        description={t("description")}
-      />
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {collections.map((collection) => (
-          <CollectionCard key={collection.slug} slug={collection.slug} headingLevel="h2" />
-        ))}
-      </div>
-    </Container>
+    <section className="flex min-h-[calc(100svh-5rem)] items-center py-8">
+      <Container panel className="py-0 flex flex-col gap-10">
+        <SectionHeading
+          as="h1"
+          eyebrow={t("eyebrow")}
+          title={t("title")}
+          description={t("description")}
+        />
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {collections.map((collection) => (
+            <CollectionCard
+              key={collection.slug}
+              slug={collection.slug}
+              headingLevel="h2"
+            />
+          ))}
+        </div>
+      </Container>
+    </section>
   );
 }
