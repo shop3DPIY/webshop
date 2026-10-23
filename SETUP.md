@@ -103,8 +103,11 @@ In Supabase → **Authentication** → **URL Configuration**:
 Without these, password-reset and confirmation links fall back to the
 Site URL — they land on the homepage instead of the reset form.
 
-**Sign in with an email code:** in **Authentication** → **Emails** →
-**Magic Link**, the template must contain `{{ .Token }}` (the code), e.g.
+**Sign in with an email code:** on Supabase's free plan the email
+templates can only be edited once custom SMTP is set up. Until then the
+"Magic Link" mail contains a sign-in link, which works too (it goes
+through /api/auth/callback). After SMTP is connected, add `{{ .Token }}`
+to the Magic Link template, e.g.
 `<p>Your 3DPIY sign-in code: <strong>{{ .Token }}</strong></p>`.
 
 Supabase's built-in mailer only sends a few emails per hour — fine for

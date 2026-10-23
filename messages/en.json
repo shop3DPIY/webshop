@@ -240,7 +240,7 @@
     "usePassword": "Sign in with a password instead",
     "sendCode": "Email me a code",
     "codeLabel": "Code from your email",
-    "codeSent": "We've emailed a code to {email}. Enter it below — it's only valid for a short while.",
+    "codeSent": "We've emailed {email}. Click the sign-in link in that email (open it in this browser), or enter the code if it shows one.",
     "resendCode": "Send a new code",
     "backToSignIn": "Back to sign in",
     "linkExpired": "That link has expired or was already used. Request a new one below — and open it in the same browser you requested it from.",

@@ -240,7 +240,7 @@
     "usePassword": "Liever inloggen met een wachtwoord",
     "sendCode": "Mail mij een code",
     "codeLabel": "Code uit je e-mail",
-    "codeSent": "We hebben een code gemaild naar {email}. Vul hem hieronder in — hij is maar even geldig.",
+    "codeSent": "We hebben {email} gemaild. Klik op de inloglink in die mail (open hem in deze browser), of vul de code in als die erin staat.",
     "resendCode": "Stuur een nieuwe code",
     "backToSignIn": "Terug naar inloggen",
     "linkExpired": "Deze link is verlopen of al gebruikt. Vraag hieronder een nieuwe aan — en open hem in dezelfde browser waarin je hem hebt aangevraagd.",

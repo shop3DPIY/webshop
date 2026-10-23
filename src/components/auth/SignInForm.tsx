@@ -17,8 +17,10 @@ const FIELD = "border-line bg-paper rounded-2xl border px-4 py-2.5 text-sm font-
  * the i18n-aware router), everyone else goes to `redirectTo` (defaults to
  * "/account"). There is no separate admin sign-in screen.
  *
- * The code arrives via Supabase's "Magic Link" email template, which must
- * contain {{ .Token }} for the code to show up in the mail (see SETUP.md).
+ * The mail uses Supabase's "Magic Link" template. Its default sends a
+ * sign-in link (handled by /api/auth/callback); once custom SMTP is set up
+ * the template can include {{ .Token }} so the mail shows a code to type in
+ * here instead (see SETUP.md). Both paths work.
  */
 export function SignInForm({ redirectTo = "/account" }: { redirectTo?: string }) {
   const t = useTranslations("auth");
@@ -77,7 +79,14 @@ export function SignInForm({ redirectTo = "/account" }: { redirectTo?: string })
     setStatus("loading");
     const { error } = await supabase.auth.signInWithOtp({
       email,
-      options: { shouldCreateUser: false },
+      options: {
+        shouldCreateUser: false,
+        // Supabase's default template (until custom SMTP lets us edit it)
+        // mails a link instead of a code — make that link land signed in.
+        emailRedirectTo: `${window.location.origin}/api/auth/callback?next=${encodeURIComponent(
+          redirectTo.startsWith("/studio") ? "/account" : redirectTo,
+        )}`,
+      },
     });
     if (error) return fail(error.message);
     setCodeSentTo(email);
