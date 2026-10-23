@@ -499,3 +499,17 @@ input[type="radio"]:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* Form field labels (a stacked <label> with its field directly inside)
+   line up with the text inside the field (px-4), site-wide: the label
+   text moves in by 1rem, the field itself stays flush with the column. */
+label.flex-col:has(
+    > :is(input:not([type="checkbox"], [type="radio"], [type="hidden"]), select, textarea)
+  ) {
+  padding-left: 1rem;
+}
+label.flex-col
+  > :is(input:not([type="checkbox"], [type="radio"], [type="hidden"]), select, textarea) {
+  margin-left: -1rem;
+  width: calc(100% + 1rem);
+}
