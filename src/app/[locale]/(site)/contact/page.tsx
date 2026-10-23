@@ -2,8 +2,9 @@ import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ContactForm } from "@/components/forms/ContactForm";
+import { BUSINESS_DETAILS } from "@/lib/config/business";
 
-const CONTACT_EMAIL = "hello@3dpiy.com";
+const CONTACT_EMAIL = BUSINESS_DETAILS.contactEmail;
 
 export async function generateMetadata() {
   const t = await getTranslations("contact");

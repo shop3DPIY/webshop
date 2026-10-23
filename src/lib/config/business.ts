@@ -8,4 +8,10 @@
 export const BUSINESS_DETAILS = {
   kvk: "xxxxxxxx",
   vatId: "NLxxxxxxxxxB01",
+  /**
+   * Where the contact form sends to and the address shown on the contact
+   * page. Temporarily the Outlook address — switch to an @3dpiy.com
+   * address once that mailbox exists.
+   */
+  contactEmail: "shop3dpiy@outlook.com",
 } as const;

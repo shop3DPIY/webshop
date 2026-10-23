@@ -2,8 +2,9 @@
 
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
+import { BUSINESS_DETAILS } from "@/lib/config/business";
 
-const CONTACT_EMAIL = "hello@3dpiy.com";
+const CONTACT_EMAIL = BUSINESS_DETAILS.contactEmail;
 
 export function ContactForm({
   defaultSubject = "",
