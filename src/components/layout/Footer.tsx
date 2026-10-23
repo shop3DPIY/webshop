@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { BusinessNavLink } from "./BusinessNavLink";
 import { Logo } from "./Logo";
 import { Container } from "@/components/ui/Container";
+import { BUSINESS_DETAILS } from "@/lib/config/business";
 
 const LEGAL_LINKS = [
   { href: "/legal/privacy", key: "legalPrivacy" },
@@ -76,6 +77,9 @@ export async function Footer() {
       <Container className="border-line text-ink/60 flex flex-col gap-2 border-t py-6 text-xs sm:flex-row sm:justify-between">
         <span>
           © {year} {t("copyright")}
+        </span>
+        <span>
+          {t("kvk")} {BUSINESS_DETAILS.kvk} · {t("vatId")} {BUSINESS_DETAILS.vatId}
         </span>
         <span>{t("digitalOnly")}</span>
       </Container>
