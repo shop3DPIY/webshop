@@ -1,8 +1,6 @@
-import { cookies } from "next/headers";
-import { getLocale, getTranslations } from "next-intl/server";
-import { Link, redirect } from "@/i18n/navigation";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { LogoImage } from "@/components/layout/LogoImage";
-import { TRACK_COOKIE, isTrack } from "@/lib/config/track";
 import { getTrackCollections } from "@/lib/config/colors";
 
 /**
@@ -13,24 +11,10 @@ import { getTrackCollections } from "@/lib/config/colors";
  * has no navbar/footer at all (see the (site) route group next to it) —
  * it's a standalone start screen, not part of the regular site chrome.
  *
- * A returning visitor skips straight to their track (see proxy.ts, which
- * sets this cookie on any /dolls or /serious-games request) — ?pick=1
- * (used by the logo, see Logo.tsx) always forces this chooser back open.
+ * Always shown — also to returning visitors (the track cookie set in
+ * proxy.ts only keeps the header/footer on the right track elsewhere).
  */
-export default async function TrackChooserPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ pick?: string }>;
-}) {
-  const { pick } = await searchParams;
-  if (!pick) {
-    const cookieStore = await cookies();
-    const track = cookieStore.get(TRACK_COOKIE)?.value;
-    if (isTrack(track)) {
-      redirect({ href: `/${track}`, locale: await getLocale() });
-    }
-  }
-
+export default async function TrackChooserPage() {
   const t = await getTranslations("trackChooser");
   const tCollections = await getTranslations("collections.items");
   const shopCollections = getTrackCollections("dolls");
