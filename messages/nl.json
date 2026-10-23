@@ -237,6 +237,7 @@
     "signUpLink": "Maak er een aan",
     "forgotLink": "Wachtwoord vergeten?",
     "backToSignIn": "Terug naar inloggen",
+    "linkExpired": "Deze link is verlopen of al gebruikt. Vraag hieronder een nieuwe aan — en open hem in dezelfde browser waarin je hem hebt aangevraagd.",
     "checkEmailTitle": "Check je inbox",
     "checkEmailBody": "We hebben je een link gestuurd — volg deze om verder te gaan.",
     "errorGeneric": "Er ging iets mis. Probeer het opnieuw."

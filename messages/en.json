@@ -237,6 +237,7 @@
     "signUpLink": "Create one",
     "forgotLink": "Forgot your password?",
     "backToSignIn": "Back to sign in",
+    "linkExpired": "That link has expired or was already used. Request a new one below — and open it in the same browser you requested it from.",
     "checkEmailTitle": "Check your inbox",
     "checkEmailBody": "We've sent you a link — follow it to continue.",
     "errorGeneric": "Something went wrong. Please try again."

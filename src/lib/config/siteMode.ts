@@ -44,3 +44,19 @@ export function isAllowedInGatedMode(pathname: string, mode: SiteMode): boolean 
   }
   return false;
 }
+
+/**
+ * Secret preview link for gated modes: visiting any page with
+ * `?preview=<SITE_PREVIEW_SECRET>` sets a cookie that shows the full site
+ * in that browser (for ~30 days); `?preview=off` removes it again. Set
+ * SITE_PREVIEW_SECRET in Netlify's env vars (server-only — not
+ * NEXT_PUBLIC_, so it never reaches the browser bundle). Without it set,
+ * previewing is simply off.
+ */
+export const PREVIEW_COOKIE = "site_preview";
+export const PREVIEW_PARAM = "preview";
+
+export function getPreviewSecret(): string | null {
+  const secret = process.env.SITE_PREVIEW_SECRET;
+  return secret && secret.length >= 8 ? secret : null;
+}

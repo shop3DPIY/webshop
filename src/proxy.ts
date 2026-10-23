@@ -2,7 +2,13 @@ import createIntlMiddleware from "next-intl/middleware";
 import { NextResponse, type NextRequest } from "next/server";
 import { routing } from "./i18n/routing";
 import { updateSupabaseSession } from "./lib/supabase/middleware";
-import { getSiteMode, isAllowedInGatedMode } from "./lib/config/siteMode";
+import {
+  PREVIEW_COOKIE,
+  PREVIEW_PARAM,
+  getPreviewSecret,
+  getSiteMode,
+  isAllowedInGatedMode,
+} from "./lib/config/siteMode";
 import { TRACK_COOKIE } from "./lib/config/track";
 
 const intlMiddleware = createIntlMiddleware(routing);
@@ -22,7 +28,32 @@ export default async function proxy(request: NextRequest) {
   const isComingSoonRoute = pathname === "/coming-soon";
   const bypassesIntl = isStudioRoute || isComingSoonRoute;
 
-  if (!isStudioRoute) {
+  // Secret preview link (see siteMode.ts): ?preview=<secret> turns the
+  // preview cookie on, ?preview=off turns it off — then reload the same
+  // URL without the parameter so it doesn't linger in the address bar.
+  const previewSecret = getPreviewSecret();
+  const previewParam = request.nextUrl.searchParams.get(PREVIEW_PARAM);
+  if (previewSecret && previewParam !== null) {
+    const clean = request.nextUrl.clone();
+    clean.searchParams.delete(PREVIEW_PARAM);
+    const response = NextResponse.redirect(clean);
+    if (previewParam === previewSecret) {
+      response.cookies.set(PREVIEW_COOKIE, previewSecret, {
+        path: "/",
+        maxAge: 60 * 60 * 24 * 30,
+        httpOnly: true,
+        secure: request.nextUrl.protocol === "https:",
+        sameSite: "lax",
+      });
+    } else if (previewParam === "off") {
+      response.cookies.delete(PREVIEW_COOKIE);
+    }
+    return response;
+  }
+  const isPreviewing =
+    previewSecret !== null && request.cookies.get(PREVIEW_COOKIE)?.value === previewSecret;
+
+  if (!isStudioRoute && !isPreviewing) {
     const mode = getSiteMode();
     if (mode !== "live" && !isAllowedInGatedMode(pathname, mode)) {
       const gateUrl = request.nextUrl.clone();
