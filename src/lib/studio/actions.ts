@@ -74,7 +74,10 @@ async function uploadIfPresent(
  * category's track (a product can't be both personal- and commercial-
  * licensed) and never repeating the primary category itself.
  */
-function extraCategoriesFor(formData: FormData, category: string): CollectionSlug[] {
+function extraCategoriesFor(
+  formData: FormData,
+  category: string,
+): CollectionSlug[] {
   const primary = COLLECTIONS[category as CollectionSlug];
   if (!primary) return [];
   return formData
@@ -86,12 +89,47 @@ function extraCategoriesFor(formData: FormData, category: string): CollectionSlu
     });
 }
 
+/** A storage path we issued ourselves: "<folder>/<stamp>-<name>", nothing else. */
+const STORAGE_PATH_RE = /^[a-zA-Z0-9._-]+\/[a-zA-Z0-9._-]+$/;
+
+/**
+ * Storage paths of files the ingest script uploaded directly (JSON form
+ * fields uploadedDownload / uploadedImages / uploadedTimelapse). Anything
+ * that isn't a path shaped like the ones upload-urls hands out is ignored.
+ */
+function parseUploaded(formData: FormData) {
+  const json = <T>(key: string): T | null => {
+    try {
+      const raw = formData.get(key);
+      return raw ? (JSON.parse(String(raw)) as T) : null;
+    } catch {
+      return null;
+    }
+  };
+  const ok = (p: unknown): p is string =>
+    typeof p === "string" && STORAGE_PATH_RE.test(p);
+
+  const download = json<{ fileName: string; path: string }>("uploadedDownload");
+  const images = json<string[]>("uploadedImages") ?? [];
+  const timelapse = String(formData.get("uploadedTimelapse") ?? "");
+  return {
+    download:
+      download && ok(download.path) && typeof download.fileName === "string"
+        ? download
+        : null,
+    images: Array.isArray(images) ? images.filter(ok) : [],
+    timelapse: ok(timelapse) ? timelapse : null,
+  };
+}
+
 /**
  * Core product writer — assumes the caller has already authorized the
  * request. Returns the product id so callers can redirect, respond with
  * JSON, etc. as appropriate for their own context.
  */
-export async function persistProduct(formData: FormData): Promise<{ id: string }> {
+export async function persistProduct(
+  formData: FormData,
+): Promise<{ id: string }> {
   const admin = createAdminClient();
   if (!admin) throw new Error("Supabase admin client not configured");
 
@@ -100,12 +138,14 @@ export async function persistProduct(formData: FormData): Promise<{ id: string }
   const slug = String(formData.get("slug") ?? "") || slugify(titleInput);
 
   const existing = id
-    ? (await admin.from("products").select("*").eq("id", id).single())
-        .data
+    ? (await admin.from("products").select("*").eq("id", id).single()).data
     : null;
 
-  const downloadFiles: { format: string; fileName: string; storagePath: string }[] =
-    existing?.download_files ?? [];
+  const downloadFiles: {
+    format: string;
+    fileName: string;
+    storagePath: string;
+  }[] = existing?.download_files ?? [];
 
   for (const [format, field] of [
     ["STL", "stlFile"],
@@ -124,14 +164,50 @@ export async function persistProduct(formData: FormData): Promise<{ id: string }
   }
 
   let images = existing?.images ?? [];
-  const imagePath = await uploadIfPresent("product-images", slug, formData.get("imageFile"));
+  const imagePath = await uploadIfPresent(
+    "product-images",
+    slug,
+    formData.get("imageFile"),
+  );
   if (imagePath) {
-    const publicUrl = admin.storage.from("product-images").getPublicUrl(imagePath).data.publicUrl;
+    const publicUrl = admin.storage
+      .from("product-images")
+      .getPublicUrl(imagePath).data.publicUrl;
     if (publicUrl) images = [{ src: publicUrl, alt: titleInput }];
   }
 
+  // Files the ingest script already PUT into Storage itself (via
+  // /api/studio/ingest/upload-urls — too big to pass through the site).
+  const uploaded = parseUploaded(formData);
+  if (uploaded.download) {
+    const ext =
+      uploaded.download.fileName.split(".").pop()?.toUpperCase() ?? "ZIP";
+    const format = ext === "STL" || ext === "3MF" ? ext : "ZIP";
+    const next = downloadFiles.filter((f) => f.format !== format);
+    next.push({
+      format,
+      fileName: uploaded.download.fileName,
+      storagePath: uploaded.download.path,
+    });
+    downloadFiles.length = 0;
+    downloadFiles.push(...next);
+  }
+  if (uploaded.images.length > 0) {
+    images = uploaded.images.map((path) => ({
+      src: admin.storage.from("product-images").getPublicUrl(path).data
+        .publicUrl,
+      alt: titleInput,
+    }));
+  }
+  const timelapseUrl = uploaded.timelapse
+    ? admin.storage.from("product-images").getPublicUrl(uploaded.timelapse).data
+        .publicUrl
+    : (existing?.timelapse_url ?? null);
+
   const dimensions =
-    formData.get("dimWidth") && formData.get("dimDepth") && formData.get("dimHeight")
+    formData.get("dimWidth") &&
+    formData.get("dimDepth") &&
+    formData.get("dimHeight")
       ? {
           width: Number(formData.get("dimWidth")),
           depth: Number(formData.get("dimDepth")),
@@ -165,13 +241,15 @@ export async function persistProduct(formData: FormData): Promise<{ id: string }
     extra_categories: extraCategoriesFor(formData, category),
     tags: splitList(formData.get("tags")),
     images,
+    timelapse_url: timelapseUrl,
     download_files: downloadFiles,
     dimensions,
     print_settings: printSettings,
     version: String(formData.get("version") ?? "1.0.0"),
     license_type: String(formData.get("licenseType") ?? "personal"),
     is_free: formData.get("isFree") === "on",
-    external_commerce_id: String(formData.get("externalCommerceId") ?? "") || null,
+    external_commerce_id:
+      String(formData.get("externalCommerceId") ?? "") || null,
     publication_status: String(formData.get("publicationStatus") ?? "draft"),
     source_filename: String(formData.get("sourceFilename") ?? "") || null,
     ...pricing,
@@ -185,7 +263,11 @@ export async function persistProduct(formData: FormData): Promise<{ id: string }
     return { id };
   }
 
-  const { data, error } = await admin.from("products").insert(payload).select("id").single();
+  const { data, error } = await admin
+    .from("products")
+    .insert(payload)
+    .select("id")
+    .single();
   if (error) throw error;
   revalidatePath("/studio/products");
   return { id: data.id };
@@ -251,7 +333,9 @@ export async function applyRecalculation(formData: FormData) {
 
   for (const p of products ?? []) {
     const result = calculatePrices(settings, {
-      category: (p.category in COLLECTIONS ? p.category : "other") as CollectionSlug,
+      category: (p.category in COLLECTIONS
+        ? p.category
+        : "other") as CollectionSlug,
       complexity: p.complexity as Complexity,
       isSet: p.is_set,
       partCount: p.part_count,
@@ -262,7 +346,10 @@ export async function applyRecalculation(formData: FormData) {
     ) as Record<PriceTier, number>;
     const { error: updateError } = await admin
       .from("products")
-      .update({ ...priceColumns(calc, calc), updated_at: new Date().toISOString() })
+      .update({
+        ...priceColumns(calc, calc),
+        updated_at: new Date().toISOString(),
+      })
       .eq("id", p.id);
     if (updateError) throw updateError;
   }

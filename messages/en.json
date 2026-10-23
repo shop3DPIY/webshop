@@ -115,6 +115,7 @@
     "emptyDescription": "This collection is still filling up as 3DPIY prepares for launch — check back soon."
   },
   "productPage": {
+    "timelapse": "Print timelapse",
     "backToCollection": "Back to collection",
     "specs": {
       "category": "Collection",

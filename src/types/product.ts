@@ -70,6 +70,8 @@ export interface Product {
   /** Freeform tags for search/filtering */
   tags: string[];
   images: ProductImage[];
+  /** Public URL of an optional print timelapse video */
+  timelapseUrl?: string;
   downloadFiles: DownloadFile[];
   dimensions?: Dimensions;
   printSettings?: PrintSettings;

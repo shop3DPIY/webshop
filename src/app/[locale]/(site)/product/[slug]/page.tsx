@@ -61,7 +61,9 @@ export default async function ProductPage({
     },
     product.downloadFiles.length > 0 && {
       label: tSpecs("downloadFiles"),
-      value: [...new Set(product.downloadFiles.map((f) => f.format))].join(", "),
+      value: [...new Set(product.downloadFiles.map((f) => f.format))].join(
+        ", ",
+      ),
     },
     product.printSettings?.layerHeightMm && {
       label: tSpecs("layerHeight"),
@@ -73,7 +75,9 @@ export default async function ProductPage({
     },
     product.printSettings?.supportsRequired !== undefined && {
       label: tSpecs("supportsRequired"),
-      value: product.printSettings.supportsRequired ? tSpecs("supportYes") : tSpecs("supportNo"),
+      value: product.printSettings.supportsRequired
+        ? tSpecs("supportYes")
+        : tSpecs("supportNo"),
     },
     product.printSettings?.compatiblePrinters?.length && {
       label: tSpecs("compatiblePrinters"),
@@ -127,21 +131,67 @@ export default async function ProductPage({
       </Link>
 
       <div className="grid gap-10 lg:grid-cols-2">
-        <div className={`glass relative aspect-square overflow-hidden rounded-3xl ${classes.border} ${classes.wash}`}>
-          {cover && (
-            <Image
-              src={cover.src}
-              alt={cover.alt}
-              fill
-              className="object-cover"
-              sizes="(min-width: 1024px) 50vw, 100vw"
-              priority
-            />
+        <div className="flex flex-col gap-4">
+          <div
+            className={`glass relative aspect-square overflow-hidden rounded-3xl ${classes.border} ${classes.wash}`}
+          >
+            {cover && (
+              <Image
+                src={cover.src}
+                alt={cover.alt}
+                fill
+                className="object-cover"
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                priority
+              />
+            )}
+            <Badge className="bg-white/90 text-night border-white absolute top-4 left-4 gap-1.5 border">
+              <span
+                className={`h-2 w-2 rounded-full ${classes.bg}`}
+                aria-hidden
+              />
+              {collection.name}
+            </Badge>
+          </div>
+
+          {product.images.length > 1 && (
+            <div className="grid grid-cols-4 gap-3">
+              {product.images.slice(1).map((image) => (
+                <a
+                  key={image.src}
+                  href={image.src}
+                  target="_blank"
+                  rel="noopener"
+                  className={`glass relative aspect-square overflow-hidden rounded-2xl ${classes.border}`}
+                >
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    className="object-cover"
+                    sizes="25vw"
+                  />
+                </a>
+              ))}
+            </div>
           )}
-          <Badge className="bg-white/90 text-night border-white absolute top-4 left-4 gap-1.5 border">
-            <span className={`h-2 w-2 rounded-full ${classes.bg}`} aria-hidden />
-            {collection.name}
-          </Badge>
+
+          {product.timelapseUrl && (
+            <div className="flex flex-col gap-2">
+              <h2 className="font-display text-ink text-lg font-semibold">
+                {t("timelapse")}
+              </h2>
+              <video
+                src={product.timelapseUrl}
+                controls
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className={`glass w-full rounded-3xl ${classes.border}`}
+              />
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col gap-6">
@@ -149,11 +199,15 @@ export default async function ProductPage({
             <h1 className="font-display text-ink text-3xl font-bold sm:text-4xl">
               {product.title}
             </h1>
-            <p className="text-ink/70 mt-3 text-base sm:text-lg">{product.description}</p>
+            <p className="text-ink/70 mt-3 text-base sm:text-lg">
+              {product.description}
+            </p>
           </div>
 
           {product.printSettings?.instructions && (
-            <p className="text-ink/70 text-sm">{product.printSettings.instructions}</p>
+            <p className="text-ink/70 text-sm">
+              {product.printSettings.instructions}
+            </p>
           )}
 
           <div className="rounded-3xl p-6 glass">
@@ -163,11 +217,18 @@ export default async function ProductPage({
               </Button>
             ) : (
               <>
-                <Button variant="secondary" size="lg" className="w-full" disabled>
+                <Button
+                  variant="secondary"
+                  size="lg"
+                  className="w-full"
+                  disabled
+                >
                   {tBuy("comingSoon")}
                 </Button>
                 <p className="text-ink/60 mt-3 text-xs">
-                  {product.externalCommerceId ? tBuy("comingSoonNote") : tBuy("notListedNote")}
+                  {product.externalCommerceId
+                    ? tBuy("comingSoonNote")
+                    : tBuy("notListedNote")}
                 </p>
               </>
             )}
