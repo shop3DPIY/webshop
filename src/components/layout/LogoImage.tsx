@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 const MAIN = "/images/logo/logo-3dpiy-v3.png";
-const DARK_SG = "/images/logo/logo-3dpiy-dark-sg-v3.png";
+const DARK_SG = "/images/logo/logo-3dpiy-dark-sg-v4.png";
 
 /**
  * The 3DPIY logo. The purple artwork is used everywhere (Shop light and

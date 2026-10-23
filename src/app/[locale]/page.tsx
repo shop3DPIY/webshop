@@ -40,7 +40,7 @@ export default async function TrackChooserPage({
       <div className="relative flex h-full w-full flex-col items-center justify-center px-6 py-8">
         <div className="flex w-full max-w-4xl flex-col items-center gap-6 rounded-xl p-8 text-center sm:p-10 glass">
           <div className="flex flex-col items-center gap-3">
-            <LogoImage variant="chooser" priority className="h-16 w-auto sm:h-20" />
+            <LogoImage variant="chooser" priority className="h-24 w-auto sm:h-32" />
             <h1 className="font-display text-xl font-bold text-ink sm:text-2xl">
               {t("title")}
             </h1>
