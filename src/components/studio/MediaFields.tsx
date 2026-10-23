@@ -200,7 +200,7 @@ export function MediaFields({
           JPG, PNG or WebP.
         </p>
         {images.length > 0 && (
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(13rem,1fr))] gap-3">
             {images.map((src, i) => (
               <div
                 key={src}
@@ -212,11 +212,11 @@ export function MediaFields({
                   alt=""
                   className="aspect-square w-full rounded-xl object-cover"
                 />
-                <div className="flex items-center justify-between gap-1">
-                  <span className="text-xs font-semibold">
+                <div className="flex items-center justify-between gap-2 px-1">
+                  <span className="w-12 shrink-0 text-xs font-semibold">
                     {i === 0 ? "Cover" : `#${i + 1}`}
                   </span>
-                  <span className="flex gap-1">
+                  <span className="flex shrink-0 gap-1">
                     <button
                       type="button"
                       onClick={() => move(i, -1)}
