@@ -19,7 +19,7 @@ export async function AccountNewsletter({
   return (
     <div
       id="newsletter"
-      className="flex scroll-mt-28 flex-col items-start gap-4 rounded-3xl p-6 glass sm:flex-row sm:items-center sm:justify-between"
+      className="flex scroll-mt-28 flex-col items-start gap-4 rounded-3xl p-6 glass"
     >
       <div>
         <h3 className="font-display text-ink text-lg font-semibold">

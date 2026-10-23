@@ -192,15 +192,20 @@ export default async function AccountPage({
         <h2 className="font-display text-ink text-xl font-semibold">
           {t("settingsTab")}
         </h2>
-        <ProfileSettingsForm
-          userId={user.id}
-          email={profile?.email ?? user.email ?? ""}
-          fullName={profile?.full_name ?? ""}
-        />
-        <AccountNewsletter
-          email={profile?.email ?? user.email ?? ""}
-          justSubscribed={newsletter === "subscribed"}
-        />
+        {/* Profile form and newsletter side by side on wide screens. */}
+        <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-2">
+          <div className="min-w-0">
+            <ProfileSettingsForm
+              userId={user.id}
+              email={profile?.email ?? user.email ?? ""}
+              fullName={profile?.full_name ?? ""}
+            />
+          </div>
+          <AccountNewsletter
+            email={profile?.email ?? user.email ?? ""}
+            justSubscribed={newsletter === "subscribed"}
+          />
+        </div>
       </section>
     </Container>
   );
