@@ -45,7 +45,7 @@ export default async function ManageNewsletterPage({
 
   return (
     <Container panel className="flex flex-col gap-8 py-16 sm:py-24">
-      <div className="mx-auto flex w-full max-w-lg flex-col gap-6">
+      <div className="mx-auto flex w-full max-w-2xl flex-col gap-6">
         {!subscriber ? (
           <>
             <h1 className="font-display text-ink text-2xl font-bold">
