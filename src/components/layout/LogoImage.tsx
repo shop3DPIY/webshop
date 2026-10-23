@@ -1,45 +1,56 @@
 import Image from "next/image";
 
+const MAIN = "/images/logo/logo-3dpiy-v3.png";
+const DARK_SG = "/images/logo/logo-3dpiy-dark-sg-v3.png";
+
 /**
- * The 3DPIY logo, in three artworks: the purple/green one for the Shop in
- * light mode, the gradient one for Serious Games in light mode, and the
- * dark-mode one for both tracks. All three are rendered and toggled with
- * CSS (.logo-shop-light / .logo-sg-light in globals.css follow the same
- * track selectors as the rest of the theme), so the right one shows on
- * first paint with no client JS.
+ * The 3DPIY logo. The purple artwork is used everywhere (Shop light and
+ * dark, Serious Games light); Serious Games in dark mode gets the
+ * gradient artwork. Both are rendered and toggled with CSS (.logo-main /
+ * .logo-sg-dark in globals.css, using the same track selectors as the
+ * rest of the theme), so the right one shows on first paint with no JS.
+ *
+ * `variant="chooser"` is the start screen, which always shows the
+ * gradient artwork.
  */
 export function LogoImage({
   className = "",
   priority = false,
+  variant = "site",
 }: {
   className?: string;
   priority?: boolean;
+  variant?: "site" | "chooser";
 }) {
+  if (variant === "chooser") {
+    return (
+      <Image
+        src={DARK_SG}
+        alt="3DPIY"
+        width={345}
+        height={237}
+        priority={priority}
+        className={className}
+      />
+    );
+  }
   return (
     <>
       <Image
-        src="/images/logo/Logo_3DPIY_color-transparent.png"
+        src={MAIN}
         alt="3DPIY"
         width={345}
         height={237}
         priority={priority}
-        className={`logo-shop-light ${className}`}
+        className={`logo-main ${className}`}
       />
       <Image
-        src="/images/logo/Logo_3DPIY_v2-transparent.png"
+        src={DARK_SG}
         alt="3DPIY"
         width={345}
         height={237}
         priority={priority}
-        className={`logo-sg-light ${className}`}
-      />
-      <Image
-        src="/images/logo/Logo_3dpiy_dark_v2-transparent.png"
-        alt="3DPIY"
-        width={349}
-        height={237}
-        priority={priority}
-        className={`hidden dark:block ${className}`}
+        className={`logo-sg-dark ${className}`}
       />
     </>
   );

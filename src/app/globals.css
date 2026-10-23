@@ -438,21 +438,15 @@ select:-webkit-autofill {
   }
 }
 
-/* Light-mode logo per track (see LogoImage.tsx): purple/green on the
-   Shop, the gradient artwork on Serious Games. Dark mode has its own
-   artwork for both, so both light ones hide there. */
-.logo-sg-light {
+/* Logo per track and theme (see LogoImage.tsx): the purple artwork
+   everywhere, except Serious Games in dark mode, which gets the gradient
+   artwork. */
+.logo-sg-dark {
   display: none;
 }
-:root[data-track="serious-games"]:not(:has([data-track-page="dolls"])) .logo-shop-light,
-:root:has([data-track-page="serious-games"]) .logo-shop-light {
+.dark:where([data-track="serious-games"]:not(:has([data-track-page="dolls"])), :has([data-track-page="serious-games"])) .logo-main {
   display: none;
 }
-:root[data-track="serious-games"]:not(:has([data-track-page="dolls"])) .logo-sg-light,
-:root:has([data-track-page="serious-games"]) .logo-sg-light {
+.dark:where([data-track="serious-games"]:not(:has([data-track-page="dolls"])), :has([data-track-page="serious-games"])) .logo-sg-dark {
   display: block;
-}
-.dark .logo-shop-light,
-.dark .logo-sg-light {
-  display: none !important;
 }

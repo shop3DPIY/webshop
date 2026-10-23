@@ -22,7 +22,7 @@ export default function ComingSoonPage() {
       <div className="relative flex h-full w-full flex-col items-center justify-center gap-6 px-6">
         <div className="flex min-h-[20vh] w-full max-w-3xl flex-col items-center justify-center gap-4 rounded-3xl px-8 py-6 text-center glass">
           <Image
-            src="/images/logo/Logo_3DPIY_v2-transparent.png"
+            src="/images/logo/logo-3dpiy-v3.png"
             alt="3DPIY"
             width={345}
             height={237}
