@@ -337,6 +337,7 @@
     "accountSubscribed": "Je bent aangemeld met {email}.",
     "accountManage": "Voorkeuren aanpassen",
     "accountNotSubscribed": "Ontvang nieuwe designs in je inbox — alle categorieën, later aan te passen.",
-    "accountSubscribe": "Aanmelden"
+    "accountSubscribe": "Aanmelden",
+    "accountJustSubscribed": "Aangemeld! Er is een welkomstmail naar je onderweg."
   }
 }

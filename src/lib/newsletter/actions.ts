@@ -49,6 +49,10 @@ export async function subscribeFromAccount(formData: FormData) {
     await sendWelcomeMail(user.email, result.token, result.locale ?? "en");
   }
   revalidatePath("/", "layout");
+  const locale = String(formData.get("locale") ?? "en");
+  redirect(
+    `${locale === "nl" ? "/nl" : ""}/account?newsletter=subscribed#newsletter`,
+  );
 }
 
 function backToManagePage(locale: string, token: string, state: string): never {

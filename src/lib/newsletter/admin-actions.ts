@@ -92,16 +92,14 @@ export async function sendNewsletter(formData: FormData) {
 
   let sent = 0;
   for (let i = 0; i < recipients.length; i += BATCH_SIZE) {
-    const chunk = recipients
-      .slice(i, i + BATCH_SIZE)
-      .map((r) =>
-        newsletterMail({
-          to: r.email,
-          subject,
-          message,
-          manageLink: manageUrl(r.token, r.locale),
-        }),
-      );
+    const chunk = recipients.slice(i, i + BATCH_SIZE).map((r) =>
+      newsletterMail({
+        to: r.email,
+        subject,
+        message,
+        manageLink: manageUrl(r.token, r.locale),
+      }),
+    );
     const result = await sendBatch(chunk);
     if (!result.ok) back(`error=failed&sent=${sent}`);
     sent += chunk.length;

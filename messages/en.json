@@ -337,6 +337,7 @@
     "accountSubscribed": "You're signed up with {email}.",
     "accountManage": "Change preferences",
     "accountNotSubscribed": "Get new designs in your inbox — every category, adjustable later.",
-    "accountSubscribe": "Sign up"
+    "accountSubscribe": "Sign up",
+    "accountJustSubscribed": "You're signed up! A welcome mail is on its way."
   }
 }

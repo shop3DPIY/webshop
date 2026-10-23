@@ -520,3 +520,13 @@ label.flex-col
   outline: none !important;
   filter: none !important;
 }
+
+/* Underlined text links (sign-in options, "forgot password", inline links)
+   get a hover too: brand purple, like the nav links. */
+:is(a, button).underline:hover {
+  color: #8c52ff;
+  text-decoration-color: #8c52ff;
+}
+:is(a, button).underline {
+  transition: color 0.15s;
+}
