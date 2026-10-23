@@ -5,7 +5,13 @@ import { revalidatePath } from "next/cache";
 import { COLLECTIONS } from "@/lib/config/colors";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
-import { getSubscriberByToken, isEmail, isToken, upsertSubscriber } from "./server";
+import {
+  getSubscriberByToken,
+  isEmail,
+  isToken,
+  upsertSubscriber,
+} from "./server";
+import { sendWelcomeMail } from "./mails";
 
 export type SignupState = { status: "idle" | "ok" | "invalid" | "error" };
 
@@ -18,12 +24,14 @@ export async function subscribeToNewsletter(
   if (formData.get("website")) return { status: "ok" };
   const email = String(formData.get("email") ?? "").trim();
   if (!isEmail(email)) return { status: "invalid" };
-  const ok = await upsertSubscriber({
+  const result = await upsertSubscriber({
     email,
     locale: String(formData.get("locale") ?? "en"),
     source: "footer",
   });
-  return { status: ok ? "ok" : "error" };
+  if (result.welcome && result.token)
+    await sendWelcomeMail(email, result.token, result.locale ?? "en");
+  return { status: result.ok ? "ok" : "error" };
 }
 
 /** Account page: subscribe the signed-in customer's own address. */
@@ -31,12 +39,15 @@ export async function subscribeFromAccount(formData: FormData) {
   const supabase = await createClient();
   const user = supabase ? (await supabase.auth.getUser()).data.user : null;
   if (!user?.email) return;
-  await upsertSubscriber({
+  const result = await upsertSubscriber({
     email: user.email,
     locale: String(formData.get("locale") ?? "en"),
     source: "account",
     userId: user.id,
   });
+  if (result.welcome && result.token) {
+    await sendWelcomeMail(user.email, result.token, result.locale ?? "en");
+  }
   revalidatePath("/", "layout");
 }
 
@@ -57,7 +68,8 @@ export async function updateNewsletterPreferences(formData: FormData) {
     .getAll("categories")
     .map(String)
     .filter((slug) => slug in COLLECTIONS);
-  if (!allCategories && categories.length === 0) backToManagePage(locale, token, "none");
+  if (!allCategories && categories.length === 0)
+    backToManagePage(locale, token, "none");
 
   await admin
     .from("newsletter_subscribers")
@@ -92,6 +104,10 @@ export async function resubscribeToNewsletter(formData: FormData) {
   const locale = String(formData.get("locale") ?? "en");
   const subscriber = isToken(token) ? await getSubscriberByToken(token) : null;
   if (!subscriber) redirect("/");
-  await upsertSubscriber({ email: subscriber.email, locale, source: subscriber.source });
+  await upsertSubscriber({
+    email: subscriber.email,
+    locale,
+    source: subscriber.source,
+  });
   backToManagePage(locale, token, "resubscribed");
 }

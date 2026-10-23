@@ -1,6 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { sendContactMessage } from "@/lib/contact/actions";
 import { Button } from "@/components/ui/Button";
 import { BUSINESS_DETAILS } from "@/lib/config/business";
 
@@ -8,27 +10,46 @@ const CONTACT_EMAIL = BUSINESS_DETAILS.contactEmail;
 
 export function ContactForm({
   defaultSubject = "",
+  mailConfigured = false,
 }: {
   defaultSubject?: string;
+  /** true when the site can send mail itself (Resend); otherwise mailto */
+  mailConfigured?: boolean;
 }) {
   const t = useTranslations("contact");
+  const [status, setStatus] = useState<
+    "idle" | "sending" | "sent" | "invalid" | "error"
+  >("idle");
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const form = event.currentTarget;
-    const data = new FormData(form);
-
-    // Honeypot: real visitors never fill this hidden field.
-    if (data.get("company")) return;
-
+  /** No mail service yet: open the visitor's own mail app, pre-filled. */
+  function openMailApp(data: FormData) {
     const name = String(data.get("name") ?? "");
     const email = String(data.get("email") ?? "");
     const subject = String(data.get("subject") ?? "");
     const message = String(data.get("message") ?? "");
-
     const body = `${message}\n\n— ${name} (${email})`;
-    const mailto = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  }
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    setStatus("sending");
+    const result = await sendContactMessage(data).catch(() => ({
+      status: "error" as const,
+    }));
+    if (result.status === "fallback") {
+      setStatus("idle");
+      openMailApp(data);
+      return;
+    }
+    if (result.status === "sent") form.reset();
+    setStatus(result.status);
+  }
+
+  if (status === "sent") {
+    return <p className="text-ink text-base font-medium">{t("formSent")}</p>;
   }
 
   return (
@@ -83,10 +104,24 @@ export function ContactForm({
         />
       </label>
 
-      <Button type="submit" size="lg" className="mt-2">
-        {t("formSubmit")}
+      {status === "invalid" && (
+        <p className="text-sm text-red-200">{t("formInvalid")}</p>
+      )}
+      {status === "error" && (
+        <p className="text-sm text-red-200">{t("formError")}</p>
+      )}
+
+      <Button
+        type="submit"
+        size="lg"
+        className="mt-2"
+        disabled={status === "sending"}
+      >
+        {status === "sending" ? t("formSending") : t("formSubmit")}
       </Button>
-      <p className="text-ink/60 text-xs">{t("formNote")}</p>
+      <p className="text-ink/60 text-xs">
+        {mailConfigured ? t("formNoteDirect") : t("formNote")}
+      </p>
     </form>
   );
 }

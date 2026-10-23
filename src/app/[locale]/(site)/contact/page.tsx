@@ -3,6 +3,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { BUSINESS_DETAILS } from "@/lib/config/business";
+import { isMailConfigured } from "@/lib/mail/send";
 
 const CONTACT_EMAIL = BUSINESS_DETAILS.contactEmail;
 
@@ -52,7 +53,10 @@ export default async function ContactPage({
         </div>
 
         <div className="min-w-0 rounded-3xl p-5 glass sm:p-8">
-          <ContactForm defaultSubject={subject?.slice(0, 200)} />
+          <ContactForm
+            defaultSubject={subject?.slice(0, 200)}
+            mailConfigured={isMailConfigured()}
+          />
         </div>
       </Container>
     </section>

@@ -118,6 +118,31 @@ Settings) before real customers sign in.
 Netlify's environment variables, deploy, then open
 `https://3dpiy.com/?preview=<secret>`; `?preview=off` ends it.
 
+## 6c. Mail (Resend)
+
+Everything the site sends — contact form, newsletter welcome mail,
+newsletters from Studio — goes through [Resend](https://resend.com). Until
+the keys below are set the site still works: the contact form opens the
+visitor's mail app and newsletter signups are only stored.
+
+1. Create a free Resend account → **Domains** → **Add domain** → `3dpiy.com`.
+2. Resend shows a few DNS records (TXT/MX/CNAME). Add each one at TransIP
+   (Domain → **DNS**), then click **Verify** in Resend. Can take up to an
+   hour. These don't touch your TransIP mailbox.
+3. Resend → **API Keys** → **Create API key** (permission: Sending access).
+4. Add to Netlify (**Site configuration → Environment variables**) and to
+   `.env.local`:
+   - `RESEND_API_KEY` = the key
+   - `MAIL_FROM` = e.g. `3DPIY <hallo@3dpiy.com>` (any address @3dpiy.com)
+   - `MAIL_TO` = the inbox for contact-form messages (optional; defaults to
+     `contactEmail` in `src/lib/config/business.ts`)
+5. Redeploy (push) and restart `npm run dev`.
+
+**Supabase auth mails through Resend too** (makes templates editable, so
+the sign-in mail can show a code): Supabase → Authentication → Emails →
+**SMTP Settings**: host `smtp.resend.com`, port `465`, username `resend`,
+password = the API key, sender = the same address as `MAIL_FROM`.
+
 ## 7. Deploy
 
 Any Next.js host works (Vercel is the simplest fit — zero-config, free

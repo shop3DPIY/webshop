@@ -184,7 +184,12 @@
     "formMessageLabel": "Bericht",
     "formSubmit": "Verstuur bericht",
     "formNote": "Dit opent je e-mailprogramma met je bericht al ingevuld — er wordt niets opgeslagen op deze site.",
-    "emailFallbackLabel": "Of mail direct:"
+    "emailFallbackLabel": "Of mail direct:",
+    "formSent": "Bedankt! Je bericht is verstuurd — ik reageer zo snel mogelijk.",
+    "formError": "Versturen is mislukt. Probeer het opnieuw, of mail direct naar het adres op deze pagina.",
+    "formInvalid": "Vul je naam, een geldig e-mailadres en een bericht in.",
+    "formNoteDirect": "Je bericht gaat rechtstreeks naar de inbox van 3DPIY.",
+    "formSending": "Versturen…"
   },
   "legal": {
     "noticeTitle": "Placeholder — juridische beoordeling volgt nog",

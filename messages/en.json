@@ -184,7 +184,12 @@
     "formMessageLabel": "Message",
     "formSubmit": "Send message",
     "formNote": "This opens your email app with your message pre-filled — nothing is stored on this site.",
-    "emailFallbackLabel": "Or email directly:"
+    "emailFallbackLabel": "Or email directly:",
+    "formSent": "Thanks! Your message has been sent — I'll get back to you as soon as I can.",
+    "formError": "Sending failed. Please try again, or email directly using the address on this page.",
+    "formInvalid": "Please fill in your name, a valid email address and a message.",
+    "formNoteDirect": "Your message goes straight to 3DPIY's inbox.",
+    "formSending": "Sending…"
   },
   "legal": {
     "noticeTitle": "Placeholder — pending legal review",
