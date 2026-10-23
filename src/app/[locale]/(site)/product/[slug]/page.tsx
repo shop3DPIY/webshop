@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { SpecList } from "@/components/product/SpecList";
 import { ProductCard } from "@/components/product/ProductCard";
+import { FeedbackCta } from "@/components/product/FeedbackCta";
 import { Link } from "@/i18n/navigation";
 import { TrackMarker } from "@/components/system/TrackMarker";
 import { COLLECTION_CLASSNAMES, getCollection } from "@/lib/config/colors";
@@ -250,6 +251,8 @@ export default async function ProductPage({
           </div>
         </div>
       )}
+
+      <FeedbackCta productTitle={product.title} />
     </Container>
   );
 }

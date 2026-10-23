@@ -13,18 +13,32 @@ export async function generateMetadata() {
   };
 }
 
-export default async function ContactPage() {
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ subject?: string }>;
+}) {
   const t = await getTranslations("contact");
+  // Pre-filled by links like FeedbackCta ("something wrong or missing?").
+  const { subject } = await searchParams;
 
   return (
     <Container panel className="flex flex-col gap-10 py-16 sm:py-24">
-      <SectionHeading as="h1" eyebrow={t("eyebrow")} title={t("title")} description={t("description")} />
+      <SectionHeading
+        as="h1"
+        eyebrow={t("eyebrow")}
+        title={t("title")}
+        description={t("description")}
+      />
 
       <div className="max-w-xl">
-        <ContactForm />
+        <ContactForm defaultSubject={subject?.slice(0, 200)} />
         <p className="text-ink/60 mt-6 text-sm">
           {t("emailFallbackLabel")}{" "}
-          <a href={`mailto:${CONTACT_EMAIL}`} className="text-ink font-semibold underline underline-offset-2">
+          <a
+            href={`mailto:${CONTACT_EMAIL}`}
+            className="text-ink font-semibold underline underline-offset-2"
+          >
             {CONTACT_EMAIL}
           </a>
         </p>

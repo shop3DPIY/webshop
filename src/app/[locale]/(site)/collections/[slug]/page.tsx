@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/ui/Container";
 import { ProductCard } from "@/components/product/ProductCard";
+import { FeedbackCta } from "@/components/product/FeedbackCta";
 import { Link } from "@/i18n/navigation";
 import {
   COLLECTION_LIST,
@@ -75,7 +76,7 @@ export default async function CollectionPage({
         </Container>
       </section>
 
-      <Container panel className="py-16 sm:py-24">
+      <Container panel className="flex flex-col gap-8 py-16 sm:py-24">
         {products.length > 0 ? (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {products.map((product) => (
@@ -92,6 +93,7 @@ export default async function CollectionPage({
             </p>
           </div>
         )}
+        <FeedbackCta />
       </Container>
     </>
   );

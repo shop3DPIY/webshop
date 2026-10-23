@@ -300,5 +300,12 @@
     "switchCta": "← Looking for dolls & miniatures instead?",
     "contactSalesCta": "Contact sales",
     "emptyCatalogNote": "The Serious Games catalog is being prepared — check back soon."
+  },
+  "feedbackCta": {
+    "title": "Something not working, or missing a model?",
+    "body": "Let me know — a broken file, a design you'd love to see, or an idea. I read every message.",
+    "cta": "Fill in the form",
+    "subject": "Model request / something's not right",
+    "subjectProduct": "About: {title}"
   }
 }

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CollectionCard } from "@/components/product/CollectionCard";
 import { ProductCard } from "@/components/product/ProductCard";
+import { FeedbackCta } from "@/components/product/FeedbackCta";
 import { TrackMarker } from "@/components/system/TrackMarker";
 import { getTrackCollections, getCollection } from "@/lib/config/colors";
 import { getPublishedProducts } from "@/lib/products";
@@ -71,6 +72,7 @@ export default async function DollsPage() {
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
+          <FeedbackCta />
         </Container>
       </section>
 

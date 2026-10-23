@@ -5,7 +5,11 @@ import { Button } from "@/components/ui/Button";
 
 const CONTACT_EMAIL = "hello@3dpiy.com";
 
-export function ContactForm() {
+export function ContactForm({
+  defaultSubject = "",
+}: {
+  defaultSubject?: string;
+}) {
   const t = useTranslations("contact");
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -63,6 +67,7 @@ export function ContactForm() {
           type="text"
           name="subject"
           required
+          defaultValue={defaultSubject}
           className="border-line bg-paper rounded-2xl border px-4 py-2.5 text-sm font-normal"
         />
       </label>

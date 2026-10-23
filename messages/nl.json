@@ -300,5 +300,12 @@
     "switchCta": "← Op zoek naar dolls & miniaturen?",
     "contactSalesCta": "Neem contact op",
     "emptyCatalogNote": "De Serious Games-catalogus wordt voorbereid — kom snel nog eens terug."
+  },
+  "feedbackCta": {
+    "title": "Werkt iets niet goed of mis je iets?",
+    "body": "Laat het weten — een fout in een bestand, een model dat je graag zou zien, of een idee. Ik lees elk bericht.",
+    "cta": "Vul het formulier in",
+    "subject": "Modelaanvraag / er klopt iets niet",
+    "subjectProduct": "Over: {title}"
   }
 }
