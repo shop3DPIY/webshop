@@ -369,15 +369,51 @@ textarea:focus {
 a:focus-visible,
 button:focus-visible,
 [role="button"]:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
+input:is([type="checkbox"], [type="radio"], [type="file"]):focus-visible {
   outline: 1.5px solid #ffffff;
   outline-offset: 4px;
   border-radius: 0.5rem;
   /* drop-shadow (unlike box-shadow) also traces the outline itself, so
      the white glow sits on the outside of the ring. */
   filter: drop-shadow(0 0 6px rgb(255 255 255 / 0.85));
+}
+
+/* Text fields (input, select, textarea): glass, everywhere. Focus doesn't
+   draw the ring-with-a-gap above (that shrank the field visually) — the
+   field itself lights up: brighter border, a touch more white glass and a
+   soft white glow, keeping its own size and shape. */
+:is(input:not([type="checkbox"], [type="radio"], [type="file"], [type="range"], [type="hidden"]), select, textarea) {
+  backdrop-filter: blur(16px);
+  transition:
+    border-color 0.2s,
+    background-color 0.2s,
+    box-shadow 0.2s;
+}
+:is(input:not([type="checkbox"], [type="radio"], [type="file"], [type="range"], [type="hidden"]), select, textarea):focus {
+  outline: none;
+  filter: none;
+  border-color: rgb(255 255 255 / 0.75);
+  background-color: rgb(255 255 255 / 0.22);
+  box-shadow: 0 0 12px rgb(255 255 255 / 0.45);
+}
+.dark :is(input:not([type="checkbox"], [type="radio"], [type="file"], [type="range"], [type="hidden"]), select, textarea):focus {
+  border-color: rgb(255 255 255 / 0.5);
+  background-color: rgb(255 255 255 / 0.1);
+  box-shadow: 0 0 12px rgb(255 255 255 / 0.2);
+}
+
+/* Browser autofill (saved email/password) paints its own light-blue
+   field with dark text. Keep our text color, and push the autofill
+   background out with a transition that never finishes, so the glass
+   stays visible underneath. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: var(--ink);
+  caret-color: var(--ink);
+  transition: background-color 600000s 0s;
 }
 
 /* Elements that are already rounded keep their own shape. */
