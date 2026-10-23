@@ -179,7 +179,7 @@ export function MediaFields({
                   type="file"
                   accept={accept}
                   onChange={(e) => onDownload(format, e.target.files?.[0])}
-                  className="border-line bg-paper w-full rounded-2xl border px-4 py-2.5 text-sm"
+                  className="file-upload"
                 />
                 {note(format) ??
                   (picked && (
@@ -259,7 +259,7 @@ export function MediaFields({
             void onPhotos(e.target.files);
             e.target.value = "";
           }}
-          className="border-line bg-paper w-full rounded-2xl border px-4 py-2.5 text-sm"
+          className="file-upload"
         />
         {note("photos")}
       </section>
@@ -295,7 +295,7 @@ export function MediaFields({
             void onTimelapse(e.target.files?.[0]);
             e.target.value = "";
           }}
-          className="border-line bg-paper w-full rounded-2xl border px-4 py-2.5 text-sm"
+          className="file-upload"
         />
         {note("timelapse")}
       </section>

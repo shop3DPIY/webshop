@@ -530,3 +530,42 @@ label.flex-col
 :is(a, button).underline {
   transition: color 0.15s;
 }
+
+/* Select menus: our own chevron, inset from the rounded edge like the
+   text inside the field (the native arrow hugs the very edge). */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 2.75rem !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1.1rem center;
+  background-size: 1rem;
+}
+
+/* File pickers look like an upload button in the house style: a rounded
+   glass field with a purple pill button inside. */
+.file-upload {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 9999px;
+  background-color: var(--paper);
+  padding: 0.4rem 0.4rem;
+  font-size: 0.875rem;
+  color: color-mix(in srgb, var(--ink) 75%, transparent);
+  cursor: pointer;
+}
+.file-upload::file-selector-button {
+  margin-right: 0.9rem;
+  border: 1px solid #8c52ff;
+  border-radius: 9999px;
+  background: #8c52ff;
+  color: #fff;
+  font-weight: 600;
+  padding: 0.45rem 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+.file-upload:hover::file-selector-button {
+  background: rgb(140 82 255 / 0.45);
+}
