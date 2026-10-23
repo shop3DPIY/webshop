@@ -25,7 +25,7 @@ export default async function DollsPage() {
       <TrackMarker track="dolls" />
       {/* The page opens on the categories, centred in the first screen
           (viewport minus the h-20 header). */}
-      <section className="flex min-h-[calc(100svh-5rem)] items-center py-8">
+      <section className="relative flex min-h-[calc(100svh-5rem)] items-center py-8">
         <Container panel className="py-0 flex flex-col gap-10">
           <SectionHeading
             eyebrow={tCollections("eyebrow")}
@@ -38,9 +38,28 @@ export default async function DollsPage() {
             ))}
           </div>
         </Container>
+        {/* The categories fill the first screen, so hint that there's
+            more below (New & popular, About). */}
+        <a
+          href="#new-and-popular"
+          aria-label={tNewAndPopular("title")}
+          className="border-line bg-mist text-ink hover:border-brand-purple hover:bg-brand-purple/45 absolute bottom-3 left-1/2 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full border backdrop-blur-lg transition-colors hover:text-white motion-safe:animate-bounce"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.25"
+            aria-hidden
+          >
+            <path d="M12 5v14M5 12l7 7 7-7" />
+          </svg>
+        </a>
       </section>
 
-      <section className="py-16 sm:py-24">
+      <section id="new-and-popular" className="scroll-mt-24 py-16 sm:py-24">
         <Container panel className="flex flex-col gap-10">
           <SectionHeading
             eyebrow={tNewAndPopular("eyebrow")}
