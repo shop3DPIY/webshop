@@ -14,6 +14,9 @@ import { BUSINESS_DETAILS } from "@/lib/config/business";
  *   be verified in Resend (DNS records at TransIP).
  * MAIL_TO:   where contact-form messages go (defaults to contactEmail in
  *   src/lib/config/business.ts).
+ * Replies to any site mail (welcome, newsletter) go to that same inbox,
+ * since MAIL_FROM is a no-reply address with no mailbox behind it. The
+ * contact form overrides this with the visitor's own address.
  */
 export interface Mail {
   to: string | string[];
@@ -43,7 +46,7 @@ function toResend(mail: Mail) {
     subject: mail.subject,
     html: mail.html,
     text: mail.text,
-    ...(mail.replyTo && { reply_to: mail.replyTo }),
+    reply_to: mail.replyTo ?? contactInbox(),
     ...(mail.headers && { headers: mail.headers }),
   };
 }
