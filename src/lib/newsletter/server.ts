@@ -21,9 +21,13 @@ export const isToken = (value: string) => UUID_RE.test(value);
 export const isEmail = (value: string) =>
   value.length <= 254 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 
-/** The personal manage link that goes at the bottom of every newsletter. */
+/**
+ * The personal manage link that goes at the bottom of every newsletter.
+ * SITE_URL lets local testing (.env.local: http://localhost:3000) send
+ * links that open the local site; production defaults to 3dpiy.com.
+ */
 export const manageUrl = (token: string, locale: string) =>
-  `https://3dpiy.com${locale === "nl" ? "/nl" : ""}/newsletter/${token}`;
+  `${(process.env.SITE_URL || "https://3dpiy.com").replace(/\/$/, "")}${locale === "nl" ? "/nl" : ""}/newsletter/${token}`;
 
 export async function getSubscriberByToken(
   token: string,
