@@ -7,6 +7,7 @@ const NAV = [
   { href: "/studio/pricing", label: "Pricing" },
   { href: "/studio/orders", label: "Orders" },
   { href: "/studio/customers", label: "Customers" },
+  { href: "/studio/newsletter", label: "Newsletter" },
 ];
 
 export function AdminShell({

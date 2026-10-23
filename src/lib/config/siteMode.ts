@@ -39,6 +39,8 @@ export function isAllowedInGatedMode(pathname: string, mode: SiteMode): boolean 
   const path = stripLocalePrefix(pathname);
   if (path === "/coming-soon") return true;
   if (ALWAYS_ALLOWED_PATHS.includes(path)) return true;
+  // The manage/unsubscribe link in newsletters must always work.
+  if (path.startsWith("/newsletter/")) return true;
   if (mode === "waitlist") {
     if (path === "/account" || path === "/auth/sign-up") return true;
   }

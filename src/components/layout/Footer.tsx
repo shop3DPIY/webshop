@@ -4,6 +4,7 @@ import { BusinessNavLink } from "./BusinessNavLink";
 import { Logo } from "./Logo";
 import { Container } from "@/components/ui/Container";
 import { BUSINESS_DETAILS } from "@/lib/config/business";
+import { NewsletterSignup } from "@/components/newsletter/NewsletterSignup";
 
 const LEGAL_LINKS = [
   { href: "/legal/privacy", key: "legalPrivacy" },
@@ -16,6 +17,7 @@ const LEGAL_LINKS = [
 export async function Footer() {
   const year = new Date().getFullYear();
   const t = await getTranslations("footer");
+  const tNewsletter = await getTranslations("newsletter");
   // Purple on the Shop, cyan on Serious Games — follows the track via
   // the --heading token (globals.css), so it stays right on client-side nav.
   const headingColor = "text-heading";
@@ -60,17 +62,8 @@ export async function Footer() {
           <h4 className={`${headingColor} mb-3 text-sm font-semibold`}>
             {t("newsletterHeading")}
           </h4>
-          <p className="text-ink/70 mb-3 text-sm">
-            {t("newsletterDescription")}
-          </p>
-          <div className="flex gap-2">
-            <input
-              type="email"
-              placeholder={t("newsletterPlaceholder")}
-              disabled
-              className="border-line bg-paper w-full rounded-full border px-4 py-2 text-sm disabled:opacity-60"
-            />
-          </div>
+          <p className="text-ink/70 mb-3 text-sm">{tNewsletter("description")}</p>
+          <NewsletterSignup />
         </div>
       </Container>
 

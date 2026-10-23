@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { BackendNotConnected } from "@/components/system/BackendNotConnected";
 import { SignOutButton } from "@/components/account/SignOutButton";
 import { ProfileSettingsForm } from "@/components/account/ProfileSettingsForm";
+import { AccountNewsletter } from "@/components/newsletter/AccountNewsletter";
 import { Link } from "@/i18n/navigation";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createClient } from "@/lib/supabase/server";
@@ -169,6 +170,7 @@ export default async function AccountPage() {
           email={profile?.email ?? user.email ?? ""}
           fullName={profile?.full_name ?? ""}
         />
+        <AccountNewsletter email={profile?.email ?? user.email ?? ""} />
       </section>
     </Container>
   );
