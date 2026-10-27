@@ -215,7 +215,21 @@ export default async function ProductPage({
           )}
 
           <div className="rounded-3xl p-6 glass">
-            {checkout.mode === "redirect" && checkout.url ? (
+            {product.isFree && product.downloadFiles.length > 0 ? (
+              <div className="flex flex-col gap-3">
+                {product.downloadFiles.map((file) => (
+                  <Button
+                    key={file.format}
+                    href={`/api/free/${product.id}/${file.format}`}
+                    size="lg"
+                    className="w-full"
+                  >
+                    {tBuy("getFree")}
+                    {product.downloadFiles.length > 1 && ` (${file.format})`}
+                  </Button>
+                ))}
+              </div>
+            ) : checkout.mode === "redirect" && checkout.url ? (
               <Button href={checkout.url} size="lg" className="w-full">
                 {product.isFree ? tBuy("getFree") : tBuy("buyNow")}
               </Button>
