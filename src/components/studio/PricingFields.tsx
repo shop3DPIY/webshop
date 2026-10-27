@@ -97,7 +97,6 @@ export function PricingFields({
       }),
     ),
   );
-  const [copied, setCopied] = useState<PriceTier | null>(null);
 
   // Changing what the price is based on means the old stored price no
   // longer applies — those tiers follow the calculation again.
@@ -134,23 +133,8 @@ export function PricingFields({
     includesStep,
   });
 
-  const shownCents = (tier: PriceTier) =>
-    modes[tier] === "calc"
-      ? tierCents(result, tier)
-      : (parseEuroToCents(typed[tier] ?? "") ?? tierCents(result, tier));
-
   const setMode = (tier: PriceTier, mode: Mode) =>
     setModes((m) => ({ ...m, [tier]: mode }));
-
-  const copy = async (tier: PriceTier) => {
-    try {
-      await navigator.clipboard.writeText(centsToInput(shownCents(tier)));
-      setCopied(tier);
-      setTimeout(() => setCopied(null), 1500);
-    } catch {
-      /* clipboard unavailable — the amount is still visible to copy by hand */
-    }
-  };
 
   return (
     <fieldset ref={ref} className="flex flex-col gap-4">
@@ -285,13 +269,6 @@ export function PricingFields({
                     {mode === "keep" ? "Update" : "↺ Calculated"}
                   </button>
                 )}
-                <button
-                  type="button"
-                  onClick={() => copy(tier)}
-                  className="border-line bg-mist hover:border-brand-purple hover:bg-brand-purple/45 rounded-full border px-3 py-1.5 text-xs transition-colors"
-                >
-                  {copied === tier ? "Copied" : "Copy"}
-                </button>
               </div>
             </div>
           );
@@ -302,8 +279,7 @@ export function PricingFields({
         {result.inSubscription
           ? "Included in the All-Access subscription."
           : "Not included in the All-Access subscription."}{" "}
-        Payhip has no API for updating prices — copy the amounts above into
-        Payhip with the Copy buttons.
+        Saving updates the prices on Polar automatically.
       </p>
     </fieldset>
   );

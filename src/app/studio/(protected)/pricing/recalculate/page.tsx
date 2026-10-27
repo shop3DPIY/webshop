@@ -71,8 +71,8 @@ export default async function RecalculatePage({
         <p className="text-ink/60 mt-1 max-w-2xl text-sm">
           Current price → new price from the saved price table (P = Personal, S
           = Small, U = Unlimited). Ticked products get the new prices;
-          hand-typed prices on them are replaced too. Don&apos;t forget to
-          update Payhip.
+          hand-typed prices on them are replaced too. Polar is updated
+          automatically.
         </p>
       </div>
 

@@ -30,7 +30,9 @@ Copy `.env.example` to `.env.local` and fill in:
 NEXT_PUBLIC_SUPABASE_URL=...
 NEXT_PUBLIC_SUPABASE_ANON_KEY=...
 SUPABASE_SERVICE_ROLE_KEY=...
-PAYHIP_WEBHOOK_SECRET=<make up a long random string>
+POLAR_ACCESS_TOKEN=...
+POLAR_SERVER=sandbox
+POLAR_WEBHOOK_SECRET=...
 ```
 
 Restart `npm run dev` after saving — Next.js only reads `.env.local` on
@@ -74,24 +76,30 @@ safety on nested queries:
 npx supabase gen types typescript --project-id <your-project-id> > src/lib/supabase/types.ts
 ```
 
-## 6. Connect the Payhip webhook
+## 6. Connect Polar (checkout)
 
-1. In Payhip's dashboard, find the webhook/notification settings for your
-   product(s) (Payhip calls this differently across plans — look for
-   "Webhooks" or "Notifications").
-2. Set the webhook URL to:
-   `https://<your-domain>/api/webhooks/payhip?secret=<PAYHIP_WEBHOOK_SECRET>`
-   (same secret you put in `.env.local` / your hosting provider's env vars).
-3. **Before relying on this**: trigger a real or test purchase and check
-   the `orders` table in Supabase to confirm the payload parsed correctly.
-   `src/app/api/webhooks/payhip/route.ts` has a comment flagging exactly
-   which field names to double-check against Payhip's current docs — this
-   was written without a live Payhip account to test against, so the
-   field-name guesses (email, order id, product id, price) should be
-   verified once, not assumed.
-4. On each product in 3DPIY Studio, fill in **Payhip product ID /
-   permalink** (Studio → Products → edit a product) so purchases can be
-   matched to the right product.
+Polar (polar.sh) is the merchant of record: it runs the checkout, charges
+VAT and pays out. Test everything on **sandbox.polar.sh** (mock payments,
+test card 4242 4242 4242 4242) before going live.
+
+1. Run `supabase/migrations/0012_polar.sql`.
+2. In Polar → Settings → **Access Tokens**, create an organization token
+   with all scopes and set `POLAR_ACCESS_TOKEN` (+ `POLAR_SERVER=sandbox`
+   while testing).
+3. Studio → Products → **Sync with Polar** lists every product: one
+   private Polar product per license tier (Personal / Small business /
+   Unlimited) with the Studio prices, VAT included. After that, every
+   save in Studio and every ingest run keeps Polar up to date — nothing is
+   created by hand in Polar.
+4. In Polar → Settings → **Webhooks**, add the endpoint
+   `https://<your-domain>/api/webhooks/polar` with the event
+   **order.paid** and set its secret as `POLAR_WEBHOOK_SECRET`. (Polar
+   can't reach localhost; locally the thank-you page stores the order.)
+5. Set `NEXT_PUBLIC_COMMERCE_ENABLED=true` to show the buy buttons.
+
+At go-live: create the same token + webhook in the real Polar dashboard,
+swap the env vars on Netlify (and leave `POLAR_SERVER` empty), then run
+**Sync with Polar** once.
 
 ## 6b. Auth emails and redirects
 
@@ -167,7 +175,7 @@ the same in production as in `next dev`.
   instead of duplicating it — the admin UI and automation would share one
   data layer.
 - **Payment provider replaceable later**: nothing outside
-  `src/lib/commerce/` and the Payhip webhook route knows about Payhip.
+  `src/lib/commerce/` and the checkout/webhook routes knows about Polar.
   Swapping to Stripe/WooCommerce later means a new `CommerceProvider`
   implementation and a new webhook route with the same shape
   (verify → upsert order → upsert entitlements) — the accounts, library,

@@ -39,7 +39,7 @@ interface ProductRow {
   last_updated: string;
   license_type: Product["licenseType"];
   is_free: boolean;
-  external_commerce_id: string | null;
+  commerce_product_ids: Product["commerceProductIds"] | null;
   publication_status: Product["publicationStatus"];
   related_product_ids: string[] | null;
   external_links: Product["externalLinks"] | null;
@@ -65,7 +65,7 @@ function mapRow(row: ProductRow): Product {
     lastUpdated: row.last_updated,
     licenseType: row.license_type,
     isFree: row.is_free,
-    externalCommerceId: row.external_commerce_id,
+    commerceProductIds: row.commerce_product_ids ?? {},
     publicationStatus: row.publication_status,
     relatedProductIds: row.related_product_ids ?? undefined,
     externalLinks: row.external_links ?? undefined,
@@ -73,7 +73,7 @@ function mapRow(row: ProductRow): Product {
 }
 
 const PRODUCT_COLUMNS =
-  "id, slug, title, description, title_nl, description_nl, category, extra_categories, tags, images, timelapse_url, download_files, dimensions, print_settings, version, last_updated, license_type, is_free, external_commerce_id, publication_status, related_product_ids, external_links";
+  "id, slug, title, description, title_nl, description_nl, category, extra_categories, tags, images, timelapse_url, download_files, dimensions, print_settings, version, last_updated, license_type, is_free, commerce_product_ids, publication_status, related_product_ids, external_links";
 
 export async function getAllProducts(): Promise<Product[]> {
   if (!isSupabaseConfigured()) return FALLBACK_PRODUCTS;

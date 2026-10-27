@@ -339,5 +339,18 @@
     "accountNotSubscribed": "Ontvang nieuwe designs in je inbox — alle categorieën, later aan te passen.",
     "accountSubscribe": "Aanmelden",
     "accountJustSubscribed": "Aangemeld! Er is een welkomstmail naar je onderweg."
+  },
+  "checkoutSuccess": {
+    "title": "Bedankt voor je aankoop!",
+    "body": "{title} is van jou. Download de bestanden hieronder — deze links werken 7 dagen.",
+    "inLibrary": "Je vindt het ook in de bibliotheek van je account, waar je het altijd opnieuw kunt downloaden.",
+    "toLibrary": "Naar mijn bibliotheek",
+    "keepIt": "Wil je je bestanden bewaren? Log in of maak een account met {email} — de aankoop staat dan vanzelf in je bibliotheek.",
+    "pendingTitle": "Je betaling wordt verwerkt",
+    "pendingBody": "Dit duurt meestal een paar seconden.",
+    "refresh": "Ververs deze pagina",
+    "invalidTitle": "We kunnen deze aankoop niet vinden",
+    "invalidBody": "Heb je wel betaald? Neem contact op, dan lossen we het meteen op.",
+    "contact": "Neem contact op"
   }
 }

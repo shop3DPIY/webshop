@@ -339,5 +339,18 @@
     "accountNotSubscribed": "Get new designs in your inbox — every category, adjustable later.",
     "accountSubscribe": "Sign up",
     "accountJustSubscribed": "You're signed up! A welcome mail is on its way."
+  },
+  "checkoutSuccess": {
+    "title": "Thank you for your purchase!",
+    "body": "{title} is yours. Download the files below — these links work for 7 days.",
+    "inLibrary": "It's also in your account library, where you can download it again anytime.",
+    "toLibrary": "Go to my library",
+    "keepIt": "To keep your files, sign in or create an account with {email} — the purchase then appears in your library automatically.",
+    "pendingTitle": "Your payment is being processed",
+    "pendingBody": "This usually takes a few seconds.",
+    "refresh": "Refresh this page",
+    "invalidTitle": "We couldn't find this purchase",
+    "invalidBody": "If you did pay, get in touch and we'll sort it out right away.",
+    "contact": "Contact us"
   }
 }

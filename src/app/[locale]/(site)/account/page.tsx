@@ -68,7 +68,7 @@ export default async function AccountPage({
         .order("granted_at", { ascending: false }),
       supabase!
         .from("orders")
-        .select("id, payhip_order_id, total_cents, currency, created_at")
+        .select("id, external_order_id, total_cents, currency, created_at")
         .order("created_at", { ascending: false }),
     ]);
 
@@ -169,7 +169,7 @@ export default async function AccountPage({
                 className="flex items-center justify-between p-5 text-sm"
               >
                 <div>
-                  <p className="font-medium">{order.payhip_order_id}</p>
+                  <p className="font-medium">{order.external_order_id}</p>
                   <p className="text-ink/60">{order.created_at}</p>
                 </div>
                 {order.total_cents != null && (

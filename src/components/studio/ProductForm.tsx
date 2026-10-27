@@ -27,7 +27,7 @@ interface ExistingProduct {
   version: string;
   license_type: string;
   is_free: boolean;
-  external_commerce_id: string | null;
+  commerce_product_ids: Partial<Record<PriceTier, string>> | null;
   publication_status: string;
   dimensions: { width: number; depth: number; height: number } | null;
   print_settings: {
@@ -246,15 +246,14 @@ export function ProductForm({
         />
       </label>
 
-      <label className={LABEL}>
-        Payhip product ID / permalink (leave empty until listed)
-        <input
-          type="text"
-          name="externalCommerceId"
-          defaultValue={p?.external_commerce_id ?? ""}
-          className={FIELD}
-        />
-      </label>
+      <p className="text-ink/60 text-xs">
+        Polar: saving lists this product automatically, one Polar product
+        per license with the prices above (free and archived products are
+        taken off).{" "}
+        {Object.values(p?.commerce_product_ids ?? {}).some(Boolean)
+          ? `Listed now: ${Object.keys(p?.commerce_product_ids ?? {}).join(", ")}.`
+          : "Not listed yet."}
+      </p>
 
       <h2 className="font-display text-lg font-semibold">
         Dimensions &amp; printing

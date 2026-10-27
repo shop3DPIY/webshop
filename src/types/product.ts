@@ -5,7 +5,7 @@ import type { CollectionSlug } from "@/lib/config/colors";
  *
  * This schema is the single source of truth for a product, independent of
  * where it is stored (today: local JSON files in src/content/products) and
- * independent of the commerce provider (today: Payhip). It is designed so
+ * independent of the commerce provider (today: Polar). It is designed so
  * that a future migration to a CMS/database, or a future local publishing
  * assistant (see src/lib/commerce and docs), only needs to produce objects
  * matching this shape.
@@ -86,12 +86,12 @@ export interface Product {
   /** true for free downloads, false for paid products */
   isFree: boolean;
   /**
-   * Identifier used by the active commerce provider (e.g. a Payhip product
-   * permalink/id). Null when the product has not been listed with a
-   * commerce provider yet (e.g. drafts, free downloads with no checkout).
-   * Never used elsewhere in the app except by the commerce layer.
+   * The active commerce provider's product id per license tier (Polar:
+   * one product per tier, created automatically by Studio). Empty when
+   * the product hasn't been listed yet (e.g. free downloads). Never used
+   * elsewhere in the app except by the commerce layer.
    */
-  externalCommerceId: string | null;
+  commerceProductIds?: Partial<Record<"personal" | "small" | "unlimited", string>>;
   publicationStatus: PublicationStatus;
   /** Related product ids, shown on the product detail page */
   relatedProductIds?: string[];

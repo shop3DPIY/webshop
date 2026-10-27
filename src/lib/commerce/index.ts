@@ -1,20 +1,22 @@
-import { payhipProvider } from "./payhip";
+import { polarProvider } from "./polar";
 import type { CommerceProvider } from "./types";
 
 /**
  * Active commerce provider, selected via env var so it can be swapped
  * without touching any page or component.
  *
- * To replace Payhip: implement `CommerceProvider` in a new file (e.g.
- * woocommerce.ts or stripe.ts), add it to the map below, and set
- * COMMERCE_PROVIDER accordingly. No other code needs to change.
+ * To replace Polar: implement `CommerceProvider` in a new file (e.g.
+ * stripe.ts), add it to the map below, and set COMMERCE_PROVIDER
+ * accordingly. The catalog sync, checkout route and webhook live in
+ * src/lib/commerce/polar/ and src/app/api/{checkout,webhooks/polar}.
  */
 const providers: Record<string, CommerceProvider> = {
-  payhip: payhipProvider,
+  polar: polarProvider,
 };
 
-const selected = process.env.COMMERCE_PROVIDER ?? "payhip";
+const selected = process.env.COMMERCE_PROVIDER ?? "polar";
 
-export const commerceProvider: CommerceProvider = providers[selected] ?? payhipProvider;
+export const commerceProvider: CommerceProvider = providers[selected] ?? polarProvider;
 
+export { isListed } from "./types";
 export type { CheckoutLink, CheckoutMode, CommerceProvider } from "./types";

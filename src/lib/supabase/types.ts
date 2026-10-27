@@ -47,7 +47,10 @@ export interface Database {
           last_updated: string;
           license_type: "personal" | "commercial" | "enterprise" | "free";
           is_free: boolean;
+          /** Old single Payhip id — unused since 0012 */
           external_commerce_id: string | null;
+          /** Commerce provider (Polar) product id per license tier, see 0012 */
+          commerce_product_ids: Partial<Record<"personal" | "small" | "unlimited", string>>;
           publication_status: "draft" | "published" | "archived";
           related_product_ids: string[] | null;
           external_links: { printables?: string; makerWorld?: string } | null;
@@ -78,7 +81,8 @@ export interface Database {
       orders: {
         Row: {
           id: string;
-          payhip_order_id: string;
+          external_order_id: string;
+          checkout_id: string | null;
           buyer_email: string;
           customer_id: string | null;
           total_cents: number | null;
@@ -87,7 +91,7 @@ export interface Database {
           created_at: string;
         };
         Insert: Partial<Database["public"]["Tables"]["orders"]["Row"]> & {
-          payhip_order_id: string;
+          external_order_id: string;
           buyer_email: string;
           raw_payload: Record<string, unknown>;
         };
@@ -101,6 +105,7 @@ export interface Database {
           external_product_id: string | null;
           title: string | null;
           price_cents: number | null;
+          license_tier: "personal" | "small" | "unlimited" | null;
         };
         Insert: Partial<Database["public"]["Tables"]["order_items"]["Row"]> & {
           order_id: string;

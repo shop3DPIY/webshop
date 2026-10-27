@@ -1,8 +1,14 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { formatEuro } from "@/lib/pricing/calculate";
+import { syncAllProductsToPolar } from "@/lib/studio/actions";
 
-export default async function StudioProductsPage() {
+export default async function StudioProductsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ commerceError?: string; synced?: string }>;
+}) {
+  const { commerceError, synced } = await searchParams;
   const supabase = await createClient();
   const { data: products } = await supabase!
     .from("products")
@@ -13,13 +19,35 @@ export default async function StudioProductsPage() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <h1 className="font-display text-2xl font-bold">Products</h1>
-        <Link
-          href="/studio/products/new"
-          className="border border-action bg-action text-on-action hover:border-action-hover-border hover:bg-action-hover hover:text-on-action-hover backdrop-blur-lg transition-colors rounded-full px-5 py-2.5 text-sm font-semibold"
-        >
-          + New product
-        </Link>
+        <div className="flex items-center gap-3">
+          <form action={syncAllProductsToPolar}>
+            <button
+              type="submit"
+              className="border-line hover:bg-mist rounded-full border px-5 py-2.5 text-sm font-semibold transition-colors"
+            >
+              Sync with Polar
+            </button>
+          </form>
+          <Link
+            href="/studio/products/new"
+            className="border border-action bg-action text-on-action hover:border-action-hover-border hover:bg-action-hover hover:text-on-action-hover backdrop-blur-lg transition-colors rounded-full px-5 py-2.5 text-sm font-semibold"
+          >
+            + New product
+          </Link>
+        </div>
       </div>
+
+      {commerceError && (
+        <p className="rounded-2xl bg-amber-100 p-4 text-sm font-medium text-amber-900">
+          Saved, but Polar couldn&apos;t be updated: {commerceError}. It will
+          retry on the next save, or use &ldquo;Sync with Polar&rdquo;.
+        </p>
+      )}
+      {synced && (
+        <p className="rounded-2xl p-4 text-sm font-medium glass">
+          {synced} product(s) synced with Polar.
+        </p>
+      )}
 
       <div className="divide-line divide-y rounded-3xl glass">
         {products && products.length > 0 ? (
@@ -47,9 +75,18 @@ export default async function StudioProductsPage() {
                   </p>
                 )}
               </div>
-              <span className="border-line rounded-full border px-3 py-1 text-xs capitalize">
-                {product.publication_status}
-              </span>
+              <div className="flex items-center gap-2">
+                {Object.values(product.commerce_product_ids ?? {}).some(
+                  Boolean,
+                ) && (
+                  <span className="border-line rounded-full border px-3 py-1 text-xs">
+                    On Polar
+                  </span>
+                )}
+                <span className="border-line rounded-full border px-3 py-1 text-xs capitalize">
+                  {product.publication_status}
+                </span>
+              </div>
             </Link>
           ))
         ) : (

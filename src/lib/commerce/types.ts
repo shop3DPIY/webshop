@@ -3,12 +3,12 @@
  *
  * Nothing outside this folder should know which commerce provider is active.
  * Components and pages only ever call `commerceProvider` (see index.ts) and
- * work with the types defined here. This keeps Payhip replaceable later by
- * WooCommerce, a custom Stripe backend, or anything else — swapping the
+ * work with the types defined here. This keeps Polar replaceable later by
+ * Payhip, a custom Stripe backend, or anything else — swapping the
  * provider implementation is the only change required.
  *
  * Product data (src/types/product.ts) never depends on this file; it only
- * carries a generic `externalCommerceId` that a provider implementation
+ * carries generic `commerceProductIds` that a provider implementation
  * knows how to interpret.
  */
 
@@ -37,4 +37,9 @@ export interface CommerceProvider {
   isEnabled(): boolean;
   /** Build the checkout link/widget config for a single product. */
   getCheckoutLink(product: Product): CheckoutLink;
+}
+
+/** Whether the product has been listed with the commerce provider. */
+export function isListed(product: Product): boolean {
+  return Object.values(product.commerceProductIds ?? {}).some(Boolean);
 }

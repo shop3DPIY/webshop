@@ -5,7 +5,7 @@ export default async function StudioOrdersPage() {
   const { data: orders } = await supabase!
     .from("orders")
     .select(
-      "id, payhip_order_id, buyer_email, total_cents, currency, customer_id, created_at",
+      "id, external_order_id, buyer_email, total_cents, currency, customer_id, created_at",
     )
     .order("created_at", { ascending: false });
 
@@ -21,7 +21,7 @@ export default async function StudioOrdersPage() {
               className="flex items-center justify-between gap-4 p-5 text-sm"
             >
               <div>
-                <p className="font-medium">{order.payhip_order_id}</p>
+                <p className="font-medium">{order.external_order_id}</p>
                 <p className="text-ink/60">
                   {order.buyer_email} · {order.created_at}
                 </p>
@@ -42,7 +42,7 @@ export default async function StudioOrdersPage() {
           ))
         ) : (
           <p className="text-ink/60 p-8 text-center text-sm">
-            No orders yet — these sync in automatically from the Payhip webhook
+            No orders yet — these sync in automatically from Polar
             once it&apos;s configured.
           </p>
         )}

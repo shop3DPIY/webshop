@@ -22,6 +22,7 @@ import {
   storedPrices,
 } from "@/lib/pricing/settings";
 import { generateProductText, type ProductText } from "@/lib/ai/productText";
+import { trySyncProductToPolar } from "@/lib/commerce/polar/sync";
 import { requireAdmin } from "./guard";
 
 /**
@@ -176,7 +177,7 @@ function parseStudioMedia(formData: FormData) {
  */
 export async function persistProduct(
   formData: FormData,
-): Promise<{ id: string }> {
+): Promise<{ id: string; commerceError: string | null }> {
   const admin = createAdminClient();
   if (!admin) throw new Error("Supabase admin client not configured");
 
@@ -316,36 +317,65 @@ export async function persistProduct(
     version: String(formData.get("version") ?? "1.0.0"),
     license_type: String(formData.get("licenseType") ?? "personal"),
     is_free: formData.get("isFree") === "on",
-    external_commerce_id:
-      String(formData.get("externalCommerceId") ?? "") || null,
     publication_status: String(formData.get("publicationStatus") ?? "draft"),
     source_filename: String(formData.get("sourceFilename") ?? "") || null,
     ...pricing,
     updated_at: new Date().toISOString(),
   };
 
+  let savedId = id;
   if (id) {
     const { error } = await admin.from("products").update(payload).eq("id", id);
     if (error) throw error;
-    revalidatePath("/studio/products");
-    return { id };
+  } else {
+    const { data, error } = await admin
+      .from("products")
+      .insert(payload)
+      .select("id")
+      .single();
+    if (error) throw error;
+    savedId = data.id;
   }
 
-  const { data, error } = await admin
-    .from("products")
-    .insert(payload)
-    .select("id")
-    .single();
-  if (error) throw error;
+  // List/update the design with the commerce provider (Polar) — never
+  // blocks the save; a failure is shown in Studio and retried next save.
+  const commerceError = await trySyncProductToPolar(savedId);
   revalidatePath("/studio/products");
-  return { id: data.id };
+  return { id: savedId, commerceError };
 }
 
 /** Studio form action — session-authenticated via requireAdmin(). */
 export async function saveProduct(formData: FormData) {
   await requireAdmin();
-  await persistProduct(formData);
-  redirect("/studio/products");
+  const { commerceError } = await persistProduct(formData);
+  redirect(
+    commerceError
+      ? `/studio/products?commerceError=${encodeURIComponent(commerceError.slice(0, 300))}`
+      : "/studio/products",
+  );
+}
+
+/** Studio → Products → "Sync with Polar": (re)lists every product. */
+export async function syncAllProductsToPolar() {
+  await requireAdmin();
+  const admin = createAdminClient();
+  if (!admin) throw new Error("Supabase admin client not configured");
+
+  const { data: products, error } = await admin.from("products").select("id");
+  if (error) throw error;
+
+  const failures: string[] = [];
+  for (const p of products ?? []) {
+    const message = await trySyncProductToPolar(p.id);
+    if (message) failures.push(message);
+  }
+
+  revalidatePath("/studio/products");
+  redirect(
+    failures.length > 0
+      ? `/studio/products?commerceError=${encodeURIComponent(`${failures.length} product(s) failed: ${failures[0].slice(0, 200)}`)}`
+      : `/studio/products?synced=${products?.length ?? 0}`,
+  );
 }
 
 /**
@@ -420,6 +450,7 @@ export async function applyRecalculation(formData: FormData) {
       })
       .eq("id", p.id);
     if (updateError) throw updateError;
+    await trySyncProductToPolar(p.id);
   }
 
   revalidatePath("/studio/products");

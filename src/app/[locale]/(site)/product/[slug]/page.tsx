@@ -15,7 +15,7 @@ import {
   getProductBySlug,
   getRelatedProducts,
 } from "@/lib/products";
-import { commerceProvider } from "@/lib/commerce";
+import { commerceProvider, isListed } from "@/lib/commerce";
 import { productText } from "@/types/product";
 
 export async function generateStaticParams() {
@@ -230,7 +230,7 @@ export default async function ProductPage({
                   {tBuy("comingSoon")}
                 </Button>
                 <p className="text-ink/60 mt-3 text-xs">
-                  {product.externalCommerceId
+                  {isListed(product)
                     ? tBuy("comingSoonNote")
                     : tBuy("notListedNote")}
                 </p>

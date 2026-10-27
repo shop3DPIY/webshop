@@ -4,7 +4,7 @@ import { persistProduct } from "@/lib/studio/actions";
 /**
  * Entry point for the local folder-watcher ingest script (see
  * /Users/carmennales/3DPIY_ingest-script on Carmen's Mac — not part of
- * this repo). Mirrors src/app/api/webhooks/payhip/route.ts's shared-secret
+ * this repo). Shared-secret
  * pattern: no user session, just a secret the script and this route both
  * know (INGEST_AUTH_CODE).
  *
@@ -26,8 +26,8 @@ export async function POST(request: NextRequest) {
   formData.set("publicationStatus", "draft");
 
   try {
-    const { id } = await persistProduct(formData);
-    return NextResponse.json({ ok: true, id });
+    const { id, commerceError } = await persistProduct(formData);
+    return NextResponse.json({ ok: true, id, commerceError });
   } catch (error) {
     console.error("[ingest] persistProduct failed", error);
     // Supabase's PostgrestError isn't an Error instance, so check for a
