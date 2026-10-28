@@ -1,5 +1,10 @@
 import { createAdminClient } from "@/lib/supabase/admin";
-import { PRICE_TIERS, type PriceTier } from "@/lib/pricing/calculate";
+import {
+  PRICE_TIERS,
+  tierExtras,
+  tierNames,
+  type PriceTier,
+} from "@/lib/pricing/calculate";
 import { storedPrices } from "@/lib/pricing/settings";
 import {
   isPolarConfigured,
@@ -14,7 +19,8 @@ import {
  * hand in the Polar dashboard.
  *
  * Polar has one price per product, so each license tier of a design is
- * its own Polar product ("<title> — Personal license", ...). Their ids
+ * its own Polar product ("<title> — Personal license", ...; names per
+ * category, see tierNames). Their ids
  * are stored per tier in products.commerce_product_ids; the checkout
  * route offers all of a design's tiers in one checkout.
  *
@@ -24,16 +30,10 @@ import {
  * (Polar can't delete products that may have orders).
  */
 
-export const TIER_LABELS: Record<PriceTier, string> = {
-  personal: "Personal license",
-  small: "Small business license",
-  unlimited: "Unlimited commercial license",
-};
-
 type TierIds = Partial<Record<PriceTier, string>>;
 
-function polarName(title: string, tier: PriceTier) {
-  const suffix = ` — ${TIER_LABELS[tier]}`;
+function polarName(title: string, category: string, tier: PriceTier) {
+  const suffix = ` — ${tierNames(category)[tier]}`;
   const max = 64 - suffix.length;
   const base = title.length > max ? `${title.slice(0, max - 1)}…` : title;
   return `${base}${suffix}`;
@@ -116,9 +116,11 @@ export async function syncProductToPolar(productId: string): Promise<void> {
       continue;
     }
 
-    const name = polarName(row.title, tier);
+    const name = polarName(row.title, row.category, tier);
     const fields = [{ custom_field_id: await getWaiverFieldId(), required: true }];
-    const description = row.description || null;
+    const extras = tierExtras(row.category, tier);
+    const description =
+      [row.description, extras].filter(Boolean).join("\n\n") || null;
     const price = {
       amount_type: "fixed",
       price_amount: cents,

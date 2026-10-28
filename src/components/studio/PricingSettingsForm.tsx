@@ -23,6 +23,9 @@ type CategoryRow = {
   min: string;
   max: string;
   inSubscription: boolean;
+  /** Blank = use the general factor */
+  smallFactor: string;
+  unlimitedFactor: string;
 };
 
 /** The general settings, in display order: key, label, and money vs factor. */
@@ -84,6 +87,9 @@ function toForm(s: PricingSettings) {
         min: centsToInput(c.minCents),
         max: centsToInput(c.maxCents),
         inSubscription: c.inSubscription,
+        smallFactor: c.smallFactor != null ? factorToInput(c.smallFactor) : "",
+        unlimitedFactor:
+          c.unlimitedFactor != null ? factorToInput(c.unlimitedFactor) : "",
       },
     ]),
   ) as Record<CollectionSlug, CategoryRow>;
@@ -113,6 +119,8 @@ function fromForm(
     if (n === null) errors.push(`${label}: not a valid number`);
     return n ?? 0;
   };
+  const optionalNum = (label: string, v: string) =>
+    v.trim() === "" ? null : num(label, v);
 
   const cats = {} as PricingSettings["categories"];
   for (const [slug, row] of Object.entries(categories) as [
@@ -125,6 +133,11 @@ function fromForm(
       minCents: money(`${name} min`, row.min),
       maxCents: money(`${name} max`, row.max),
       inSubscription: row.inSubscription,
+      smallFactor: optionalNum(`${name} small factor`, row.smallFactor),
+      unlimitedFactor: optionalNum(
+        `${name} unlimited factor`,
+        row.unlimitedFactor,
+      ),
     };
   }
   const g = Object.fromEntries(
@@ -201,13 +214,15 @@ export function PricingSettingsForm({
   return (
     <div className="flex flex-col gap-8">
       <div className="overflow-x-auto rounded-3xl glass">
-        <table className="w-full min-w-[46rem] text-left text-sm">
+        <table className="w-full min-w-[58rem] text-left text-sm">
           <thead className="text-ink/60 text-xs uppercase">
             <tr className="border-line border-b">
               <th className="p-4 font-semibold">Category</th>
               <th className="p-4 font-semibold">Base price</th>
               <th className="p-4 font-semibold">Min</th>
               <th className="p-4 font-semibold">Max</th>
+              <th className="p-4 font-semibold">Small ×</th>
+              <th className="p-4 font-semibold">Unlimited ×</th>
               <th className="p-4 font-semibold">In subscription</th>
               <th className="p-4 font-semibold">Example (standard, single)</th>
             </tr>
@@ -251,6 +266,22 @@ export function PricingSettingsForm({
                       />
                     </td>
                   ))}
+                  {(["smallFactor", "unlimitedFactor"] as const).map((field) => (
+                    <td key={field} className="p-4">
+                      <input
+                        type="text"
+                        inputMode="decimal"
+                        value={row[field]}
+                        placeholder={form.general[field]}
+                        onChange={(e) =>
+                          setCategory(slug, { [field]: e.target.value })
+                        }
+                        aria-label={`${names[slug]} ${field}`}
+                        title="Blank = the general factor below"
+                        className={`${INPUT} w-20`}
+                      />
+                    </td>
+                  ))}
                   <td className="p-4">
                     <input
                       type="checkbox"
@@ -273,6 +304,12 @@ export function PricingSettingsForm({
           </tbody>
         </table>
       </div>
+
+      <p className="text-ink/60 -mt-4 text-xs">
+        Small × / Unlimited ×: a category&apos;s own license factors. Leave
+        blank to use the general factors below. Serious Games is sold to game
+        studios, so its tiers are called Startup and Studio.
+      </p>
 
       <div className="grid gap-4 rounded-3xl p-6 sm:grid-cols-2 lg:grid-cols-3 glass">
         {GENERAL.map(({ key, label, money }) => (

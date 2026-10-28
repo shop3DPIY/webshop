@@ -21,6 +21,10 @@ export interface CategoryPricing {
   minCents: number;
   maxCents: number;
   inSubscription: boolean;
+  /** Overrides the general small factor for this category (null = general) */
+  smallFactor?: number | null;
+  /** Overrides the general unlimited factor for this category (null = general) */
+  unlimitedFactor?: number | null;
 }
 
 export interface PricingSettings {
@@ -45,7 +49,15 @@ export const DEFAULT_PRICING_SETTINGS: PricingSettings = {
     "ikea-hacks": { baseCents: 350, minCents: 250, maxCents: 600, inSubscription: true },
     organize: { baseCents: 300, minCents: 250, maxCents: 500, inSubscription: true },
     "tech-electronics": { baseCents: 600, minCents: 400, maxCents: 1200, inSubscription: true },
-    "serious-games": { baseCents: 800, minCents: 600, maxCents: 1500, inSubscription: false },
+    // Serious Games buyers are studios that sell games built with the
+    // design, so the top (Studio) license is worth more: €8 / €40 / €150.
+    "serious-games": {
+      baseCents: 800,
+      minCents: 600,
+      maxCents: 1500,
+      inSubscription: false,
+      unlimitedFactor: 3.75,
+    },
     other: { baseCents: 400, minCents: 250, maxCents: 900, inSubscription: true },
   },
   complexityFactors: { simple: 0.7, standard: 1.0, complex: 1.5 },
@@ -113,12 +125,14 @@ export function calculatePrices(settings: PricingSettings, input: PriceInput): P
 
   // Round first, then clamp — so the result never lands outside min/max.
   const personalCents = Math.min(Math.max(roundTo(raw, 50), cat.minCents), cat.maxCents);
+  const smallFactor = cat.smallFactor ?? settings.smallFactor;
+  const unlimitedFactor = cat.unlimitedFactor ?? settings.unlimitedFactor;
   const smallCents = roundTo(
-    Math.max(personalCents * settings.smallFactor, settings.smallMinimumCents),
+    Math.max(personalCents * smallFactor, settings.smallMinimumCents),
     50,
   );
   // The tiny epsilon keeps float noise (e.g. 4499.9999) from flooring a step down.
-  const unlimitedCents = floorTo(smallCents * settings.unlimitedFactor + 1e-6, 500);
+  const unlimitedCents = floorTo(smallCents * unlimitedFactor + 1e-6, 500);
 
   return {
     personalCents,
@@ -151,6 +165,45 @@ export function estimateNetCents(grossCents: number): number {
   const vat = grossCents - grossCents / (1 + SALE_COSTS.vatRate);
   const fee = grossCents * SALE_COSTS.feeRate + SALE_COSTS.feeFixedCents;
   return Math.round(grossCents - vat - fee);
+}
+
+/**
+ * What each license tier is called, per category — used in Studio and as
+ * the Polar product names buyers see at checkout. Serious Games is sold
+ * to game studios, so its tiers are named for them; the Studio license
+ * also includes a custom design request (TIER_EXTRAS).
+ */
+const DEFAULT_TIER_NAMES: Record<PriceTier, string> = {
+  personal: "Personal license",
+  small: "Small business license",
+  unlimited: "Unlimited commercial license",
+};
+
+const CATEGORY_TIER_NAMES: Partial<Record<CollectionSlug, Record<PriceTier, string>>> = {
+  "serious-games": {
+    personal: "Personal license",
+    small: "Startup license",
+    unlimited: "Studio license",
+  },
+};
+
+export function tierNames(category: string): Record<PriceTier, string> {
+  return CATEGORY_TIER_NAMES[category as CollectionSlug] ?? DEFAULT_TIER_NAMES;
+}
+
+/** What a tier includes, shown under the design's description at checkout. */
+const TIER_EXTRAS: Partial<Record<CollectionSlug, Partial<Record<PriceTier, string>>>> = {
+  "serious-games": {
+    personal: "Print and play it yourself. Not for resale.",
+    small:
+      "For small startups (up to 5 people): use the design in your own game and sell it.",
+    unlimited:
+      "For game studios: sell unlimited copies as part of games for your clients, under your own brand. Includes the STEP file and one custom design request.",
+  },
+};
+
+export function tierExtras(category: string, tier: PriceTier): string | null {
+  return TIER_EXTRAS[category as CollectionSlug]?.[tier] ?? null;
 }
 
 /* ---------- Dutch formatting & parsing ---------- */
@@ -203,6 +256,8 @@ export function validateSettings(s: PricingSettings, names: Record<string, strin
     if (c.minCents > c.baseCents || c.baseCents > c.maxCents) {
       errors.push(`${name}: min ≤ base price ≤ max is not true`);
     }
+    if (c.smallFactor != null) factor(`${name} small factor`, c.smallFactor);
+    if (c.unlimitedFactor != null) factor(`${name} unlimited factor`, c.unlimitedFactor);
   }
   factor("Simple factor", s.complexityFactors.simple);
   factor("Standard factor", s.complexityFactors.standard);

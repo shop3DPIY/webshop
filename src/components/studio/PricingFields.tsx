@@ -10,6 +10,7 @@ import {
   formatEuro,
   parseEuroToCents,
   tierCents,
+  tierNames,
   type Complexity,
   type PriceTier,
   type PricingSettings,
@@ -18,12 +19,6 @@ import {
 const FIELD =
   "border-line bg-paper w-full rounded-2xl border px-4 py-2.5 text-sm";
 const LABEL = "flex flex-col gap-1.5 text-sm font-medium";
-
-const TIER_LABEL: Record<PriceTier, string> = {
-  personal: "Personal",
-  small: "Small (commercial)",
-  unlimited: "Unlimited (commercial)",
-};
 
 export interface ExistingPricing {
   complexity: Complexity;
@@ -134,6 +129,7 @@ export function PricingFields({
     includesStep,
   });
 
+  const TIER_LABEL = tierNames(category);
   const setMode = (tier: PriceTier, mode: Mode) =>
     setModes((m) => ({ ...m, [tier]: mode }));
 

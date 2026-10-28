@@ -127,3 +127,27 @@ describe("estimateNetCents", () => {
     expect(estimateNetCents(1500)).toBe(1097);
   });
 });
+
+describe("per-category license factors", () => {
+  it("Serious Games: €8 / €40 / €150 with its own unlimited factor", () => {
+    const r = calculatePrices(S, {
+      category: "serious-games",
+      complexity: "standard",
+      isSet: false,
+      partCount: 1,
+      includesStep: false,
+    });
+    expect([r.personalCents, r.smallCents, r.unlimitedCents]).toEqual([800, 4000, 15000]);
+  });
+
+  it("other categories keep the general factors", () => {
+    const r = calculatePrices(S, {
+      category: "doll-mini",
+      complexity: "standard",
+      isSet: false,
+      partCount: 1,
+      includesStep: false,
+    });
+    expect([r.personalCents, r.smallCents, r.unlimitedCents]).toEqual([450, 2250, 6500]);
+  });
+});
