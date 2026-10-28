@@ -139,14 +139,13 @@
       "notListedNote": "Dit product staat nog niet te koop."
     },
     "free": {
-      "intro": "Gratis ontwerpen zijn een bedankje voor nieuwsbriefleden. Laat je e-mailadres achter, dan sturen we de downloadlink meteen.",
+      "intro": "Laat je e-mailadres achter, dan mailen we je meteen de downloadlink.",
       "placeholder": "jij@email.nl",
-      "consent": "Ja, schrijf me in voor de 3DPIY-nieuwsbrief (nodig voor gratis ontwerpen — afmelden kan altijd).",
+      "consent": "Schrijf me ook in voor de 3DPIY-nieuwsbrief (nieuwe ontwerpen en tips — afmelden kan altijd).",
       "submit": "Mail mij de download",
       "sentTitle": "Kijk in je inbox!",
       "sentBody": "De downloadlink is onderweg. Niets ontvangen? Kijk even in je spammap.",
       "invalid": "Vul een geldig e-mailadres in.",
-      "needConsent": "Vink de nieuwsbrief aan om gratis ontwerpen te krijgen.",
       "error": "Er ging iets mis. Probeer het later nog eens."
     }
   },

@@ -1,5 +1,6 @@
--- Free designs are for newsletter subscribers: the visitor leaves their
--- email (and subscribes), and the download link is mailed to them.
+-- Free designs need an email address: the download link is mailed to
+-- it. Joining the newsletter is an optional checkbox (source
+-- 'free_download' when they do).
 --
 -- free_downloads: one row per address + design. The token in the mailed
 -- link is the key to the files (src/app/api/free/[token]/[format]); the

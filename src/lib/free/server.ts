@@ -5,10 +5,10 @@ import { emailLayout, escapeHtml } from "@/lib/mail/template";
 import { manageUrl } from "@/lib/newsletter/server";
 
 /**
- * Free designs are for newsletter subscribers. Leaving your email on a
- * free design's page subscribes you and records a free_downloads row
- * (migration 0015) whose token is the key to the files. The link is
- * mailed, which also proves the address is real.
+ * Free designs need an email address: leaving it on a free design's page
+ * records a free_downloads row (migration 0015) whose token is the key to
+ * the files, and the link is mailed — which also proves the address is
+ * real. Joining the newsletter is optional (a checkbox on the form).
  */
 
 /** How long a mailed download link works; asking again mails a fresh one. */
@@ -62,7 +62,7 @@ const COPY = {
     subject: (title: string) => `Your free download: ${title}`,
     heading: "Here's your free design",
     body: (title: string) =>
-      `Thanks for subscribing! Download ${title} with the button below. The link works for ${FREE_LINK_DAYS} days.`,
+      `Thanks for your interest! Download ${title} with the button below. The link works for ${FREE_LINK_DAYS} days.`,
     download: "Download",
     news: "You're now on the 3DPIY newsletter. Change your preferences or unsubscribe any time:",
     manage: "Newsletter preferences",
@@ -71,7 +71,7 @@ const COPY = {
     subject: (title: string) => `Je gratis download: ${title}`,
     heading: "Hier is je gratis ontwerp",
     body: (title: string) =>
-      `Bedankt voor je inschrijving! Download ${title} met de knop hieronder. De link werkt ${FREE_LINK_DAYS} dagen.`,
+      `Leuk dat je het wilt proberen! Download ${title} met de knop hieronder. De link werkt ${FREE_LINK_DAYS} dagen.`,
     download: "Downloaden",
     news: "Je staat nu op de 3DPIY-nieuwsbrief. Voorkeuren aanpassen of afmelden kan altijd:",
     manage: "Nieuwsbriefvoorkeuren",
@@ -84,11 +84,14 @@ export async function sendFreeDownloadMail(params: {
   title: string;
   formats: string[];
   token: string;
-  newsletterToken: string;
+  /** Set when they joined the newsletter: the mail then links to its preferences. */
+  newsletterToken: string | null;
 }) {
   if (!isMailConfigured()) return { ok: false as const };
   const c = params.locale === "nl" ? COPY.nl : COPY.en;
-  const manage = manageUrl(params.newsletterToken, params.locale);
+  const manage = params.newsletterToken
+    ? manageUrl(params.newsletterToken, params.locale)
+    : null;
   const links = params.formats.map((format) => ({
     label: params.formats.length > 1 ? `${c.download} (${format})` : c.download,
     url: freeDownloadUrl(params.token, format),
@@ -101,8 +104,10 @@ export async function sendFreeDownloadMail(params: {
       c.heading,
       c.body(params.title),
       ...links.map((l) => `${l.label}: ${l.url}`),
-      `${c.news}\n${manage}`,
-    ].join("\n\n"),
+      manage && `${c.news}\n${manage}`,
+    ]
+      .filter(Boolean)
+      .join("\n\n"),
     html: emailLayout({
       heading: c.heading,
       bodyHtml: `<p style="margin:0 0 16px">${escapeHtml(c.body(params.title))}</p>
@@ -112,7 +117,9 @@ export async function sendFreeDownloadMail(params: {
             `<a href="${l.url}" style="display:inline-block;margin:0 8px 8px 0;background:#8c52ff;color:#fff;text-decoration:none;padding:12px 20px;border-radius:999px;font-weight:bold">${escapeHtml(l.label)}</a>`,
         )
         .join("")}</p>`,
-      footerHtml: `${escapeHtml(c.news)} <a href="${manage}" style="color:#8c52ff">${escapeHtml(c.manage)}</a><br><br>`,
+      footerHtml: manage
+        ? `${escapeHtml(c.news)} <a href="${manage}" style="color:#8c52ff">${escapeHtml(c.manage)}</a><br><br>`
+        : "",
     }),
   });
 }

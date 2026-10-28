@@ -6,13 +6,13 @@ import { isEmail, upsertSubscriber } from "@/lib/newsletter/server";
 import { grantFreeDownload, sendFreeDownloadMail } from "./server";
 
 export type FreeDownloadState = {
-  status: "idle" | "sent" | "invalid" | "consent" | "error";
+  status: "idle" | "sent" | "invalid" | "error";
 };
 
 /**
- * The form on a free design's page: subscribe to the newsletter (required
- * for free designs) and get the download link by mail. Signed-in
- * visitors also get the design in their library.
+ * The form on a free design's page: an email address is required (the
+ * download link is mailed to it); joining the newsletter is an optional
+ * checkbox. Signed-in visitors also get the design in their library.
  */
 export async function requestFreeDownload(
   _prev: FreeDownloadState,
@@ -23,7 +23,7 @@ export async function requestFreeDownload(
   const locale = String(formData.get("locale") ?? "en") === "nl" ? "nl" : "en";
   const productId = String(formData.get("productId") ?? "");
   if (!isEmail(email)) return { status: "invalid" };
-  if (formData.get("consent") !== "on") return { status: "consent" };
+  const wantsNewsletter = formData.get("newsletter") === "on";
 
   const admin = createAdminClient();
   if (!admin) return { status: "error" };
@@ -39,14 +39,16 @@ export async function requestFreeDownload(
   const supabase = await createClient();
   const user = supabase ? (await supabase.auth.getUser()).data.user : null;
 
-  const subscriber = await upsertSubscriber({
-    email,
-    locale,
-    source: "free_download",
-    ...(user?.email?.toLowerCase() === email && { userId: user.id }),
-  });
+  const subscriber = wantsNewsletter
+    ? await upsertSubscriber({
+        email,
+        locale,
+        source: "free_download",
+        ...(user?.email?.toLowerCase() === email && { userId: user.id }),
+      })
+    : null;
   const token = await grantFreeDownload(email, product.id);
-  if (!subscriber.ok || !subscriber.token || !token) return { status: "error" };
+  if (!token || (subscriber && !subscriber.ok)) return { status: "error" };
 
   if (user) {
     await admin
@@ -66,7 +68,7 @@ export async function requestFreeDownload(
     title: (locale === "nl" && product.title_nl) || product.title,
     formats,
     token,
-    newsletterToken: subscriber.token,
+    newsletterToken: subscriber?.token ?? null,
   });
   return { status: sent.ok ? "sent" : "error" };
 }

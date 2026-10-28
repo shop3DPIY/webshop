@@ -139,14 +139,13 @@
       "notListedNote": "This product hasn't been listed for sale yet."
     },
     "free": {
-      "intro": "Free designs are a thank-you for newsletter subscribers. Leave your email and we'll send the download link straight away.",
+      "intro": "Leave your email and we'll send you the download link straight away.",
       "placeholder": "you@email.com",
-      "consent": "Yes, sign me up for the 3DPIY newsletter (required for free designs — unsubscribe any time).",
+      "consent": "Also sign me up for the 3DPIY newsletter (new designs and tips — unsubscribe any time).",
       "submit": "Email me the download",
       "sentTitle": "Check your inbox!",
       "sentBody": "The download link is on its way. Nothing there? Look in your spam folder.",
       "invalid": "Please enter a valid email address.",
-      "needConsent": "Tick the newsletter box to get free designs.",
       "error": "Something went wrong. Please try again later."
     }
   },

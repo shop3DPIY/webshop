@@ -8,8 +8,8 @@ import {
 } from "@/lib/free/actions";
 
 /**
- * Free designs: email + newsletter consent, then the download link is
- * mailed (see src/lib/free). Signed-in visitors get their address filled in.
+ * Free designs: an email address (required — the download link is mailed
+ * to it) plus an optional newsletter checkbox (see src/lib/free).
  */
 export function FreeDownloadForm({
   productId,
@@ -60,7 +60,7 @@ export function FreeDownloadForm({
         className="border-line bg-paper w-full rounded-full border px-4 py-2.5 text-sm"
       />
       <label className="text-ink/80 flex items-start gap-2 text-xs">
-        <input type="checkbox" name="consent" required className="mt-0.5 h-4 w-4 shrink-0" />
+        <input type="checkbox" name="newsletter" className="mt-0.5 h-4 w-4 shrink-0" />
         {t("consent")}
       </label>
       <button
@@ -72,9 +72,6 @@ export function FreeDownloadForm({
       </button>
       {state.status === "invalid" && (
         <p className="text-sm text-red-500">{t("invalid")}</p>
-      )}
-      {state.status === "consent" && (
-        <p className="text-sm text-red-500">{t("needConsent")}</p>
       )}
       {state.status === "error" && (
         <p className="text-sm text-red-500">{t("error")}</p>
