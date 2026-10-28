@@ -42,6 +42,9 @@ interface ButtonProps {
   type?: "button" | "submit";
   onClick?: () => void;
   disabled?: boolean;
+  /** Umami analytics event name + extra data (see components/system/Analytics) */
+  event?: string;
+  eventData?: Record<string, string>;
 }
 
 export function Button({
@@ -53,12 +56,25 @@ export function Button({
   type = "button",
   onClick,
   disabled,
+  event,
+  eventData,
 }: ButtonProps) {
   const classes = `${base} ${variants[variant]} ${sizes[size]} ${className}`;
+  const tracking = event
+    ? {
+        "data-umami-event": event,
+        ...Object.fromEntries(
+          Object.entries(eventData ?? {}).map(([k, v]) => [
+            `data-umami-event-${k}`,
+            v,
+          ]),
+        ),
+      }
+    : {};
 
   if (href) {
     return (
-      <Link href={href} className={classes}>
+      <Link href={href} className={classes} {...tracking}>
         {children}
       </Link>
     );
@@ -70,6 +86,7 @@ export function Button({
       className={classes}
       onClick={onClick}
       disabled={disabled}
+      {...tracking}
     >
       {children}
     </button>

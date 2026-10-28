@@ -66,6 +66,7 @@ export function FreeDownloadForm({
       <button
         type="submit"
         disabled={pending}
+        data-umami-event="free-download-request"
         className="border-action bg-action text-on-action hover:border-action-hover-border hover:bg-action-hover hover:text-on-action-hover w-full rounded-full border px-5 py-3 text-base font-semibold backdrop-blur-lg transition-colors disabled:opacity-50"
       >
         {t("submit")}

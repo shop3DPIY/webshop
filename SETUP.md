@@ -159,6 +159,15 @@ password = the API key, sender = the same address as `MAIL_FROM`.
 `.env.local` (the same key the ingest script uses). Run migration
 `0011_product_text_nl.sql` for the Dutch columns.
 
+## 6e. Analytics (Umami)
+
+Cookieless page views via Umami Cloud (free plan, no cookie banner needed).
+Create a website at cloud.umami.is for `3dpiy.com`, then put its Website ID
+in `NEXT_PUBLIC_UMAMI_WEBSITE_ID` on Netlify. Only 3dpiy.com is counted
+(not localhost, deploy previews or Studio). Tracked events: `chooser-shop`,
+`chooser-business`, `buy-click` (with product), `free-download-request`.
+Add more with `data-umami-event="name"` or the Button `event` prop.
+
 ## 7. Deploy
 
 Any Next.js host works (Vercel is the simplest fit — zero-config, free

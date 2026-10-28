@@ -219,7 +219,13 @@ export default async function ProductPage({
             {product.isFree ? (
               <FreeDownloadForm productId={product.id} />
             ) : checkout.mode === "redirect" && checkout.url ? (
-              <Button href={checkout.url} size="lg" className="w-full">
+              <Button
+                href={checkout.url}
+                size="lg"
+                className="w-full"
+                event="buy-click"
+                eventData={{ product: product.slug }}
+              >
                 {product.isFree ? tBuy("getFree") : tBuy("buyNow")}
               </Button>
             ) : (

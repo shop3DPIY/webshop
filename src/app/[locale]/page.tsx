@@ -38,6 +38,7 @@ export default async function TrackChooserPage() {
           <div className="grid w-full gap-5 sm:grid-cols-3">
             <Link
               href="/dolls"
+              data-umami-event="chooser-shop"
               className="group glass hover:bg-white/25 flex flex-col items-start gap-3 rounded-3xl p-8 text-left transition-colors sm:col-span-2"
             >
               <h2 className="font-display text-2xl font-semibold text-ink">
@@ -72,6 +73,7 @@ export default async function TrackChooserPage() {
 
             <Link
               href="/business"
+              data-umami-event="chooser-business"
               className="group glass hover:bg-white/25 flex flex-col items-start gap-3 rounded-3xl p-8 text-left transition-colors"
             >
               <h2 className="font-display text-2xl font-semibold text-ink">

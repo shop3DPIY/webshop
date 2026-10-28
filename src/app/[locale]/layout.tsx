@@ -11,6 +11,7 @@ import { TrackSync } from "@/components/system/TrackSync";
 import { routing, type Locale } from "@/i18n/routing";
 import { fontHeading, fontBody } from "@/lib/config/fonts";
 import { InputModality } from "@/components/system/InputModality";
+import { Analytics } from "@/components/system/Analytics";
 
 const siteUrl = "https://3dpiy.com";
 
@@ -68,6 +69,7 @@ export default async function LocaleLayout({
             <TrackSync />
           </ThemeProvider>
         </NextIntlClientProvider>
+        <Analytics />
       </body>
     </html>
   );
