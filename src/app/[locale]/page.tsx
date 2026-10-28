@@ -72,7 +72,7 @@ export default async function TrackChooserPage() {
 
             <Link
               href="/business"
-              className="group border-brand-purple bg-brand-purple/15 hover:bg-brand-purple/45 flex flex-col items-start gap-3 rounded-3xl border p-8 text-left shadow-xl backdrop-blur-lg transition-colors"
+              className="group glass hover:bg-white/25 flex flex-col items-start gap-3 rounded-3xl p-8 text-left transition-colors"
             >
               <h2 className="font-display text-2xl font-semibold text-ink">
                 {t("businessTitle")}
@@ -80,13 +80,24 @@ export default async function TrackChooserPage() {
               <p className="text-sm text-ink/80">
                 {t("businessDescription")}
               </p>
-              <ul className="flex flex-wrap gap-2">
+              <ul className="grid w-full grid-cols-1 gap-2">
                 {businessCollections.map((c) => (
                   <li
                     key={c.slug}
-                    className="rounded-xl border border-white/40 px-3 py-2 text-xs font-medium text-ink backdrop-blur-lg"
+                    className="flex min-w-0 items-center gap-2 rounded-xl border px-3 py-2 text-xs font-medium text-ink backdrop-blur-lg"
+                    style={{
+                      borderColor: c.color,
+                      backgroundColor: `${c.color}33`,
+                    }}
                   >
-                    {tCollections(`${c.slug}.name`)}
+                    <span
+                      className="h-2.5 w-2.5 shrink-0 rounded-full"
+                      style={{ backgroundColor: c.color }}
+                      aria-hidden
+                    />
+                    <span className="truncate">
+                      {tCollections(`${c.slug}.name`)}
+                    </span>
                   </li>
                 ))}
               </ul>
