@@ -33,7 +33,7 @@ export default async function DollsPage() {
             title={tCollections("title")}
             description={tCollections("description")}
           />
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid auto-rows-fr grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {collections.map((collection) => (
               <CollectionCard key={collection.slug} slug={collection.slug} />
             ))}
