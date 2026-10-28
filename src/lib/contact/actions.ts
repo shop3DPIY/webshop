@@ -17,7 +17,12 @@ export async function sendContactMessage(formData: FormData): Promise<ContactRes
 
   const name = String(formData.get("name") ?? "").trim().slice(0, 200);
   const email = String(formData.get("email") ?? "").trim().slice(0, 254);
-  const subject = String(formData.get("subject") ?? "").trim().slice(0, 200);
+  // "topic" is the suggested subject from the link that opened the form
+  // (e.g. "About: <product>"); kept next to whatever the visitor typed.
+  const typed = String(formData.get("subject") ?? "").trim().slice(0, 200);
+  const topic = String(formData.get("topic") ?? "").trim().slice(0, 200);
+  const subject =
+    typed && topic && typed !== topic ? `${typed} (${topic})` : typed || topic;
   const message = String(formData.get("message") ?? "").trim().slice(0, 5000);
   if (!name || !message || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { status: "invalid" };
 

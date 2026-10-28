@@ -8,6 +8,12 @@ import { BUSINESS_DETAILS } from "@/lib/config/business";
 
 const CONTACT_EMAIL = BUSINESS_DETAILS.contactEmail;
 
+/**
+ * `defaultSubject` (from a link like the "Something wrong or missing?"
+ * button) is only a suggestion: it shows as placeholder text, and goes
+ * along as `topic` so the mail still says what it's about when the
+ * visitor types their own subject or leaves it empty.
+ */
 export function ContactForm({
   defaultSubject = "",
   mailConfigured = false,
@@ -25,7 +31,10 @@ export function ContactForm({
   function openMailApp(data: FormData) {
     const name = String(data.get("name") ?? "");
     const email = String(data.get("email") ?? "");
-    const subject = String(data.get("subject") ?? "");
+    const typed = String(data.get("subject") ?? "").trim();
+    const topic = String(data.get("topic") ?? "");
+    const subject =
+      typed && topic && typed !== topic ? `${typed} (${topic})` : typed || topic;
     const message = String(data.get("message") ?? "");
     const body = `${message}\n\n— ${name} (${email})`;
     window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -62,6 +71,9 @@ export function ContactForm({
         className="hidden"
         aria-hidden="true"
       />
+      {defaultSubject && (
+        <input type="hidden" name="topic" value={defaultSubject} />
+      )}
 
       <label className="flex flex-col gap-1.5 text-sm font-medium">
         {t("formNameLabel")}
@@ -88,8 +100,8 @@ export function ContactForm({
         <input
           type="text"
           name="subject"
-          required
-          defaultValue={defaultSubject}
+          required={!defaultSubject}
+          placeholder={defaultSubject || undefined}
           className="border-line bg-paper rounded-2xl border px-4 py-2.5 text-sm font-normal"
         />
       </label>
