@@ -137,6 +137,22 @@ export function tierCents(result: PriceResult, tier: PriceTier): number {
       : result.unlimitedCents;
 }
 
+/**
+ * Rough take-home per sale, shown next to each price in Studio. Prices
+ * are consumer prices including VAT; Polar (merchant of record) pays the
+ * VAT and keeps its fee: 5% + $0.50 (≈ €0.45), +1.5% for non-US cards.
+ * Uses the Dutch 21% rate — buyers elsewhere in the EU pay their own
+ * country's rate, so it's an estimate. Payout fees (0.25% + $0.25 per
+ * payout, $2/month while payouts are active) aren't per sale and left out.
+ */
+export const SALE_COSTS = { vatRate: 0.21, feeRate: 0.065, feeFixedCents: 45 };
+
+export function estimateNetCents(grossCents: number): number {
+  const vat = grossCents - grossCents / (1 + SALE_COSTS.vatRate);
+  const fee = grossCents * SALE_COSTS.feeRate + SALE_COSTS.feeFixedCents;
+  return Math.round(grossCents - vat - fee);
+}
+
 /* ---------- Dutch formatting & parsing ---------- */
 
 const EUR = new Intl.NumberFormat("nl-NL", { style: "currency", currency: "EUR" });

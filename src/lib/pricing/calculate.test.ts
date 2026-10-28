@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   DEFAULT_PRICING_SETTINGS as S,
   calculatePrices,
+  estimateNetCents,
   formatEuro,
   parseEuroToCents,
   setFactor,
@@ -116,5 +117,13 @@ describe("formatting, parsing and validation", () => {
     const merged = withDefaults({ smallFactor: 6 } as never);
     expect(merged.smallFactor).toBe(6);
     expect(merged.categories["doll-mini"].baseCents).toBe(450);
+  });
+});
+
+describe("estimateNetCents", () => {
+  it("takes off 21% VAT and Polar's fee", () => {
+    // €4.50: VAT 78, fee 29 + 45 → 298
+    expect(estimateNetCents(450)).toBe(298);
+    expect(estimateNetCents(1500)).toBe(1097);
   });
 });

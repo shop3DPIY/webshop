@@ -6,6 +6,7 @@ import {
   PRICE_TIERS,
   calculatePrices,
   centsToInput,
+  estimateNetCents,
   formatEuro,
   parseEuroToCents,
   tierCents,
@@ -233,6 +234,15 @@ export function PricingFields({
                     </span>
                   )}
                 </p>
+                {(() => {
+                  const gross = mode === "calc" ? calc : parseEuroToCents(value);
+                  return gross != null && gross > 0 ? (
+                    <p className="text-ink/60 text-xs">
+                      You keep ≈ {formatEuro(estimateNetCents(gross))} (after
+                      21% VAT and Polar fees)
+                    </p>
+                  ) : null;
+                })()}
                 {mode === "keep" && (
                   <p className="text-ink/60 text-xs">
                     Keeps its current price (from before a price table change).
