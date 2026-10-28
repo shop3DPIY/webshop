@@ -5,8 +5,9 @@ import { getTrackCollections } from "@/lib/config/colors";
 
 /**
  * The site's entry point is a choice, not a storefront — the 3DPIY Shop
- * (every Dolls-track collection) and Serious Games are different audiences with a different "vibe" and (for
- * Serious Games) a different commercial license, so they get their own
+ * (every Dolls-track collection) and 3DPIY Business (every Business-track
+ * collection, starting with Serious Games) are different audiences with a
+ * different "vibe" and (for Business) commercial licenses, so they get their own
  * landing pages instead of being mixed into one generic homepage. This page
  * has no navbar/footer at all (see the (site) route group next to it) —
  * it's a standalone start screen, not part of the regular site chrome.
@@ -18,6 +19,7 @@ export default async function TrackChooserPage() {
   const t = await getTranslations("trackChooser");
   const tCollections = await getTranslations("collections.items");
   const shopCollections = getTrackCollections("dolls");
+  const businessCollections = getTrackCollections("business");
 
   return (
     <div className="relative h-screen w-full overflow-hidden">
@@ -69,17 +71,27 @@ export default async function TrackChooserPage() {
             </Link>
 
             <Link
-              href="/serious-games"
+              href="/business"
               className="group border-brand-purple bg-brand-purple/15 hover:bg-brand-purple/45 flex flex-col items-start gap-3 rounded-3xl border p-8 text-left shadow-xl backdrop-blur-lg transition-colors"
             >
               <h2 className="font-display text-2xl font-semibold text-ink">
-                {t("seriousGamesTitle")}
+                {t("businessTitle")}
               </h2>
               <p className="text-sm text-ink/80">
-                {t("seriousGamesDescription")}
+                {t("businessDescription")}
               </p>
+              <ul className="flex flex-wrap gap-2">
+                {businessCollections.map((c) => (
+                  <li
+                    key={c.slug}
+                    className="rounded-xl border border-white/40 px-3 py-2 text-xs font-medium text-ink backdrop-blur-lg"
+                  >
+                    {tCollections(`${c.slug}.name`)}
+                  </li>
+                ))}
+              </ul>
               <span className="mt-auto text-sm font-semibold text-ink">
-                {t("seriousGamesCta")} →
+                {t("businessCta")} →
               </span>
             </Link>
           </div>

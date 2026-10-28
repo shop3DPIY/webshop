@@ -280,8 +280,8 @@ body {
   --heading: #8c52ff;
 }
 
-:root[data-track="serious-games"]:not(:has([data-track-page="dolls"])),
-:root:has([data-track-page="serious-games"]) {
+:root[data-track="business"]:not(:has([data-track-page="dolls"])),
+:root:has([data-track-page="business"]) {
   --backdrop: var(--backdrop-banner);
   /* Serious Games: purple buttons that turn cyan on hover */
   --action: #8c52ff;
@@ -326,7 +326,7 @@ body::before {
 
 /* Serious Games in dark mode: the same near-black, but with its own
    cyan-green + purple glows (the banner's colors). */
-.dark:where([data-track="serious-games"]:not(:has([data-track-page="dolls"])), :has([data-track-page="serious-games"])) body::before {
+.dark:where([data-track="business"]:not(:has([data-track-page="dolls"])), :has([data-track-page="business"])) body::before {
   background:
     radial-gradient(80% 75% at 0% 0%, rgb(92 225 230 / 0.2), transparent 85%),
     radial-gradient(65% 60% at 0% 100%, rgb(47 191 160 / 0.12), transparent 85%),
@@ -460,10 +460,10 @@ select:-webkit-autofill {
 .logo-sg-dark {
   display: none;
 }
-.dark:where([data-track="serious-games"]:not(:has([data-track-page="dolls"])), :has([data-track-page="serious-games"])) .logo-main {
+.dark:where([data-track="business"]:not(:has([data-track-page="dolls"])), :has([data-track-page="business"])) .logo-main {
   display: none;
 }
-.dark:where([data-track="serious-games"]:not(:has([data-track-page="dolls"])), :has([data-track-page="serious-games"])) .logo-sg-dark {
+.dark:where([data-track="business"]:not(:has([data-track-page="dolls"])), :has([data-track-page="business"])) .logo-sg-dark {
   display: block;
 }
 

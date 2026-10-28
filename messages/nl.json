@@ -8,7 +8,7 @@
     "about": "Over ons",
     "contact": "Contact",
     "switchToDolls": "Wissel naar: Dolls",
-    "switchToSeriousGames": "Wissel naar: Serious Games"
+    "switchToBusiness": "Wissel naar: Business"
   },
   "hero": {
     "eyebrow": "Onafhankelijke digitale designstudio",
@@ -161,8 +161,6 @@
     "eyebrow": "Zakelijk & opdrachten",
     "title": "Werk samen met 3DPIY",
     "intro": "Heb je een commerciële licentie nodig voor een bestaand design, of wil je een gloednieuw design op maat? Zo werkt dat.",
-    "licensingTitle": "Commerciële licenties",
-    "licensingBody": "De meeste 3DPIY-designs worden verkocht onder een persoonlijke-gebruikslicentie. Met een commerciële licentie mag je een design zakelijk gebruiken — bijvoorbeeld door geprinte producten ervan te verkopen. Licenties zijn per design beschikbaar; neem contact op om beschikbaarheid en prijs te checken.",
     "commissionsTitle": "Designs op maat",
     "commissionsBody": "Heb je een idee voor een product, accessoire of opbergoplossing die nog niet bestaat? 3DPIY neemt een beperkt aantal opdrachten aan voor designs op maat, van één uniek onderdeel tot een volledige productlijn.",
     "commissionsBullets": [
@@ -172,10 +170,7 @@
       "Serious-game-props en educatief materiaal"
     ],
     "cta": "Vraag een offerte aan",
-    "legalNotice": "Licentievoorwaarden worden per project vastgesteld en worden beoordeeld voordat 3DPIY commercieel lanceert.",
-    "dollsComingSoonEyebrow": "Binnenkort beschikbaar",
-    "dollsComingSoonTitle": "Zakelijk voor Dolls & Mini komt eraan",
-    "dollsComingSoonBody": "Wil je zelf geprinte popmeubels of miniaturen verkopen? Een commerciële licentie voor de Dolls-collectie is in voorbereiding — neem gerust contact op als je nu al interesse hebt."
+    "legalNotice": "Licentievoorwaarden worden per project vastgesteld en worden beoordeeld voordat 3DPIY commercieel lanceert."
   },
   "aboutPage": {
     "eyebrow": "Over 3DPIY",
@@ -299,9 +294,9 @@
     "dollsTitle": "3DPIY Shop",
     "dollsDescription": "Poppenmeubels, woondecoratie, IKEA-hacks, opbergen, techprojecten en meer — voor persoonlijk printen thuis.",
     "dollsCta": "Bekijk de shop",
-    "seriousGamesTitle": "Serious Games",
-    "seriousGamesDescription": "Professionele, educatieve designbestanden voor bedrijven — commerciële herverkooplicentie vereist.",
-    "seriousGamesCta": "Ontdek Serious Games"
+    "businessTitle": "3DPIY Business",
+    "businessDescription": "Ontwerpen met een commerciële licentie voor bedrijven en studio's — te beginnen met Serious Games.",
+    "businessCta": "Ontdek Business"
   },
   "dollsLanding": {
     "eyebrow": "Dolls & Miniaturen",
@@ -309,18 +304,7 @@
     "titleLine2": "groot detail.",
     "description": "1:6 popmeubels en 1:12 poppenhuisminiaturen, ontworpen om prachtig te printen op je eigen printer.",
     "cta": "Bekijk de shop",
-    "switchCta": "Op zoek naar zakelijke licenties? Serious Games →"
-  },
-  "seriousGamesLanding": {
-    "eyebrow": "Voor bedrijven",
-    "titleLine1": "Serious Games,",
-    "titleLine2": "serieus gemaakt.",
-    "description": "Professionele en educatieve designbestanden, gelicentieerd voor commercieel print-en-verkoop gebruik.",
-    "cta": "Bekijk de catalogus",
-    "licenseNote": "Het doorverkopen van geprinte producten vereist een commerciële licentie — neem contact op voor prijzen.",
-    "switchCta": "← Op zoek naar dolls & miniaturen?",
-    "contactSalesCta": "Neem contact op",
-    "emptyCatalogNote": "De Serious Games-catalogus wordt voorbereid — kom snel nog eens terug."
+    "switchCta": "Op zoek naar commerciële licenties? 3DPIY Business →"
   },
   "feedbackCta": {
     "title": "Werkt iets niet goed of mis je iets?",
@@ -379,5 +363,23 @@
     "doneBody": "{email} krijgt geen updatemails meer. Nieuwe versies staan nog steeds in je bibliotheek.",
     "invalidTitle": "Link werkt niet",
     "invalidBody": "Deze afmeldlink werkt niet. Gebruik de link uit de laatste updatemail, of neem contact met ons op."
+  },
+  "businessLanding": {
+    "eyebrow": "3DPIY Business",
+    "titleLine1": "Ontwerpen die werken",
+    "titleLine2": "voor jouw bedrijf.",
+    "description": "Printklare ontwerpen met een commerciële licentie: verwerk ze in je eigen producten en verkoop ze. Te beginnen met Serious Games.",
+    "cta": "Bekijk de catalogus",
+    "contactSalesCta": "Neem contact op",
+    "licensesTitle": "Licenties die je direct koopt",
+    "licensesIntro": "Elk ontwerp heeft drie licenties. Je kiest er een bij het afrekenen — geen offerte, geen wachttijd.",
+    "personalTitle": "Persoonlijk",
+    "personalBody": "Zelf printen en gebruiken. Niet voor doorverkoop.",
+    "startupTitle": "Startup",
+    "startupBody": "Voor kleine startups (tot 5 mensen): verwerk het ontwerp in je eigen product en verkoop het.",
+    "studioTitle": "Studio",
+    "studioBody": "Voor studio's en bedrijven: onbeperkt verkopen onder je eigen merk, inclusief het STEP-bestand en één ontwerpaanvraag op maat.",
+    "emptyCatalogNote": "De Business-catalogus wordt voorbereid — kom snel nog eens terug.",
+    "switchCta": "← Toch op zoek naar de shop?"
   }
 }

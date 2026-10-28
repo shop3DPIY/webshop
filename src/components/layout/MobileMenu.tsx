@@ -11,7 +11,7 @@ export function MobileMenu() {
   const t = useTranslations("nav");
   const [open, setOpen] = useState(false);
   // Business/commercial licensing only exists for Serious Games.
-  const isSeriousGames = useCurrentTrack() === "serious-games";
+  const isBusiness = useCurrentTrack() === "business";
 
   return (
     <div className="md:hidden">
@@ -50,7 +50,7 @@ export function MobileMenu() {
       {open && (
         <div className="border-line bg-paper absolute inset-x-0 top-20 z-30 border-b p-4 shadow-lg">
           <nav className="flex flex-col gap-1">
-            {NAV_KEYS.filter((key) => key !== "business" || isSeriousGames).map(
+            {NAV_KEYS.filter((key) => key !== "business" || isBusiness).map(
               (key) => (
                 <Link
                   key={key}

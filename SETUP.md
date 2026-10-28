@@ -87,7 +87,7 @@ test card 4242 4242 4242 4242) before going live.
    with all scopes and set `POLAR_ACCESS_TOKEN` (+ `POLAR_SERVER=sandbox`
    while testing).
 3. Studio → Products → **Sync with Polar** lists every product: one
-   private Polar product per license tier (Personal / Small business /
+   private Polar product per license tier (shop designs: Personal only; Business designs: Personal / Startup / Studio —
    Unlimited) with the Studio prices, VAT included. After that, every
    save in Studio and every ingest run keeps Polar up to date — nothing is
    created by hand in Polar.

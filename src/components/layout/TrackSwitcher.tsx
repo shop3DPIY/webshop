@@ -6,13 +6,13 @@ import { useCurrentTrack } from "@/hooks/useCurrentTrack";
 
 /**
  * Shown on every page, pointing to the *other* track. The current track
- * comes from the URL when it says so (/dolls, /serious-games) and from the
+ * comes from the URL when it says so (/dolls, /business) and from the
  * track cookie everywhere else (product, account, about, ...).
  *
  * Both are read on the client on every render — usePathname re-runs on
  * each client-side navigation, and the cookie is re-read alongside it —
  * rather than in a shared server layout, which Next.js's router cache
- * reuses across /dolls <-> /serious-games navigations (so a cookie read
+ * reuses across /dolls <-> /business navigations (so a cookie read
  * there kept showing whichever track was current the *first* time the
  * layout rendered).
  */
@@ -35,9 +35,9 @@ const SwitchIcon = () => (
 export function TrackSwitcher() {
   const t = useTranslations("nav");
   const current = useCurrentTrack() ?? "dolls";
-  const target = current === "dolls" ? "serious-games" : "dolls";
+  const target = current === "dolls" ? "business" : "dolls";
   const label = t(
-    target === "serious-games" ? "switchToSeriousGames" : "switchToDolls",
+    target === "business" ? "switchToBusiness" : "switchToDolls",
   );
 
   return (

@@ -4,7 +4,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CollectionCard } from "@/components/product/CollectionCard";
 import { ACTIVE_COLLECTION_LIST } from "@/lib/config/colors";
-import { TRACK_COOKIE, isTrack } from "@/lib/config/track";
+import { TRACK_COOKIE, parseTrack } from "@/lib/config/track";
 
 export async function generateMetadata() {
   const t = await getTranslations("shopPage");
@@ -17,11 +17,11 @@ export async function generateMetadata() {
 export default async function ShopPage() {
   const t = await getTranslations("shopPage");
   const cookieStore = await cookies();
-  const track = cookieStore.get(TRACK_COOKIE)?.value;
+  const track = parseTrack(cookieStore.get(TRACK_COOKIE)?.value);
   // Each track gets its own shop: once a visitor has picked Dolls or
-  // Serious Games (see src/proxy.ts), this only shows that track's
+  // Business (see src/proxy.ts), this only shows that track's
   // collections instead of mixing both — same cookie Header/Footer use.
-  const collections = isTrack(track)
+  const collections = track
     ? ACTIVE_COLLECTION_LIST.filter((c) => c.track === track)
     : ACTIVE_COLLECTION_LIST;
 

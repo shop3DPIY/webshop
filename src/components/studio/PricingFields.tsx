@@ -285,7 +285,7 @@ export function PricingFields({
       {sellableTiers(category).length < PRICE_TIERS.length && (
         <p className="text-ink/60 text-xs">
           Shop designs are sold for personal use only — commercial licenses
-          are for the business side (Serious Games).
+          are sold on 3DPIY Business.
         </p>
       )}
       {PRICE_TIERS.filter((t) => !sellableTiers(category).includes(t)).map(

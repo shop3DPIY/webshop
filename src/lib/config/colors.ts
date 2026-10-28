@@ -41,10 +41,11 @@ export interface CollectionTheme {
   /**
    * Which customer-facing track (see src/lib/track.ts) this collection
    * belongs to. undefined = not assigned to a track yet (stays out of
-   * both /dolls and /serious-games browsing until it's enabled and
-   * assigned).
+   * both /dolls and /business browsing until it's enabled and
+   * assigned). "business" collections sell commercial licenses
+   * (Startup / Studio) next to the personal one — see sellableTiers.
    */
-  track?: "dolls" | "serious-games";
+  track?: "dolls" | "business";
 }
 
 export const BRAND_COLORS = {
@@ -150,7 +151,7 @@ export const COLLECTIONS: Record<CollectionSlug, CollectionTheme> = {
     color: "#8C52FF",
     colorSoft: "#EAE1FC",
     textOn: "dark",
-    track: "serious-games",
+    track: "business",
   },
 };
 
@@ -162,7 +163,7 @@ export const ACTIVE_COLLECTION_LIST: CollectionTheme[] = COLLECTION_LIST.filter(
 );
 
 /** Active collections belonging to one track — see src/lib/config/track.ts. */
-export function getTrackCollections(track: "dolls" | "serious-games"): CollectionTheme[] {
+export function getTrackCollections(track: "dolls" | "business"): CollectionTheme[] {
   return ACTIVE_COLLECTION_LIST.filter((c) => c.track === track);
 }
 

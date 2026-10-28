@@ -8,7 +8,7 @@
     "about": "About",
     "contact": "Contact",
     "switchToDolls": "Switch to: Dolls",
-    "switchToSeriousGames": "Switch to: Serious Games"
+    "switchToBusiness": "Switch to: Business"
   },
   "hero": {
     "eyebrow": "Independent digital design studio",
@@ -161,8 +161,6 @@
     "eyebrow": "Business & commissions",
     "title": "Work with 3DPIY",
     "intro": "Need a commercial license for an existing design, or a brand-new design made just for you? Here's how that works.",
-    "licensingTitle": "Commercial licensing",
-    "licensingBody": "Most 3DPIY designs are sold under a personal-use license. A commercial license lets you use a design in a business context — for example selling printed items made from it. Licensing is available per design; get in touch to check availability and pricing.",
     "commissionsTitle": "Custom design commissions",
     "commissionsBody": "Have an idea for a product, accessory or organizational solution that doesn't exist yet? 3DPIY takes on a limited number of custom design commissions, from a single bespoke part to a full product line.",
     "commissionsBullets": [
@@ -172,10 +170,7 @@
       "Serious-game props and educational materials"
     ],
     "cta": "Request a quote",
-    "legalNotice": "Licensing terms are finalized on a per-project basis and will be reviewed before 3DPIY launches commercially.",
-    "dollsComingSoonEyebrow": "Coming soon",
-    "dollsComingSoonTitle": "Business for Dolls & Mini is on its way",
-    "dollsComingSoonBody": "Want to sell your own printed doll furniture or miniatures? A commercial license for the Dolls collection is in the works — feel free to reach out if you're already interested."
+    "legalNotice": "Licensing terms are finalized on a per-project basis and will be reviewed before 3DPIY launches commercially."
   },
   "aboutPage": {
     "eyebrow": "About 3DPIY",
@@ -299,9 +294,9 @@
     "dollsTitle": "3DPIY Shop",
     "dollsDescription": "Doll furniture, home decor, IKEA hacks, storage, tech projects and more — for personal printing at home.",
     "dollsCta": "Browse the shop",
-    "seriousGamesTitle": "Serious Games",
-    "seriousGamesDescription": "Professional, educational design files for businesses — commercial resale license required.",
-    "seriousGamesCta": "Explore Serious Games"
+    "businessTitle": "3DPIY Business",
+    "businessDescription": "Designs with a commercial license for companies and studios — starting with Serious Games.",
+    "businessCta": "Explore Business"
   },
   "dollsLanding": {
     "eyebrow": "Dolls & Miniatures",
@@ -309,18 +304,7 @@
     "titleLine2": "big detail.",
     "description": "1:6 doll furniture and 1:12 dollhouse miniatures, designed to print beautifully on your own printer.",
     "cta": "Browse the shop",
-    "switchCta": "Looking for business licensing? Serious Games →"
-  },
-  "seriousGamesLanding": {
-    "eyebrow": "For businesses",
-    "titleLine1": "Serious Games,",
-    "titleLine2": "seriously made.",
-    "description": "Professional and educational design files, licensed for commercial print-and-resell use.",
-    "cta": "View the catalog",
-    "licenseNote": "Reselling printed output requires a commercial license — contact us for pricing.",
-    "switchCta": "← Looking for dolls & miniatures instead?",
-    "contactSalesCta": "Contact sales",
-    "emptyCatalogNote": "The Serious Games catalog is being prepared — check back soon."
+    "switchCta": "Looking for commercial licenses? 3DPIY Business →"
   },
   "feedbackCta": {
     "title": "Something not working, or missing a model?",
@@ -379,5 +363,23 @@
     "doneBody": "{email} won't get update mails anymore. New versions still show up in your library.",
     "invalidTitle": "Link not valid",
     "invalidBody": "This unsubscribe link doesn't work. Use the link from the most recent update mail, or contact us."
+  },
+  "businessLanding": {
+    "eyebrow": "3DPIY Business",
+    "titleLine1": "Designs that work",
+    "titleLine2": "for your business.",
+    "description": "Ready-to-print designs with a commercial license: build them into your own products and sell them. Starting with Serious Games.",
+    "cta": "View the catalog",
+    "contactSalesCta": "Contact us",
+    "licensesTitle": "Licenses you buy straight away",
+    "licensesIntro": "Every design has three licenses. Pick one at checkout — no quote, no waiting.",
+    "personalTitle": "Personal",
+    "personalBody": "Print and use it yourself. Not for resale.",
+    "startupTitle": "Startup",
+    "startupBody": "For small startups (up to 5 people): use the design in your own product and sell it.",
+    "studioTitle": "Studio",
+    "studioBody": "For studios and companies: sell unlimited copies under your own brand, including the STEP file and one custom design request.",
+    "emptyCatalogNote": "The Business catalog is being prepared — check back soon.",
+    "switchCta": "← Looking for the shop instead?"
   }
 }

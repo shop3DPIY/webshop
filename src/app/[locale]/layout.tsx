@@ -4,7 +4,7 @@ import { getMessages } from "next-intl/server";
 import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
-import { TRACK_COOKIE, isTrack } from "@/lib/config/track";
+import { TRACK_COOKIE, parseTrack } from "@/lib/config/track";
 import "../globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { TrackSync } from "@/components/system/TrackSync";
@@ -52,12 +52,12 @@ export default async function LocaleLayout({
   const cookieStore = await cookies();
   const isDark = cookieStore.get("theme")?.value === "dark";
   // Drives the per-track backdrop and button color (see globals.css).
-  const track = cookieStore.get(TRACK_COOKIE)?.value;
+  const track = parseTrack(cookieStore.get(TRACK_COOKIE)?.value);
 
   return (
     <html
       lang={locale}
-      data-track={isTrack(track) ? track : undefined}
+      data-track={track}
       className={`${fontHeading.variable} ${fontBody.variable} h-full antialiased ${isDark ? "dark" : ""}`}
     >
       <body className="min-h-full flex flex-col bg-paper text-ink">

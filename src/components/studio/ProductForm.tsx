@@ -11,7 +11,7 @@ import { ProductTextFields } from "./ProductTextFields";
 
 const TRACK_GROUPS = [
   { track: "dolls" as const, label: "Dolls & Mini" },
-  { track: "serious-games" as const, label: "Serious Games" },
+  { track: "business" as const, label: "Business" },
 ];
 
 interface ExistingProduct {

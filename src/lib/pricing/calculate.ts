@@ -175,44 +175,52 @@ export function estimateNetCents(grossCents: number): number {
   return Math.round(grossCents - vat - fee);
 }
 
+const isBusiness = (category: string) =>
+  COLLECTIONS[category as CollectionSlug]?.track === "business";
+
 /**
  * Which license tiers are for sale. The shop (3dpiy.com, the Dolls track)
- * is personal use only; commercial licenses are sold on the business side
- * (the Serious Games track). Studio sync only lists these tiers on Polar,
+ * is personal use only; commercial licenses are sold on the Business
+ * track (any collection with track "business", Serious Games first). Studio sync only lists these tiers on Polar,
  * and the checkout only offers them.
  */
 export function sellableTiers(category: string): PriceTier[] {
-  return COLLECTIONS[category as CollectionSlug]?.track === "serious-games"
-    ? PRICE_TIERS
-    : ["personal"];
+  return isBusiness(category) ? PRICE_TIERS : ["personal"];
 }
 
 /**
- * What each license tier is called, per category — used in Studio and as
- * the Polar product names buyers see at checkout. Serious Games is sold
- * to game studios, so its tiers are named for them; the Studio license
- * also includes a custom design request (TIER_EXTRAS).
+ * What each license tier is called — used in Studio and as the Polar
+ * product names buyers see at checkout. Business collections are sold to
+ * companies and studios, so their tiers are named for them; the Studio
+ * license also includes a custom design request (tierExtras).
  */
-const DEFAULT_TIER_NAMES: Record<PriceTier, string> = {
+const SHOP_TIER_NAMES: Record<PriceTier, string> = {
   personal: "Personal license",
   small: "Small business license",
   unlimited: "Unlimited commercial license",
 };
 
-const CATEGORY_TIER_NAMES: Partial<Record<CollectionSlug, Record<PriceTier, string>>> = {
-  "serious-games": {
-    personal: "Personal license",
-    small: "Startup license",
-    unlimited: "Studio license",
-  },
+const BUSINESS_TIER_NAMES: Record<PriceTier, string> = {
+  personal: "Personal license",
+  small: "Startup license",
+  unlimited: "Studio license",
 };
 
 export function tierNames(category: string): Record<PriceTier, string> {
-  return CATEGORY_TIER_NAMES[category as CollectionSlug] ?? DEFAULT_TIER_NAMES;
+  return isBusiness(category) ? BUSINESS_TIER_NAMES : SHOP_TIER_NAMES;
 }
 
-/** What a tier includes, shown under the design's description at checkout. */
-const TIER_EXTRAS: Partial<Record<CollectionSlug, Partial<Record<PriceTier, string>>>> = {
+/** What a Business tier includes, shown under the design's description at checkout. */
+const BUSINESS_TIER_EXTRAS: Record<PriceTier, string> = {
+  personal: "Print and use it yourself. Not for resale.",
+  small:
+    "For small startups (up to 5 people): use the design in your own product and sell it.",
+  unlimited:
+    "For studios and companies: sell unlimited copies under your own brand. Includes the STEP file and one custom design request.",
+};
+
+/** Per-collection wording where the general Business text doesn't fit. */
+const CATEGORY_TIER_EXTRAS: Partial<Record<CollectionSlug, Partial<Record<PriceTier, string>>>> = {
   "serious-games": {
     personal: "Print and play it yourself. Not for resale.",
     small:
@@ -223,7 +231,8 @@ const TIER_EXTRAS: Partial<Record<CollectionSlug, Partial<Record<PriceTier, stri
 };
 
 export function tierExtras(category: string, tier: PriceTier): string | null {
-  return TIER_EXTRAS[category as CollectionSlug]?.[tier] ?? null;
+  if (!isBusiness(category)) return null;
+  return CATEGORY_TIER_EXTRAS[category as CollectionSlug]?.[tier] ?? BUSINESS_TIER_EXTRAS[tier];
 }
 
 /* ---------- Dutch formatting & parsing ---------- */

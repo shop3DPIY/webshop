@@ -13,7 +13,7 @@ import { TRACK_COOKIE } from "./lib/config/track";
 
 const intlMiddleware = createIntlMiddleware(routing);
 
-const TRACK_PATH_RE = /^\/(?:nl\/)?(dolls|serious-games)(?:\/|$)/;
+const TRACK_PATH_RE = /^\/(?:nl\/)?(dolls|business)(?:\/|$)/;
 
 export default async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;

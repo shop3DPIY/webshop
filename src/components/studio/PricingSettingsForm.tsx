@@ -325,7 +325,7 @@ export function PricingSettingsForm({
         Small × / Unlimited ×: a category&apos;s own license factors. Leave
         blank to use the general factors below. Ends in 9: license prices
         €40 → €39, €150 → €149. Shop designs are sold for personal use only;
-        Serious Games (the business side) also sells Startup and Studio
+        Business collections (Serious Games) also sell Startup and Studio
         licenses.
       </p>
 
