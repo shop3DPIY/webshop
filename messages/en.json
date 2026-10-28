@@ -43,6 +43,14 @@
         "name": "Tech & Electronics",
         "tagline": "Enclosures and DIY electronics projects"
       },
+      "games": {
+        "name": "Games",
+        "tagline": "Board game inserts, game pieces and accessories"
+      },
+      "kids": {
+        "name": "Kids",
+        "tagline": "Toys and fun prints for children"
+      },
       "other": {
         "name": "Other",
         "tagline": "Anything that doesn't fit the other collections yet"

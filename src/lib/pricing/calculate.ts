@@ -52,6 +52,8 @@ export const DEFAULT_PRICING_SETTINGS: PricingSettings = {
     "ikea-hacks": { baseCents: 350, minCents: 250, maxCents: 600, inSubscription: true },
     organize: { baseCents: 300, minCents: 250, maxCents: 500, inSubscription: true },
     "tech-electronics": { baseCents: 600, minCents: 400, maxCents: 1200, inSubscription: true },
+    games: { baseCents: 450, minCents: 300, maxCents: 900, inSubscription: true },
+    kids: { baseCents: 400, minCents: 250, maxCents: 900, inSubscription: true },
     // Serious Games buyers are studios that sell games built with the
     // design, so the top (Studio) license is worth more: €8 / €39 / €149.
     "serious-games": {

@@ -16,6 +16,8 @@ export type CollectionSlug =
   | "ikea-hacks"
   | "organize"
   | "tech-electronics"
+  | "games"
+  | "kids"
   | "other"
   | "serious-games";
 
@@ -107,6 +109,26 @@ export const COLLECTIONS: Record<CollectionSlug, CollectionTheme> = {
     tagline: "Enclosures and DIY electronics projects",
     color: "#2F8EFF",
     colorSoft: "#DCEAFF",
+    textOn: "dark",
+    enabled: true,
+    track: "dolls",
+  },
+  games: {
+    slug: "games",
+    name: "Games",
+    tagline: "Board game inserts, game pieces and accessories",
+    color: "#F0433A",
+    colorSoft: "#FDE1DF",
+    textOn: "dark",
+    enabled: true,
+    track: "dolls",
+  },
+  kids: {
+    slug: "kids",
+    name: "Kids",
+    tagline: "Toys and fun prints for children",
+    color: "#14B8C4",
+    colorSoft: "#D6F3F5",
     textOn: "dark",
     enabled: true,
     track: "dolls",
@@ -206,6 +228,22 @@ export const COLLECTION_CLASSNAMES: Record<
     border: "border-tech-electronics",
     wash: "bg-tech-electronics-wash",
     washHover: "hover:bg-tech-electronics-wash-hover",
+  },
+  games: {
+    bg: "bg-games",
+    bgSoft: "bg-games-soft",
+    text: "text-games",
+    border: "border-games",
+    wash: "bg-games-wash",
+    washHover: "hover:bg-games-wash-hover",
+  },
+  kids: {
+    bg: "bg-kids",
+    bgSoft: "bg-kids-soft",
+    text: "text-kids",
+    border: "border-kids",
+    wash: "bg-kids-wash",
+    washHover: "hover:bg-kids-wash-hover",
   },
   other: {
     bg: "bg-other",

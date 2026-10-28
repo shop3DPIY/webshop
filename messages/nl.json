@@ -43,6 +43,14 @@
         "name": "Tech & Electronics",
         "tagline": "Behuizingen en DIY-elektronicaprojecten"
       },
+      "games": {
+        "name": "Spellen",
+        "tagline": "Bordspelinserts, speelstukken en accessoires"
+      },
+      "kids": {
+        "name": "Kids",
+        "tagline": "Speelgoed en leuke prints voor kinderen"
+      },
       "other": {
         "name": "Overig",
         "tagline": "Alles wat nog niet in de andere collecties past"

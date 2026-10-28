@@ -58,6 +58,10 @@
   --organize-soft: #dff6e8;
   --tech-electronics: #2f8eff;
   --tech-electronics-soft: #dceaff;
+  --games: #f0433a;
+  --games-soft: #fde1df;
+  --kids: #14b8c4;
+  --kids-soft: #d6f3f5;
   --other: #6b7280;
   --other-soft: #e8e9ec;
   --serious-games: #8c52ff;
@@ -90,6 +94,10 @@
     var(--tech-electronics) 45%,
     transparent
   );
+  --games-wash: color-mix(in srgb, var(--games) 15%, transparent);
+  --games-wash-hover: color-mix(in srgb, var(--games) 45%, transparent);
+  --kids-wash: color-mix(in srgb, var(--kids) 15%, transparent);
+  --kids-wash-hover: color-mix(in srgb, var(--kids) 45%, transparent);
   --other-wash: color-mix(in srgb, var(--other) 15%, transparent);
   --other-wash-hover: color-mix(in srgb, var(--other) 45%, transparent);
   --serious-games-wash: color-mix(
@@ -141,6 +149,10 @@
   --color-organize-soft: var(--organize-soft);
   --color-tech-electronics: var(--tech-electronics);
   --color-tech-electronics-soft: var(--tech-electronics-soft);
+  --color-games: var(--games);
+  --color-games-soft: var(--games-soft);
+  --color-kids: var(--kids);
+  --color-kids-soft: var(--kids-soft);
   --color-other: var(--other);
   --color-other-soft: var(--other-soft);
   --color-serious-games: var(--serious-games);
@@ -155,6 +167,10 @@
   --color-organize-wash-hover: var(--organize-wash-hover);
   --color-tech-electronics-wash: var(--tech-electronics-wash);
   --color-tech-electronics-wash-hover: var(--tech-electronics-wash-hover);
+  --color-games-wash: var(--games-wash);
+  --color-games-wash-hover: var(--games-wash-hover);
+  --color-kids-wash: var(--kids-wash);
+  --color-kids-wash-hover: var(--kids-wash-hover);
   --color-other-wash: var(--other-wash);
   --color-other-wash-hover: var(--other-wash-hover);
   --color-serious-games-wash: var(--serious-games-wash);

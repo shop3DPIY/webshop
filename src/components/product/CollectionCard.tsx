@@ -27,7 +27,8 @@ export function CollectionCard({
         <Heading className={`font-display text-xl font-semibold text-ink`}>
           {t("name")}
         </Heading>
-        <p className="text-ink/70 mt-1 text-sm">{t("tagline")}</p>
+        {/* Always two lines tall, so titles line up across a row. */}
+        <p className="text-ink/70 mt-1 min-h-10 text-sm">{t("tagline")}</p>
       </div>
     </Link>
   );
