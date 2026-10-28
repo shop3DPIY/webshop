@@ -10,8 +10,8 @@ import { emailLayout, escapeHtml, textToHtml } from "@/lib/mail/template";
  * Who gets one: everyone who owns the design — account holders through
  * their entitlement, and guest buyers through the email on their order
  * (they get the purchase in their library as soon as they sign up with
- * that address, see claim_orders_for_new_profile). Free downloads
- * without an account leave no address, so they can't be told.
+ * that address, see claim_orders_for_new_profile) — plus everyone who
+ * got a free design by email (free_downloads, src/lib/free).
  *
  * Buyers can opt out with the link in each mail (update_mail_optouts,
  * migration 0014). That link carries an HMAC of the address instead of a
@@ -49,7 +49,7 @@ export async function getUpdateRecipients(
   const admin = createAdminClient();
   if (!admin) return [];
 
-  const [{ data: entitled }, { data: ordered }, { data: optouts }] =
+  const [{ data: entitled }, { data: ordered }, { data: free }, { data: optouts }] =
     await Promise.all([
       admin
         .from("entitlements")
@@ -59,6 +59,7 @@ export async function getUpdateRecipients(
         .from("order_items")
         .select("orders(buyer_email)")
         .eq("product_id", productId),
+      admin.from("free_downloads").select("email").eq("product_id", productId),
       admin.from("update_mail_optouts").select("email"),
     ]);
 
@@ -76,6 +77,7 @@ export async function getUpdateRecipients(
     | undefined;
   for (const row of entitled ?? []) add(first(row.profiles)?.email);
   for (const row of ordered ?? []) add(first(row.orders)?.buyer_email);
+  for (const row of free ?? []) add(row.email);
   if (emails.size === 0) return [];
 
   // Language: the newsletter remembers which site language someone used.

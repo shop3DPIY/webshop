@@ -9,7 +9,7 @@ export interface Subscriber {
   all_categories: boolean;
   categories: string[];
   locale: string;
-  source: "footer" | "account";
+  source: "footer" | "account" | "free_download";
   created_at: string;
 }
 
@@ -69,7 +69,7 @@ export async function getSubscriberByEmail(
 export async function upsertSubscriber(params: {
   email: string;
   locale: string;
-  source: "footer" | "account";
+  source: "footer" | "account" | "free_download";
   userId?: string;
 }): Promise<{
   ok: boolean;

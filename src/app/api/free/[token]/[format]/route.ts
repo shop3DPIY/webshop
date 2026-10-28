@@ -1,31 +1,29 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { productForFreeToken } from "@/lib/free/server";
 
 /**
- * Download button of a free design: no checkout, no Polar, no account
- * needed. Only published designs marked free in Studio qualify — paid
- * files stay behind /api/account/download and the thank-you page.
- *
- * A signed-in visitor also gets the design added to their library, so
- * it's there to download again later.
+ * Download buttons in the free-design mail (src/lib/free). The token is
+ * the proof the visitor subscribed with a real address; it works for
+ * FREE_LINK_DAYS and only while the design is still free and published.
  */
 export async function GET(
   _request: NextRequest,
-  { params }: { params: Promise<{ productId: string; format: string }> },
+  { params }: { params: Promise<{ token: string; format: string }> },
 ) {
-  const { productId, format } = await params;
+  const { token, format } = await params;
 
+  const productId = await productForFreeToken(token);
   const admin = createAdminClient();
-  if (!admin) {
-    return NextResponse.json({ error: "Not configured" }, { status: 503 });
+  if (!productId || !admin) {
+    return NextResponse.json({ error: "Link expired or not valid" }, { status: 403 });
   }
 
   const { data: product } = await admin
     .from("products")
-    .select("id, download_files, is_free, publication_status")
+    .select("download_files, is_free, publication_status")
     .eq("id", productId)
-    .maybeSingle();
+    .single();
   if (!product?.is_free || product.publication_status !== "published") {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
@@ -35,17 +33,6 @@ export async function GET(
   );
   if (!file?.storagePath) {
     return NextResponse.json({ error: "File not found" }, { status: 404 });
-  }
-
-  const supabase = await createClient();
-  const user = supabase ? (await supabase.auth.getUser()).data.user : null;
-  if (user) {
-    await admin
-      .from("entitlements")
-      .upsert(
-        { customer_id: user.id, product_id: product.id },
-        { onConflict: "customer_id,product_id", ignoreDuplicates: true },
-      );
   }
 
   const { data: signed, error } = await admin.storage
