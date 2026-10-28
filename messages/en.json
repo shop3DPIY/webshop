@@ -352,5 +352,14 @@
     "invalidTitle": "We couldn't find this purchase",
     "invalidBody": "If you did pay, get in touch and we'll sort it out right away.",
     "contact": "Contact us"
+  },
+  "updateMails": {
+    "title": "Update mails",
+    "body": "Stop update mails to {email}? You'll no longer hear when a design you own gets a new version. Your purchases stay in your library.",
+    "button": "Unsubscribe from update mails",
+    "doneTitle": "You're unsubscribed",
+    "doneBody": "{email} won't get update mails anymore. New versions still show up in your library.",
+    "invalidTitle": "Link not valid",
+    "invalidBody": "This unsubscribe link doesn't work. Use the link from the most recent update mail, or contact us."
   }
 }

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { ProductForm } from "@/components/studio/ProductForm";
@@ -21,7 +22,15 @@ export default async function EditProductPage({
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="font-display text-2xl font-bold">Edit product</h1>
+      <div className="flex items-center justify-between gap-4">
+        <h1 className="font-display text-2xl font-bold">Edit product</h1>
+        <Link
+          href={`/studio/products/${product.id}/notify`}
+          className="border-line hover:bg-mist rounded-full border px-5 py-2.5 text-sm font-semibold transition-colors"
+        >
+          Notify buyers
+        </Link>
+      </div>
       <div className="max-w-2xl">
         <ProductForm
           product={product}

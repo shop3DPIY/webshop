@@ -24,6 +24,7 @@ import {
 import { generateProductText, type ProductText } from "@/lib/ai/productText";
 import { trySyncProductToPolar } from "@/lib/commerce/polar/sync";
 import { requireAdmin } from "./guard";
+import { getUpdateRecipients } from "@/lib/updates/server";
 
 /**
  * All admin writes go through this file — nowhere else touches the
@@ -347,12 +348,25 @@ export async function persistProduct(
 /** Studio form action — session-authenticated via requireAdmin(). */
 export async function saveProduct(formData: FormData) {
   await requireAdmin();
-  const { commerceError } = await persistProduct(formData);
-  redirect(
-    commerceError
-      ? `/studio/products?commerceError=${encodeURIComponent(commerceError.slice(0, 300))}`
-      : "/studio/products",
-  );
+  const id = String(formData.get("id") ?? "");
+  const before = id
+    ? (await createAdminClient()?.from("products").select("version").eq("id", id).single())?.data
+    : null;
+
+  const { id: savedId, commerceError } = await persistProduct(formData);
+  if (commerceError) {
+    redirect(`/studio/products?commerceError=${encodeURIComponent(commerceError.slice(0, 300))}`);
+  }
+
+  // A new version of a design people own: offer to tell them (nothing is
+  // sent until "Send" on that page — see src/lib/updates).
+  const version = String(formData.get("version") ?? "");
+  if (before && version && before.version !== version) {
+    if ((await getUpdateRecipients(savedId)).length > 0) {
+      redirect(`/studio/products/${savedId}/notify`);
+    }
+  }
+  redirect("/studio/products");
 }
 
 /** Studio → Products → "Sync with Polar": (re)lists every product. */

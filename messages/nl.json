@@ -352,5 +352,14 @@
     "invalidTitle": "We kunnen deze aankoop niet vinden",
     "invalidBody": "Heb je wel betaald? Neem contact op, dan lossen we het meteen op.",
     "contact": "Neem contact op"
+  },
+  "updateMails": {
+    "title": "Updatemails",
+    "body": "Geen updatemails meer naar {email}? Je hoort dan niet meer wanneer er een nieuwe versie is van een ontwerp dat je hebt. Je aankopen blijven in je bibliotheek.",
+    "button": "Afmelden voor updatemails",
+    "doneTitle": "Je bent afgemeld",
+    "doneBody": "{email} krijgt geen updatemails meer. Nieuwe versies staan nog steeds in je bibliotheek.",
+    "invalidTitle": "Link werkt niet",
+    "invalidBody": "Deze afmeldlink werkt niet. Gebruik de link uit de laatste updatemail, of neem contact met ons op."
   }
 }

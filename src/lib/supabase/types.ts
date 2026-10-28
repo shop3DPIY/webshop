@@ -51,6 +51,8 @@ export interface Database {
           external_commerce_id: string | null;
           /** Commerce provider (Polar) product id per license tier, see 0012 */
           commerce_product_ids: Partial<Record<"personal" | "small" | "unlimited", string>>;
+          /** Last version buyers got an update mail about, see 0014 */
+          update_notified_version: string | null;
           publication_status: "draft" | "published" | "archived";
           related_product_ids: string[] | null;
           external_links: { printables?: string; makerWorld?: string } | null;
