@@ -16,7 +16,7 @@ export async function Header() {
   return (
     <header className="border-line bg-paper sticky top-0 z-40 border-b shadow-xl backdrop-blur-lg">
       <Container className="flex h-20 items-center justify-between gap-2 sm:gap-4">
-        <div className="flex shrink-0 items-center gap-2 sm:gap-5">
+        <div className="flex shrink-0 items-center gap-3 sm:gap-8">
           <TrackSwitcher />
           <Logo className="h-12 w-auto sm:h-16" />
         </div>
