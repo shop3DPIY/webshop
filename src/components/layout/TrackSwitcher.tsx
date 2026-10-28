@@ -47,14 +47,14 @@ export function TrackSwitcher() {
       data-umami-event={`switch-to-${target}`}
       className="group flex items-center gap-2 text-sm font-medium text-ink"
     >
-      <span className="border-line bg-mist group-hover:border-brand-purple group-hover:bg-brand-purple/45 group-hover:text-white flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-colors">
-        <SwitchIcon />
-      </span>
       {/* Spelled out so both sides are easy to find, except where the header
           is tight (phones, and md before lg when the center nav appears);
           there the icon alone (plus the title/aria text) keeps the room. */}
       <span className="group-hover:text-brand-purple sr-only whitespace-nowrap transition-colors sm:not-sr-only md:sr-only lg:not-sr-only">
         {label}
+      </span>
+      <span className="border-line bg-mist group-hover:border-brand-purple group-hover:bg-brand-purple/45 group-hover:text-white flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-colors">
+        <SwitchIcon />
       </span>
     </Link>
   );
