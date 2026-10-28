@@ -26,6 +26,7 @@ type CategoryRow = {
   /** Blank = use the general factor */
   smallFactor: string;
   unlimitedFactor: string;
+  charmPricing: boolean;
 };
 
 /** The general settings, in display order: key, label, and money vs factor. */
@@ -90,6 +91,7 @@ function toForm(s: PricingSettings) {
         smallFactor: c.smallFactor != null ? factorToInput(c.smallFactor) : "",
         unlimitedFactor:
           c.unlimitedFactor != null ? factorToInput(c.unlimitedFactor) : "",
+        charmPricing: Boolean(c.charmPricing),
       },
     ]),
   ) as Record<CollectionSlug, CategoryRow>;
@@ -138,6 +140,7 @@ function fromForm(
         `${name} unlimited factor`,
         row.unlimitedFactor,
       ),
+      charmPricing: row.charmPricing,
     };
   }
   const g = Object.fromEntries(
@@ -214,7 +217,7 @@ export function PricingSettingsForm({
   return (
     <div className="flex flex-col gap-8">
       <div className="overflow-x-auto rounded-3xl glass">
-        <table className="w-full min-w-[58rem] text-left text-sm">
+        <table className="w-full min-w-[64rem] text-left text-sm">
           <thead className="text-ink/60 text-xs uppercase">
             <tr className="border-line border-b">
               <th className="p-4 font-semibold">Category</th>
@@ -223,6 +226,7 @@ export function PricingSettingsForm({
               <th className="p-4 font-semibold">Max</th>
               <th className="p-4 font-semibold">Small ×</th>
               <th className="p-4 font-semibold">Unlimited ×</th>
+              <th className="p-4 font-semibold">Ends in 9</th>
               <th className="p-4 font-semibold">In subscription</th>
               <th className="p-4 font-semibold">Example (standard, single)</th>
             </tr>
@@ -285,6 +289,18 @@ export function PricingSettingsForm({
                   <td className="p-4">
                     <input
                       type="checkbox"
+                      checked={row.charmPricing}
+                      onChange={(e) =>
+                        setCategory(slug, { charmPricing: e.target.checked })
+                      }
+                      aria-label={`${names[slug]} license prices end in 9`}
+                      title="License prices end in 9: €40 → €39, €150 → €149"
+                      className="h-4 w-4"
+                    />
+                  </td>
+                  <td className="p-4">
+                    <input
+                      type="checkbox"
                       checked={row.inSubscription}
                       onChange={(e) =>
                         setCategory(slug, { inSubscription: e.target.checked })
@@ -307,8 +323,10 @@ export function PricingSettingsForm({
 
       <p className="text-ink/60 -mt-4 text-xs">
         Small × / Unlimited ×: a category&apos;s own license factors. Leave
-        blank to use the general factors below. Serious Games is sold to game
-        studios, so its tiers are called Startup and Studio.
+        blank to use the general factors below. Ends in 9: license prices
+        €40 → €39, €150 → €149. Shop designs are sold for personal use only;
+        Serious Games (the business side) also sells Startup and Studio
+        licenses.
       </p>
 
       <div className="grid gap-4 rounded-3xl p-6 sm:grid-cols-2 lg:grid-cols-3 glass">

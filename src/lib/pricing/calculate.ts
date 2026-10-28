@@ -1,4 +1,5 @@
-import type { CollectionSlug } from "@/lib/config/colors";
+// Relative, not "@/…": the unit tests run without the path alias.
+import { COLLECTIONS, type CollectionSlug } from "../config/colors";
 
 /**
  * Price calculation for Studio's pricing tool — the single place the
@@ -25,6 +26,8 @@ export interface CategoryPricing {
   smallFactor?: number | null;
   /** Overrides the general unlimited factor for this category (null = general) */
   unlimitedFactor?: number | null;
+  /** License prices end in 9: €40 → €39, €150 → €149 */
+  charmPricing?: boolean;
 }
 
 export interface PricingSettings {
@@ -50,13 +53,14 @@ export const DEFAULT_PRICING_SETTINGS: PricingSettings = {
     organize: { baseCents: 300, minCents: 250, maxCents: 500, inSubscription: true },
     "tech-electronics": { baseCents: 600, minCents: 400, maxCents: 1200, inSubscription: true },
     // Serious Games buyers are studios that sell games built with the
-    // design, so the top (Studio) license is worth more: €8 / €40 / €150.
+    // design, so the top (Studio) license is worth more: €8 / €39 / €149.
     "serious-games": {
       baseCents: 800,
       minCents: 600,
       maxCents: 1500,
       inSubscription: false,
       unlimitedFactor: 3.75,
+      charmPricing: true,
     },
     other: { baseCents: 400, minCents: 250, maxCents: 900, inSubscription: true },
   },
@@ -133,11 +137,13 @@ export function calculatePrices(settings: PricingSettings, input: PriceInput): P
   );
   // The tiny epsilon keeps float noise (e.g. 4499.9999) from flooring a step down.
   const unlimitedCents = floorTo(smallCents * unlimitedFactor + 1e-6, 500);
+  const charm = (cents: number) =>
+    cat.charmPricing && cents >= 1000 ? cents - 100 : cents;
 
   return {
     personalCents,
-    smallCents,
-    unlimitedCents,
+    smallCents: charm(smallCents),
+    unlimitedCents: charm(unlimitedCents),
     inSubscription: cat.inSubscription,
     customFromCents: input.category === "serious-games" ? settings.customFromCents : null,
   };
@@ -165,6 +171,18 @@ export function estimateNetCents(grossCents: number): number {
   const vat = grossCents - grossCents / (1 + SALE_COSTS.vatRate);
   const fee = grossCents * SALE_COSTS.feeRate + SALE_COSTS.feeFixedCents;
   return Math.round(grossCents - vat - fee);
+}
+
+/**
+ * Which license tiers are for sale. The shop (3dpiy.com, the Dolls track)
+ * is personal use only; commercial licenses are sold on the business side
+ * (the Serious Games track). Studio sync only lists these tiers on Polar,
+ * and the checkout only offers them.
+ */
+export function sellableTiers(category: string): PriceTier[] {
+  return COLLECTIONS[category as CollectionSlug]?.track === "serious-games"
+    ? PRICE_TIERS
+    : ["personal"];
 }
 
 /**

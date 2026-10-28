@@ -3,11 +3,12 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { commerceProvider } from "@/lib/commerce";
 import { polarFetch, type PolarCheckout } from "@/lib/commerce/polar/api";
-import { PRICE_TIERS, type PriceTier } from "@/lib/pricing/calculate";
+import { sellableTiers, type PriceTier } from "@/lib/pricing/calculate";
 
 /**
- * The buy button's target: creates a Polar checkout session for all
- * license tiers of one design (the buyer picks one there) and redirects
+ * The buy button's target: creates a Polar checkout session for the
+ * license tiers on sale for one design (the buyer picks one there —
+ * shop designs only have the personal license, see sellableTiers) and redirects
  * to it. Product pages are static, so this is where the per-visitor
  * part happens — a signed-in buyer's email is prefilled and their
  * account id travels along, so the purchase lands in their library.
@@ -32,12 +33,12 @@ export async function GET(
 
   const { data: product } = await admin
     .from("products")
-    .select("id, slug, commerce_product_ids, publication_status, is_free")
+    .select("id, slug, category, commerce_product_ids, publication_status, is_free")
     .eq("id", productId)
     .maybeSingle();
 
   const ids = (product?.commerce_product_ids ?? {}) as Partial<Record<PriceTier, string>>;
-  const polarProducts = PRICE_TIERS.map((tier) => ids[tier]).filter(
+  const polarProducts = sellableTiers(product?.category ?? "").map((tier) => ids[tier]).filter(
     (id): id is string => Boolean(id),
   );
   if (

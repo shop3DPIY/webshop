@@ -10,6 +10,7 @@ import {
   formatEuro,
   parseEuroToCents,
   tierCents,
+  sellableTiers,
   tierNames,
   type Complexity,
   type PriceTier,
@@ -206,7 +207,7 @@ export function PricingFields({
       </label>
 
       <div className="divide-line divide-y rounded-2xl glass">
-        {PRICE_TIERS.map((tier) => {
+        {sellableTiers(category).map((tier) => {
           const calc = tierCents(result, tier);
           const mode = modes[tier];
           const value =
@@ -280,6 +281,29 @@ export function PricingFields({
           );
         })}
       </div>
+
+      {sellableTiers(category).length < PRICE_TIERS.length && (
+        <p className="text-ink/60 text-xs">
+          Shop designs are sold for personal use only — commercial licenses
+          are for the business side (Serious Games).
+        </p>
+      )}
+      {PRICE_TIERS.filter((t) => !sellableTiers(category).includes(t)).map(
+        (tier) => (
+          <span key={tier} hidden>
+            <input type="hidden" name={`price_${tier}_mode`} value={modes[tier]} />
+            <input
+              type="hidden"
+              name={`price_${tier}`}
+              value={
+                modes[tier] === "calc"
+                  ? centsToInput(tierCents(result, tier))
+                  : (typed[tier] ?? "")
+              }
+            />
+          </span>
+        ),
+      )}
 
       <p className="text-ink/60 text-xs">
         {result.inSubscription

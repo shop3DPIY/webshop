@@ -1,6 +1,7 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import {
   PRICE_TIERS,
+  sellableTiers,
   tierExtras,
   tierNames,
   type PriceTier,
@@ -26,7 +27,8 @@ import {
  *
  * Polar products are always "private": they never appear on a Polar
  * storefront, only in checkouts our site creates. A free or archived
- * design, or a tier without a price, gets its Polar product archived
+ * design, a tier without a price, or a commercial tier of a shop
+ * (personal-use-only) design gets its Polar product archived
  * (Polar can't delete products that may have orders).
  */
 
@@ -101,7 +103,11 @@ export async function syncProductToPolar(productId: string): Promise<void> {
 
   for (const tier of PRICE_TIERS) {
     const cents = prices[tier];
-    const wanted = sellable && cents != null && cents > 0;
+    const wanted =
+      sellable &&
+      sellableTiers(row.category).includes(tier) &&
+      cents != null &&
+      cents > 0;
     const existing = ids[tier]
       ? await polarFetch<PolarProduct>(`/products/${ids[tier]}`)
       : null;

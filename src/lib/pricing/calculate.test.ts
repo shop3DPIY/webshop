@@ -129,7 +129,7 @@ describe("estimateNetCents", () => {
 });
 
 describe("per-category license factors", () => {
-  it("Serious Games: €8 / €40 / €150 with its own unlimited factor", () => {
+  it("Serious Games: €8 / €39 / €149 with its own factor and prices ending in 9", () => {
     const r = calculatePrices(S, {
       category: "serious-games",
       complexity: "standard",
@@ -137,7 +137,7 @@ describe("per-category license factors", () => {
       partCount: 1,
       includesStep: false,
     });
-    expect([r.personalCents, r.smallCents, r.unlimitedCents]).toEqual([800, 4000, 15000]);
+    expect([r.personalCents, r.smallCents, r.unlimitedCents]).toEqual([800, 3900, 14900]);
   });
 
   it("other categories keep the general factors", () => {
