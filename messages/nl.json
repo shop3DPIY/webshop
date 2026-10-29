@@ -320,7 +320,7 @@
     "ok": "Je bent aangemeld! In elke nieuwsbrief staat een link om je categorieën aan te passen of je af te melden.",
     "invalid": "Dat lijkt geen geldig e-mailadres.",
     "error": "Er ging iets mis. Probeer het later opnieuw.",
-    "consent": "Door je aan te melden ga je akkoord met de <privacy>privacyverklaring</privacy>.",
+    "consent": "Met aanmelden ga je akkoord met de <privacy>privacyverklaring</privacy>.",
     "manageTitle": "Je nieuwsbrief",
     "manageIntro": "Aangemeld als {email}. Kies waarover je mails wilt ontvangen.",
     "modeAll": "Alle categorieën",

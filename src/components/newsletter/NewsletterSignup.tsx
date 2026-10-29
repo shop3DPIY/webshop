@@ -58,7 +58,8 @@ export function NewsletterSignup() {
       {state.status === "error" && (
         <p className="text-xs text-red-200">{t("error")}</p>
       )}
-      <p className="text-ink/60 text-xs">
+      {/* Kept to one line on phones: a shorter NL text, a hair smaller */}
+      <p className="text-ink/60 text-[11px] sm:text-xs">
         {t.rich("consent", {
           privacy: (chunks) => (
             <Link
