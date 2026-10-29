@@ -22,9 +22,11 @@ export default async function TrackChooserPage() {
   const businessCollections = getTrackCollections("business");
 
   return (
-    <div className="relative h-screen w-full overflow-hidden">
-      <div className="relative flex h-full w-full flex-col items-center justify-center px-6 py-8">
-        <div className="flex w-full max-w-4xl flex-col items-center gap-6 rounded-xl p-8 text-center sm:p-10 glass">
+    // min-h, not h-screen + overflow-hidden: on phones the tiles are taller
+    // than the screen and the panel got cut off top and bottom.
+    <div className="relative min-h-dvh w-full">
+      <div className="relative flex min-h-dvh w-full flex-col items-center justify-center px-4 py-8 sm:px-6">
+        <div className="flex w-full max-w-4xl flex-col items-center gap-6 rounded-xl p-5 text-center sm:p-10 glass">
           <div className="flex flex-col items-center gap-3">
             <LogoImage variant="chooser" priority className="h-24 w-auto sm:h-32" />
             <h1 className="font-display text-xl font-bold text-ink sm:text-2xl">
@@ -39,7 +41,7 @@ export default async function TrackChooserPage() {
             <Link
               href="/dolls"
               data-umami-event="chooser-shop"
-              className="group glass hover:bg-white/25 flex flex-col items-start gap-3 rounded-3xl p-8 text-left transition-colors sm:col-span-2"
+              className="group glass hover:bg-white/25 flex flex-col items-start gap-3 rounded-3xl p-6 text-left sm:p-8 transition-colors sm:col-span-2"
             >
               <h2 className="font-display text-2xl font-semibold text-ink">
                 {t("dollsTitle")}
@@ -74,7 +76,7 @@ export default async function TrackChooserPage() {
             <Link
               href="/business"
               data-umami-event="chooser-business"
-              className="group glass hover:bg-white/25 flex flex-col items-start gap-3 rounded-3xl p-8 text-left transition-colors"
+              className="group glass hover:bg-white/25 flex flex-col items-start gap-3 rounded-3xl p-6 text-left sm:p-8 transition-colors"
             >
               <h2 className="font-display text-2xl font-semibold text-ink">
                 {t("businessTitle")}

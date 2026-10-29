@@ -24,7 +24,7 @@ export async function Footer() {
 
   return (
     <footer className="border-line bg-paper border-t shadow-xl backdrop-blur-lg">
-      <Container className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
+      <Container className="grid gap-10 px-7 py-12 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <Logo />
           <p className="text-ink/70 mt-3 text-sm">{t("tagline")}</p>

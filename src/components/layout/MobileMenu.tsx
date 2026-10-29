@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { useCurrentTrack } from "@/hooks/useCurrentTrack";
@@ -47,8 +48,12 @@ export function MobileMenu() {
         )}
       </button>
 
-      {open && (
-        <div className="border-line bg-paper absolute inset-x-0 top-20 z-30 border-b p-4 shadow-lg">
+      {/* Portaled to <body>: inside the header (which has its own
+          backdrop-filter) the panel's blur would only see the header, not
+          the page behind it, and the menu came out see-through. */}
+      {open &&
+        createPortal(
+        <div className="border-line fixed inset-x-0 top-20 z-30 border-b bg-white/25 p-4 shadow-xl backdrop-blur-2xl backdrop-saturate-150 md:hidden dark:bg-black/40">
           <nav className="flex flex-col gap-1">
             {NAV_KEYS.filter((key) => key !== "business" || isBusiness).map(
               (key) => (
@@ -70,8 +75,9 @@ export function MobileMenu() {
               {t("contact")}
             </Link>
           </nav>
-        </div>
-      )}
+        </div>,
+          document.body,
+        )}
     </div>
   );
 }

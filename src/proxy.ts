@@ -9,11 +9,8 @@ import {
   getSiteMode,
   isAllowedInGatedMode,
 } from "./lib/config/siteMode";
-import { TRACK_COOKIE } from "./lib/config/track";
 
 const intlMiddleware = createIntlMiddleware(routing);
-
-const TRACK_PATH_RE = /^\/(?:nl\/)?(dolls|business)(?:\/|$)/;
 
 export default async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
@@ -65,18 +62,9 @@ export default async function proxy(request: NextRequest) {
 
   const response = bypassesIntl ? NextResponse.next() : intlMiddleware(request);
 
-  // Visiting either track's pages (via the chooser or a direct/bookmarked
-  // link) remembers that choice, so a later visit to "/" skips straight to
-  // it — the switcher on each track's pages is what keeps the other track
-  // reachable instead of trapping visitors.
-  const trackMatch = pathname.match(TRACK_PATH_RE);
-  if (trackMatch) {
-    response.cookies.set(TRACK_COOKIE, trackMatch[1], {
-      path: "/",
-      maxAge: 60 * 60 * 24 * 365,
-      sameSite: "lax",
-    });
-  }
+  // The track cookie is written on the client (TrackSync), not here:
+  // link prefetches run through the proxy as well and would set it to
+  // whatever track a prefetched link points at.
 
   return updateSupabaseSession(request, response);
 }

@@ -24,6 +24,15 @@ export function TrackSync() {
     }
     const parsed = parseTrack(track);
     if (parsed) document.documentElement.setAttribute("data-track", parsed);
+    // Remember the track only on a real visit to /dolls or /business.
+    // (The proxy used to set this cookie, but link prefetches pass through
+    // the proxy too — the header's switcher prefetching /business flipped
+    // the Shop visitor's cookie to Business, so Shop/About/Contact opened
+    // in the Business look.)
+    if (pathname === "/dolls" || pathname.startsWith("/dolls/") ||
+        pathname === "/business" || pathname.startsWith("/business/")) {
+      document.cookie = `${TRACK_COOKIE}=${parsed}; path=/; max-age=${60 * 60 * 24 * 365}; samesite=lax`;
+    }
   }, [pathname]);
 
   return null;
