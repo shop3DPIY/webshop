@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { persistProduct } from "@/lib/studio/actions";
+import { formatCompatible, ikeaCompatibleFrom } from "@/lib/compatible";
 
 /**
  * Entry point for the local folder-watcher ingest script (see
@@ -24,6 +25,15 @@ export async function POST(request: NextRequest) {
 
   const formData = await request.formData();
   formData.set("publicationStatus", "draft");
+  // IKEA hacks: link the IKEA product(s) named in the folder/file names.
+  if (formData.get("category") === "ikea-hacks" && !formData.has("compatible")) {
+    const links = ikeaCompatibleFrom(
+      String(formData.get("folderName") ?? ""),
+      String(formData.get("title") ?? ""),
+      String(formData.get("sourceFilename") ?? ""),
+    );
+    if (links.length > 0) formData.set("compatible", formatCompatible(links));
+  }
 
   try {
     const { id, commerceError } = await persistProduct(formData);

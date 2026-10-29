@@ -5,6 +5,8 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { CollectionCard } from "@/components/product/CollectionCard";
 import { ACTIVE_COLLECTION_LIST } from "@/lib/config/colors";
 import { TRACK_COOKIE, parseTrack } from "@/lib/config/track";
+import { ProductBrowser } from "@/components/product/ProductBrowser";
+import { getPublishedProducts } from "@/lib/products";
 
 export async function generateMetadata() {
   const t = await getTranslations("shopPage");
@@ -16,6 +18,8 @@ export async function generateMetadata() {
 
 export default async function ShopPage() {
   const t = await getTranslations("shopPage");
+  const tBrowser = await getTranslations("productBrowser");
+  const tCollections = await getTranslations("collections.items");
   const cookieStore = await cookies();
   const track = parseTrack(cookieStore.get(TRACK_COOKIE)?.value);
   // Each track gets its own shop: once a visitor has picked Dolls or
@@ -25,9 +29,15 @@ export default async function ShopPage() {
     ? ACTIVE_COLLECTION_LIST.filter((c) => c.track === track)
     : ACTIVE_COLLECTION_LIST;
 
-  // Centred in the first screen (viewport minus the h-20 header), like the
-  // Shop landing page.
+  const slugs = new Set(collections.map((c) => c.slug));
+  const products = (await getPublishedProducts()).filter((p) =>
+    slugs.has(p.category),
+  );
+
+  // Collections first (centred in the first screen, viewport minus the
+  // h-20 header), then every design with search and filters.
   return (
+    <>
     <section className="flex min-h-[calc(100svh-5rem)] items-center py-8">
       <Container panel className="py-0 flex flex-col gap-10">
         <SectionHeading
@@ -47,5 +57,20 @@ export default async function ShopPage() {
         </div>
       </Container>
     </section>
+    <section id="all-designs" className="scroll-mt-24">
+      <Container panel className="flex flex-col gap-8 pt-0 pb-16">
+        <h2 className="font-display text-ink text-2xl font-bold sm:text-3xl">
+          {tBrowser("allTitle")}
+        </h2>
+        <ProductBrowser
+          products={products}
+          collections={collections.map((c) => ({
+            slug: c.slug,
+            name: tCollections(`${c.slug}.name`),
+          }))}
+        />
+      </Container>
+    </section>
+    </>
   );
 }

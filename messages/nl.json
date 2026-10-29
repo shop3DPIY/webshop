@@ -117,10 +117,31 @@
     "enterprise": "Enterprise",
     "free": "Gratis"
   },
+  "productBrowser": {
+      "search": "Zoeken",
+      "searchPlaceholder": "Zoek ontwerpen — bijv. Kallax, poppenhuis, haakje…",
+      "price": "Prijs",
+      "priceAll": "Alle prijzen",
+      "priceFree": "Gratis",
+      "priceUnder5": "Onder € 5",
+      "price5to10": "€ 5 – € 10",
+      "priceOver10": "Boven € 10",
+      "sort": "Sorteren",
+      "sortNewest": "Nieuwste eerst",
+      "sortPriceAsc": "Prijs: laag naar hoog",
+      "sortPriceDesc": "Prijs: hoog naar laag",
+      "sortName": "Naam A–Z",
+      "allCollections": "Alle collecties",
+      "count": "{count, plural, =0 {Geen ontwerpen} one {# ontwerp} other {# ontwerpen}}",
+      "clear": "Filters wissen",
+      "noResults": "Niets gevonden — probeer een ander woord of wis de filters.",
+      "emptyCatalog": "Nog geen ontwerpen — kom snel terug.",
+      "allTitle": "Alle ontwerpen"
+  },
   "shopPage": {
     "eyebrow": "Shop",
-    "title": "Zes collecties, één printer",
-    "description": "Blader per collectie om het juiste design te vinden — elke collectie heeft zijn eigen kleur, zodat je altijd weet waar je bent."
+    "title": "Al onze ontwerpen, één printer",
+    "description": "Kies een collectie, of doorzoek hieronder alle ontwerpen — elke collectie heeft zijn eigen kleur, zodat je altijd weet waar je bent."
   },
   "collectionPage": {
     "backToShop": "Alle collecties",
@@ -128,6 +149,7 @@
     "emptyDescription": "Deze collectie wordt nog aangevuld terwijl 3DPIY zich voorbereidt op de lancering — kom snel nog eens kijken."
   },
   "productPage": {
+    "compatibleWith": "Past op",
     "timelapse": "Print-timelapse",
     "backToCollection": "Terug naar collectie",
     "specs": {

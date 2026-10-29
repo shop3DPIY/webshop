@@ -2,7 +2,7 @@ import { TrackMarker } from "@/components/system/TrackMarker";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/ui/Container";
-import { ProductCard } from "@/components/product/ProductCard";
+import { ProductBrowser } from "@/components/product/ProductBrowser";
 import { FeedbackCta } from "@/components/product/FeedbackCta";
 import { Link } from "@/i18n/navigation";
 import {
@@ -78,11 +78,7 @@ export default async function CollectionPage({
 
       <Container panel className="flex flex-col gap-8 py-16 sm:py-24">
         {products.length > 0 ? (
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          <ProductBrowser products={products} />
         ) : (
           <div className="rounded-3xl p-12 text-center glass">
             <h2 className="font-display text-ink text-xl font-semibold">

@@ -218,6 +218,32 @@ export default async function ProductPage({
             </p>
           </div>
 
+          {(product.externalLinks?.compatible?.length ?? 0) > 0 && (
+            <div className="flex flex-wrap items-center gap-2 text-sm">
+              <span className="text-ink/60">{t("compatibleWith")}:</span>
+              {product.externalLinks!.compatible!.map((link) =>
+                link.url ? (
+                  <a
+                    key={link.label}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="border-line hover:bg-mist rounded-full border px-3 py-1 font-medium transition-colors"
+                  >
+                    {link.label} ↗
+                  </a>
+                ) : (
+                  <span
+                    key={link.label}
+                    className="border-line rounded-full border px-3 py-1 font-medium"
+                  >
+                    {link.label}
+                  </span>
+                ),
+              )}
+            </div>
+          )}
+
           {product.printSettings?.instructions && (
             <p className="text-ink/70 text-sm">
               {product.printSettings.instructions}

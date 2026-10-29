@@ -117,10 +117,31 @@
     "enterprise": "Enterprise",
     "free": "Free"
   },
+  "productBrowser": {
+      "search": "Search",
+      "searchPlaceholder": "Search designs — e.g. Kallax, dollhouse, hook…",
+      "price": "Price",
+      "priceAll": "Any price",
+      "priceFree": "Free",
+      "priceUnder5": "Under €5",
+      "price5to10": "€5 – €10",
+      "priceOver10": "Over €10",
+      "sort": "Sort",
+      "sortNewest": "Newest first",
+      "sortPriceAsc": "Price: low to high",
+      "sortPriceDesc": "Price: high to low",
+      "sortName": "Name A–Z",
+      "allCollections": "All collections",
+      "count": "{count, plural, =0 {No designs} one {# design} other {# designs}}",
+      "clear": "Clear filters",
+      "noResults": "Nothing matches — try another word or clear the filters.",
+      "emptyCatalog": "No designs yet — check back soon.",
+      "allTitle": "All designs"
+  },
   "shopPage": {
     "eyebrow": "Shop",
-    "title": "Six collections, one printer",
-    "description": "Browse by collection to find the right design — each one has its own color so you always know where you are."
+    "title": "All our designs, one printer",
+    "description": "Pick a collection, or search all designs below — each collection has its own color so you always know where you are."
   },
   "collectionPage": {
     "backToShop": "All collections",
@@ -128,6 +149,7 @@
     "emptyDescription": "This collection is still filling up as 3DPIY prepares for launch — check back soon."
   },
   "productPage": {
+    "compatibleWith": "Compatible with",
     "timelapse": "Print timelapse",
     "backToCollection": "Back to collection",
     "specs": {

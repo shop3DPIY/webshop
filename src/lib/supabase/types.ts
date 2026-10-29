@@ -55,7 +55,7 @@ export interface Database {
           update_notified_version: string | null;
           publication_status: "draft" | "published" | "archived";
           related_product_ids: string[] | null;
-          external_links: { printables?: string; makerWorld?: string } | null;
+          external_links: { printables?: string; makerWorld?: string; compatible?: { label: string; url?: string }[] } | null;
           /** Chosen Persoonlijk price (see migration 0008) */
           price_cents: number | null;
           complexity: "simple" | "standard" | "complex";

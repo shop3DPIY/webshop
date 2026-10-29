@@ -43,6 +43,7 @@ interface ProductRow {
   publication_status: Product["publicationStatus"];
   related_product_ids: string[] | null;
   external_links: Product["externalLinks"] | null;
+  price_cents: number | null;
 }
 
 function mapRow(row: ProductRow): Product {
@@ -69,11 +70,12 @@ function mapRow(row: ProductRow): Product {
     publicationStatus: row.publication_status,
     relatedProductIds: row.related_product_ids ?? undefined,
     externalLinks: row.external_links ?? undefined,
+    priceCents: row.price_cents,
   };
 }
 
 const PRODUCT_COLUMNS =
-  "id, slug, title, description, title_nl, description_nl, category, extra_categories, tags, images, timelapse_url, download_files, dimensions, print_settings, version, last_updated, license_type, is_free, commerce_product_ids, publication_status, related_product_ids, external_links";
+  "id, slug, title, description, title_nl, description_nl, category, extra_categories, tags, images, timelapse_url, download_files, dimensions, print_settings, version, last_updated, license_type, is_free, commerce_product_ids, publication_status, related_product_ids, external_links, price_cents";
 
 export async function getAllProducts(): Promise<Product[]> {
   if (!isSupabaseConfigured()) return FALLBACK_PRODUCTS;

@@ -36,7 +36,7 @@ export async function Footer() {
           </h4>
           <ul className="text-ink space-y-2 text-sm">
             <li>
-              <Link href="/shop">{t("shopAll")}</Link>
+              <Link href="/shop#all-designs">{t("shopAll")}</Link>
             </li>
             <li>
               <Link href="/free-designs">{t("shopFree")}</Link>

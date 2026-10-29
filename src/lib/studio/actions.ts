@@ -23,6 +23,7 @@ import {
 } from "@/lib/pricing/settings";
 import { generateProductText, type ProductText } from "@/lib/ai/productText";
 import { trySyncProductToPolar } from "@/lib/commerce/polar/sync";
+import { parseCompatible } from "@/lib/compatible";
 import { requireAdmin } from "./guard";
 import { getUpdateRecipients } from "@/lib/updates/server";
 
@@ -324,6 +325,13 @@ export async function persistProduct(
         ? "published"
         : String(formData.get("publicationStatus") ?? "draft"),
     source_filename: String(formData.get("sourceFilename") ?? "") || null,
+    // "Compatible with" lines; other external links (Printables…) are kept.
+    ...(formData.has("compatible") && {
+      external_links: {
+        ...(existing?.external_links ?? {}),
+        compatible: parseCompatible(String(formData.get("compatible") ?? "")),
+      },
+    }),
     ...pricing,
     updated_at: new Date().toISOString(),
   };

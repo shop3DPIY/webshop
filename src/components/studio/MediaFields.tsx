@@ -25,6 +25,8 @@ const DOWNLOAD_FORMATS = [
 
 const BUTTON =
   "border-line bg-mist hover:border-brand-purple hover:bg-brand-purple/45 rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors";
+const PHOTO_BUTTON =
+  "border-line bg-mist hover:border-brand-purple hover:bg-brand-purple/45 rounded-full border px-2 py-0.5 text-xs font-semibold transition-colors disabled:opacity-40";
 
 type Download = { format: string; fileName: string; path: string };
 type Status = { busy: boolean; error: string | null };
@@ -200,20 +202,23 @@ export function MediaFields({
           JPG, PNG or WebP.
         </p>
         {images.length > 0 && (
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(13rem,1fr))] gap-3">
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(8.5rem,1fr))] gap-3">
             {images.map((src, i) => (
               <div
                 key={src}
                 className="flex flex-col gap-2 rounded-2xl p-2 glass"
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={src}
-                  alt=""
-                  className="aspect-square w-full rounded-xl object-cover"
-                />
-                <div className="flex items-center justify-between gap-2 px-1">
-                  <span className="w-12 shrink-0 text-xs font-semibold">
+                {/* Small thumbnail; click opens the full photo in a new tab. */}
+                <a href={src} target="_blank" rel="noopener noreferrer" title="Open full size">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={src}
+                    alt=""
+                    className="aspect-square w-full rounded-xl object-cover transition-opacity hover:opacity-85"
+                  />
+                </a>
+                <div className="flex items-center justify-between gap-1">
+                  <span className="shrink-0 text-xs font-semibold">
                     {i === 0 ? "Cover" : `#${i + 1}`}
                   </span>
                   <span className="flex shrink-0 gap-1">
@@ -221,7 +226,7 @@ export function MediaFields({
                       type="button"
                       onClick={() => move(i, -1)}
                       disabled={i === 0}
-                      className={BUTTON}
+                      className={PHOTO_BUTTON}
                       aria-label="Move left"
                     >
                       ←
@@ -230,7 +235,7 @@ export function MediaFields({
                       type="button"
                       onClick={() => move(i, 1)}
                       disabled={i === images.length - 1}
-                      className={BUTTON}
+                      className={PHOTO_BUTTON}
                       aria-label="Move right"
                     >
                       →
@@ -240,7 +245,7 @@ export function MediaFields({
                       onClick={() =>
                         setImages((list) => list.filter((x) => x !== src))
                       }
-                      className={BUTTON}
+                      className={PHOTO_BUTTON}
                       aria-label="Remove photo"
                     >
                       ×
@@ -277,7 +282,7 @@ export function MediaFields({
               muted
               playsInline
               preload="metadata"
-              className="w-full max-w-md rounded-2xl"
+              className="w-full max-w-60 rounded-2xl"
             />
             <button
               type="button"

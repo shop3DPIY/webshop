@@ -99,7 +99,20 @@ export interface Product {
   externalLinks?: {
     printables?: string;
     makerWorld?: string;
+    /**
+     * "Compatible with": the product(s) this design fits, e.g. an IKEA
+     * item. Filled in by the ingest script for IKEA (from the folder name)
+     * or by hand in Studio. Shown on the product page and searchable.
+     */
+    compatible?: CompatibleLink[];
   };
+  /** Personal-license price in cents (null for free/unpriced designs) */
+  priceCents?: number | null;
+}
+
+export interface CompatibleLink {
+  label: string;
+  url?: string;
 }
 
 /** The product's title and description in the visitor's language. */

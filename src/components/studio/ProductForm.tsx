@@ -1,3 +1,4 @@
+import { formatCompatible } from "@/lib/compatible";
 import { saveProduct } from "@/lib/studio/actions";
 import { COLLECTION_LIST, type CollectionSlug } from "@/lib/config/colors";
 import type {
@@ -41,6 +42,7 @@ interface ExistingProduct {
   images: { src: string; alt: string }[] | null;
   timelapse_url: string | null;
   source_filename: string | null;
+  external_links: { compatible?: { label: string; url?: string }[] } | null;
   complexity: Complexity;
   is_set: boolean;
   part_count: number;
@@ -344,6 +346,18 @@ export function ProductForm({
             </section>
 
             <label className={LABEL}>
+              Compatible with — one per line, &ldquo;Name | link&rdquo; (link
+              optional). Shown on the product page and searchable.
+              <textarea
+                name="compatible"
+                rows={2}
+                defaultValue={formatCompatible(p?.external_links?.compatible)}
+                className={FIELD}
+                placeholder={"IKEA KALLAX | https://www.ikea.com/nl/nl/search/?q=kallax"}
+              />
+            </label>
+
+            <label className={LABEL}>
               Internal notes — original filename in your design software (never
               shown to customers)
               <input
@@ -379,7 +393,7 @@ export function ProductForm({
             type="submit"
             name="setLive"
             value="1"
-            className="border-line bg-mist hover:border-brand-purple hover:bg-brand-purple/45 rounded-full border px-6 py-3 text-sm font-semibold transition-colors"
+            className="rounded-full border-2 border-white bg-white/35 px-6 py-3 text-sm font-semibold text-white shadow-md backdrop-blur-lg transition-colors hover:border-brand-purple hover:bg-brand-purple/60"
           >
             {p ? "Save & set live" : "Create & set live"}
           </button>

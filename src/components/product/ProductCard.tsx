@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { productText, type Product } from "@/types/product";
 import { COLLECTION_CLASSNAMES } from "@/lib/config/colors";
 import { Badge } from "@/components/ui/Badge";
+import { formatEuro } from "@/lib/pricing/calculate";
 
 export function ProductCard({ product }: { product: Product }) {
   const tCollections = useTranslations("collections.items");
@@ -40,6 +41,11 @@ export function ProductCard({ product }: { product: Product }) {
       <div className="flex flex-1 flex-col p-4">
         <h3 className="font-display text-ink text-base font-semibold">{text.title}</h3>
         <p className="text-ink/60 mt-1 line-clamp-2 text-sm">{text.description}</p>
+        {!product.isFree && product.priceCents != null && (
+          <p className="text-ink mt-auto pt-3 text-sm font-semibold">
+            {formatEuro(product.priceCents)}
+          </p>
+        )}
       </div>
     </Link>
   );
