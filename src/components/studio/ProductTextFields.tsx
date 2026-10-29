@@ -6,6 +6,14 @@ import { generateProductTextAction } from "@/lib/studio/actions";
 const FIELD =
   "border-line bg-paper w-full rounded-2xl border px-4 py-2.5 text-sm";
 const LABEL = "flex flex-col gap-1.5 text-sm font-medium";
+/** Same rules as the server's slugify (src/lib/studio/actions.ts). */
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
 const BUTTON_SECONDARY =
   "border-line bg-mist hover:border-brand-purple hover:bg-brand-purple/45 rounded-full border px-4 py-2 text-sm font-semibold transition-colors disabled:opacity-50";
 
@@ -41,6 +49,12 @@ export function ProductTextFields({
   const [suggestion, setSuggestion] = useState<Texts | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // A new product's slug follows the English title (also after "Use these
+  // texts") until you type in the slug field yourself. An existing
+  // product keeps its slug: changing it would break links to it.
+  const [slugValue, setSlugValue] = useState(slug ?? "");
+  const [slugTouched, setSlugTouched] = useState(!!slug);
+  const shownSlug = slugTouched ? slugValue : slugify(texts.title);
 
   // The collection select lives elsewhere in the form.
   useEffect(() => {
@@ -87,11 +101,16 @@ export function ProductTextFields({
           />
         </label>
         <label className={LABEL}>
-          Slug (leave empty to auto-generate)
+          Slug (web address)
           <input
             type="text"
             name="slug"
-            defaultValue={slug}
+            value={shownSlug}
+            onChange={(e) => {
+              setSlugTouched(true);
+              setSlugValue(e.target.value);
+            }}
+            placeholder="made from the title"
             className={FIELD}
           />
         </label>
