@@ -207,7 +207,7 @@ export function MediaFields({
           <PhotoPreview src={preview} onClose={() => setPreview(null)} />
         )}
         {images.length > 0 && (
-          <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
+          <div className="grid grid-cols-3 gap-3">
             {images.map((src, i) => (
               <div
                 key={src}
