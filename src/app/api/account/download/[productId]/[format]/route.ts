@@ -41,7 +41,15 @@ export async function GET(
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  const { data: product } = await supabase
+  const admin = createAdminClient();
+  if (!admin) {
+    return NextResponse.json({ error: "Not configured" }, { status: 503 });
+  }
+
+  // Service-role read (entitlement already checked above): a design that
+  // was taken offline (archived) is hidden by RLS but stays downloadable
+  // for the people who own it.
+  const { data: product } = await admin
     .from("products")
     .select("download_files")
     .eq("id", productId)
@@ -52,11 +60,6 @@ export async function GET(
   );
   if (!file?.storagePath) {
     return NextResponse.json({ error: "File not found" }, { status: 404 });
-  }
-
-  const admin = createAdminClient();
-  if (!admin) {
-    return NextResponse.json({ error: "Not configured" }, { status: 503 });
   }
 
   const { data: signed, error } = await admin.storage

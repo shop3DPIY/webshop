@@ -14,10 +14,13 @@ export function AdminShell({
   children,
   adminName,
   adminEmail,
+  draftCount = 0,
 }: {
   children: React.ReactNode;
   adminName?: string | null;
   adminEmail?: string | null;
+  /** Products waiting in "Not live yet" (e.g. new ingest uploads) */
+  draftCount?: number;
 }) {
   return (
     <div className="flex min-h-full flex-col">
@@ -59,9 +62,17 @@ export function AdminShell({
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-ink/70 hover:text-ink text-sm font-medium"
+                className="text-ink/70 hover:text-ink flex items-center gap-1.5 text-sm font-medium"
               >
                 {item.label}
+                {item.href === "/studio/products" && draftCount > 0 && (
+                  <span
+                    className="bg-action text-on-action rounded-full px-2 py-0.5 text-xs font-bold"
+                    title={`${draftCount} not live yet`}
+                  >
+                    {draftCount} new
+                  </span>
+                )}
               </Link>
             ))}
           </nav>

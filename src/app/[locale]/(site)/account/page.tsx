@@ -1,3 +1,4 @@
+import { createAdminClient } from "@/lib/supabase/admin";
 import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -78,7 +79,11 @@ export default async function AccountPage({
   const productIds = (entitlementRows ?? []).map((row) => row.product_id);
   const { data: libraryProducts } =
     productIds.length > 0
-      ? await supabase!
+      ? // Service-role read: the ids come from the visitor's own
+        // (RLS-checked) entitlements, and owned designs that were taken
+        // offline (archived) must stay in the library — the public RLS
+        // policy only shows published products.
+        await (createAdminClient() ?? supabase!)
           .from("products")
           .select("id, slug, title, category, download_files")
           .in("id", productIds)
