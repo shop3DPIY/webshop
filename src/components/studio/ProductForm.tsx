@@ -58,6 +58,19 @@ const FIELD =
   "border-line bg-paper w-full rounded-2xl border px-4 py-2.5 text-sm";
 const LABEL = "flex flex-col gap-1.5 text-sm font-medium";
 
+/** ⓘ with the explanation on hover (and for screen readers). */
+function Info({ text }: { text: string }) {
+  return (
+    <span
+      title={text}
+      aria-label={text}
+      className="text-ink/60 hover:text-ink cursor-help font-normal"
+    >
+      ⓘ
+    </span>
+  );
+}
+
 export function ProductForm({
   product,
   pricingSettings,
@@ -230,7 +243,10 @@ export function ProductForm({
                 />
               </label>
               <label className={LABEL}>
-                Recommended materials (comma separated)
+                <span>
+                  Recommended materials{" "}
+                  <Info text="Comma separated, e.g. PLA, PETG" />
+                </span>
                 <input
                   type="text"
                   name="recommendedMaterials"
@@ -243,7 +259,10 @@ export function ProductForm({
             </section>
 
             <label className={LABEL}>
-              Compatible printers (comma separated)
+              <span>
+                Compatible printers{" "}
+                <Info text="Comma separated, e.g. Bambu Lab A1, Prusa MK4" />
+              </span>
               <input
                 type="text"
                 name="compatiblePrinters"
@@ -263,8 +282,10 @@ export function ProductForm({
             </label>
 
             <label className={LABEL}>
-              Printing instructions — this is the explanation shown on the
-              product page
+              <span>
+                Printing instructions{" "}
+                <Info text="The printing explanation shown on the product page" />
+              </span>
               <textarea
                 name="instructions"
                 defaultValue={p?.print_settings?.instructions}
@@ -314,7 +335,10 @@ export function ProductForm({
             </section>
 
             <label className={LABEL}>
-              Tags — search words, comma separated (site search + Google)
+              <span>
+                Tags{" "}
+                <Info text="Search words, comma separated — used by the site search and shown on the product page for Google. Mix English and Dutch, e.g. ikea, kallax, storage, opbergen" />
+              </span>
               <input
                 type="text"
                 name="tags"
@@ -325,8 +349,10 @@ export function ProductForm({
             </label>
 
             <label className={LABEL}>
-              Compatible with — one per line, &ldquo;Name | link&rdquo; (link
-              optional). Shown on the product page and searchable.
+              <span>
+                Compatible with{" "}
+                <Info text="One per line: Name | link (the link is optional). Shown on the product page and searchable." />
+              </span>
               <textarea
                 name="compatible"
                 rows={2}
@@ -337,8 +363,10 @@ export function ProductForm({
             </label>
 
             <label className={LABEL}>
-              Internal notes — original filename in your design software (never
-              shown to customers)
+              <span>
+                Internal notes{" "}
+                <Info text="Original filename in your design software — never shown to customers" />
+              </span>
               <input
                 type="text"
                 name="sourceFilename"

@@ -14,6 +14,9 @@ const slugify = (value: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 
+/** Same look as Studio's "Save & set live": stands out without shouting. */
+const BUTTON_AI =
+  "rounded-full border border-white bg-white/35 px-4 py-2 text-sm font-semibold text-white shadow-md backdrop-blur-lg transition-colors hover:border-brand-purple hover:bg-brand-purple/60 disabled:opacity-50";
 const BUTTON_SECONDARY =
   "border-line bg-mist hover:border-brand-purple hover:bg-brand-purple/45 rounded-full border px-4 py-2 text-sm font-semibold transition-colors disabled:opacity-50";
 
@@ -164,7 +167,7 @@ export function ProductTextFields({
               texts.descriptionNl
             )
           }
-          className={BUTTON_SECONDARY}
+          className={BUTTON_AI}
         >
           {busy ? "Writing…" : "✨ Text with AI"}
         </button>
