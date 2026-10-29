@@ -67,7 +67,7 @@ export async function Footer() {
         </div>
       </Container>
 
-      <Container className="border-line text-ink/60 flex flex-col gap-2 border-t py-6 text-xs sm:flex-row sm:justify-between">
+      <Container className="border-line text-ink/60 flex flex-col gap-2 border-t px-7 py-6 text-xs sm:flex-row sm:justify-between">
         <span>
           © {year} {t("copyright")}
         </span>
