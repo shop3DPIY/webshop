@@ -318,7 +318,11 @@ export async function persistProduct(
     version: String(formData.get("version") ?? "1.0.0"),
     license_type: String(formData.get("licenseType") ?? "personal"),
     is_free: formData.get("isFree") === "on",
-    publication_status: String(formData.get("publicationStatus") ?? "draft"),
+    // "Set live" button: saves and publishes in one go.
+    publication_status:
+      formData.get("setLive") === "1"
+        ? "published"
+        : String(formData.get("publicationStatus") ?? "draft"),
     source_filename: String(formData.get("sourceFilename") ?? "") || null,
     ...pricing,
     updated_at: new Date().toISOString(),

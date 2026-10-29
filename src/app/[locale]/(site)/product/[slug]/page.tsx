@@ -53,6 +53,7 @@ export default async function ProductPage({
   const tSpecs = await getTranslations("productPage.specs");
   const tBuy = await getTranslations("productPage.buy");
   const tLicense = await getTranslations("licenseTypes");
+  const tLicenseHint = await getTranslations("licenseHints");
   const collection = getCollection(product.category);
   const classes = COLLECTION_CLASSNAMES[product.category];
   const cover = product.images[0];
@@ -91,6 +92,11 @@ export default async function ProductPage({
     {
       label: tSpecs("license"),
       value: tLicense(product.licenseType),
+      hint: {
+        text: tLicenseHint(product.licenseType),
+        linkLabel: tLicenseHint("more"),
+        href: "/legal/license",
+      },
     },
     {
       label: tSpecs("version"),
@@ -100,7 +106,10 @@ export default async function ProductPage({
       label: tSpecs("lastUpdated"),
       value: product.lastUpdated,
     },
-  ].filter((row): row is { label: string; value: string } => Boolean(row));
+  ].filter(
+    (row): row is { label: string; value: string; hint?: { text: string; linkLabel: string; href: string } } =>
+      Boolean(row),
+  );
 
   const jsonLd = {
     "@context": "https://schema.org",

@@ -104,6 +104,13 @@
   "productCard": {
     "free": "Free"
   },
+  "licenseHints": {
+      "personal": "For your own use: print it for yourself, your home or as a gift. Selling the prints or sharing the files isn't allowed.",
+      "commercial": "Lets you sell what you print. At checkout you choose Personal, Startup or Studio — the 3DPIY Business page shows the differences.",
+      "enterprise": "Custom terms agreed with 3DPIY.",
+      "free": "Free for your own use — the same rules as Personal use: no selling, no sharing the files.",
+      "more": "Read the full license"
+  },
   "licenseTypes": {
     "personal": "Personal use",
     "commercial": "Commercial use",

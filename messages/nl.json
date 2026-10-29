@@ -104,6 +104,13 @@
   "productCard": {
     "free": "Gratis"
   },
+  "licenseHints": {
+      "personal": "Voor eigen gebruik: print het voor jezelf, je huis of als cadeau. De prints verkopen of de bestanden delen mag niet.",
+      "commercial": "Hiermee mag je verkopen wat je print. Bij het afrekenen kies je Personal, Startup of Studio — op de 3DPIY Business-pagina zie je de verschillen.",
+      "enterprise": "Aangepaste voorwaarden, afgesproken met 3DPIY.",
+      "free": "Gratis voor eigen gebruik — dezelfde regels als Persoonlijk gebruik: niet verkopen, de bestanden niet delen.",
+      "more": "Lees de volledige licentie"
+  },
   "licenseTypes": {
     "personal": "Persoonlijk gebruik",
     "commercial": "Commercieel gebruik",

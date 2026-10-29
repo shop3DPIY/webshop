@@ -37,7 +37,7 @@ export default async function EditProductPage({
           Notify buyers
         </Link>
       </div>
-      <div className="max-w-2xl">
+      <div>
         <ProductForm
           product={product}
           pricingSettings={await getPricingSettings()}

@@ -117,19 +117,28 @@ export default async function StudioCustomersPage() {
                     <p className="text-ink/60">{c.email}</p>
                   </div>
                   <div className="flex flex-wrap items-center gap-2 text-xs">
-                    <span className="border-line rounded-full border px-3 py-1">
-                      {c.hasAccount ? "Account" : "No account"}
-                    </span>
-                    <span className="border-line rounded-full border px-3 py-1">
-                      {c.orders.length} order(s)
-                      {spent > 0 && ` · ${formatEuro(spent)}`}
-                    </span>
-                    {c.free.length > 0 && (
-                      <span className="border-line rounded-full border px-3 py-1">
-                        {c.free.length} free
+                    {c.orders.length > 0 && (
+                      <span className="rounded-full border border-emerald-300 bg-emerald-500/40 px-3 py-1 font-semibold">
+                        Bought · {c.orders.length} order(s)
                       </span>
                     )}
+                    {c.free.length > 0 && (
+                      <span className="rounded-full border border-sky-300 bg-sky-500/40 px-3 py-1 font-semibold">
+                        Free download · {c.free.length}
+                      </span>
+                    )}
+                    {c.orders.length === 0 && c.free.length === 0 && (
+                      <span className="border-line rounded-full border px-3 py-1">
+                        Account only
+                      </span>
+                    )}
+                    <span className="border-line rounded-full border px-3 py-1">
+                      {c.hasAccount ? "Has account" : "No account"}
+                    </span>
                     <span className="text-ink/60">since {date(c.since)}</span>
+                    <span className="font-display ml-2 min-w-20 text-right text-base font-bold">
+                      {formatEuro(spent)}
+                    </span>
                   </div>
                 </summary>
 
