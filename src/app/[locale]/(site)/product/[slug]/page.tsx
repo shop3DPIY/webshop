@@ -36,6 +36,7 @@ export async function generateMetadata({
   return {
     title: text.title,
     description: text.description,
+    ...(product.tags.length > 0 && { keywords: product.tags }),
   };
 }
 
@@ -118,6 +119,7 @@ export default async function ProductPage({
     description: text.description,
     sku: product.slug,
     category: collection.name,
+    ...(product.tags.length > 0 && { keywords: product.tags.join(", ") }),
     ...(cover && { image: `https://3dpiy.com${cover.src}` }),
     ...(checkout.mode === "redirect" &&
       checkout.url && {
@@ -283,6 +285,22 @@ export default async function ProductPage({
           </div>
 
           <SpecList rows={specRows} />
+
+          {/* Search words: visible (Google reads page text, not hidden
+              keywords) and each one searches the shop for more like it. */}
+          {product.tags.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {product.tags.map((tag) => (
+                <Link
+                  key={tag}
+                  href={`/shop?q=${encodeURIComponent(tag)}#all-designs`}
+                  className="border-line hover:bg-mist rounded-full border px-3 py-1 text-xs transition-colors"
+                >
+                  #{tag}
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

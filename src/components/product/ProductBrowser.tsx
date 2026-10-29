@@ -24,14 +24,17 @@ const FIELD =
 export function ProductBrowser({
   products,
   collections,
+  initialQuery = "",
 }: {
   products: Product[];
+  /** From ?q= (e.g. a tag clicked on a product page) */
+  initialQuery?: string;
   collections?: { slug: CollectionSlug; name: string }[];
 }) {
   const t = useTranslations("productBrowser");
   const tCollections = useTranslations("collections.items");
   const locale = useLocale();
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(initialQuery);
   const [collection, setCollection] = useState<CollectionSlug | "all">("all");
   const [price, setPrice] = useState<PriceFilter>("all");
   const [sort, setSort] = useState<Sort>("newest");

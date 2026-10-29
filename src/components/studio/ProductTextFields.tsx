@@ -23,6 +23,7 @@ type Texts = {
   titleNl: string;
   descriptionNl: string;
 };
+type Suggestion = Texts & { tags?: string[] };
 
 /**
  * Title + description in English and Dutch, with "Text with AI": type
@@ -46,7 +47,7 @@ export function ProductTextFields({
   const ref = useRef<HTMLDivElement>(null);
   const [texts, setTexts] = useState<Texts>(initial);
   const [category, setCategory] = useState(initialCategory);
-  const [suggestion, setSuggestion] = useState<Texts | null>(null);
+  const [suggestion, setSuggestion] = useState<Suggestion | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   // A new product's slug follows the English title (also after "Use these
@@ -122,7 +123,7 @@ export function ProductTextFields({
           value={texts.description}
           onChange={set("description")}
           required
-          rows={3}
+          rows={4}
           className={FIELD}
         />
       </label>
@@ -137,17 +138,17 @@ export function ProductTextFields({
             className={FIELD}
           />
         </label>
-        <label className={LABEL}>
-          Description (Dutch)
-          <textarea
-            name="descriptionNl"
-            value={texts.descriptionNl}
-            onChange={set("descriptionNl")}
-            rows={3}
-            className={FIELD}
-          />
-        </label>
       </section>
+      <label className={LABEL}>
+        Description (Dutch)
+        <textarea
+          name="descriptionNl"
+          value={texts.descriptionNl}
+          onChange={set("descriptionNl")}
+          rows={4}
+          className={FIELD}
+        />
+      </label>
 
       <div className="flex flex-wrap items-center gap-3">
         <button
@@ -190,11 +191,30 @@ export function ProductTextFields({
               <p className="text-ink/80 mt-1">{suggestion.descriptionNl}</p>
             </div>
           </div>
+          {suggestion.tags && suggestion.tags.length > 0 && (
+            <p className="text-ink/70 text-xs">
+              <span className="font-semibold">Tags:</span>{" "}
+              {suggestion.tags.join(", ")}
+            </p>
+          )}
           <div className="flex flex-wrap gap-3">
             <button
               type="button"
               onClick={() => {
-                setTexts(suggestion);
+                const { tags, ...rest } = suggestion;
+                setTexts(rest);
+                // The Tags field lives elsewhere in the form: add the
+                // suggested search words to whatever is there already.
+                const field = ref.current
+                  ?.closest("form")
+                  ?.querySelector<HTMLInputElement>('input[name="tags"]');
+                if (field && tags?.length) {
+                  const current = field.value
+                    .split(",")
+                    .map((t) => t.trim())
+                    .filter(Boolean);
+                  field.value = [...new Set([...current, ...tags])].join(", ");
+                }
                 setSuggestion(null);
               }}
               className="border-action bg-action text-on-action hover:border-action-hover-border hover:bg-action-hover hover:text-on-action-hover rounded-full border px-4 py-2 text-sm font-semibold transition-colors"

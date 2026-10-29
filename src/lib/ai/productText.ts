@@ -17,7 +17,8 @@ House style:
 - Title: short, in Title Case (English) / normal Dutch capitalisation, names what the object is. Max ~6 words. No file formats or version numbers.
 - Description: 1–3 sentences. Say what it is and what it's for; mention scale (e.g. 1:6, 1:12) or what it fits (e.g. an IKEA product) when known. Don't invent dimensions, materials or features that aren't given.
 - Remember the customer buys a digital file to print, not a physical object.
-- Dutch: natural, informal (je/jij), the same meaning and tone as the English — not a word-for-word translation.`;
+- Dutch: natural, informal (je/jij), the same meaning and tone as the English — not a word-for-word translation.
+- Tags: 6–10 short lowercase search words people would type to find this, in English AND Dutch mixed (e.g. "ikea", "kallax", "trofast", "storage", "opbergen", "bak", "organiser"). Include any brand/product it fits. No duplicates, no phrases longer than two words.`;
 
 export interface ProductTextInput {
   /** Title as typed or derived from the folder name (any language) */
@@ -33,6 +34,8 @@ export interface ProductText {
   description: string;
   titleNl: string;
   descriptionNl: string;
+  /** Search words (EN + NL); may be empty from older callers */
+  tags: string[];
 }
 
 export const isAiConfigured = () => Boolean(process.env.ANTHROPIC_API_KEY);
@@ -74,8 +77,13 @@ export async function generateProductText(
               description: { type: "string", description: "English description" },
               titleNl: { type: "string", description: "Dutch title" },
               descriptionNl: { type: "string", description: "Dutch description" },
+              tags: {
+                type: "array",
+                items: { type: "string" },
+                description: "Search words, English and Dutch",
+              },
             },
-            required: ["title", "description", "titleNl", "descriptionNl"],
+            required: ["title", "description", "titleNl", "descriptionNl", "tags"],
             additionalProperties: false,
           },
         },
@@ -110,5 +118,12 @@ export async function generateProductText(
     description: out.description.trim(),
     titleNl: out.titleNl.trim(),
     descriptionNl: out.descriptionNl.trim(),
+    tags: [
+      ...new Set(
+        (Array.isArray(out.tags) ? out.tags : [])
+          .map((t) => String(t).trim().toLowerCase())
+          .filter(Boolean),
+      ),
+    ].slice(0, 12),
   };
 }

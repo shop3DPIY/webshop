@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { createClient } from "@/lib/supabase/client";
 
 /**
@@ -65,6 +66,7 @@ export function MediaFields({
   existingTimelapse: string | null;
 }) {
   const [downloads, setDownloads] = useState<Download[]>([]);
+  const [preview, setPreview] = useState<string | null>(null);
   const [images, setImages] = useState<string[]>(
     existingImages.map((i) => i.src),
   );
@@ -201,22 +203,30 @@ export function MediaFields({
           The first photo is the cover. Use the arrows to reorder, × to remove.
           JPG, PNG or WebP.
         </p>
+        {preview && (
+          <PhotoPreview src={preview} onClose={() => setPreview(null)} />
+        )}
         {images.length > 0 && (
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(8.5rem,1fr))] gap-3">
+          <div className="grid grid-cols-3 gap-3 sm:grid-cols-4">
             {images.map((src, i) => (
               <div
                 key={src}
                 className="flex flex-col gap-2 rounded-2xl p-2 glass"
               >
-                {/* Small thumbnail; click opens the full photo in a new tab. */}
-                <a href={src} target="_blank" rel="noopener noreferrer" title="Open full size">
+                {/* Small thumbnail; click shows it large on top of the page. */}
+                <button
+                  type="button"
+                  onClick={() => setPreview(src)}
+                  title="View large"
+                  className="cursor-zoom-in"
+                >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={src}
                     alt=""
                     className="aspect-square w-full rounded-xl object-cover transition-opacity hover:opacity-85"
                   />
-                </a>
+                </button>
                 <div className="flex items-center justify-between gap-1">
                   <span className="shrink-0 text-xs font-semibold">
                     {i === 0 ? "Cover" : `#${i + 1}`}
@@ -305,5 +315,43 @@ export function MediaFields({
         {note("timelapse")}
       </section>
     </div>
+  );
+}
+
+/** Full-size photo over the page; closes with ×, Escape or a click beside it. */
+function PhotoPreview({ src, onClose }: { src: string; onClose: () => void }) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  // Portaled to <body>: inside a glass tile (backdrop-filter) "fixed"
+  // would only cover that tile, not the whole screen.
+  return createPortal(
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Photo"
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-6 backdrop-blur-sm"
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt=""
+        onClick={(e) => e.stopPropagation()}
+        className="max-h-full max-w-full rounded-2xl object-contain shadow-2xl"
+      />
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="Close"
+        className="absolute top-5 right-5 flex h-11 w-11 items-center justify-center rounded-full border border-white bg-white/30 text-xl font-semibold text-white backdrop-blur-lg hover:bg-white/50"
+      >
+        ×
+      </button>
+    </div>,
+    document.body,
   );
 }

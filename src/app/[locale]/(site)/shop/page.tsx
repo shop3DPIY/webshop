@@ -16,7 +16,12 @@ export async function generateMetadata() {
   };
 }
 
-export default async function ShopPage() {
+export default async function ShopPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q } = await searchParams;
   const t = await getTranslations("shopPage");
   const tBrowser = await getTranslations("productBrowser");
   const tCollections = await getTranslations("collections.items");
@@ -64,6 +69,7 @@ export default async function ShopPage() {
         </h2>
         <ProductBrowser
           products={products}
+          initialQuery={q?.slice(0, 100)}
           collections={collections.map((c) => ({
             slug: c.slug,
             name: tCollections(`${c.slug}.name`),

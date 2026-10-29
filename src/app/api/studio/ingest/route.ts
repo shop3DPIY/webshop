@@ -32,7 +32,16 @@ export async function POST(request: NextRequest) {
       String(formData.get("title") ?? ""),
       String(formData.get("sourceFilename") ?? ""),
     );
-    if (links.length > 0) formData.set("compatible", formatCompatible(links));
+    if (links.length > 0) {
+      formData.set("compatible", formatCompatible(links));
+      // …and make those names searchable (site search + Google).
+      const tags = String(formData.get("tags") ?? "")
+        .split(",")
+        .map((t) => t.trim().toLowerCase())
+        .filter(Boolean);
+      const extra = ["ikea", ...links.map((l) => l.label.replace(/^IKEA /, "").toLowerCase())];
+      formData.set("tags", [...new Set([...tags, ...extra])].join(", "));
+    }
   }
 
   try {

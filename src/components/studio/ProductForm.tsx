@@ -1,4 +1,5 @@
 import { formatCompatible } from "@/lib/compatible";
+import { AlsoShowIn } from "./AlsoShowIn";
 import { saveProduct } from "@/lib/studio/actions";
 import { COLLECTION_LIST, type CollectionSlug } from "@/lib/config/colors";
 import type {
@@ -274,46 +275,22 @@ export function ProductForm({
             </label>
           </div>
           <div className="flex flex-col gap-6 rounded-3xl p-6 glass">
-            <fieldset className="flex flex-col gap-3">
-              <legend className="text-sm font-medium">Also show in</legend>
-              <p className="text-ink/60 text-xs">
-                Extra collections this product appears in, next to the main
-                Collection above. Only collections on the same track as the main
-                one are saved (Serious Games stays separate).
-              </p>
-              {TRACK_GROUPS.map((group) => (
-                <div key={group.track} className="flex flex-col gap-2">
-                  <span className="text-ink/60 text-xs font-semibold uppercase">
-                    {group.label}
-                  </span>
-                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                    {COLLECTION_LIST.filter((c) => c.track === group.track).map(
-                      (c) => (
-                        <label
-                          key={c.slug}
-                          className="flex items-center gap-2 rounded-xl bg-white/20 px-3 py-2 text-sm"
-                        >
-                          <input
-                            type="checkbox"
-                            name="extraCategories"
-                            value={c.slug}
-                            defaultChecked={p?.extra_categories?.includes(
-                              c.slug,
-                            )}
-                          />
-                          <span
-                            className="h-2.5 w-2.5 shrink-0 rounded-full"
-                            style={{ backgroundColor: c.color }}
-                            aria-hidden
-                          />
-                          {c.name}
-                        </label>
-                      ),
-                    )}
-                  </div>
-                </div>
-              ))}
-            </fieldset>
+            <AlsoShowIn
+              groups={TRACK_GROUPS.map((group) => ({
+                track: group.track,
+                label: group.label,
+                collections: COLLECTION_LIST.filter(
+                  (c) => c.track === group.track,
+                ).map((c) => ({
+                  slug: c.slug,
+                  name: c.name,
+                  color: c.color,
+                  track: c.track ?? group.track,
+                })),
+              }))}
+              initialCategory={initialCategory}
+              initialExtra={p?.extra_categories ?? []}
+            />
 
             <section className="grid gap-4 sm:grid-cols-3">
               <label className={LABEL}>
@@ -322,15 +299,6 @@ export function ProductForm({
                   type="text"
                   name="version"
                   defaultValue={p?.version ?? "1.0.0"}
-                  className={FIELD}
-                />
-              </label>
-              <label className={LABEL}>
-                Tags (comma separated)
-                <input
-                  type="text"
-                  name="tags"
-                  defaultValue={p?.tags?.join(", ")}
                   className={FIELD}
                 />
               </label>
@@ -344,6 +312,17 @@ export function ProductForm({
                 Free design
               </label>
             </section>
+
+            <label className={LABEL}>
+              Tags — search words, comma separated (site search + Google)
+              <input
+                type="text"
+                name="tags"
+                defaultValue={p?.tags?.join(", ")}
+                className={FIELD}
+                placeholder="e.g. ikea, kallax, trofast, storage, opbergen, bak"
+              />
+            </label>
 
             <label className={LABEL}>
               Compatible with — one per line, &ldquo;Name | link&rdquo; (link
@@ -393,7 +372,7 @@ export function ProductForm({
             type="submit"
             name="setLive"
             value="1"
-            className="rounded-full border-2 border-white bg-white/35 px-6 py-3 text-sm font-semibold text-white shadow-md backdrop-blur-lg transition-colors hover:border-brand-purple hover:bg-brand-purple/60"
+            className="rounded-full border border-white bg-white/35 px-6 py-3 text-sm font-semibold text-white shadow-md backdrop-blur-lg transition-colors hover:border-brand-purple hover:bg-brand-purple/60"
           >
             {p ? "Save & set live" : "Create & set live"}
           </button>
