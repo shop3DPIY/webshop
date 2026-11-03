@@ -181,6 +181,7 @@ export function ProductForm({
             <PricingFields
               settings={pricingSettings}
               initialCategory={initialCategory}
+              initialFree={p?.is_free}
               existing={
                 p && {
                   complexity: p.complexity,
@@ -322,15 +323,6 @@ export function ProductForm({
                   defaultValue={p?.version ?? "1.0.0"}
                   className={FIELD}
                 />
-              </label>
-              <label className="flex items-end gap-2 pb-2.5 text-sm font-medium">
-                <input
-                  type="checkbox"
-                  name="isFree"
-                  defaultChecked={p?.is_free}
-                  className="h-4 w-4"
-                />
-                Free design
               </label>
             </section>
 

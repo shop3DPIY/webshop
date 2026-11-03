@@ -54,10 +54,12 @@ export function PricingFields({
   settings,
   initialCategory,
   existing,
+  initialFree,
 }: {
   settings: PricingSettings;
   initialCategory: CollectionSlug;
   existing?: ExistingPricing;
+  initialFree?: boolean;
 }) {
   const ref = useRef<HTMLFieldSetElement>(null);
   const [category, setCategory] = useState(initialCategory);
@@ -172,7 +174,16 @@ export function PricingFields({
           </select>
           {isSet && <input type="hidden" name="isSet" value="on" />}
         </label>
-        {isSet ? (
+        <label className="flex items-end gap-2 pb-2.5 text-sm font-medium">
+          <input
+            type="checkbox"
+            name="isFree"
+            defaultChecked={initialFree}
+            className="h-4 w-4"
+          />
+          Free design
+        </label>
+        {isSet && (
           <label className={LABEL}>
             Number of parts
             <input
@@ -187,8 +198,6 @@ export function PricingFields({
               className={FIELD}
             />
           </label>
-        ) : (
-          <div />
         )}
       </section>
 
