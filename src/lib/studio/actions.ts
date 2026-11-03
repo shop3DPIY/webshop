@@ -366,8 +366,15 @@ export async function saveProduct(formData: FormData) {
     : null;
 
   const { id: savedId, commerceError } = await persistProduct(formData);
+  // Back on the list, open the tab the product is in now and say so —
+  // otherwise "Save & set live" just looks like the product vanished.
+  const status =
+    formData.get("setLive") === "1"
+      ? "published"
+      : String(formData.get("publicationStatus") ?? "draft");
+  const listUrl = `/studio/products?tab=${status}&saved=${savedId}`;
   if (commerceError) {
-    redirect(`/studio/products?commerceError=${encodeURIComponent(commerceError.slice(0, 300))}`);
+    redirect(`${listUrl}&commerceError=${encodeURIComponent(commerceError.slice(0, 300))}`);
   }
 
   // A new version of a design people own: offer to tell them (nothing is
@@ -378,7 +385,7 @@ export async function saveProduct(formData: FormData) {
       redirect(`/studio/products/${savedId}/notify`);
     }
   }
-  redirect("/studio/products");
+  redirect(listUrl);
 }
 
 /** Studio → Products → "Sync with Polar": (re)lists every product. */

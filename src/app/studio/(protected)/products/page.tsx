@@ -16,10 +16,12 @@ export default async function StudioProductsPage({
     commerceError?: string;
     synced?: string;
     deleted?: string;
+    saved?: string;
     tab?: string;
   }>;
 }) {
-  const { commerceError, synced, deleted, tab: tabParam } = await searchParams;
+  const { commerceError, synced, deleted, saved, tab: tabParam } =
+    await searchParams;
   const supabase = await createClient();
   const { data: all } = await supabase!
     .from("products")
@@ -36,6 +38,7 @@ export default async function StudioProductsPage({
       ? "draft"
       : "published";
   const products = (all ?? []).filter((p) => p.publication_status === tab);
+  const savedProduct = saved ? all?.find((p) => p.id === saved) : undefined;
 
   return (
     <div className="flex flex-col gap-6">
@@ -63,6 +66,25 @@ export default async function StudioProductsPage({
         <p className="rounded-2xl bg-amber-100 p-4 text-sm font-medium text-amber-900">
           Saved, but Polar couldn&apos;t be updated: {commerceError}. It will
           retry on the next save, or use &ldquo;Sync with Polar&rdquo;.
+        </p>
+      )}
+      {savedProduct && (
+        <p className="rounded-2xl p-4 text-sm font-medium glass">
+          {savedProduct.publication_status === "published" ? (
+            <>
+              &ldquo;{savedProduct.title}&rdquo; is live.{" "}
+              <a
+                href={`/product/${savedProduct.slug}`}
+                target="_blank"
+                rel="noreferrer"
+                className="underline"
+              >
+                View on site
+              </a>
+            </>
+          ) : (
+            <>&ldquo;{savedProduct.title}&rdquo; saved.</>
+          )}
         </p>
       )}
       {deleted && (
