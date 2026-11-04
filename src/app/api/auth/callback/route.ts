@@ -23,6 +23,19 @@ export async function GET(request: NextRequest) {
   // Only same-site paths — never redirect to another host via ?next=.
   const safeNext = next.startsWith("/") && !next.startsWith("//") ? next : "/account";
 
+  // Mail templates with {{ .TokenHash }} (SETUP.md): don't spend the token
+  // on this GET — mail scanners open links too — but hand it to the
+  // confirm page, whose button verifies it in whatever browser this is.
+  const tokenHash = searchParams.get("token_hash");
+  const type = searchParams.get("type");
+  if (tokenHash && type) {
+    const confirm = new URL("/auth/confirm", origin);
+    confirm.searchParams.set("token_hash", tokenHash);
+    confirm.searchParams.set("type", type);
+    confirm.searchParams.set("next", safeNext);
+    return NextResponse.redirect(confirm);
+  }
+
   let ok = false;
   if (code) {
     const supabase = await createClient();
@@ -34,6 +47,12 @@ export async function GET(request: NextRequest) {
 
   if (!ok && safeNext.startsWith("/auth/reset-password")) {
     return NextResponse.redirect(`${origin}/auth/forgot-password?expired=1`);
+  }
+  // A signup link opened in another browser (phone, mail app): Supabase
+  // has confirmed the address before sending us here, only the sign-in
+  // part failed — say so instead of a bare sign-in page.
+  if (!ok && searchParams.get("from") === "signup") {
+    return NextResponse.redirect(`${origin}/auth/sign-in?confirmed=1`);
   }
   return NextResponse.redirect(`${origin}${safeNext}`);
 }

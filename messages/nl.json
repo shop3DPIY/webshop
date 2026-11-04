@@ -299,7 +299,15 @@
     "checkEmailBody": "We hebben je een link gestuurd — volg deze om verder te gaan.",
     "errorGeneric": "Er ging iets mis. Probeer het opnieuw.",
     "codeResent": "Nieuwe code verstuurd. Gebruik alleen de nieuwste code — oudere werken niet meer.",
-    "codeInvalid": "Deze code werkt niet (meer). Controleer of je de nieuwste hebt overgetypt, of vraag een nieuwe code aan."
+    "codeInvalid": "Deze code werkt niet (meer). Controleer of je de nieuwste hebt overgetypt, of vraag een nieuwe code aan.",
+    "confirmTitle": "Bijna klaar",
+    "confirmTitleReset": "Kies een nieuw wachtwoord",
+    "confirmBody": "Klik op de knop om je e-mailadres te bevestigen en in te loggen.",
+    "confirmBodyReset": "Klik op de knop om een nieuw wachtwoord in te stellen.",
+    "confirmContinue": "Bevestigen en verder",
+    "confirmContinueReset": "Nieuw wachtwoord instellen",
+    "linkExpiredShort": "Deze link is verlopen of al gebruikt. Log in, of vraag een nieuwe link aan.",
+    "emailConfirmed": "Je e-mailadres is bevestigd. Log in om verder te gaan."
   },
   "account": {
     "eyebrow": "My 3DPIY",

@@ -13,10 +13,10 @@ export async function generateMetadata() {
 export default async function SignInPage({
   searchParams,
 }: {
-  searchParams: Promise<{ next?: string }>;
+  searchParams: Promise<{ next?: string; confirmed?: string }>;
 }) {
   const t = await getTranslations("auth");
-  const { next } = await searchParams;
+  const { next, confirmed } = await searchParams;
 
   return (
     <Container panel className="flex flex-col gap-8 py-16 sm:py-24">
@@ -24,6 +24,12 @@ export default async function SignInPage({
         <h1 className="font-display text-ink text-center text-2xl font-bold">
           {t("signInTitle")}
         </h1>
+
+        {confirmed && (
+          <p className="border-line bg-mist mt-6 rounded-2xl border p-4 text-center text-sm">
+            {t("emailConfirmed")}
+          </p>
+        )}
 
         <div className="mt-8">
           {isSupabaseConfigured() ? (

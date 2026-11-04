@@ -26,7 +26,7 @@ export function SignUpForm() {
       password,
       options: {
         data: { full_name: name },
-        emailRedirectTo: `${window.location.origin}/api/auth/callback?next=/account`,
+        emailRedirectTo: `${window.location.origin}/api/auth/callback?next=/account&from=signup`,
       },
     });
 

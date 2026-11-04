@@ -299,7 +299,15 @@
     "checkEmailBody": "We've sent you a link — follow it to continue.",
     "errorGeneric": "Something went wrong. Please try again.",
     "codeResent": "New code sent. Use only the newest code — older ones no longer work.",
-    "codeInvalid": "That code doesn't work (any more). Check you typed the newest one, or send a new code."
+    "codeInvalid": "That code doesn't work (any more). Check you typed the newest one, or send a new code.",
+    "confirmTitle": "Almost there",
+    "confirmTitleReset": "Choose a new password",
+    "confirmBody": "Click the button to confirm your email address and sign in.",
+    "confirmBodyReset": "Click the button to set a new password.",
+    "confirmContinue": "Confirm and continue",
+    "confirmContinueReset": "Set a new password",
+    "linkExpiredShort": "This link has expired or was already used. Sign in, or request a new link.",
+    "emailConfirmed": "Your email address is confirmed. Sign in to continue."
   },
   "account": {
     "eyebrow": "My 3DPIY",

@@ -118,6 +118,27 @@ through /api/auth/callback). After SMTP is connected, add `{{ .Token }}`
 to the Magic Link template, e.g.
 `<p>Your 3DPIY sign-in code: <strong>{{ .Token }}</strong></p>`.
 
+**Email templates — links that work on any device.** The default
+templates use `{{ .ConfirmationURL }}`, a one-time PKCE link that only
+works in the browser that asked for the mail (not on the phone, not in
+the Outlook app). Replace the link in these templates (Supabase →
+Authentication → Emails → Templates) so it goes to the site's own
+confirm page, where a button spends the token:
+
+- **Confirm signup:**
+  `<a href="{{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=signup">Confirm your email</a>`
+- **Reset password:**
+  `<a href="{{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=recovery">Choose a new password</a>`
+- **Magic Link** (sign in with a code):
+  `<p>Your 3DPIY sign-in code: <strong>{{ .Token }}</strong></p>` and
+  optionally
+  `<a href="{{ .RedirectTo }}&token_hash={{ .TokenHash }}&type=magiclink">or sign in with this link</a>`
+
+`{{ .RedirectTo }}` is `…/api/auth/callback?next=…` (already has a `?`,
+hence the `&`). It only stays that when it matches the Redirect URLs
+above — otherwise Supabase falls back to the Site URL and the link breaks.
+Old mails with the default link keep working in the same browser.
+
 Supabase's built-in mailer only sends a few emails per hour — fine for
 testing, but connect your own SMTP (Authentication → Emails → SMTP
 Settings) before real customers sign in.
