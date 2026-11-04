@@ -6,9 +6,17 @@ import { Link } from "@/i18n/navigation";
 
 const TYPES: EmailOtpType[] = ["signup", "recovery", "email", "magiclink", "invite", "email_change"];
 
-export async function generateMetadata() {
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ type?: string }>;
+}) {
   const t = await getTranslations("auth");
-  return { title: t("confirmTitle"), robots: { index: false, follow: false } };
+  const { type } = await searchParams;
+  return {
+    title: type === "recovery" ? t("confirmTitleReset") : t("confirmTitle"),
+    robots: { index: false, follow: false },
+  };
 }
 
 /**
