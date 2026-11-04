@@ -105,11 +105,11 @@
     "free": "Free"
   },
   "licenseHints": {
-      "personal": "For your own use: print it for yourself, your home or as a gift. Selling the prints or sharing the files isn't allowed.",
-      "commercial": "Lets you sell what you print. At checkout you choose Personal, Startup or Studio — the 3DPIY Business page shows the differences.",
-      "enterprise": "Custom terms agreed with 3DPIY.",
-      "free": "Free for your own use — the same rules as Personal use: no selling, no sharing the files.",
-      "more": "Read the full license"
+    "personal": "For your own use: print it for yourself, your home or as a gift. Selling the prints or sharing the files isn't allowed.",
+    "commercial": "Lets you sell what you print. At checkout you choose Personal, Startup or Studio — the 3DPIY Business page shows the differences.",
+    "enterprise": "Custom terms agreed with 3DPIY.",
+    "free": "Free for your own use — the same rules as Personal use: no selling, no sharing the files.",
+    "more": "Read the full license"
   },
   "licenseTypes": {
     "personal": "Personal use",
@@ -118,25 +118,25 @@
     "free": "Free"
   },
   "productBrowser": {
-      "search": "Search",
-      "searchPlaceholder": "Search designs — e.g. Kallax, dollhouse, hook…",
-      "price": "Price",
-      "priceAll": "Any price",
-      "priceFree": "Free",
-      "priceUnder5": "Under €5",
-      "price5to10": "€5 – €10",
-      "priceOver10": "Over €10",
-      "sort": "Sort",
-      "sortNewest": "Newest first",
-      "sortPriceAsc": "Price: low to high",
-      "sortPriceDesc": "Price: high to low",
-      "sortName": "Name A–Z",
-      "allCollections": "All collections",
-      "count": "{count, plural, =0 {No designs} one {# design} other {# designs}}",
-      "clear": "Clear filters",
-      "noResults": "Nothing matches — try another word or clear the filters.",
-      "emptyCatalog": "No designs yet — check back soon.",
-      "allTitle": "All designs"
+    "search": "Search",
+    "searchPlaceholder": "Search designs — e.g. Kallax, dollhouse, hook…",
+    "price": "Price",
+    "priceAll": "Any price",
+    "priceFree": "Free",
+    "priceUnder5": "Under €5",
+    "price5to10": "€5 – €10",
+    "priceOver10": "Over €10",
+    "sort": "Sort",
+    "sortNewest": "Newest first",
+    "sortPriceAsc": "Price: low to high",
+    "sortPriceDesc": "Price: high to low",
+    "sortName": "Name A–Z",
+    "allCollections": "All collections",
+    "count": "{count, plural, =0 {No designs} one {# design} other {# designs}}",
+    "clear": "Clear filters",
+    "noResults": "Nothing matches — try another word or clear the filters.",
+    "emptyCatalog": "No designs yet — check back soon.",
+    "allTitle": "All designs"
   },
   "shopPage": {
     "eyebrow": "Shop",
@@ -173,7 +173,10 @@
       "getFree": "Download for free",
       "comingSoon": "Checkout coming soon",
       "comingSoonNote": "3DPIY is in development mode — checkout isn't active yet.",
-      "notListedNote": "This product hasn't been listed for sale yet."
+      "notListedNote": "This product hasn't been listed for sale yet.",
+      "loading": "One moment…",
+      "from": "from {price}",
+      "inclVat": "incl. VAT"
     },
     "free": {
       "intro": "Leave your email and we'll send you the download link straight away.",

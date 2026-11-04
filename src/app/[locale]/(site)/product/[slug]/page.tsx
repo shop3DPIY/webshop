@@ -17,6 +17,8 @@ import {
 } from "@/lib/products";
 import { commerceProvider, isListed } from "@/lib/commerce";
 import { FreeDownloadForm } from "@/components/product/FreeDownloadForm";
+import { BuyButton } from "@/components/product/BuyButton";
+import { formatEuro } from "@/lib/pricing/calculate";
 import { productText } from "@/types/product";
 
 export async function generateStaticParams() {
@@ -32,7 +34,8 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = await getProductBySlug(slug);
   if (!product) return {};
-  const text = productText(product, await getLocale());
+  const locale = await getLocale();
+  const text = productText(product, locale);
   return {
     title: text.title,
     description: text.description,
@@ -50,7 +53,8 @@ export default async function ProductPage({
   if (!product) notFound();
 
   const t = await getTranslations("productPage");
-  const text = productText(product, await getLocale());
+  const locale = await getLocale();
+  const text = productText(product, locale);
   const tSpecs = await getTranslations("productPage.specs");
   const tBuy = await getTranslations("productPage.buy");
   const tLicense = await getTranslations("licenseTypes");
@@ -105,7 +109,10 @@ export default async function ProductPage({
     },
     {
       label: tSpecs("lastUpdated"),
-      value: product.lastUpdated,
+      value: new Date(product.lastUpdated).toLocaleDateString(
+        locale === "nl" ? "nl-NL" : "en-GB",
+        { day: "numeric", month: "long", year: "numeric" },
+      ),
     },
   ].filter(
     (row): row is { label: string; value: string; hint?: { text: string; linkLabel: string; href: string } } =>
@@ -127,7 +134,12 @@ export default async function ProductPage({
           "@type": "Offer",
           url: checkout.url,
           availability: "https://schema.org/InStock",
-          ...(product.isFree && { price: "0", priceCurrency: "EUR" }),
+          ...(product.isFree
+            ? { price: "0", priceCurrency: "EUR" }
+            : product.priceCents != null && {
+                price: (product.priceCents / 100).toFixed(2),
+                priceCurrency: "EUR",
+              }),
         },
       }),
   };
@@ -256,15 +268,26 @@ export default async function ProductPage({
             {product.isFree ? (
               <FreeDownloadForm productId={product.id} />
             ) : checkout.mode === "redirect" && checkout.url ? (
-              <Button
-                href={checkout.url}
-                size="lg"
-                className="w-full"
-                event="buy-click"
-                eventData={{ product: product.slug }}
-              >
-                {product.isFree ? tBuy("getFree") : tBuy("buyNow")}
-              </Button>
+              <div className="flex flex-col gap-4">
+                {product.priceCents != null && (
+                  <p className="flex items-baseline gap-2">
+                    <span className="font-display text-3xl font-bold">
+                      {/* Business designs come in several licenses
+                          (chosen at checkout) — show the lowest. */}
+                      {collection.track === "business"
+                        ? tBuy("from", { price: formatEuro(product.priceCents) })
+                        : formatEuro(product.priceCents)}
+                    </span>
+                    <span className="text-ink/60 text-sm">{tBuy("inclVat")}</span>
+                  </p>
+                )}
+                <BuyButton
+                  href={checkout.url}
+                  label={tBuy("buyNow")}
+                  loadingLabel={tBuy("loading")}
+                  productSlug={product.slug}
+                />
+              </div>
             ) : (
               <>
                 <Button
