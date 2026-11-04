@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { sendContactMessage } from "@/lib/contact/actions";
 import { Button } from "@/components/ui/Button";
@@ -17,10 +17,15 @@ const CONTACT_EMAIL = BUSINESS_DETAILS.contactEmail;
 export function ContactForm({
   defaultSubject = "",
   mailConfigured = false,
+  defaultName = "",
+  defaultEmail = "",
 }: {
   defaultSubject?: string;
   /** true when the site can send mail itself (Resend); otherwise mailto */
   mailConfigured?: boolean;
+  /** Filled in for signed-in visitors */
+  defaultName?: string;
+  defaultEmail?: string;
 }) {
   const t = useTranslations("contact");
   const [status, setStatus] = useState<
@@ -57,8 +62,20 @@ export function ContactForm({
     setStatus(result.status);
   }
 
+  // The short "sent" note replaces the much taller form, which left it
+  // half off-screen when you'd scrolled down to the button.
+  const sentRef = useRef<HTMLParagraphElement>(null);
+  useEffect(() => {
+    if (status === "sent")
+      sentRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [status]);
+
   if (status === "sent") {
-    return <p className="text-ink text-base font-medium">{t("formSent")}</p>;
+    return (
+      <p ref={sentRef} role="status" className="text-ink text-base font-medium">
+        {t("formSent")}
+      </p>
+    );
   }
 
   return (
@@ -81,6 +98,7 @@ export function ContactForm({
           type="text"
           name="name"
           required
+          defaultValue={defaultName}
           className="border-line bg-paper rounded-2xl border px-4 py-2.5 text-sm font-normal"
         />
       </label>
@@ -91,6 +109,7 @@ export function ContactForm({
           type="email"
           name="email"
           required
+          defaultValue={defaultEmail}
           className="border-line bg-paper rounded-2xl border px-4 py-2.5 text-sm font-normal"
         />
       </label>

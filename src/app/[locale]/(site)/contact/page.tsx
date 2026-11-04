@@ -4,6 +4,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { BUSINESS_DETAILS } from "@/lib/config/business";
 import { isMailConfigured } from "@/lib/mail/send";
+import { createClient } from "@/lib/supabase/server";
 
 const CONTACT_EMAIL = BUSINESS_DETAILS.contactEmail;
 
@@ -23,6 +24,12 @@ export default async function ContactPage({
   const t = await getTranslations("contact");
   // Pre-filled by links like FeedbackCta ("something wrong or missing?").
   const { subject } = await searchParams;
+  // Signed in: fill in name and email so the visitor doesn't have to.
+  const supabase = await createClient();
+  const user = supabase ? (await supabase.auth.getUser()).data.user : null;
+  const { data: profile } = user
+    ? await supabase!.from("profiles").select("full_name").eq("id", user.id).maybeSingle()
+    : { data: null };
 
   // Two columns on wide screens — intro + direct email on the left, the
   // form on its own glass card on the right; stacked on phones.
@@ -56,6 +63,8 @@ export default async function ContactPage({
           <ContactForm
             defaultSubject={subject?.slice(0, 200)}
             mailConfigured={isMailConfigured()}
+            defaultName={profile?.full_name ?? ""}
+            defaultEmail={user?.email ?? ""}
           />
         </div>
       </Container>

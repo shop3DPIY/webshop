@@ -12,7 +12,8 @@ export type FreeDownloadState = {
 /**
  * The form on a free design's page: an email address is required (the
  * download link is mailed to it); joining the newsletter is an optional
- * checkbox. Signed-in visitors also get the design in their library.
+ * checkbox. The design also lands in the library of the account with
+ * that address, if there is one.
  */
 export async function requestFreeDownload(
   _prev: FreeDownloadState,
@@ -50,11 +51,25 @@ export async function requestFreeDownload(
   const token = await grantFreeDownload(email, product.id);
   if (!token || (subscriber && !subscriber.ok)) return { status: "error" };
 
-  if (user) {
+  // Into the library of whoever owns this address: the signed-in visitor,
+  // or (signed out) an existing account with that email — a free design,
+  // so adding it on someone's say-so gives nothing away.
+  const ownerId =
+    user?.id ??
+    (
+      await admin
+        .from("profiles")
+        .select("id")
+        // Case-insensitive exact match: escape ilike's wildcards (_ and %
+        // are valid in addresses).
+        .ilike("email", email.replace(/[\\%_]/g, "\\$&"))
+        .maybeSingle()
+    ).data?.id;
+  if (ownerId) {
     await admin
       .from("entitlements")
       .upsert(
-        { customer_id: user.id, product_id: product.id },
+        { customer_id: ownerId, product_id: product.id },
         { onConflict: "customer_id,product_id", ignoreDuplicates: true },
       );
   }

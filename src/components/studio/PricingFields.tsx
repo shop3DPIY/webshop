@@ -68,6 +68,7 @@ export function PricingFields({
   );
   const [isSet, setIsSet] = useState(existing?.isSet ?? false);
   const [partCount, setPartCount] = useState(existing?.partCount ?? 2);
+  const [isFree, setIsFree] = useState(initialFree ?? false);
   const [includesStep, setIncludesStep] = useState(
     existing?.includesStep ?? false,
   );
@@ -178,7 +179,8 @@ export function PricingFields({
           <input
             type="checkbox"
             name="isFree"
-            defaultChecked={initialFree}
+            checked={isFree}
+            onChange={(e) => setIsFree(e.target.checked)}
             className="h-4 w-4"
           />
           Free design
@@ -215,7 +217,15 @@ export function PricingFields({
         STEP file included (+ {formatEuro(settings.stepSurchargeCents)})
       </label>
 
-      <div className="divide-line divide-y rounded-2xl glass">
+      {isFree && (
+        <p className="text-ink/70 text-sm">
+          Free design: the prices below aren&apos;t used — visitors get it for
+          their email address, and it isn&apos;t listed on Polar.
+        </p>
+      )}
+      <div
+        className={`divide-line divide-y rounded-2xl glass ${isFree ? "opacity-40" : ""}`}
+      >
         {sellableTiers(category).map((tier) => {
           const calc = tierCents(result, tier);
           const mode = modes[tier];
