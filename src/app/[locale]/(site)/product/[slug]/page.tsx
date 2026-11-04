@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Container } from "@/components/ui/Container";
 import { Badge } from "@/components/ui/Badge";
@@ -18,6 +17,7 @@ import {
 import { commerceProvider, isListed } from "@/lib/commerce";
 import { FreeDownloadForm } from "@/components/product/FreeDownloadForm";
 import { BuyButton } from "@/components/product/BuyButton";
+import { ProductGallery } from "@/components/product/ProductGallery";
 import { formatEuro } from "@/lib/pricing/calculate";
 import { productText } from "@/types/product";
 
@@ -115,8 +115,13 @@ export default async function ProductPage({
       ),
     },
   ].filter(
-    (row): row is { label: string; value: string; hint?: { text: string; linkLabel: string; href: string } } =>
-      Boolean(row),
+    (
+      row,
+    ): row is {
+      label: string;
+      value: string;
+      hint?: { text: string; linkLabel: string; href: string };
+    } => Boolean(row),
   );
 
   const jsonLd = {
@@ -160,49 +165,31 @@ export default async function ProductPage({
 
       <div className="grid gap-10 lg:grid-cols-2">
         <div className="flex flex-col gap-4">
-          <div
-            className={`glass relative aspect-square overflow-hidden rounded-3xl ${classes.border} ${classes.wash}`}
-          >
-            {cover && (
-              <Image
-                src={cover.src}
-                alt={cover.alt}
-                fill
-                className="object-cover"
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                priority
+          {(() => {
+            const badge = (
+              <Badge className="bg-white/90 text-night border-white pointer-events-none absolute top-4 left-4 gap-1.5 border">
+                <span
+                  className={`h-2 w-2 rounded-full ${classes.bg}`}
+                  aria-hidden
+                />
+                {collection.name}
+              </Badge>
+            );
+            return cover ? (
+              <ProductGallery
+                images={product.images}
+                borderClass={classes.border}
+                washClass={classes.wash}
+                badge={badge}
               />
-            )}
-            <Badge className="bg-white/90 text-night border-white absolute top-4 left-4 gap-1.5 border">
-              <span
-                className={`h-2 w-2 rounded-full ${classes.bg}`}
-                aria-hidden
-              />
-              {collection.name}
-            </Badge>
-          </div>
-
-          {product.images.length > 1 && (
-            <div className="grid grid-cols-4 gap-3">
-              {product.images.slice(1).map((image) => (
-                <a
-                  key={image.src}
-                  href={image.src}
-                  target="_blank"
-                  rel="noopener"
-                  className={`glass relative aspect-square overflow-hidden rounded-2xl ${classes.border}`}
-                >
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    fill
-                    className="object-cover"
-                    sizes="25vw"
-                  />
-                </a>
-              ))}
-            </div>
-          )}
+            ) : (
+              <div
+                className={`glass relative aspect-square overflow-hidden rounded-xl ${classes.border} ${classes.wash}`}
+              >
+                {badge}
+              </div>
+            );
+          })()}
 
           {product.timelapseUrl && (
             <div className="flex flex-col gap-2">
@@ -216,7 +203,7 @@ export default async function ProductPage({
                 loop
                 playsInline
                 preload="metadata"
-                className={`glass w-full rounded-3xl ${classes.border}`}
+                className={`glass w-full rounded-xl ${classes.border}`}
               />
             </div>
           )}
@@ -275,10 +262,14 @@ export default async function ProductPage({
                       {/* Business designs come in several licenses
                           (chosen at checkout) — show the lowest. */}
                       {collection.track === "business"
-                        ? tBuy("from", { price: formatEuro(product.priceCents) })
+                        ? tBuy("from", {
+                            price: formatEuro(product.priceCents),
+                          })
                         : formatEuro(product.priceCents)}
                     </span>
-                    <span className="text-ink/60 text-sm">{tBuy("inclVat")}</span>
+                    <span className="text-ink/60 text-sm">
+                      {tBuy("inclVat")}
+                    </span>
                   </p>
                 )}
                 <BuyButton

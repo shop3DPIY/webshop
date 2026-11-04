@@ -60,7 +60,11 @@ export function FreeDownloadForm({
         className="border-line bg-paper w-full rounded-full border px-4 py-2.5 text-sm"
       />
       <label className="text-ink/80 flex items-start gap-2 text-xs">
-        <input type="checkbox" name="newsletter" className="mt-0.5 h-4 w-4 shrink-0" />
+        <input
+          type="checkbox"
+          name="newsletter"
+          className="mt-0.5 h-4 w-4 shrink-0"
+        />
         {t("consent")}
       </label>
       <button

@@ -6,7 +6,8 @@ import { useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/Button";
 
-const FIELD = "border-line bg-paper rounded-2xl border px-4 py-2.5 text-sm font-normal";
+const FIELD =
+  "border-line bg-paper rounded-2xl border px-4 py-2.5 text-sm font-normal";
 
 /**
  * One sign-in form for everyone — customers and the admin alike — with two
@@ -22,7 +23,11 @@ const FIELD = "border-line bg-paper rounded-2xl border px-4 py-2.5 text-sm font-
  * the template can include {{ .Token }} so the mail shows a code to type in
  * here instead (see SETUP.md). Both paths work.
  */
-export function SignInForm({ redirectTo = "/account" }: { redirectTo?: string }) {
+export function SignInForm({
+  redirectTo = "/account",
+}: {
+  redirectTo?: string;
+}) {
   const t = useTranslations("auth");
   const router = useRouter();
   const [method, setMethod] = useState<"password" | "code">("password");
@@ -72,7 +77,12 @@ export function SignInForm({ redirectTo = "/account" }: { redirectTo?: string })
       email: String(data.get("email") ?? ""),
       password: String(data.get("password") ?? ""),
     });
-    if (error) return fail(error.message);
+    if (error)
+      return fail(
+        error.code === "invalid_credentials"
+          ? t("wrongPassword")
+          : error.message,
+      );
     await afterSignIn(signInData.user.id);
   }
 
@@ -91,7 +101,15 @@ export function SignInForm({ redirectTo = "/account" }: { redirectTo?: string })
         )}`,
       },
     });
-    if (error) return fail(error.message);
+    // shouldCreateUser is off, so an unknown address comes back as
+    // "Signups not allowed for otp" — say what it means instead.
+    if (error)
+      return fail(
+        error.code === "otp_disabled" ||
+          /signups not allowed/i.test(error.message)
+          ? t("noAccountForEmail")
+          : error.message,
+      );
     if (codeSentTo) setCodeRound((n) => n + 1);
     setCodeSentTo(email);
     setStatus("idle");
@@ -106,7 +124,8 @@ export function SignInForm({ redirectTo = "/account" }: { redirectTo?: string })
       type: "email",
     });
     // Supabase's message is English and technical; say what to do instead.
-    if (error || !data.user) return fail(error ? t("codeInvalid") : t("errorGeneric"));
+    if (error || !data.user)
+      return fail(error ? t("codeInvalid") : t("errorGeneric"));
     await afterSignIn(data.user.id);
   }
 
@@ -129,9 +148,14 @@ export function SignInForm({ redirectTo = "/account" }: { redirectTo?: string })
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       {codeSentTo ? (
         <>
-          <p className="text-ink/80 text-sm">{t("codeSent", { email: codeSentTo })}</p>
+          <p className="text-ink/80 text-sm">
+            {t("codeSent", { email: codeSentTo })}
+          </p>
           {codeRound > 0 && status !== "error" && (
-            <p role="status" className="rounded-2xl p-3 text-sm font-medium glass">
+            <p
+              role="status"
+              className="rounded-2xl p-3 text-sm font-medium glass"
+            >
               {t("codeResent")}
             </p>
           )}
@@ -153,7 +177,13 @@ export function SignInForm({ redirectTo = "/account" }: { redirectTo?: string })
       ) : (
         <label className="flex flex-col gap-1.5 text-sm font-medium">
           {t("emailLabel")}
-          <input type="email" name="email" required autoComplete="email" className={FIELD} />
+          <input
+            type="email"
+            name="email"
+            required
+            autoComplete="email"
+            className={FIELD}
+          />
         </label>
       )}
 
@@ -170,9 +200,16 @@ export function SignInForm({ redirectTo = "/account" }: { redirectTo?: string })
         </label>
       )}
 
-      {status === "error" && <p className="text-sm text-red-600">{errorMessage}</p>}
+      {status === "error" && (
+        <p className="text-sm text-red-600">{errorMessage}</p>
+      )}
 
-      <Button type="submit" size="lg" disabled={status === "loading"} className="mt-2">
+      <Button
+        type="submit"
+        size="lg"
+        disabled={status === "loading"}
+        className="mt-2"
+      >
         {method === "code" && !codeSentTo ? t("sendCode") : t("signInSubmit")}
       </Button>
 

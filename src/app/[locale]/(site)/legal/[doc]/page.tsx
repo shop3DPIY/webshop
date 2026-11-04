@@ -1,8 +1,15 @@
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/ui/Container";
+import { BackButton } from "@/components/ui/BackButton";
 
-const LEGAL_DOCS = ["privacy", "cookies", "terms", "delivery", "license"] as const;
+const LEGAL_DOCS = [
+  "privacy",
+  "cookies",
+  "terms",
+  "delivery",
+  "license",
+] as const;
 type LegalDoc = (typeof LEGAL_DOCS)[number];
 
 function isLegalDoc(doc: string): doc is LegalDoc {
@@ -37,6 +44,7 @@ export default async function LegalDocPage({
 
   return (
     <Container panel className="flex flex-col gap-6 py-16 sm:py-24">
+      <BackButton label={tLegal("back")} />
       <h1 className="font-display text-ink text-3xl font-bold sm:text-4xl">
         {tDoc("title")}
       </h1>

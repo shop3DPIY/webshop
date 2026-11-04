@@ -3,7 +3,10 @@
 import { useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { ProductCard } from "./ProductCard";
-import { COLLECTION_CLASSNAMES, type CollectionSlug } from "@/lib/config/colors";
+import {
+  COLLECTION_CLASSNAMES,
+  type CollectionSlug,
+} from "@/lib/config/colors";
 import { productText, type Product } from "@/types/product";
 
 type PriceFilter = "all" | "free" | "under5" | "5to10" | "over10";

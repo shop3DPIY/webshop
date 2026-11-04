@@ -18,7 +18,9 @@ export function ProductCard({ product }: { product: Product }) {
       href={`/product/${product.slug}`}
       className={`group flex flex-col overflow-hidden rounded-3xl glass transition-colors ${classes.border} ${classes.wash} ${classes.washHover}`}
     >
-      <div className={`relative aspect-square border-b ${classes.border} ${classes.wash}`}>
+      <div
+        className={`relative aspect-square border-b ${classes.border} ${classes.wash}`}
+      >
         {cover && (
           <Image
             src={cover.src}
@@ -39,8 +41,12 @@ export function ProductCard({ product }: { product: Product }) {
         )}
       </div>
       <div className="flex flex-1 flex-col p-4">
-        <h3 className="font-display text-ink text-base font-semibold">{text.title}</h3>
-        <p className="text-ink/60 mt-1 line-clamp-2 text-sm">{text.description}</p>
+        <h3 className="font-display text-ink text-base font-semibold">
+          {text.title}
+        </h3>
+        <p className="text-ink/60 mt-1 line-clamp-2 text-sm">
+          {text.description}
+        </p>
         {!product.isFree && product.priceCents != null && (
           <p className="text-ink mt-auto pt-3 text-sm font-semibold">
             {formatEuro(product.priceCents)}

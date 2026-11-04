@@ -187,6 +187,14 @@
       "sentBody": "De downloadlink is onderweg. Niets ontvangen? Kijk even in je spammap.",
       "invalid": "Vul een geldig e-mailadres in.",
       "error": "Er ging iets mis. Probeer het later nog eens."
+    },
+    "gallery": {
+      "open": "Foto {n} van {total} groter bekijken",
+      "show": "Toon foto {n}",
+      "close": "Sluiten",
+      "previous": "Vorige foto",
+      "next": "Volgende foto",
+      "counter": "{n} / {total}"
     }
   },
   "business": {
@@ -256,7 +264,8 @@
       "license": {
         "title": "Licentieovereenkomst"
       }
-    }
+    },
+    "back": "Terug"
   },
   "freeDesignsPage": {
     "eyebrow": "Gratis designs",
@@ -291,7 +300,7 @@
     "usePassword": "Liever inloggen met een wachtwoord",
     "sendCode": "Mail mij een code",
     "codeLabel": "Code uit je e-mail",
-    "codeSent": "We hebben {email} gemaild. Klik op de inloglink in die mail (open hem in deze browser), of vul de code in als die erin staat.",
+    "codeSent": "We hebben een code gemaild naar {email}. Vul hem hieronder in — of klik op de inloglink in die mail.",
     "resendCode": "Stuur een nieuwe code",
     "backToSignIn": "Terug naar inloggen",
     "linkExpired": "Deze link is verlopen of al gebruikt. Vraag hieronder een nieuwe aan — en open hem in dezelfde browser waarin je hem hebt aangevraagd.",
@@ -307,7 +316,9 @@
     "confirmContinue": "Bevestigen en verder",
     "confirmContinueReset": "Nieuw wachtwoord instellen",
     "linkExpiredShort": "Deze link is verlopen of al gebruikt. Log in, of vraag een nieuwe link aan.",
-    "emailConfirmed": "Je e-mailadres is bevestigd. Log in om verder te gaan."
+    "emailConfirmed": "Je e-mailadres is bevestigd. Log in om verder te gaan.",
+    "noAccountForEmail": "Er is nog geen account met dit e-mailadres. Controleer op typfouten, of maak een account aan.",
+    "wrongPassword": "Dit e-mailadres en wachtwoord horen niet bij elkaar. Probeer het opnieuw, of log in met een code per mail."
   },
   "account": {
     "eyebrow": "My 3DPIY",

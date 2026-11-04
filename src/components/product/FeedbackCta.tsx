@@ -9,12 +9,16 @@ import { Button } from "@/components/ui/Button";
  */
 export async function FeedbackCta({ productTitle }: { productTitle?: string }) {
   const t = await getTranslations("feedbackCta");
-  const subject = productTitle ? t("subjectProduct", { title: productTitle }) : t("subject");
+  const subject = productTitle
+    ? t("subjectProduct", { title: productTitle })
+    : t("subject");
 
   return (
     <div className="flex flex-col items-start gap-4 rounded-3xl p-6 glass sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <h2 className="font-display text-ink text-lg font-semibold">{t("title")}</h2>
+        <h2 className="font-display text-ink text-lg font-semibold">
+          {t("title")}
+        </h2>
         <p className="text-ink/70 mt-1 text-sm">{t("body")}</p>
       </div>
       <Button
