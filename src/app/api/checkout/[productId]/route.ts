@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { requestOrigin } from "@/lib/requestOrigin";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { commerceProvider } from "@/lib/commerce";
@@ -54,7 +55,7 @@ export async function GET(
   const referer = request.headers.get("referer") ?? "";
   const locale = /^https?:\/\/[^/]+\/nl(\/|$)/.test(referer) ? "nl" : "en";
   const prefix = locale === "nl" ? "/nl" : "";
-  const origin = request.nextUrl.origin;
+  const origin = requestOrigin(request);
 
   const supabase = await createClient();
   const user = supabase ? (await supabase.auth.getUser()).data.user : null;
