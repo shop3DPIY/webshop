@@ -413,5 +413,11 @@
     "studioBody": "Voor studio's en bedrijven: onbeperkt verkopen onder je eigen merk, inclusief het STEP-bestand en één ontwerpaanvraag op maat.",
     "emptyCatalogNote": "De Business-catalogus wordt voorbereid — kom snel nog eens terug.",
     "switchCta": "← Toch op zoek naar de shop?"
+  },
+  "notFound": {
+    "title": "Deze pagina bestaat niet",
+    "body": "De link is misschien oud, of het ontwerp is offline gehaald. Kijk even in de shop, of laat weten wat je zocht.",
+    "shop": "Naar de shop",
+    "contact": "Contact"
   }
 }

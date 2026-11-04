@@ -413,5 +413,11 @@
     "studioBody": "For studios and companies: sell unlimited copies under your own brand, including the STEP file and one custom design request.",
     "emptyCatalogNote": "The Business catalog is being prepared — check back soon.",
     "switchCta": "← Looking for the shop instead?"
+  },
+  "notFound": {
+    "title": "This page doesn't exist",
+    "body": "The link may be old, or the design has been taken offline. Have a look in the shop, or let us know what you were looking for.",
+    "shop": "Go to the shop",
+    "contact": "Contact"
   }
 }
