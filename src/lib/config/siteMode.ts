@@ -32,7 +32,13 @@ function stripLocalePrefix(pathname: string): string {
 // Always reachable in any gated mode — the owner needs a way to sign in
 // (and recover a lost password) to reach /studio even when the public
 // site is showing nothing but the coming-soon page.
-const ALWAYS_ALLOWED_PATHS = ["/auth/sign-in", "/auth/forgot-password", "/auth/reset-password"];
+const ALWAYS_ALLOWED_PATHS = [
+  "/auth/sign-in",
+  "/auth/forgot-password",
+  "/auth/reset-password",
+  // Where the links in auth mails land (see /api/auth/callback).
+  "/auth/confirm",
+];
 
 /** Used by proxy.ts to decide whether a request may pass through as-is. */
 export function isAllowedInGatedMode(pathname: string, mode: SiteMode): boolean {
