@@ -1,5 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/admin";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+import { formatEuro } from "@/lib/pricing/calculate";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
@@ -66,10 +67,13 @@ export default async function AccountPage({
       supabase!
         .from("entitlements")
         .select("product_id, granted_at")
+        // RLS lets admins read everyone's rows — this page is only yours.
+        .eq("customer_id", user.id)
         .order("granted_at", { ascending: false }),
       supabase!
         .from("orders")
         .select("id, external_order_id, total_cents, currency, created_at")
+        .eq("customer_id", user.id)
         .order("created_at", { ascending: false }),
     ]);
 
@@ -88,6 +92,23 @@ export default async function AccountPage({
           .select("id, slug, title, category, download_files")
           .in("id", productIds)
       : { data: [] };
+
+  // What each order was for (titles are stored on the order line, so this
+  // still reads right if a product is renamed or deleted later).
+  const orderIds = (orders ?? []).map((o) => o.id);
+  const { data: orderItems } =
+    orderIds.length > 0
+      ? await supabase!
+          .from("order_items")
+          .select("order_id, title")
+          .in("order_id", orderIds)
+      : { data: [] };
+  const titlesFor = (orderId: string) =>
+    (orderItems ?? [])
+      .filter((item) => item.order_id === orderId && item.title)
+      .map((item) => item.title)
+      .join(", ");
+  const dateLocale = (await getLocale()) === "nl" ? "nl-NL" : "en-GB";
 
   return (
     <Container panel className="flex flex-col gap-14 py-16 sm:py-24">
@@ -174,12 +195,22 @@ export default async function AccountPage({
                 className="flex items-center justify-between p-5 text-sm"
               >
                 <div>
-                  <p className="font-medium">{order.external_order_id}</p>
-                  <p className="text-ink/60">{order.created_at}</p>
+                  <p className="font-medium">
+                    {titlesFor(order.id) || t("orderFallbackTitle")}
+                  </p>
+                  <p className="text-ink/60">
+                    {new Date(order.created_at).toLocaleDateString(dateLocale, {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </p>
                 </div>
                 {order.total_cents != null && (
                   <p className="font-medium">
-                    {(order.total_cents / 100).toFixed(2)} {order.currency}
+                    {order.currency === "EUR"
+                      ? formatEuro(order.total_cents)
+                      : `${(order.total_cents / 100).toFixed(2)} ${order.currency}`}
                   </p>
                 )}
               </div>

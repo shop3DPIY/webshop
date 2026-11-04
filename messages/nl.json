@@ -317,7 +317,8 @@
     "signIn": "Inloggen",
     "adminBannerTitle": "Je bent ingelogd als admin",
     "adminBannerBody": "Dit is de klantweergave. Om producten toe te voegen, bestanden te uploaden en bestellingen te beheren, gebruik je 3DPIY Studio.",
-    "adminBannerCta": "Open 3DPIY Studio"
+    "adminBannerCta": "Open 3DPIY Studio",
+    "orderFallbackTitle": "Bestelling"
   },
   "trackChooser": {
     "eyebrow": "Onafhankelijke digitale designstudio",

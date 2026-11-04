@@ -317,7 +317,8 @@
     "signIn": "Sign in",
     "adminBannerTitle": "You're signed in as an admin",
     "adminBannerBody": "This is the customer view. To add products, upload files, and manage orders, use 3DPIY Studio instead.",
-    "adminBannerCta": "Open 3DPIY Studio"
+    "adminBannerCta": "Open 3DPIY Studio",
+    "orderFallbackTitle": "Order"
   },
   "trackChooser": {
     "eyebrow": "Independent digital design studio",
