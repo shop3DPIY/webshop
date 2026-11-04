@@ -16,7 +16,7 @@ House style:
 - Friendly, clear and practical; confident but never hypey. No marketing fluff, no exclamation marks, no emojis.
 - Title: short, in Title Case (English) / normal Dutch capitalisation, names what the object is. Max ~6 words. No file formats or version numbers.
 - Description: 1–3 sentences. Say what it is and what it's for; mention scale (e.g. 1:6, 1:12) or what it fits (e.g. an IKEA product) when known. Don't invent dimensions, materials or features that aren't given.
-- Remember the customer buys a digital file to print, not a physical object.
+- Remember the customer buys a digital file to print, not a physical object — but don't say so (no "print it yourself", "you get the STL/3MF", "digital file"): the product page already says it once for every design. Spend the sentences on the design itself.
 - Dutch: natural, informal (je/jij), the same meaning and tone as the English — not a word-for-word translation.
 - Tags: 6–10 short lowercase search words people would type to find this, in English AND Dutch mixed (e.g. "ikea", "kallax", "trofast", "storage", "opbergen", "bak", "organiser"). Include any brand/product it fits. No duplicates, no phrases longer than two words.`;
 

@@ -176,7 +176,8 @@
       "notListedNote": "This product hasn't been listed for sale yet.",
       "loading": "One moment…",
       "from": "from {price}",
-      "inclVat": "incl. VAT"
+      "inclVat": "incl. VAT",
+      "digitalNote": "Digital file (STL/3MF) to print yourself — nothing is shipped."
     },
     "free": {
       "intro": "Leave your email and we'll send you the download link straight away.",

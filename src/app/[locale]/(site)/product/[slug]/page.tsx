@@ -296,6 +296,11 @@ export default async function ProductPage({
                 </p>
               </>
             )}
+            {/* Said once here for every design, so descriptions don't
+                each have to repeat it. */}
+            <p className="text-ink/60 border-line mt-4 border-t pt-4 text-xs">
+              {tBuy("digitalNote")}
+            </p>
           </div>
 
           <SpecList rows={specRows} />
