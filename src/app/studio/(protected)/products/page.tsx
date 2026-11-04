@@ -20,8 +20,13 @@ export default async function StudioProductsPage({
     tab?: string;
   }>;
 }) {
-  const { commerceError, synced, deleted, saved, tab: tabParam } =
-    await searchParams;
+  const {
+    commerceError,
+    synced,
+    deleted,
+    saved,
+    tab: tabParam,
+  } = await searchParams;
   const supabase = await createClient();
   const { data: all } = await supabase!
     .from("products")
@@ -132,27 +137,35 @@ export default async function StudioProductsPage({
                 <p className="text-ink/60">
                   {product.category} · v{product.version}
                 </p>
-                {product.price_cents != null && (
-                  <p className="text-ink/60 text-xs">
-                    P {formatEuro(product.price_cents)} · S{" "}
-                    {product.price_small_cents != null
-                      ? formatEuro(product.price_small_cents)
-                      : "—"}{" "}
-                    · U{" "}
-                    {product.price_unlimited_cents != null
-                      ? formatEuro(product.price_unlimited_cents)
-                      : "—"}
-                  </p>
+                {product.is_free ? (
+                  <p className="text-ink/60 text-xs">Free</p>
+                ) : (
+                  product.price_cents != null && (
+                    <p className="text-ink/60 text-xs">
+                      P {formatEuro(product.price_cents)} · S{" "}
+                      {product.price_small_cents != null
+                        ? formatEuro(product.price_small_cents)
+                        : "—"}{" "}
+                      · U{" "}
+                      {product.price_unlimited_cents != null
+                        ? formatEuro(product.price_unlimited_cents)
+                        : "—"}
+                    </p>
+                  )
                 )}
               </div>
               <div className="flex items-center gap-2">
-                {Object.values(product.commerce_product_ids ?? {}).some(
-                  Boolean,
-                ) && (
-                  <span className="border-line rounded-full border px-3 py-1 text-xs">
-                    On Polar
-                  </span>
-                )}
+                {/* Free and offline designs keep their (archived) Polar ids
+                    for when they're sold again, but aren't on sale there. */}
+                {!product.is_free &&
+                  product.publication_status !== "archived" &&
+                  Object.values(product.commerce_product_ids ?? {}).some(
+                    Boolean,
+                  ) && (
+                    <span className="border-line rounded-full border px-3 py-1 text-xs">
+                      On Polar
+                    </span>
+                  )}
                 <span className="border-line rounded-full border px-3 py-1 text-xs capitalize">
                   {product.publication_status}
                 </span>
@@ -160,9 +173,7 @@ export default async function StudioProductsPage({
             </Link>
           ))
         ) : (
-          <p className="text-ink/60 p-8 text-center text-sm">
-            Nothing here.
-          </p>
+          <p className="text-ink/60 p-8 text-center text-sm">Nothing here.</p>
         )}
       </div>
     </div>

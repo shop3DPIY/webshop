@@ -3,6 +3,7 @@ import { COLLECTION_LIST } from "@/lib/config/colors";
 import { isMailConfigured } from "@/lib/mail/send";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { sendNewsletter } from "@/lib/newsletter/admin-actions";
+import { NewsletterDraft } from "@/components/studio/NewsletterDraft";
 
 const FIELD =
   "border-line bg-paper w-full rounded-2xl border px-4 py-2.5 text-sm";
@@ -77,7 +78,15 @@ export default async function SendNewsletterPage({
         </p>
       )}
 
-      <form action={sendNewsletter} className="flex flex-col gap-5">
+      <NewsletterDraft
+        formId="newsletter-form"
+        sent={Boolean(sent && !error)}
+      />
+      <form
+        id="newsletter-form"
+        action={sendNewsletter}
+        className="flex flex-col gap-5"
+      >
         <label className={LABEL}>
           Subject
           <input

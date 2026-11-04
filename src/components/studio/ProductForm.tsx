@@ -350,7 +350,9 @@ export function ProductForm({
                 rows={2}
                 defaultValue={formatCompatible(p?.external_links?.compatible)}
                 className={FIELD}
-                placeholder={"IKEA KALLAX | https://www.ikea.com/nl/nl/search/?q=kallax"}
+                placeholder={
+                  "IKEA KALLAX | https://www.ikea.com/nl/nl/search/?q=kallax"
+                }
               />
             </label>
 
@@ -372,9 +374,11 @@ export function ProductForm({
               Polar: saving lists this product automatically, one Polar product
               per license with the prices above (free and archived products are
               taken off).{" "}
-              {Object.values(p?.commerce_product_ids ?? {}).some(Boolean)
-                ? `Listed now: ${Object.keys(p?.commerce_product_ids ?? {}).join(", ")}.`
-                : "Not listed yet."}
+              {p?.is_free || p?.publication_status === "archived"
+                ? "Not on sale on Polar now."
+                : Object.values(p?.commerce_product_ids ?? {}).some(Boolean)
+                  ? `Listed now: ${Object.keys(p?.commerce_product_ids ?? {}).join(", ")}.`
+                  : "Not listed yet."}
             </p>
           </div>
         </div>
