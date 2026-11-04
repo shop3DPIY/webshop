@@ -297,7 +297,9 @@
     "linkExpired": "Deze link is verlopen of al gebruikt. Vraag hieronder een nieuwe aan — en open hem in dezelfde browser waarin je hem hebt aangevraagd.",
     "checkEmailTitle": "Check je inbox",
     "checkEmailBody": "We hebben je een link gestuurd — volg deze om verder te gaan.",
-    "errorGeneric": "Er ging iets mis. Probeer het opnieuw."
+    "errorGeneric": "Er ging iets mis. Probeer het opnieuw.",
+    "codeResent": "Nieuwe code verstuurd. Gebruik alleen de nieuwste code — oudere werken niet meer.",
+    "codeInvalid": "Deze code werkt niet (meer). Controleer of je de nieuwste hebt overgetypt, of vraag een nieuwe code aan."
   },
   "account": {
     "eyebrow": "My 3DPIY",

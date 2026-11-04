@@ -29,6 +29,9 @@ export function SignInForm({ redirectTo = "/account" }: { redirectTo?: string })
   const [codeSentTo, setCodeSentTo] = useState<string | null>(null);
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  // Bumped on "Send a new code": empties the code field (remount) and
+  // shows a "new code sent" note, so the old code isn't tried again.
+  const [codeRound, setCodeRound] = useState(0);
 
   const fail = (message: string) => {
     setErrorMessage(message);
@@ -89,6 +92,7 @@ export function SignInForm({ redirectTo = "/account" }: { redirectTo?: string })
       },
     });
     if (error) return fail(error.message);
+    if (codeSentTo) setCodeRound((n) => n + 1);
     setCodeSentTo(email);
     setStatus("idle");
   }
@@ -101,7 +105,8 @@ export function SignInForm({ redirectTo = "/account" }: { redirectTo?: string })
       token: token.replace(/\s/g, ""),
       type: "email",
     });
-    if (error || !data.user) return fail(error?.message ?? t("errorGeneric"));
+    // Supabase's message is English and technical; say what to do instead.
+    if (error || !data.user) return fail(error ? t("codeInvalid") : t("errorGeneric"));
     await afterSignIn(data.user.id);
   }
 
@@ -125,9 +130,15 @@ export function SignInForm({ redirectTo = "/account" }: { redirectTo?: string })
       {codeSentTo ? (
         <>
           <p className="text-ink/80 text-sm">{t("codeSent", { email: codeSentTo })}</p>
+          {codeRound > 0 && status !== "error" && (
+            <p role="status" className="rounded-2xl p-3 text-sm font-medium glass">
+              {t("codeResent")}
+            </p>
+          )}
           <label className="flex flex-col gap-1.5 text-sm font-medium">
             {t("codeLabel")}
             <input
+              key={codeRound}
               type="text"
               name="code"
               required

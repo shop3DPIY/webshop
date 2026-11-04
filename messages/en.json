@@ -297,7 +297,9 @@
     "linkExpired": "That link has expired or was already used. Request a new one below — and open it in the same browser you requested it from.",
     "checkEmailTitle": "Check your inbox",
     "checkEmailBody": "We've sent you a link — follow it to continue.",
-    "errorGeneric": "Something went wrong. Please try again."
+    "errorGeneric": "Something went wrong. Please try again.",
+    "codeResent": "New code sent. Use only the newest code — older ones no longer work.",
+    "codeInvalid": "That code doesn't work (any more). Check you typed the newest one, or send a new code."
   },
   "account": {
     "eyebrow": "My 3DPIY",
