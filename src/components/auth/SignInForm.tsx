@@ -183,7 +183,17 @@ export function SignInForm({
   const loading = status === "loading";
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} noValidate aria-busy={loading} className="flex flex-col gap-5">
+    <form
+      ref={formRef}
+      onSubmit={handleSubmit}
+      // Typing in the field that had an error clears that error.
+      onChange={(e) => {
+        if (fieldError && (e.target as unknown as HTMLInputElement).name === fieldError.name) setFieldError(null);
+      }}
+      noValidate
+      aria-busy={loading}
+      className="flex flex-col gap-5"
+    >
       {status === "error" && (
         <div
           role="alert"
@@ -243,7 +253,7 @@ export function SignInForm({
       {method === "password" && (
         <div className="flex flex-col gap-1.5">
           <div className="flex items-baseline justify-between gap-3">
-            <label htmlFor="password" className="text-sm font-semibold">
+            <label htmlFor="password" className="pl-4 text-sm font-semibold">
               {t("passwordLabel")}
             </label>
             <Link href="/auth/forgot-password" className="text-ink text-sm font-semibold underline underline-offset-2">
