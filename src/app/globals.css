@@ -592,13 +592,3 @@ select {
 .file-upload:hover::file-selector-button {
   background: rgb(140 82 255 / 0.45);
 }
-
-/* Sign-in card: a purple focus ring on the fields, so the active field is
-   clear on the frosted glass. */
-.auth-card :is(input:not([type="checkbox"], [type="radio"], [type="hidden"])):focus {
-  border-color: #8c52ff;
-  box-shadow: 0 0 0 3px rgb(140 82 255 / 0.55);
-}
-.auth-card input:not([type="checkbox"], [type="radio"], [type="hidden"]) {
-  border-color: rgb(255 255 255 / 0.6);
-}

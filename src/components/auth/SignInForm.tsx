@@ -6,9 +6,10 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/Button";
 
-// 16px text: smaller makes iOS Safari zoom in when the field is tapped.
+// The site's field style; 16px text because smaller makes iOS Safari
+// zoom in when the field is tapped.
 const FIELD =
-  "border-line bg-paper text-ink w-full rounded-2xl border px-4 py-3 text-base font-normal";
+  "border-line bg-paper w-full rounded-2xl border px-4 py-2.5 text-base font-normal";
 
 /**
  * One sign-in form for everyone — customers and the admin alike — with two
@@ -175,7 +176,7 @@ export function SignInForm({
       : {};
   const errorText = (name: string) =>
     fieldError?.name === name && (
-      <span id={`${name}-error`} className="pl-4 text-sm font-semibold text-red-100">
+      <span id={`${name}-error`} className="pl-4 text-sm text-red-200">
         {fieldError.message}
       </span>
     );
@@ -197,7 +198,7 @@ export function SignInForm({
       {status === "error" && (
         <div
           role="alert"
-          className="flex items-start gap-3 rounded-2xl border border-red-300 bg-red-50 p-4 text-sm font-medium text-red-800 dark:border-red-400/50 dark:bg-red-950/60 dark:text-red-100"
+          className="flex items-start gap-3 rounded-2xl border border-red-300 p-4 text-sm font-medium text-red-200 glass"
         >
           <svg aria-hidden width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="mt-0.5 shrink-0">
             <circle cx="12" cy="12" r="10" />
@@ -209,7 +210,7 @@ export function SignInForm({
 
       {codeSentTo ? (
         <>
-          <p className="text-ink text-sm">
+          <p className="text-ink/80 text-sm">
             {t("codeSent", { email: codeSentTo })}
           </p>
           {codeRound > 0 && status !== "error" && (
@@ -217,7 +218,7 @@ export function SignInForm({
               {t("codeResent")}
             </p>
           )}
-          <label className="flex flex-col gap-1.5 text-sm font-semibold">
+          <label className="flex flex-col gap-1.5 text-sm font-medium">
             {t("codeLabel")}
             <input
               key={codeRound}
@@ -235,7 +236,7 @@ export function SignInForm({
           </label>
         </>
       ) : (
-        <label className="flex flex-col gap-1.5 text-sm font-semibold">
+        <label className="flex flex-col gap-1.5 text-sm font-medium">
           {t("emailLabel")}
           <input
             type="email"
@@ -253,7 +254,7 @@ export function SignInForm({
       {method === "password" && (
         <div className="flex flex-col gap-1.5">
           <div className="flex items-baseline justify-between gap-3">
-            <label htmlFor="password" className="pl-4 text-sm font-semibold">
+            <label htmlFor="password" className="pl-4 text-sm font-medium">
               {t("passwordLabel")}
             </label>
             <Link href="/auth/forgot-password" className="text-ink text-sm font-semibold underline underline-offset-2">
@@ -320,19 +321,15 @@ export function SignInForm({
         </button>
       )}
 
-      <div className="text-ink flex items-center gap-3 text-xs font-semibold uppercase" aria-hidden>
+      <div className="text-ink/60 flex items-center gap-3 text-xs font-semibold uppercase" aria-hidden>
         <span className="bg-line h-px flex-1" />
         {t("or")}
         <span className="bg-line h-px flex-1" />
       </div>
 
-      <button
-        type="button"
-        onClick={switchMethod}
-        className="border-line text-ink hover:bg-mist w-full rounded-full border-2 px-7 py-3 text-base font-semibold transition-colors"
-      >
+      <Button type="button" variant="secondary" size="lg" onClick={switchMethod} className="w-full">
         {method === "password" ? t("useCode") : t("usePassword")}
-      </button>
+      </Button>
     </form>
   );
 }
