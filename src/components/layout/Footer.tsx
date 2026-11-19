@@ -93,9 +93,13 @@ export async function Footer() {
         <span>
           © {year} {t("copyright")}
         </span>
-        <span>
-          {t("kvk")} {business.kvk} · {t("vatId")} {business.vatId}
-        </span>
+        {/* Only once real numbers are filled in (Studio → Settings). */}
+        {!/x/i.test(business.kvk) && business.kvk && (
+          <span>
+            {t("kvk")} {business.kvk}
+            {!/x{3}/i.test(business.vatId) && business.vatId && ` · ${t("vatId")} ${business.vatId}`}
+          </span>
+        )}
         <span>{t("digitalOnly")}</span>
       </Container>
     </footer>
