@@ -13,6 +13,7 @@ const COPY = {
     link: "Inschrijving beheren",
     notYou:
       "Heb je je niet zelf aangemeld? Klik dan op de link hierboven en meld je af.",
+    gift: "Als welkom: 10% korting op je eerste aankoop met deze code (eenmalig, 60 dagen geldig). Vul hem in bij het afrekenen:",
   },
   en: {
     subject: "Welcome to the 3DPIY newsletter",
@@ -22,6 +23,7 @@ const COPY = {
       "Prefer only certain categories, or no newsletter after all? Change it or unsubscribe here:",
     link: "Manage subscription",
     notYou: "Didn't sign up yourself? Use the link above to unsubscribe.",
+    gift: "As a welcome: 10% off your first purchase with this code (once, valid for 60 days). Enter it at checkout:",
   },
 };
 
@@ -30,17 +32,20 @@ export async function sendWelcomeMail(
   email: string,
   token: string,
   locale: string,
+  /** One-off welcome discount code (src/lib/newsletter/welcomeCode.ts) */
+  code?: string | null,
 ) {
   const c = locale === "nl" ? COPY.nl : COPY.en;
   const url = manageUrl(token, locale);
   await sendMail({
     to: email,
     subject: c.subject,
-    text: `${c.heading}\n\n${c.body}\n\n${c.manage}\n${url}\n\n${c.notYou}`,
+    text: `${c.heading}\n\n${c.body}\n\n${code ? `${c.gift} ${code}\n\n` : ""}${c.manage}\n${url}\n\n${c.notYou}`,
     html: emailLayout({
       locale,
       heading: c.heading,
       bodyHtml: `<p style="margin:0 0 16px">${escapeHtml(c.body)}</p>
+${code ? `<p style="margin:0 0 8px">${escapeHtml(c.gift)}</p><p style="margin:0 0 20px"><span style="display:inline-block;padding:10px 18px;border:2px dashed #8c52ff;border-radius:12px;font-size:20px;font-weight:bold;letter-spacing:2px;color:#8c52ff">${escapeHtml(code)}</span></p>` : ""}
 <p style="margin:0 0 16px">${escapeHtml(c.manage)}</p>
 <p style="margin:0 0 16px">${emailButton(url, c.link)}</p>
 <p style="margin:0;color:#6b6478;font-size:13px">${escapeHtml(c.notYou)}</p>`,

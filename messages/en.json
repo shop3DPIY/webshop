@@ -25,7 +25,7 @@
     "items": {
       "doll-mini": {
         "name": "Doll & Mini",
-        "tagline": "1:6 doll furniture and 1:12 dollhouse miniatures"
+        "tagline": "Barbie-size (1:6) doll furniture and accessories"
       },
       "home-living": {
         "name": "Home & Living",
@@ -147,7 +147,8 @@
     "clear": "Clear filters",
     "noResults": "Nothing matches — try another word or clear the filters.",
     "emptyCatalog": "No designs yet — check back soon.",
-    "allTitle": "All designs"
+    "allTitle": "All designs",
+    "allScales": "All scales"
   },
   "shopPage": {
     "eyebrow": "Shop",
@@ -167,7 +168,10 @@
     "emptyTitle": "More designs coming soon",
     "emptyDescription": "This collection is still filling up as 3DPIY prepares for launch — check back soon.",
     "shop": "Shop",
-    "designsHeading": "Designs"
+    "designsHeading": "Designs",
+    "scaleBarbie": "1:6 · Barbie",
+    "scaleDollhouse": "1:12 · Dollhouse",
+    "alsoHere": "Also in {name}"
   },
   "productPage": {
     "compatibleWith": "Compatible with",

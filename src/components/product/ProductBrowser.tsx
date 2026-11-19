@@ -22,17 +22,20 @@ const FIELD =
  * "compatible with" items (e.g. an IKEA product name).
  *
  * `collections` shows the collection filter (the Shop's all-designs
- * list); leave it out on a collection page.
+ * list); leave it out on a collection page. `scales` shows scale chips
+ * (Doll & Mini); a design without a scale counts as the first one.
  */
 export function ProductBrowser({
   products,
   collections,
   initialQuery = "",
+  scales,
 }: {
   products: Product[];
   /** From ?q= (e.g. a tag clicked on a product page) */
   initialQuery?: string;
   collections?: { slug: CollectionSlug; name: string }[];
+  scales?: { value: string; label: string }[];
 }) {
   const t = useTranslations("productBrowser");
   const tCollections = useTranslations("collections.items");
@@ -41,6 +44,7 @@ export function ProductBrowser({
   const [collection, setCollection] = useState<CollectionSlug | "all">("all");
   const [price, setPrice] = useState<PriceFilter>("all");
   const [sort, setSort] = useState<Sort>("newest");
+  const [scale, setScale] = useState<string>("all");
 
   const haystacks = useMemo(
     () =>
@@ -76,6 +80,11 @@ export function ProductBrowser({
           p.extraCategories?.includes(collection),
       )
       .filter((p) => {
+        if (!scales || scale === "all") return true;
+        const own = (p.printSettings?.scale ?? "").split(/[,/]/).map((s) => s.trim()).filter(Boolean);
+        return own.length === 0 ? scale === scales[0]?.value : own.includes(scale);
+      })
+      .filter((p) => {
         const c = cents(p);
         switch (price) {
           case "free":
@@ -100,9 +109,9 @@ export function ProductBrowser({
         }
         return b.lastUpdated.localeCompare(a.lastUpdated);
       });
-  }, [products, haystacks, query, collection, price, sort, locale]);
+  }, [products, haystacks, query, collection, price, sort, locale, scale, scales]);
 
-  const filtered = query || collection !== "all" || price !== "all";
+  const filtered = query || collection !== "all" || price !== "all" || scale !== "all";
 
   return (
     <div className="flex flex-col gap-6">
@@ -181,6 +190,24 @@ export function ProductBrowser({
           </div>
         )}
 
+        {scales && scales.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {[{ value: "all", label: t("allScales") }, ...scales].map((s) => (
+              <button
+                key={s.value}
+                type="button"
+                onClick={() => setScale(s.value)}
+                aria-pressed={scale === s.value}
+                className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
+                  scale === s.value ? "border-white bg-white/40" : "border-line hover:bg-mist"
+                }`}
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
+        )}
+
         <p className="text-ink text-xs" aria-live="polite">
           {t("count", { count: shown.length })}
           {filtered && (
@@ -192,6 +219,7 @@ export function ProductBrowser({
                   setQuery("");
                   setCollection("all");
                   setPrice("all");
+                  setScale("all");
                 }}
                 className="underline underline-offset-2"
               >

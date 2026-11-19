@@ -2,6 +2,7 @@ import { EN } from "./en";
 import { NL } from "./nl";
 import { FAQ_EN } from "../faq/en";
 import { FAQ_NL } from "../faq/nl";
+import { COLLECTION_TEXTS } from "../collections/texts";
 
 /**
  * Site texts editable in Studio → Texts: the five legal pages and the two
@@ -12,13 +13,17 @@ export const LEGAL_DOCS = ["privacy", "cookies", "terms", "delivery", "license"]
 export type LegalDoc = (typeof LEGAL_DOCS)[number];
 export const FAQ_DOCS = ["faq-shop", "faq-business"] as const;
 export type FaqDoc = (typeof FAQ_DOCS)[number];
-export const TEXT_DOCS = [...LEGAL_DOCS, ...FAQ_DOCS] as const;
-export type TextDoc = LegalDoc | FaqDoc;
+/** One text per collection, shown under its designs: "col-<slug>". */
+export type CollectionDoc = `col-${string}`;
+export const COLLECTION_DOCS = Object.keys(COLLECTION_TEXTS).map((slug) => `col-${slug}` as CollectionDoc);
+export const TEXT_DOCS: readonly TextDoc[] = [...LEGAL_DOCS, ...FAQ_DOCS, ...COLLECTION_DOCS];
+export type TextDoc = LegalDoc | FaqDoc | CollectionDoc;
 
 export const isLegalDoc = (doc: string): doc is LegalDoc =>
   (LEGAL_DOCS as readonly string[]).includes(doc);
 export const isTextDoc = (doc: string): doc is TextDoc =>
   (TEXT_DOCS as readonly string[]).includes(doc);
+export const isCollectionDoc = (doc: string): doc is CollectionDoc => doc.startsWith("col-");
 
 type Text = { title: string; body: string };
 
@@ -26,6 +31,9 @@ type Text = { title: string; body: string };
 export const DEFAULT_LEGAL: Record<TextDoc, { en: Text; nl: Text }> = {
   ...(Object.fromEntries(LEGAL_DOCS.map((doc) => [doc, { en: EN[doc], nl: NL[doc] }])) as Record<LegalDoc, { en: Text; nl: Text }>),
   ...(Object.fromEntries(FAQ_DOCS.map((doc) => [doc, { en: FAQ_EN[doc], nl: FAQ_NL[doc] }])) as Record<FaqDoc, { en: Text; nl: Text }>),
+  ...(Object.fromEntries(
+    Object.entries(COLLECTION_TEXTS).map(([slug, text]) => [`col-${slug}`, text]),
+  ) as Record<CollectionDoc, { en: Text; nl: Text }>),
 };
 
 /** Date the default texts were written (shown as "last updated"). */

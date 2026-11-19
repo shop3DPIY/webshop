@@ -3,6 +3,9 @@ import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { CollectionIcon } from "@/components/product/CollectionIcon";
+import { ProductCard } from "@/components/product/ProductCard";
+import { LegalBody } from "@/components/legal/LegalBody";
+import { getLegalText } from "@/lib/settings/legal";
 import { Container } from "@/components/ui/Container";
 import { ProductBrowser } from "@/components/product/ProductBrowser";
 import { FeedbackCta } from "@/components/product/FeedbackCta";
@@ -48,6 +51,11 @@ export default async function CollectionPage({
   const tPage = await getTranslations("collectionPage");
   const classes = COLLECTION_CLASSNAMES[slug];
   const products = await getProductsByCategory(slug);
+  // First what belongs here, then what's also ticked for this collection.
+  const own = products.filter((p) => p.category === slug);
+  // The collection text (Studio → Texts), under the designs.
+  const collectionText = await getLegalText(`col-${slug}`, await getLocale());
+  const alsoHere = products.filter((p) => p.category !== slug);
 
   return (
     <>
@@ -75,11 +83,21 @@ export default async function CollectionPage({
       </section>
 
       <Container panel className="flex flex-col gap-8 py-16 sm:py-24">
-        {products.length > 0 ? (
+        {own.length > 0 ? (
           <>
             {/* For screen readers and heading order: the cards are h3s. */}
             <h2 className="sr-only">{tPage("designsHeading")}</h2>
-            <ProductBrowser products={products} />
+            <ProductBrowser
+              products={own}
+              scales={
+                slug === "doll-mini"
+                  ? [
+                      { value: "1:6", label: tPage("scaleBarbie") },
+                      { value: "1:12", label: tPage("scaleDollhouse") },
+                    ]
+                  : undefined
+              }
+            />
           </>
         ) : (
           <div className="rounded-3xl p-12 text-center glass">
@@ -91,6 +109,27 @@ export default async function CollectionPage({
             </p>
           </div>
         )}
+
+        {/* Designs from other collections that are also ticked for this one. */}
+        {alsoHere.length > 0 && (
+          <section className="flex flex-col gap-5">
+            <h2 className="font-display text-ink text-2xl font-semibold">
+              {tPage("alsoHere", { name: t("name") })}
+            </h2>
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {alsoHere.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          </section>
+        )}
+
+        {collectionText.body && (
+          <section className="border-line max-w-3xl border-t pt-8">
+            <LegalBody text={collectionText.body} />
+          </section>
+        )}
+
         <FeedbackCta />
       </Container>
     </>

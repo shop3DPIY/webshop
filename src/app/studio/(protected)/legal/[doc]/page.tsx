@@ -8,6 +8,14 @@ import { ConfirmSubmitButton } from "@/components/ui/ConfirmDialog";
 const FIELD = "border-line bg-paper w-full rounded-2xl border px-4 py-2.5 text-sm";
 const LABEL = "flex flex-col gap-1.5 text-sm font-medium";
 
+/** Where a text shows on the site. */
+const viewPath = (doc: string, prefix: string) =>
+  doc.startsWith("faq")
+    ? `${prefix}/faq`
+    : doc.startsWith("col-")
+      ? `${prefix}/collections/${doc.slice(4)}`
+      : `${prefix}/legal/${doc}`;
+
 /** Edit one legal page, English (the base) and Dutch side by side. */
 export default async function StudioLegalDocPage({
   params,
@@ -31,10 +39,10 @@ export default async function StudioLegalDocPage({
           <h1 className="font-display mt-1 text-2xl font-bold">{source.en.title}</h1>
         </div>
         <div className="flex gap-2">
-          <a href={doc.startsWith("faq") ? "/faq" : `/legal/${doc}`} target="_blank" className="border-line hover:bg-mist rounded-full border px-4 py-2 text-sm font-semibold">
+          <a href={viewPath(doc, "")} target="_blank" className="border-line hover:bg-mist rounded-full border px-4 py-2 text-sm font-semibold">
             View EN ↗
           </a>
-          <a href={doc.startsWith("faq") ? "/nl/faq" : `/nl/legal/${doc}`} target="_blank" className="border-line hover:bg-mist rounded-full border px-4 py-2 text-sm font-semibold">
+          <a href={viewPath(doc, "/nl")} target="_blank" className="border-line hover:bg-mist rounded-full border px-4 py-2 text-sm font-semibold">
             View NL ↗
           </a>
         </div>

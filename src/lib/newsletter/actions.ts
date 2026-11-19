@@ -13,6 +13,7 @@ import {
   upsertSubscriber,
 } from "./server";
 import { sendConfirmMail, sendWelcomeMail } from "./mails";
+import { ensureWelcomeCode } from "./welcomeCode";
 
 export type SignupState = { status: "idle" | "ok" | "invalid" | "error" };
 
@@ -54,7 +55,8 @@ export async function subscribeFromAccount(formData: FormData) {
     confirmed: true,
   });
   if (result.welcome && result.token) {
-    await sendWelcomeMail(user.email, result.token, result.locale ?? "en");
+    const code = await ensureWelcomeCode(user.email);
+    await sendWelcomeMail(user.email, result.token, result.locale ?? "en", code);
   }
   revalidatePath("/", "layout");
   const locale = String(formData.get("locale") ?? "en");
@@ -133,7 +135,8 @@ export async function confirmNewsletter(formData: FormData) {
   const subscriber = isToken(token) ? await getSubscriberByToken(token) : null;
   if (!subscriber) redirect("/");
   if (subscriber.status === "pending" && (await confirmSubscriber(subscriber))) {
-    await sendWelcomeMail(subscriber.email, subscriber.token, subscriber.locale);
+    const code = await ensureWelcomeCode(subscriber.email);
+    await sendWelcomeMail(subscriber.email, subscriber.token, subscriber.locale, code);
   }
   backToManagePage(locale, token, "confirmed");
 }

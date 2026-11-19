@@ -25,7 +25,7 @@
     "items": {
       "doll-mini": {
         "name": "Poppen & Mini",
-        "tagline": "1:6 poppenmeubels en 1:12 poppenhuisminiaturen"
+        "tagline": "Barbie-meubels en accessoires op schaal 1:6"
       },
       "home-living": {
         "name": "Wonen",
@@ -147,7 +147,8 @@
     "clear": "Filters wissen",
     "noResults": "Niets gevonden — probeer een ander woord of wis de filters.",
     "emptyCatalog": "Nog geen ontwerpen — kom snel terug.",
-    "allTitle": "Alle ontwerpen"
+    "allTitle": "Alle ontwerpen",
+    "allScales": "Alle schalen"
   },
   "shopPage": {
     "eyebrow": "Shop",
@@ -167,7 +168,10 @@
     "emptyTitle": "Binnenkort meer designs",
     "emptyDescription": "Deze collectie wordt nog aangevuld terwijl 3DPIY zich voorbereidt op de lancering — kom snel nog eens kijken.",
     "shop": "Shop",
-    "designsHeading": "Ontwerpen"
+    "designsHeading": "Ontwerpen",
+    "scaleBarbie": "1:6 · Barbie",
+    "scaleDollhouse": "1:12 · Poppenhuis",
+    "alsoHere": "Ook in {name}"
   },
   "productPage": {
     "compatibleWith": "Past op",
@@ -444,7 +448,7 @@
   },
   "newsletter": {
     "submit": "Aanmelden",
-    "placeholder": "jij@email.com",
+    "placeholder": "jij@email.nl",
     "description": "Nieuwe designs en tips in je inbox. Je ontvangt alle categorieën — in elke mail kun je dat aanpassen of je afmelden.",
     "ok": "Bijna klaar! Kijk in je inbox en klik op de link in de mail om je aanmelding te bevestigen.",
     "invalid": "Dat lijkt geen geldig e-mailadres.",
