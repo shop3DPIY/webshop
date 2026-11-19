@@ -597,3 +597,8 @@ select {
   caret-color: var(--action);
   font-weight: 500;
 }
+/* The example text stays lighter than what you type. */
+.signin-field::placeholder {
+  color: rgb(140 82 255 / 0.5);
+  -webkit-text-fill-color: rgb(140 82 255 / 0.5);
+}
