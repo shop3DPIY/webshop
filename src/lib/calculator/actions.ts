@@ -9,6 +9,9 @@ import { withDefaults, type CalcInputs } from "./calc";
  * row-level security only lets people read and change their own rows.
  */
 
+/** The route pattern, so both /account/calculator and /nl/… refresh. */
+const CALC_ROUTE = "/[locale]/(site)/account/calculator";
+
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 async function currentUser() {
@@ -39,7 +42,7 @@ export async function saveCalculation(input: {
       .eq("id", input.id)
       .eq("user_id", user.id);
     if (error) return { ok: false };
-    revalidatePath("/account/calculator");
+    revalidatePath(CALC_ROUTE, "page");
     return { ok: true, id: input.id };
   }
   const { data, error } = await supabase
@@ -48,7 +51,7 @@ export async function saveCalculation(input: {
     .select("id")
     .single();
   if (error || !data) return { ok: false };
-  revalidatePath("/account/calculator");
+  revalidatePath(CALC_ROUTE, "page");
   return { ok: true, id: data.id };
 }
 
@@ -59,5 +62,5 @@ export async function deleteCalculation(formData: FormData) {
   if (supabase && user && formData.get("confirm") === "on" && UUID_RE.test(id)) {
     await supabase.from("calculations").delete().eq("id", id).eq("user_id", user.id);
   }
-  revalidatePath("/account/calculator");
+  revalidatePath(CALC_ROUTE, "page");
 }
