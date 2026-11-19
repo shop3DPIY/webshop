@@ -183,7 +183,28 @@
       "printTime": "Printtijd",
       "hoursValue": "{hours} uur",
       "filament": "Filament",
-      "infill": "Infill"
+      "infill": "Infill",
+      "scale": "Schaal",
+      "plates": "Printplaten",
+      "parts": "Onderdelen",
+      "testedOn": "Getest op",
+      "smallBed": "Kleine printers",
+      "smallBedValue": "Past op de A1 mini (180 mm) qua formaat — niet op getest",
+      "difficulty": "Moeilijkheid",
+      "level": {
+        "1": "Heel makkelijk",
+        "2": "Makkelijk",
+        "3": "Gemiddeld",
+        "4": "Gevorderd",
+        "5": "Expert"
+      },
+      "involves": {
+        "print": "3D-printen",
+        "sew": "Naaien",
+        "parts": "Extra onderdelen",
+        "electronics": "Elektronica",
+        "paint": "Verven"
+      }
     },
     "buy": {
       "buyNow": "Nu kopen",

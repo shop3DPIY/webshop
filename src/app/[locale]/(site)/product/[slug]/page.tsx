@@ -26,6 +26,7 @@ import { ProductGallery } from "@/components/product/ProductGallery";
 import { formatEuro } from "@/lib/pricing/calculate";
 import { productText } from "@/types/product";
 import { formatLabel } from "@/lib/fileFormats";
+import { difficultyFor, fitsSmallBed, involvesFor } from "@/lib/productDetails";
 
 export async function generateStaticParams() {
   const products = await getAllProducts();
@@ -92,7 +93,11 @@ export default async function ProductPage({
   const nl = locale === "nl";
   const num = (n: number) => String(n).replace(".", nl ? "," : ".");
 
+  const difficulty = difficultyFor(product);
+  const involves = involvesFor(product);
+
   const specRows = [
+    product.printSettings?.scale && { label: tSpecs("scale"), value: product.printSettings.scale },
     !isPattern && {
       label: tSpecs("printTech"),
       value: tSpecs(ps?.printTech === "resin" ? "printTechResin" : "printTechFdm"),
@@ -104,6 +109,8 @@ export default async function ProductPage({
     },
     ps?.filamentGrams && { label: tSpecs("filament"), value: `${num(ps.filamentGrams)} g` },
     ps?.infillPct && { label: tSpecs("infill"), value: `${num(ps.infillPct)}%` },
+    ps?.plates && { label: tSpecs("plates"), value: num(ps.plates) },
+    ps?.parts && { label: tSpecs("parts"), value: num(ps.parts) },
     product.dimensions && {
       label: tSpecs("dimensions"),
       value: `${product.dimensions.width} × ${product.dimensions.depth} × ${product.dimensions.height} mm`,
@@ -131,9 +138,14 @@ export default async function ProductPage({
       value: tSpecs(ps.colorSetup === "ams" ? "colorsAms" : "colorsNoAms"),
     },
     ps?.compatiblePrinters?.length && {
-      label: tSpecs("compatiblePrinters"),
+      label: tSpecs("testedOn"),
       value: ps.compatiblePrinters.join(", "),
     },
+    !isPattern &&
+      fitsSmallBed(product.dimensions) && {
+        label: tSpecs("smallBed"),
+        value: tSpecs("smallBedValue"),
+      },
     {
       label: tSpecs("license"),
       value: tLicense(product.licenseType),
@@ -210,7 +222,25 @@ export default async function ProductPage({
           <h1 className="font-display text-ink text-3xl font-bold sm:text-4xl">
             {text.title}
           </h1>
-          {ps?.colorSetup && <ColorSetupBadge setup={ps.colorSetup} />}
+          <div className="flex flex-wrap items-center gap-2">
+            {ps?.colorSetup && <ColorSetupBadge setup={ps.colorSetup} />}
+            <span
+              className="border-line inline-flex items-center gap-1.5 rounded-full border bg-white/40 px-2.5 py-0.5 text-xs font-semibold"
+              title={tSpecs("difficulty")}
+            >
+              <span aria-hidden className="flex gap-0.5">
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <span key={n} className={`h-2 w-2 rounded-full ${n <= difficulty ? "bg-brand-purple" : "bg-ink/20"}`} />
+                ))}
+              </span>
+              {tSpecs(`level.${difficulty}`)}
+            </span>
+            {involves.map((item) => (
+              <span key={item} className="border-line rounded-full border bg-white/40 px-2.5 py-0.5 text-xs font-semibold">
+                {tSpecs(`involves.${item}`)}
+              </span>
+            ))}
+          </div>
           {/* The buy box sits below the photos on phones — the price and a
               jump link up here keep it in the first screen. */}
           {!product.isFree && priceLabel && checkout.mode === "redirect" && (

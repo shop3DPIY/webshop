@@ -11,6 +11,8 @@ import { PricingFields } from "./PricingFields";
 import { MediaFields } from "./MediaFields";
 import { ProductTextFields } from "./ProductTextFields";
 import { BundleFields, type BundleCandidate } from "./BundleFields";
+import { InvolvesFields } from "./InvolvesFields";
+import { TEST_PRINTERS } from "@/lib/productDetails";
 
 const TRACK_GROUPS = [
   { track: "dolls" as const, label: "Dolls & Mini" },
@@ -44,6 +46,11 @@ interface ExistingProduct {
     filamentGrams?: number;
     infillPct?: number;
     requiredParts?: { qty: number; name: string; url?: string }[];
+    scale?: string;
+    plates?: number;
+    parts?: number;
+    difficulty?: number;
+    involves?: ("print" | "sew" | "parts" | "electronics" | "paint")[];
     instructions?: string;
     compatiblePrinters?: string[];
   } | null;
@@ -301,18 +308,73 @@ export function ProductForm({
               </label>
             </section>
 
-            <label className={LABEL}>
-              <span>
-                Compatible printers{" "}
-                <Info text="Comma separated, e.g. Bambu Lab A1, Prusa MK4" />
-              </span>
+            <fieldset className="flex flex-col gap-2">
+              <legend className="text-sm font-medium">
+                Tested on{" "}
+                <Info text="The printers you printed it on yourself. A1 mini fit is shown automatically from the size." />
+              </legend>
+              <div className="flex flex-wrap gap-4">
+                {TEST_PRINTERS.map((printer) => (
+                  <label key={printer} className="flex items-center gap-2 text-sm">
+                    <input
+                      type="checkbox"
+                      name="testedPrinter"
+                      value={printer}
+                      defaultChecked={p?.print_settings?.compatiblePrinters?.includes(printer)}
+                      className="h-4 w-4"
+                    />
+                    {printer}
+                  </label>
+                ))}
+              </div>
               <input
                 type="text"
                 name="compatiblePrinters"
-                defaultValue={p?.print_settings?.compatiblePrinters?.join(", ")}
+                defaultValue={p?.print_settings?.compatiblePrinters
+                  ?.filter((x) => !TEST_PRINTERS.includes(x))
+                  .join(", ")}
+                placeholder="Other printers, comma separated"
                 className={FIELD}
               />
+            </fieldset>
+
+            <section className="grid gap-4 sm:grid-cols-3">
+              <label className={LABEL}>
+                <span>
+                  Scale <Info text="For dolls and miniatures, e.g. 1:6 or 1:12" />
+                </span>
+                <input name="scale" list="scales" defaultValue={p?.print_settings?.scale ?? ""} placeholder="e.g. 1:6" className={FIELD} />
+                <datalist id="scales">
+                  {["1:3", "1:4", "1:6", "1:12", "1:24"].map((s) => (
+                    <option key={s} value={s} />
+                  ))}
+                </datalist>
+              </label>
+              <label className={LABEL}>
+                Plates
+                <input type="text" inputMode="numeric" name="plates" defaultValue={p?.print_settings?.plates} className={FIELD} />
+              </label>
+              <label className={LABEL}>
+                Parts
+                <input type="text" inputMode="numeric" name="parts" defaultValue={p?.print_settings?.parts} className={FIELD} />
+              </label>
+            </section>
+
+            <label className={LABEL}>
+              <span>
+                Difficulty <Info text="Auto works it out from parts, supports, extra parts and electronics. Pick a level to override it." />
+              </span>
+              <select name="difficulty" defaultValue={p?.print_settings?.difficulty ?? ""} className={FIELD}>
+                <option value="">Auto</option>
+                <option value="1">1 — Very easy</option>
+                <option value="2">2 — Easy</option>
+                <option value="3">3 — Medium</option>
+                <option value="4">4 — Advanced</option>
+                <option value="5">5 — Expert</option>
+              </select>
             </label>
+
+            <InvolvesFields initial={p?.print_settings?.involves ?? null} />
 
             <section className="grid gap-4 sm:grid-cols-3">
               <label className={LABEL}>

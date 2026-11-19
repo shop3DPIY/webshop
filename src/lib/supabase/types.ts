@@ -47,6 +47,11 @@ export interface Database {
             filamentGrams?: number;
             infillPct?: number;
             requiredParts?: { qty: number; name: string; url?: string }[];
+            scale?: string;
+            plates?: number;
+            parts?: number;
+            difficulty?: number;
+            involves?: ("print" | "sew" | "parts" | "electronics" | "paint")[];
             instructions?: string;
             compatiblePrinters?: string[];
           } | null;

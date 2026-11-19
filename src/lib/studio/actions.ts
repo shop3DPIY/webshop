@@ -28,6 +28,8 @@ import { requireAdmin } from "./guard";
 import { getUpdateRecipients } from "@/lib/updates/server";
 import { removeReplacedMedia, sweepOrphanUploads } from "./storage";
 import { bundleFromForm } from "./bundles";
+import { readThreeMf, type ThreeMfInfo } from "./threemf";
+import { TEST_PRINTERS } from "@/lib/productDetails";
 
 /**
  * All admin writes go through this file — nowhere else touches the
@@ -105,7 +107,7 @@ function printDetailsFromForm(
   existing: Record<string, unknown> | null | undefined,
 ) {
   if (!formData.has("printTech")) {
-    const keep = ["printTech", "nozzleMm", "printTimeHours", "filamentGrams", "infillPct", "requiredParts"];
+    const keep = ["printTech", "nozzleMm", "printTimeHours", "filamentGrams", "infillPct", "requiredParts", "scale", "plates", "parts", "difficulty", "involves"];
     return Object.fromEntries(keep.filter((k) => existing?.[k] !== undefined).map((k) => [k, existing![k]]));
   }
   const num = (key: string) => {
@@ -134,6 +136,23 @@ function printDetailsFromForm(
     filamentGrams: num("filamentGrams"),
     infillPct: num("infillPct"),
     requiredParts,
+    scale: String(formData.get("scale") ?? "").trim().slice(0, 20) || undefined,
+    plates: num("plates"),
+    parts: num("parts"),
+    difficulty: [1, 2, 3, 4, 5].includes(Number(formData.get("difficulty")))
+      ? Number(formData.get("difficulty"))
+      : undefined,
+    // Only stored when Carmen changed the ticks (involvesSet); otherwise
+    // the product page derives them.
+    involves:
+      formData.get("involvesSet") === "1"
+        ? formData
+            .getAll("involves")
+            .map(String)
+            .filter((v): v is "print" | "sew" | "parts" | "electronics" | "paint" =>
+              ["print", "sew", "parts", "electronics", "paint"].includes(v),
+            )
+        : undefined,
   };
 }
 
@@ -347,7 +366,13 @@ export async function persistProduct(
     recommendedMaterials: splitList(formData.get("recommendedMaterials")),
     supportsRequired: formData.get("supportsRequired") === "on",
     instructions: String(formData.get("instructions") ?? "") || undefined,
-    compatiblePrinters: splitList(formData.get("compatiblePrinters")),
+    // "Tested on": the printer checkboxes plus any others typed in.
+    compatiblePrinters: [
+      ...new Set([
+        ...formData.getAll("testedPrinter").map(String),
+        ...splitList(formData.get("compatiblePrinters")),
+      ]),
+    ],
     ...printDetailsFromForm(formData, existing?.print_settings),
     // Only the Studio form has this field; the ingest route keeps what's set.
     colorSetup: formData.has("colorSetup")
@@ -356,6 +381,34 @@ export async function persistProduct(
         : undefined
       : existing?.print_settings?.colorSetup,
   };
+
+  // Ingest drafts (no Studio print fields): take what the 3MF says, but
+  // never overwrite details that are already stored.
+  if (!formData.has("printTech") && /\.(3mf|zip)$/i.test(uploaded.download?.fileName ?? "")) {
+    try {
+      const { data } = await admin.storage.from("product-files").download(uploaded.download!.path);
+      const info = data ? await readThreeMf(await data.arrayBuffer()) : null;
+      if (info) {
+        const ps = printSettings as Record<string, unknown>;
+        const fill = (key: string, value: unknown) => {
+          if (value !== undefined && (ps[key] === undefined || (Array.isArray(ps[key]) && !(ps[key] as unknown[]).length))) ps[key] = value;
+        };
+        fill("nozzleMm", info.nozzleMm);
+        fill("layerHeightMm", info.layerHeightMm);
+        fill("infillPct", info.infillPct);
+        fill("printTimeHours", info.printTimeHours);
+        fill("filamentGrams", info.filamentGrams);
+        fill("plates", info.plates);
+        fill("parts", info.parts);
+        fill("recommendedMaterials", info.materials);
+        if (!existing) ps.supportsRequired = info.supportsRequired ?? ps.supportsRequired;
+        fill("colorSetup", info.multicolor ? "ams" : info.materials ? "no-ams" : undefined);
+        if (info.printerModel && TEST_PRINTERS.includes(info.printerModel)) fill("compatiblePrinters", [info.printerModel]);
+      }
+    } catch (error) {
+      console.error("[ingest] reading the 3MF failed", error);
+    }
+  }
 
   const category = String(formData.get("category") ?? "");
   const pricing = productPricingFromForm(
@@ -599,5 +652,25 @@ export async function generateProductTextAction(input: {
       error:
         "The AI couldn't write the texts right now. Try again in a moment.",
     };
+  }
+}
+
+/**
+ * Studio → "Fill in from 3MF": reads the print details from a 3MF that
+ * is already in Storage (just uploaded, or saved earlier).
+ */
+export async function readThreeMfAction(
+  path: string,
+): Promise<{ ok: true; info: ThreeMfInfo } | { ok: false; error: string }> {
+  await requireAdmin();
+  if (!STORAGE_PATH_RE.test(path)) return { ok: false, error: "Unknown file" };
+  const admin = createAdminClient();
+  if (!admin) return { ok: false, error: "Supabase is not configured" };
+  const { data, error } = await admin.storage.from("product-files").download(path);
+  if (error || !data) return { ok: false, error: "Couldn't open the 3MF" };
+  try {
+    return { ok: true, info: await readThreeMf(await data.arrayBuffer()) };
+  } catch {
+    return { ok: false, error: "This 3MF couldn't be read" };
   }
 }

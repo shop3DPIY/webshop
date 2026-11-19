@@ -183,7 +183,28 @@
       "printTime": "Print time",
       "hoursValue": "{hours} h",
       "filament": "Filament",
-      "infill": "Infill"
+      "infill": "Infill",
+      "scale": "Scale",
+      "plates": "Print plates",
+      "parts": "Parts",
+      "testedOn": "Tested on",
+      "smallBed": "Small printers",
+      "smallBedValue": "Fits the A1 mini (180 mm) by size — not tested on it",
+      "difficulty": "Difficulty",
+      "level": {
+        "1": "Very easy",
+        "2": "Easy",
+        "3": "Medium",
+        "4": "Advanced",
+        "5": "Expert"
+      },
+      "involves": {
+        "print": "3D printing",
+        "sew": "Sewing",
+        "parts": "Extra parts",
+        "electronics": "Electronics",
+        "paint": "Painting"
+      }
     },
     "buy": {
       "buyNow": "Buy now",

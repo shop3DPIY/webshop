@@ -62,6 +62,16 @@ export interface PrintSettings {
   infillPct?: number;
   /** Extra parts to buy: magnets, screws, electronics… */
   requiredParts?: RequiredPart[];
+  /** Doll / model scale, e.g. "1:6" */
+  scale?: string;
+  /** Print plates (Bambu Studio plates) */
+  plates?: number;
+  /** Printed parts in total */
+  parts?: number;
+  /** 1 (very easy) – 5 (expert); unset = derived, see src/lib/productDetails.ts */
+  difficulty?: number;
+  /** What making it involves; unset = derived */
+  involves?: ("print" | "sew" | "parts" | "electronics" | "paint")[];
   /** Free-form printing instructions / tips */
   instructions?: string;
   /** Printers this design is explicitly confirmed compatible with */

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { createClient } from "@/lib/supabase/client";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
+import { readThreeMfAction } from "@/lib/studio/actions";
 
 /**
  * Files, photos and timelapse for the Studio product form. Every file is
@@ -68,7 +69,7 @@ export function MediaFields({
   existingImages,
   existingTimelapse,
 }: {
-  existingDownloads: { format: string; fileName: string }[];
+  existingDownloads: { format: string; fileName: string; storagePath?: string }[];
   existingImages: { src: string; alt: string }[];
   existingTimelapse: string | null;
 }) {
@@ -182,6 +183,64 @@ export function MediaFields({
 
   const anyBusy = Object.values(status).some((s) => s.busy);
 
+  // The 3MF to read details from (or a ZIP with one inside): a new
+  // upload wins over the saved one.
+  const threeMfPath =
+    downloads.find((d) => d.format === "3MF")?.path ??
+    existingDownloads.find((d) => d.format === "3MF")?.storagePath ??
+    downloads.find((d) => d.format === "ZIP")?.path ??
+    existingDownloads.find((d) => d.format === "ZIP")?.storagePath;
+  const [fillNote, setFillNote] = useState<string | null>(null);
+
+  /** Fills the product form's fields with what the 3MF says. */
+  async function fillFrom3mf(button: HTMLButtonElement) {
+    if (!threeMfPath) return;
+    setFillNote("Reading the 3MF…");
+    const res = await readThreeMfAction(threeMfPath);
+    if (!res.ok) return setFillNote(res.error);
+    const form = button.form;
+    if (!form) return;
+    const i = res.info;
+    const filled: string[] = [];
+    const set = (name: string, value: string | number | undefined, label: string) => {
+      const el = form.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement | null;
+      if (!el || value === undefined || value === "") return;
+      el.value = String(value);
+      filled.push(label);
+    };
+    set("nozzleMm", i.nozzleMm, "nozzle");
+    set("layerHeightMm", i.layerHeightMm, "layer height");
+    set("infillPct", i.infillPct, "infill");
+    set("printTimeHours", i.printTimeHours, "print time");
+    set("filamentGrams", i.filamentGrams, "filament");
+    set("plates", i.plates, "plates");
+    set("parts", i.parts, "parts");
+    set("recommendedMaterials", i.materials?.join(", "), "materials");
+    if (i.dimensions) {
+      set("dimWidth", i.dimensions.width, "size");
+      set("dimDepth", i.dimensions.depth, "");
+      set("dimHeight", i.dimensions.height, "");
+    }
+    if (i.multicolor !== undefined || i.materials) set("colorSetup", i.multicolor ? "ams" : "no-ams", "colours/AMS");
+    const supports = form.elements.namedItem("supportsRequired") as HTMLInputElement | null;
+    if (supports && i.supportsRequired !== undefined) {
+      supports.checked = i.supportsRequired;
+      filled.push("supports");
+    }
+    form.querySelectorAll<HTMLInputElement>('input[name="testedPrinter"]').forEach((box) => {
+      if (box.value === i.printerModel) {
+        box.checked = true;
+        filled.push(`tested on ${i.printerModel}`);
+      }
+    });
+    setFillNote(
+      `Filled in: ${filled.filter(Boolean).join(", ") || "nothing found"}. Check the values before saving.` +
+        (i.printTimeHours === undefined
+          ? " Print time and filament weight are only in a 3MF saved after slicing."
+          : ""),
+    );
+  }
+
   return (
     <div className="flex flex-col gap-8">
       <input
@@ -254,6 +313,19 @@ export function MediaFields({
           })}
         </div>
       </section>
+
+      {threeMfPath && (
+        <div className="flex flex-col gap-1">
+          <button
+            type="button"
+            onClick={(e) => void fillFrom3mf(e.currentTarget)}
+            className={`${BUTTON} w-fit`}
+          >
+            ✨ Fill in print details from the 3MF
+          </button>
+          {fillNote && <span className="text-ink/70 text-xs">{fillNote}</span>}
+        </div>
+      )}
 
       <section className="flex flex-col gap-3">
         <h2 className="font-display text-lg font-semibold">Photos</h2>
