@@ -344,12 +344,6 @@ body::before {
   @apply shadow-xl backdrop-blur-2xl;
 }
 
-/* White text on light glass: a very soft purple shadow keeps letters
-   readable where the backdrop behind is pale. Not in dark mode. */
-:root:not(.dark) .glass {
-  text-shadow: 0 1px 2px rgb(50 10 90 / 0.5), 0 0 8px rgb(50 10 90 / 0.25);
-}
-
 /* Glass inside glass (a tile on a panel) is clearer, so the white doesn't
    stack up. Only the fallback fill changes — tiles with their own
    bg-* class (collection washes, hovers) keep it. */
