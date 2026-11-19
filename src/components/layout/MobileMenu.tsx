@@ -5,6 +5,9 @@ import { createPortal } from "react-dom";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { useCurrentTrack } from "@/hooks/useCurrentTrack";
+import { TrackSwitcher } from "./TrackSwitcher";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { ThemeToggle } from "./ThemeToggle";
 
 const NAV_KEYS = ["shop", "business", "about"] as const;
 
@@ -21,7 +24,7 @@ export function MobileMenu() {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-label={open ? "Close menu" : "Open menu"}
-        className="border-line text-ink flex h-9 w-9 items-center justify-center rounded-full border"
+        className="border-line text-ink flex h-11 w-11 items-center justify-center rounded-full border"
       >
         {open ? (
           <svg
@@ -75,6 +78,14 @@ export function MobileMenu() {
               {t("contact")}
             </Link>
           </nav>
+          {/* On phones these moved here from the header row. */}
+          <div className="border-line mt-3 flex flex-wrap items-center justify-between gap-3 border-t px-3 pt-4">
+            <TrackSwitcher inMenu />
+            <div className="border-line bg-mist/60 flex items-center gap-1 rounded-full border p-1">
+              <LanguageSwitcher />
+              <ThemeToggle />
+            </div>
+          </div>
         </div>,
           document.body,
         )}

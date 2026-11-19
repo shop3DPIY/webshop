@@ -9,7 +9,7 @@ export function AccountLink() {
     <Link
       href="/account"
       title={t("account")}
-      className="border-action bg-action text-on-action hover:border-action-hover-border hover:bg-action-hover hover:text-on-action-hover flex h-10 w-10 items-center justify-center rounded-full border backdrop-blur-lg transition-colors"
+      className="border-action bg-action text-on-action hover:border-action-hover-border hover:bg-action-hover hover:text-on-action-hover flex h-11 w-11 items-center md:h-10 md:w-10 justify-center rounded-full border backdrop-blur-lg transition-colors"
     >
       <svg
         width="18"
