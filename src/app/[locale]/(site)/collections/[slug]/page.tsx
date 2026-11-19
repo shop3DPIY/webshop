@@ -55,6 +55,8 @@ export default async function CollectionPage({
   const own = products.filter((p) => p.category === slug);
   // The collection text (Studio → Texts), under the designs.
   const collectionText = await getLegalText(`col-${slug}`, await getLocale());
+  const [introParagraph, ...rest] = collectionText.body.trim().split(/\n\s*\n/);
+  const moreText = rest.join("\n\n");
   const alsoHere = products.filter((p) => p.category !== slug);
 
   return (
@@ -78,6 +80,25 @@ export default async function CollectionPage({
               {t("name")}
             </h1>
             <p className="text-ink max-w-xl text-lg">{t("tagline")}</p>
+            {/* The collection text: the first paragraph shows, the rest
+                folds out. All of it is in the page, so search engines
+                read it too (hidden text would be penalised). */}
+            {introParagraph && (
+              <div className="max-w-3xl">
+                <LegalBody text={introParagraph} />
+                {moreText && (
+                  <details className="group mt-3">
+                    <summary className="text-ink w-fit cursor-pointer list-none text-sm font-semibold underline underline-offset-2">
+                      <span className="group-open:hidden">{tPage("readMore")}</span>
+                      <span className="hidden group-open:inline">{tPage("readLess")}</span>
+                    </summary>
+                    <div className="mt-3">
+                      <LegalBody text={moreText} />
+                    </div>
+                  </details>
+                )}
+              </div>
+            )}
           </div>
         </Container>
       </section>
@@ -120,17 +141,6 @@ export default async function CollectionPage({
               {alsoHere.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
-            </div>
-          </section>
-        )}
-
-        {collectionText.body && (
-          <section className="rounded-3xl p-6 glass sm:p-8">
-            <h2 className="font-display text-ink mb-3 text-xl font-semibold">
-              {tPage("aboutCollection", { name: t("name") })}
-            </h2>
-            <div className="max-w-3xl">
-              <LegalBody text={collectionText.body} />
             </div>
           </section>
         )}

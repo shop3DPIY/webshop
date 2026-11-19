@@ -172,7 +172,8 @@
     "scaleBarbie": "1:6 · Barbie",
     "scaleDollhouse": "1:12 · Poppenhuis",
     "alsoHere": "Ook in {name}",
-    "aboutCollection": "Over {name}"
+    "readMore": "Lees meer",
+    "readLess": "Minder tonen"
   },
   "productPage": {
     "compatibleWith": "Past op",

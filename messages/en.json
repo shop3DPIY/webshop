@@ -172,7 +172,8 @@
     "scaleBarbie": "1:6 · Barbie",
     "scaleDollhouse": "1:12 · Dollhouse",
     "alsoHere": "Also in {name}",
-    "aboutCollection": "About {name}"
+    "readMore": "Read more",
+    "readLess": "Show less"
   },
   "productPage": {
     "compatibleWith": "Compatible with",
