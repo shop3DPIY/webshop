@@ -1,13 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/Button";
 
+// 16px text: smaller makes iOS Safari zoom in when the field is tapped.
 const FIELD =
-  "border-line bg-paper rounded-2xl border px-4 py-2.5 text-sm font-normal";
+  "border-line bg-paper text-ink w-full rounded-2xl border px-4 py-3 text-base font-normal";
 
 /**
  * One sign-in form for everyone — customers and the admin alike — with two
@@ -37,6 +38,10 @@ export function SignInForm({
   // Bumped on "Send a new code": empties the code field (remount) and
   // shows a "new code sent" note, so the old code isn't tried again.
   const [codeRound, setCodeRound] = useState(0);
+  const [showPassword, setShowPassword] = useState(false);
+  // A field the browser flags (empty, not an email) — shown under it.
+  const [fieldError, setFieldError] = useState<{ name: string; message: string } | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const fail = (message: string) => {
     setErrorMessage(message);
@@ -81,7 +86,7 @@ export function SignInForm({
       return fail(
         error.code === "invalid_credentials"
           ? t("wrongPassword")
-          : error.message,
+          : t("errorGeneric"),
       );
     await afterSignIn(signInData.user.id);
   }
@@ -108,7 +113,7 @@ export function SignInForm({
         error.code === "otp_disabled" ||
           /signups not allowed/i.test(error.message)
           ? t("noAccountForEmail")
-          : error.message,
+          : t("errorGeneric"),
       );
     if (codeSentTo) setCodeRound((n) => n + 1);
     setCodeSentTo(email);
@@ -131,6 +136,24 @@ export function SignInForm({
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (status === "loading") return;
+    // The browser's own checks (required, email, code pattern), shown
+    // under the field instead of as a native bubble.
+    const invalid = [...event.currentTarget.elements].find(
+      (el): el is HTMLInputElement => el instanceof HTMLInputElement && !el.checkValidity(),
+    );
+    if (invalid) {
+      setFieldError({
+        name: invalid.name,
+        message:
+          invalid.name === "email" && invalid.value ? t("invalidEmail")
+          : invalid.name === "code" && invalid.value ? t("codeInvalid")
+          : t("fieldRequired"),
+      });
+      invalid.focus();
+      return;
+    }
+    setFieldError(null);
     const data = new FormData(event.currentTarget);
     setStatus("loading");
     if (method === "password") return signInWithPassword(data);
@@ -142,24 +165,49 @@ export function SignInForm({
     setMethod((m) => (m === "password" ? "code" : "password"));
     setCodeSentTo(null);
     setStatus("idle");
+    setFieldError(null);
   };
 
+  /** aria wiring for a field that may show an error under it. */
+  const errorProps = (name: string) =>
+    fieldError?.name === name
+      ? { "aria-invalid": true as const, "aria-describedby": `${name}-error` }
+      : {};
+  const errorText = (name: string) =>
+    fieldError?.name === name && (
+      <span id={`${name}-error`} className="text-sm font-medium text-red-700 dark:text-red-300">
+        {fieldError.message}
+      </span>
+    );
+
+  const loading = status === "loading";
+
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+    <form ref={formRef} onSubmit={handleSubmit} noValidate aria-busy={loading} className="flex flex-col gap-5">
+      {status === "error" && (
+        <div
+          role="alert"
+          className="flex items-start gap-3 rounded-2xl border border-red-300 bg-red-50 p-4 text-sm font-medium text-red-800 dark:border-red-400/50 dark:bg-red-950/60 dark:text-red-100"
+        >
+          <svg aria-hidden width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="mt-0.5 shrink-0">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 7v6M12 17h.01" />
+          </svg>
+          <span>{errorMessage}</span>
+        </div>
+      )}
+
       {codeSentTo ? (
         <>
-          <p className="text-ink/80 text-sm">
+          <p className="text-ink/85 text-sm">
             {t("codeSent", { email: codeSentTo })}
           </p>
           {codeRound > 0 && status !== "error" && (
-            <p
-              role="status"
-              className="rounded-2xl p-3 text-sm font-medium glass"
-            >
+            <p role="status" className="border-line bg-mist rounded-2xl border p-3 text-sm font-medium">
               {t("codeResent")}
             </p>
           )}
-          <label className="flex flex-col gap-1.5 text-sm font-medium">
+          <label className="flex flex-col gap-1.5 text-sm font-semibold">
             {t("codeLabel")}
             <input
               key={codeRound}
@@ -170,68 +218,111 @@ export function SignInForm({
               autoComplete="one-time-code"
               pattern="[0-9 ]{6,10}"
               autoFocus
+              {...errorProps("code")}
               className={`${FIELD} text-center tracking-[0.4em]`}
             />
+            {errorText("code")}
           </label>
         </>
       ) : (
-        <label className="flex flex-col gap-1.5 text-sm font-medium">
+        <label className="flex flex-col gap-1.5 text-sm font-semibold">
           {t("emailLabel")}
           <input
             type="email"
             name="email"
             required
             autoComplete="email"
+            placeholder={t("emailPlaceholder")}
+            {...errorProps("email")}
             className={FIELD}
           />
+          {errorText("email")}
         </label>
       )}
 
       {method === "password" && (
-        <label className="flex flex-col gap-1.5 text-sm font-medium">
-          {t("passwordLabel")}
-          <input
-            type="password"
-            name="password"
-            required
-            autoComplete="current-password"
-            className={FIELD}
-          />
-        </label>
-      )}
-
-      {status === "error" && (
-        <p className="text-sm text-red-600">{errorMessage}</p>
+        <div className="flex flex-col gap-1.5">
+          <div className="flex items-baseline justify-between gap-3">
+            <label htmlFor="password" className="text-sm font-semibold">
+              {t("passwordLabel")}
+            </label>
+            <Link href="/auth/forgot-password" className="text-ink text-sm font-semibold underline underline-offset-2">
+              {t("forgotLink")}
+            </Link>
+          </div>
+          <div className="relative">
+            <input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              required
+              autoComplete="current-password"
+              {...errorProps("password")}
+              className={`${FIELD} pr-14`}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((v) => !v)}
+              aria-label={showPassword ? t("hidePassword") : t("showPassword")}
+              aria-pressed={showPassword}
+              className="text-ink/80 hover:text-ink absolute top-1/2 right-1 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full"
+            >
+              <svg aria-hidden width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
+                <circle cx="12" cy="12" r="3" />
+                {showPassword && <path d="M3 3l18 18" />}
+              </svg>
+            </button>
+          </div>
+          {errorText("password")}
+        </div>
       )}
 
       <Button
         type="submit"
         size="lg"
-        disabled={status === "loading"}
-        className="mt-2"
+        disabled={loading}
+        className="mt-1 w-full"
       >
-        {method === "code" && !codeSentTo ? t("sendCode") : t("signInSubmit")}
+        <span className="flex items-center gap-2">
+          {loading && (
+            <svg aria-hidden width="18" height="18" viewBox="0 0 24 24" className="animate-spin">
+              <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="3" strokeOpacity="0.3" />
+              <path d="M21 12a9 9 0 0 0-9-9" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
+            </svg>
+          )}
+          {loading
+            ? t("busy")
+            : method === "code" && !codeSentTo
+              ? t("sendCode")
+              : t("signInSubmit")}
+        </span>
       </Button>
 
-      <div className="flex flex-col items-center gap-2 text-sm">
-        {codeSentTo && (
-          <button
-            type="button"
-            onClick={() => sendCode(codeSentTo)}
-            disabled={status === "loading"}
-            className="text-ink font-semibold underline underline-offset-2"
-          >
-            {t("resendCode")}
-          </button>
-        )}
+      {codeSentTo && (
         <button
           type="button"
-          onClick={switchMethod}
-          className="text-ink font-semibold underline underline-offset-2"
+          onClick={() => sendCode(codeSentTo)}
+          disabled={loading}
+          className="text-ink mx-auto text-sm font-semibold underline underline-offset-2"
         >
-          {method === "password" ? t("useCode") : t("usePassword")}
+          {t("resendCode")}
         </button>
+      )}
+
+      <div className="text-ink/75 flex items-center gap-3 text-xs font-semibold uppercase" aria-hidden>
+        <span className="bg-line h-px flex-1" />
+        {t("or")}
+        <span className="bg-line h-px flex-1" />
       </div>
+
+      <button
+        type="button"
+        onClick={switchMethod}
+        className="border-line text-ink hover:bg-mist w-full rounded-full border-2 px-7 py-3 text-base font-semibold transition-colors"
+      >
+        {method === "password" ? t("useCode") : t("usePassword")}
+      </button>
     </form>
   );
 }
