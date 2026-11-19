@@ -51,14 +51,31 @@ export default async function CheckoutSuccessPage({
   }
 
   const admin = createAdminClient();
+  const locale = await getLocale();
   const { data: row } = await admin!
     .from("products")
-    .select("title, title_nl, download_files")
+    .select("title, title_nl, download_files, bundle_product_ids")
     .eq("id", result.productId)
     .single();
-  const title =
-    ((await getLocale()) === "nl" && row?.title_nl) || row?.title || "";
-  const files = (row?.download_files ?? []) as { format: string }[];
+  const titleOf = (p: { title: string; title_nl: string | null } | null) =>
+    (locale === "nl" && p?.title_nl) || p?.title || "";
+  const title = titleOf(row);
+
+  // What to download: the design itself, or each design in a bundle
+  // (?p= tells the download route which one).
+  const bundleIds = (row?.bundle_product_ids ?? []) as string[];
+  const { data: parts } =
+    bundleIds.length > 0
+      ? await admin!
+          .from("products")
+          .select("id, title, title_nl, download_files")
+          .in("id", bundleIds)
+      : { data: null };
+  const groups = (
+    parts
+      ? parts.map((p) => ({ id: p.id as string, title: titleOf(p), files: p.download_files }))
+      : [{ id: null, title: "", files: row?.download_files ?? [] }]
+  ) as { id: string | null; title: string; files: { format: string }[] }[];
 
   const supabase = await createClient();
   const user = supabase ? (await supabase.auth.getUser()).data.user : null;
@@ -67,15 +84,24 @@ export default async function CheckoutSuccessPage({
     <Container panel className="flex flex-col items-center gap-8 py-24 text-center">
       <SectionHeading as="h1" title={t("title")} description={t("body", { title })} />
 
-      <div className="flex flex-wrap justify-center gap-3">
-        {files.map((file) => (
-          <Button
-            key={file.format}
-            href={`/api/checkout/download/${checkoutId}/${file.format}`}
-            size="lg"
-          >
-            {tAccount("download")} ({file.format})
-          </Button>
+      <div className="flex flex-col items-center gap-6">
+        {groups.map((group) => (
+          <div key={group.id ?? "single"} className="flex flex-col items-center gap-3">
+            {group.title && (
+              <p className="font-display text-ink font-semibold">{group.title}</p>
+            )}
+            <div className="flex flex-wrap justify-center gap-3">
+              {group.files.map((file) => (
+                <Button
+                  key={file.format}
+                  href={`/api/checkout/download/${checkoutId}/${file.format}${group.id ? `?p=${group.id}` : ""}`}
+                  size="lg"
+                >
+                  {tAccount("download")} ({file.format})
+                </Button>
+              ))}
+            </div>
+          </div>
         ))}
       </div>
 

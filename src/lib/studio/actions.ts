@@ -26,6 +26,8 @@ import { trySyncProductToPolar } from "@/lib/commerce/polar/sync";
 import { parseCompatible } from "@/lib/compatible";
 import { requireAdmin } from "./guard";
 import { getUpdateRecipients } from "@/lib/updates/server";
+import { removeReplacedMedia, sweepOrphanUploads } from "./storage";
+import { bundleFromForm } from "./bundles";
 
 /**
  * All admin writes go through this file — nowhere else touches the
@@ -297,6 +299,9 @@ export async function persistProduct(
     existing ? storedPrices(existing) : undefined,
   );
 
+  // A bundle's prices come from the designs it contains.
+  const bundle = await bundleFromForm(formData, category, id);
+
   const payload = {
     slug,
     title: titleInput,
@@ -333,6 +338,8 @@ export async function persistProduct(
       },
     }),
     ...pricing,
+    ...(bundle && { bundle_product_ids: bundle.bundle_product_ids }),
+    ...bundle?.prices,
     updated_at: new Date().toISOString(),
   };
 
@@ -340,6 +347,10 @@ export async function persistProduct(
   if (id) {
     const { error } = await admin.from("products").update(payload).eq("id", id);
     if (error) throw error;
+    // Photos/files removed or replaced in this save leave Storage too.
+    await removeReplacedMedia(existing, payload).catch((e) =>
+      console.error("[studio] removing replaced media failed", e),
+    );
   } else {
     const { data, error } = await admin
       .from("products")
@@ -366,6 +377,10 @@ export async function saveProduct(formData: FormData) {
     : null;
 
   const { id: savedId, commerceError } = await persistProduct(formData);
+  // Uploads from Studio forms that were never saved.
+  await sweepOrphanUploads().catch((e) =>
+    console.error("[studio] sweeping unsaved uploads failed", e),
+  );
   // Back on the list, open the tab the product is in now and say so —
   // otherwise "Save & set live" just looks like the product vanished.
   const status =

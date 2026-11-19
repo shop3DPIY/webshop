@@ -22,7 +22,7 @@ export default async function ContactPage({
   searchParams: Promise<{ subject?: string }>;
 }) {
   const t = await getTranslations("contact");
-  // Pre-filled by links like FeedbackCta ("something wrong or missing?").
+  // Pre-filled by links that open the form with a subject.
   const { subject } = await searchParams;
   // Signed in: fill in name and email so the visitor doesn't have to.
   const supabase = await createClient();

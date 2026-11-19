@@ -44,6 +44,7 @@ interface ProductRow {
   related_product_ids: string[] | null;
   external_links: Product["externalLinks"] | null;
   price_cents: number | null;
+  bundle_product_ids: string[] | null;
 }
 
 function mapRow(row: ProductRow): Product {
@@ -71,11 +72,12 @@ function mapRow(row: ProductRow): Product {
     relatedProductIds: row.related_product_ids ?? undefined,
     externalLinks: row.external_links ?? undefined,
     priceCents: row.price_cents,
+    bundleProductIds: row.bundle_product_ids ?? [],
   };
 }
 
 const PRODUCT_COLUMNS =
-  "id, slug, title, description, title_nl, description_nl, category, extra_categories, tags, images, timelapse_url, download_files, dimensions, print_settings, version, last_updated, license_type, is_free, commerce_product_ids, publication_status, related_product_ids, external_links, price_cents";
+  "id, slug, title, description, title_nl, description_nl, category, extra_categories, tags, images, timelapse_url, download_files, dimensions, print_settings, version, last_updated, license_type, is_free, commerce_product_ids, publication_status, related_product_ids, external_links, price_cents, bundle_product_ids";
 
 export async function getAllProducts(): Promise<Product[]> {
   if (!isSupabaseConfigured()) return FALLBACK_PRODUCTS;
@@ -154,6 +156,36 @@ export async function getRelatedProducts(product: Product): Promise<Product[]> {
     .from("products")
     .select(PRODUCT_COLUMNS)
     .in("id", product.relatedProductIds)
+    .eq("publication_status", "published");
+  return (data as ProductRow[] | null)?.map(mapRow) ?? [];
+}
+
+/** Published designs by id, in the given order (e.g. a bundle's contents). */
+export async function getProductsByIds(ids: string[]): Promise<Product[]> {
+  if (ids.length === 0) return [];
+  if (!isSupabaseConfigured()) {
+    return FALLBACK_PRODUCTS.filter((p) => ids.includes(p.id));
+  }
+  const supabase = createPublicClient();
+  const { data } = await supabase!
+    .from("products")
+    .select(PRODUCT_COLUMNS)
+    .in("id", ids)
+    .eq("publication_status", "published");
+  const found = (data as ProductRow[] | null)?.map(mapRow) ?? [];
+  return ids
+    .map((id) => found.find((p) => p.id === id))
+    .filter((p): p is Product => Boolean(p));
+}
+
+/** Published bundles that contain a design ("save with the bundle"). */
+export async function getBundlesContaining(productId: string): Promise<Product[]> {
+  if (!isSupabaseConfigured()) return [];
+  const supabase = createPublicClient();
+  const { data } = await supabase!
+    .from("products")
+    .select(PRODUCT_COLUMNS)
+    .contains("bundle_product_ids", [productId])
     .eq("publication_status", "published");
   return (data as ProductRow[] | null)?.map(mapRow) ?? [];
 }

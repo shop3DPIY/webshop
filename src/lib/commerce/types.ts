@@ -4,7 +4,7 @@
  * Nothing outside this folder should know which commerce provider is active.
  * Components and pages only ever call `commerceProvider` (see index.ts) and
  * work with the types defined here. This keeps Polar replaceable later by
- * Payhip, a custom Stripe backend, or anything else — swapping the
+ * a custom Stripe backend or anything else — swapping the
  * provider implementation is the only change required.
  *
  * Product data (src/types/product.ts) never depends on this file; it only

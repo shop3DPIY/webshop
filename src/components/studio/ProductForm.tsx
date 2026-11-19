@@ -10,6 +10,7 @@ import type {
 import { PricingFields } from "./PricingFields";
 import { MediaFields } from "./MediaFields";
 import { ProductTextFields } from "./ProductTextFields";
+import { BundleFields, type BundleCandidate } from "./BundleFields";
 
 const TRACK_GROUPS = [
   { track: "dolls" as const, label: "Dolls & Mini" },
@@ -52,6 +53,7 @@ interface ExistingProduct {
   price_small_cents: number | null;
   price_unlimited_cents: number | null;
   price_overrides: PriceTier[] | null;
+  bundle_product_ids: string[] | null;
 }
 
 const FIELD =
@@ -75,11 +77,14 @@ export function ProductForm({
   product,
   pricingSettings,
   aiAvailable,
+  bundleCandidates,
 }: {
   product?: ExistingProduct;
   pricingSettings: PricingSettings;
   /** ANTHROPIC_API_KEY is set, so "Text with AI" works */
   aiAvailable: boolean;
+  /** Designs that can go in a bundle (see src/lib/studio/bundles.ts) */
+  bundleCandidates: BundleCandidate[];
 }) {
   const p = product;
   // Same default the Collection select shows for a new product (its first option).
@@ -178,6 +183,26 @@ export function ProductForm({
         </div>
         <div className="flex flex-col gap-8">
           <div className="flex flex-col gap-6 rounded-3xl p-6 glass">
+            <BundleFields
+              candidates={bundleCandidates}
+              initialIds={p?.bundle_product_ids ?? []}
+              initialCategory={initialCategory}
+              // Only hand-typed prices go in the fields; the rest follow
+              // the suggestion.
+              initialPrices={Object.fromEntries(
+                (p?.price_overrides ?? []).map((tier) => [
+                  tier,
+                  tier === "personal"
+                    ? p?.price_cents
+                    : tier === "small"
+                      ? p?.price_small_cents
+                      : p?.price_unlimited_cents,
+                ]),
+              )}
+            />
+          </div>
+          {/* Hidden by BundleFields while the product is a bundle. */}
+          <div data-pricing-tile className="flex flex-col gap-6 rounded-3xl p-6 glass">
             <PricingFields
               settings={pricingSettings}
               initialCategory={initialCategory}

@@ -5,6 +5,7 @@ import { COLLECTION_LIST } from "@/lib/config/colors";
 import { CategoryChoice } from "@/components/newsletter/CategoryChoice";
 import { getSubscriberByToken } from "@/lib/newsletter/server";
 import {
+  confirmNewsletter,
   resubscribeToNewsletter,
   unsubscribeFromNewsletter,
   updateNewsletterPreferences,
@@ -41,7 +42,9 @@ export default async function ManageNewsletterPage({
         ? t("none")
         : s === "resubscribed"
           ? t("resubscribed")
-          : null;
+          : s === "confirmed"
+            ? t("confirmed")
+            : null;
 
   return (
     <Container panel className="flex flex-col gap-8 py-16 sm:py-24">
@@ -52,6 +55,22 @@ export default async function ManageNewsletterPage({
               {t("notFoundTitle")}
             </h1>
             <p className="text-ink/70">{t("notFoundBody")}</p>
+          </>
+        ) : subscriber.status === "pending" ? (
+          // Double opt-in: a button, not the link itself, confirms — mail
+          // scanners that open links don't sign anyone up.
+          <>
+            <h1 className="font-display text-ink text-2xl font-bold">
+              {t("confirmTitle")}
+            </h1>
+            <p className="text-ink/70">
+              {t("confirmBody", { email: subscriber.email })}
+            </p>
+            <form action={confirmNewsletter}>
+              <input type="hidden" name="token" value={token} />
+              <input type="hidden" name="locale" value={locale} />
+              <Button type="submit">{t("confirmButton")}</Button>
+            </form>
           </>
         ) : subscriber.status === "unsubscribed" ? (
           <>

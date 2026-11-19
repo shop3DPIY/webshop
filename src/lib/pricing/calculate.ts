@@ -160,6 +160,17 @@ export function tierCents(result: PriceResult, tier: PriceTier): number {
 }
 
 /**
+ * Bundles: the suggested price is the sum of the included designs'
+ * prices minus this discount, rounded to 50 cents. Studio shows it as the
+ * default; Carmen can type her own price instead.
+ */
+export const BUNDLE_DISCOUNT = 0.2;
+
+export function bundlePriceCents(sumCents: number): number {
+  return Math.max(50, roundTo(sumCents * (1 - BUNDLE_DISCOUNT), 50));
+}
+
+/**
  * Rough take-home per sale, shown next to each price in Studio. Prices
  * are consumer prices including VAT; Polar (merchant of record) pays the
  * VAT and keeps its fee: 5% + $0.50 (≈ €0.45), +1.5% for non-US cards.

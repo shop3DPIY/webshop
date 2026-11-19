@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { productForRecentCheckout } from "@/lib/commerce/polar/checkout";
+import { bundleContents } from "@/lib/studio/bundles";
 
 /**
  * Download buttons on the thank-you page, for buyers without (or not
@@ -8,17 +9,22 @@ import { productForRecentCheckout } from "@/lib/commerce/polar/checkout";
  * it's unguessable, only the buyer is sent to a URL containing it, and
  * it only works for a few days (see productForRecentCheckout). Signed-in
  * buyers use /api/account/download instead, which has no time limit.
+ *
+ * For a bundle, ?p=<design id> picks one of the designs inside it.
  */
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ checkoutId: string; format: string }> },
 ) {
   const { checkoutId, format } = await params;
 
-  const productId = await productForRecentCheckout(checkoutId);
-  if (!productId) {
+  const boughtId = await productForRecentCheckout(checkoutId);
+  if (!boughtId) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
+  const part = request.nextUrl.searchParams.get("p");
+  const productId =
+    part && (await bundleContents(boughtId)).includes(part) ? part : boughtId;
 
   const admin = createAdminClient();
   if (!admin) {

@@ -8,6 +8,9 @@ const NAV = [
   { href: "/studio/orders", label: "Orders" },
   { href: "/studio/customers", label: "Customers" },
   { href: "/studio/newsletter", label: "Newsletter" },
+  { href: "/studio/discounts", label: "Discounts" },
+  { href: "/studio/requests", label: "Requests" },
+  { href: "/studio/makes", label: "Makes" },
 ];
 
 export function AdminShell({
@@ -15,12 +18,15 @@ export function AdminShell({
   adminName,
   adminEmail,
   draftCount = 0,
+  waiting = {},
 }: {
   children: React.ReactNode;
   adminName?: string | null;
   adminEmail?: string | null;
   /** Products waiting in "Not live yet" (e.g. new ingest uploads) */
   draftCount?: number;
+  /** Things to review per nav item (new requests, photos to approve) */
+  waiting?: Record<string, number>;
 }) {
   return (
     <div className="flex min-h-full flex-col">
@@ -71,6 +77,11 @@ export function AdminShell({
                     title={`${draftCount} not live yet`}
                   >
                     {draftCount} new
+                  </span>
+                )}
+                {(waiting[item.href] ?? 0) > 0 && (
+                  <span className="bg-action text-on-action rounded-full px-2 py-0.5 text-xs font-bold">
+                    {waiting[item.href]} new
                   </span>
                 )}
               </Link>

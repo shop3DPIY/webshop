@@ -35,7 +35,10 @@ export default async function StudioNewsletterPage() {
         <div>
           <h1 className="font-display text-2xl font-bold">Newsletter</h1>
           <p className="text-ink/60 mt-1 max-w-2xl text-sm">
-            {active.length} subscribed · {subscribers.length - active.length}{" "}
+            {active.length} subscribed ·{" "}
+            {subscribers.filter((r) => r.status === "pending").length} waiting
+            for confirmation ·{" "}
+            {subscribers.filter((r) => r.status === "unsubscribed").length}{" "}
             unsubscribed. Write and send a newsletter with “New newsletter”;
             every mail gets the subscriber&apos;s own link to change categories
             or unsubscribe.

@@ -81,6 +81,7 @@
     "shopHeading": "Shop",
     "shopAll": "Alle designs",
     "shopFree": "Gratis designs",
+    "shopRequests": "Wensenlijstje & verzoeken",
     "shopBusiness": "Zakelijk",
     "legalHeading": "Juridisch",
     "legalPrivacy": "Privacy",
@@ -102,7 +103,8 @@
     "label": "Taal"
   },
   "productCard": {
-    "free": "Gratis"
+    "free": "Gratis",
+    "bundle": "Bundel · {count}"
   },
   "licenseHints": {
     "personal": "Voor eigen gebruik: print het voor jezelf, je huis of als cadeau. De prints verkopen of de bestanden delen mag niet.",
@@ -187,7 +189,8 @@
       "sentTitle": "Kijk in je inbox!",
       "sentBody": "De downloadlink is onderweg. Niets ontvangen? Kijk even in je spammap.",
       "invalid": "Vul een geldig e-mailadres in.",
-      "error": "Er ging iets mis. Probeer het later nog eens."
+      "error": "Er ging iets mis. Probeer het later nog eens.",
+      "jump": "Gratis downloaden"
     },
     "gallery": {
       "open": "Foto {n} van {total} groter bekijken",
@@ -196,6 +199,11 @@
       "previous": "Vorige foto",
       "next": "Volgende foto",
       "counter": "{n} / {total}"
+    },
+    "bundle": {
+      "includes": "In deze bundel {count, plural, one {zit # ontwerp} other {zitten # ontwerpen}}",
+      "alsoIn": "Ook in een bundel",
+      "alsoInBody": "Koop dit ontwerp samen met andere voordeliger."
     }
   },
   "business": {
@@ -364,15 +372,13 @@
   "feedbackCta": {
     "title": "Werkt iets niet goed of mis je iets?",
     "body": "Laat het weten — een fout in een bestand, een model dat je graag zou zien, of een idee. Ik lees elk bericht.",
-    "cta": "Vul het formulier in",
-    "subject": "Modelaanvraag / er klopt iets niet",
-    "subjectProduct": "Over: {title}"
+    "cta": "Vul het formulier in"
   },
   "newsletter": {
     "submit": "Aanmelden",
     "placeholder": "jij@email.com",
     "description": "Nieuwe designs en tips in je inbox. Je ontvangt alle categorieën — in elke mail kun je dat aanpassen of je afmelden.",
-    "ok": "Je bent aangemeld! In elke nieuwsbrief staat een link om je categorieën aan te passen of je af te melden.",
+    "ok": "Bijna klaar! Kijk in je inbox en klik op de link in de mail om je aanmelding te bevestigen.",
     "invalid": "Dat lijkt geen geldig e-mailadres.",
     "error": "Er ging iets mis. Probeer het later opnieuw.",
     "consent": "Met aanmelden ga je akkoord met de <privacy>privacyverklaring</privacy>.",
@@ -395,7 +401,11 @@
     "accountManage": "Voorkeuren aanpassen",
     "accountNotSubscribed": "Ontvang nieuwe designs in je inbox — alle categorieën, later aan te passen.",
     "accountSubscribe": "Aanmelden",
-    "accountJustSubscribed": "Aangemeld! Er is een welkomstmail naar je onderweg."
+    "accountJustSubscribed": "Aangemeld! Er is een welkomstmail naar je onderweg.",
+    "confirmTitle": "Bevestig je aanmelding",
+    "confirmBody": "Klik op de knop om {email} aan te melden voor de 3DPIY-nieuwsbrief.",
+    "confirmButton": "Ja, aanmelden",
+    "confirmed": "Je bent aangemeld! Kies hieronder eventueel je categorieën."
   },
   "checkoutSuccess": {
     "title": "Bedankt voor je aankoop!",
@@ -442,5 +452,64 @@
     "body": "De link is misschien oud, of het ontwerp is offline gehaald. Kijk even in de shop, of laat weten wat je zocht.",
     "shop": "Naar de shop",
     "contact": "Contact"
+  },
+  "requests": {
+    "eyebrow": "Verzoeken",
+    "title": "Mis je een model, of klopt er iets niet?",
+    "description": "Vertel welk ontwerp je graag zou zien, of wat er mis is met een ontwerp dat je hebt. Populaire wensen komen op het wensenlijstje hieronder, waar iedereen kan stemmen.",
+    "kindLabel": "Waar gaat het over?",
+    "kindRequest": "Ik wil graag een ontwerp",
+    "kindProblem": "Er klopt iets niet",
+    "about": "Over:",
+    "titleRequest": "Wat zou je graag willen?",
+    "titleRequestPh": "bijv. een houder voor IKEA SKÅDIS",
+    "titleProblem": "Wat gaat er mis?",
+    "titleProblemPh": "bijv. het deksel past niet",
+    "detailsLabel": "Meer uitleg (mag leeg)",
+    "detailsRequestPh": "Maten, waarvoor het is, een link naar een foto…",
+    "detailsProblemPh": "Welke printer en welk materiaal, wat er gebeurt…",
+    "nameLabel": "Je naam",
+    "emailLabel": "Je e-mailadres",
+    "submit": "Versturen",
+    "sending": "Versturen…",
+    "invalid": "Vul in waar het over gaat, je naam en een geldig e-mailadres.",
+    "error": "Er ging iets mis. Probeer het later nog eens.",
+    "noteRequest": "Je naam en e-mailadres worden nooit getoond. Komt je wens op het wensenlijstje, dan alleen de titel en uitleg.",
+    "noteProblem": "Probleemmeldingen worden nooit openbaar getoond. Ik antwoord per e-mail.",
+    "sentTitle": "Bedankt, ik heb het ontvangen!",
+    "sentBody": "Ik lees elk verzoek. Past het, dan komt het op het wensenlijstje hieronder zodat anderen ook kunnen stemmen.",
+    "sentBodyProblem": "Ik zoek het uit en antwoord per e-mail.",
+    "listTitle": "Wensenlijstje",
+    "listIntro": "Stem op de ontwerpen die je het liefst wilt — die met de meeste stemmen gaan voor.",
+    "listIntroSignedOut": "Stem op de ontwerpen die je het liefst wilt (log in om te stemmen) — die met de meeste stemmen gaan voor.",
+    "listEmpty": "Nog geen wensen op het lijstje — wees de eerste!",
+    "statusPlanned": "Gepland",
+    "statusDone": "Klaar",
+    "vote": "Stemmen",
+    "unvote": "Stem intrekken",
+    "signInToVote": "Log in om te stemmen",
+    "votesLabel": "stemmen"
+  },
+  "makes": {
+    "title": "Gemaakt door kopers",
+    "intro": "Foto's die kopers deelden van hun print.",
+    "empty": "Nog geen foto's. Heb je dit ontwerp geprint? Deel de jouwe!",
+    "share": "Deel je print",
+    "signInFirst": "Heb je dit ontwerp gekocht? Log in om een foto van je print te delen.",
+    "signIn": "Inloggen",
+    "ownersOnly": "Alleen wie dit ontwerp in de bibliotheek heeft, kan er een foto van delen.",
+    "photo": "Foto van je print",
+    "displayName": "Naam die erbij staat (mag leeg)",
+    "caption": "Een paar woorden (mag leeg)",
+    "captionPh": "bijv. geprint in silk PLA",
+    "consent": "Ik heb deze foto zelf gemaakt en vind het goed dat 3DPIY hem op deze pagina toont (met de naam hierboven). Later toch weg? Vraag het gewoon.",
+    "submit": "Foto versturen",
+    "sending": "Versturen…",
+    "sent": "Bedankt! Je foto staat hier zodra ik ernaar gekeken heb.",
+    "errorPhoto": "Die foto kon niet gelezen worden. Probeer een JPG of PNG.",
+    "errorLimit": "Je hebt al 3 foto's van dit ontwerp die nog bekeken moeten worden.",
+    "errorInvalid": "Kies een foto en vink het vakje aan.",
+    "errorGeneric": "Er ging iets mis. Probeer het later nog eens.",
+    "photoAlt": "Een print van dit ontwerp door een koper"
   }
 }

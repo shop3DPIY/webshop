@@ -1,6 +1,7 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { PRICE_TIERS, type PriceTier } from "@/lib/pricing/calculate";
 import type { PolarOrder } from "./api";
+import { bundleContents } from "@/lib/studio/bundles";
 
 /**
  * Stores a paid Polar order as an order + order item and, when the buyer
@@ -70,10 +71,16 @@ export async function fulfillPolarOrder(
   }
 
   if (profile?.id && productId) {
+    // A bundle gives every design inside it too.
+    const ids = [productId, ...(await bundleContents(productId))];
     await admin
       .from("entitlements")
       .upsert(
-        { customer_id: profile.id, product_id: productId, order_id: stored.id },
+        ids.map((id) => ({
+          customer_id: profile.id,
+          product_id: id,
+          order_id: stored.id,
+        })),
         { onConflict: "customer_id,product_id" },
       );
   }

@@ -6,16 +6,20 @@ import { COLLECTIONS } from "@/lib/config/colors";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import {
+  confirmSubscriber,
   getSubscriberByToken,
   isEmail,
   isToken,
   upsertSubscriber,
 } from "./server";
-import { sendWelcomeMail } from "./mails";
+import { sendConfirmMail, sendWelcomeMail } from "./mails";
 
 export type SignupState = { status: "idle" | "ok" | "invalid" | "error" };
 
-/** Footer signup: just an email, every category by default. */
+/**
+ * Footer signup: just an email, every category by default. Double
+ * opt-in: they get a confirmation mail and only join after clicking it.
+ */
 export async function subscribeToNewsletter(
   _prev: SignupState,
   formData: FormData,
@@ -29,12 +33,15 @@ export async function subscribeToNewsletter(
     locale: String(formData.get("locale") ?? "en"),
     source: "footer",
   });
-  if (result.welcome && result.token)
-    await sendWelcomeMail(email, result.token, result.locale ?? "en");
+  if (result.sendConfirm && result.token)
+    await sendConfirmMail(email, result.token, result.locale ?? "en");
   return { status: result.ok ? "ok" : "error" };
 }
 
-/** Account page: subscribe the signed-in customer's own address. */
+/**
+ * Account page: subscribe the signed-in customer's own address — already
+ * verified at signup, so no confirmation mail is needed.
+ */
 export async function subscribeFromAccount(formData: FormData) {
   const supabase = await createClient();
   const user = supabase ? (await supabase.auth.getUser()).data.user : null;
@@ -44,6 +51,7 @@ export async function subscribeFromAccount(formData: FormData) {
     locale: String(formData.get("locale") ?? "en"),
     source: "account",
     userId: user.id,
+    confirmed: true,
   });
   if (result.welcome && result.token) {
     await sendWelcomeMail(user.email, result.token, result.locale ?? "en");
@@ -108,10 +116,24 @@ export async function resubscribeToNewsletter(formData: FormData) {
   const locale = String(formData.get("locale") ?? "en");
   const subscriber = isToken(token) ? await getSubscriberByToken(token) : null;
   if (!subscriber) redirect("/");
+  // The personal link proves the address, so no new confirmation mail.
   await upsertSubscriber({
     email: subscriber.email,
     locale,
     source: subscriber.source,
+    confirmed: true,
   });
   backToManagePage(locale, token, "resubscribed");
+}
+
+/** Double opt-in: the button on the page the confirmation mail links to. */
+export async function confirmNewsletter(formData: FormData) {
+  const token = String(formData.get("token") ?? "");
+  const locale = String(formData.get("locale") ?? "en");
+  const subscriber = isToken(token) ? await getSubscriberByToken(token) : null;
+  if (!subscriber) redirect("/");
+  if (subscriber.status === "pending" && (await confirmSubscriber(subscriber))) {
+    await sendWelcomeMail(subscriber.email, subscriber.token, subscriber.locale);
+  }
+  backToManagePage(locale, token, "confirmed");
 }

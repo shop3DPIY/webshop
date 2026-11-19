@@ -3,6 +3,7 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { isMailConfigured, sendBatch, type Mail } from "@/lib/mail/send";
 import { emailLayout, escapeHtml, textToHtml } from "@/lib/mail/template";
+import { bundlesContaining } from "@/lib/studio/bundles";
 
 /**
  * "A new version of your design is available" mails.
@@ -49,6 +50,8 @@ export async function getUpdateRecipients(
   const admin = createAdminClient();
   if (!admin) return [];
 
+  // Guest buyers of a bundle that contains this design own it too.
+  const orderedIds = [productId, ...(await bundlesContaining(productId))];
   const [{ data: entitled }, { data: ordered }, { data: free }, { data: optouts }] =
     await Promise.all([
       admin
@@ -58,7 +61,7 @@ export async function getUpdateRecipients(
       admin
         .from("order_items")
         .select("orders(buyer_email)")
-        .eq("product_id", productId),
+        .in("product_id", orderedIds),
       admin.from("free_downloads").select("email").eq("product_id", productId),
       admin.from("update_mail_optouts").select("email"),
     ]);

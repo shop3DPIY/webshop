@@ -47,8 +47,6 @@ export interface Database {
           last_updated: string;
           license_type: "personal" | "commercial" | "enterprise" | "free";
           is_free: boolean;
-          /** Old single Payhip id — unused since 0012 */
-          external_commerce_id: string | null;
           /** Commerce provider (Polar) product id per license tier, see 0012 */
           commerce_product_ids: Partial<Record<"personal" | "small" | "unlimited", string>>;
           /** Last version buyers got an update mail about, see 0014 */
@@ -68,6 +66,8 @@ export interface Database {
           price_unlimited_cents: number | null;
           price_unlimited_calc_cents: number | null;
           price_overrides: ("personal" | "small" | "unlimited")[];
+          /** Non-empty = a bundle of these designs, see 0016 */
+          bundle_product_ids: string[];
           created_at: string;
           updated_at: string;
         };

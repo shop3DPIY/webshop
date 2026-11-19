@@ -41,6 +41,9 @@ export async function Footer() {
             <li>
               <Link href="/free-designs">{t("shopFree")}</Link>
             </li>
+            <li>
+              <Link href="/requests">{t("shopRequests")}</Link>
+            </li>
             <BusinessNavLink asListItem label={t("shopBusiness")} />
           </ul>
         </div>

@@ -3,9 +3,11 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { ProductForm } from "@/components/studio/ProductForm";
 import { getPricingSettings } from "@/lib/pricing/settings";
+import { getBundleCandidates } from "@/lib/studio/bundles";
 import { isAiConfigured } from "@/lib/ai/productText";
 import { countOwners } from "@/lib/studio/owners";
 import { archiveProduct, deleteProduct } from "@/lib/studio/lifecycle";
+import { ConfirmSubmitButton } from "@/components/ui/ConfirmDialog";
 
 export default async function EditProductPage({
   params,
@@ -41,6 +43,7 @@ export default async function EditProductPage({
         <ProductForm
           product={product}
           pricingSettings={await getPricingSettings()}
+          bundleCandidates={await getBundleCandidates(product.id)}
           aiAvailable={isAiConfigured()}
         />
       </div>
@@ -62,12 +65,17 @@ export default async function EditProductPage({
             ) : (
               <form action={archiveProduct}>
                 <input type="hidden" name="id" value={product.id} />
-                <button
-                  type="submit"
+                <ConfirmSubmitButton
                   className="border-line hover:bg-mist rounded-full border px-5 py-2.5 text-sm font-semibold transition-colors"
+                  labels={{
+                    title: `Take “${product.title}” offline?`,
+                    body: "It disappears from the shop and from Polar checkouts. Buyers keep it in their library.",
+                    confirm: "Yes, take offline",
+                    cancel: "Cancel",
+                  }}
                 >
                   Take offline
-                </button>
+                </ConfirmSubmitButton>
               </form>
             )}
           </>
@@ -79,19 +87,20 @@ export default async function EditProductPage({
               deleted for good: the product, its files and photos, and its
               Polar listing. This can&apos;t be undone.
             </p>
-            <label className="flex items-center gap-2 text-sm font-medium">
-              <input type="checkbox" name="confirm" className="h-4 w-4" />
-              Yes, delete &ldquo;{product.title}&rdquo; permanently
-            </label>
             {deleteError === "confirm" && (
-              <p className="text-sm text-red-200">Tick the box first.</p>
+              <p className="text-sm text-red-200">Confirm in the dialog first.</p>
             )}
-            <button
-              type="submit"
+            <ConfirmSubmitButton
               className="w-fit rounded-full border border-red-300 bg-red-500/70 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-red-600"
+              labels={{
+                title: `Delete “${product.title}” permanently?`,
+                body: "The product, its files and photos, and its Polar listing are deleted. This can't be undone.",
+                confirm: "Yes, delete permanently",
+                cancel: "Cancel",
+              }}
             >
               Delete permanently
-            </button>
+            </ConfirmSubmitButton>
           </form>
         )}
         {deleteError === "owned" && (

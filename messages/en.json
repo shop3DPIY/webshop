@@ -81,6 +81,7 @@
     "shopHeading": "Shop",
     "shopAll": "All designs",
     "shopFree": "Free designs",
+    "shopRequests": "Wish list & requests",
     "shopBusiness": "Business",
     "legalHeading": "Legal",
     "legalPrivacy": "Privacy",
@@ -102,7 +103,8 @@
     "label": "Language"
   },
   "productCard": {
-    "free": "Free"
+    "free": "Free",
+    "bundle": "Bundle · {count}"
   },
   "licenseHints": {
     "personal": "For your own use: print it for yourself, your home or as a gift. Selling the prints or sharing the files isn't allowed.",
@@ -187,7 +189,8 @@
       "sentTitle": "Check your inbox!",
       "sentBody": "The download link is on its way. Nothing there? Look in your spam folder.",
       "invalid": "Please enter a valid email address.",
-      "error": "Something went wrong. Please try again later."
+      "error": "Something went wrong. Please try again later.",
+      "jump": "Free download"
     },
     "gallery": {
       "open": "View photo {n} of {total} larger",
@@ -196,6 +199,11 @@
       "previous": "Previous photo",
       "next": "Next photo",
       "counter": "{n} / {total}"
+    },
+    "bundle": {
+      "includes": "This bundle includes {count, plural, one {# design} other {# designs}}",
+      "alsoIn": "Also in a bundle",
+      "alsoInBody": "Get this design together with others for less."
     }
   },
   "business": {
@@ -364,15 +372,13 @@
   "feedbackCta": {
     "title": "Something not working, or missing a model?",
     "body": "Let me know — a broken file, a design you'd love to see, or an idea. I read every message.",
-    "cta": "Fill in the form",
-    "subject": "Model request / something's not right",
-    "subjectProduct": "About: {title}"
+    "cta": "Fill in the form"
   },
   "newsletter": {
     "submit": "Sign up",
     "placeholder": "you@email.com",
     "description": "New designs and tips in your inbox. You'll get every category — every mail lets you change that or unsubscribe.",
-    "ok": "You're signed up! Every newsletter has a link to change your categories or unsubscribe.",
+    "ok": "Almost done! Check your inbox and click the link in the mail to confirm your signup.",
     "invalid": "That doesn't look like a valid email address.",
     "error": "Something went wrong. Please try again later.",
     "consent": "By signing up you agree to the <privacy>privacy policy</privacy>.",
@@ -395,7 +401,11 @@
     "accountManage": "Change preferences",
     "accountNotSubscribed": "Get new designs in your inbox — every category, adjustable later.",
     "accountSubscribe": "Sign up",
-    "accountJustSubscribed": "You're signed up! A welcome mail is on its way."
+    "accountJustSubscribed": "You're signed up! A welcome mail is on its way.",
+    "confirmTitle": "Confirm your signup",
+    "confirmBody": "Click the button to sign up {email} for the 3DPIY newsletter.",
+    "confirmButton": "Yes, sign me up",
+    "confirmed": "You're signed up! Choose your categories below if you like."
   },
   "checkoutSuccess": {
     "title": "Thank you for your purchase!",
@@ -442,5 +452,64 @@
     "body": "The link may be old, or the design has been taken offline. Have a look in the shop, or let us know what you were looking for.",
     "shop": "Go to the shop",
     "contact": "Contact"
+  },
+  "requests": {
+    "eyebrow": "Requests",
+    "title": "Missing a model, or something not right?",
+    "description": "Tell me which design you'd love to see, or what's wrong with one you have. Popular wishes go on the wish list below, where everyone can vote.",
+    "kindLabel": "What is it about?",
+    "kindRequest": "I'd like a design",
+    "kindProblem": "Something's not right",
+    "about": "About:",
+    "titleRequest": "What would you like?",
+    "titleRequestPh": "e.g. a holder for IKEA SKÅDIS",
+    "titleProblem": "What's wrong?",
+    "titleProblemPh": "e.g. the lid doesn't fit",
+    "detailsLabel": "More details (optional)",
+    "detailsRequestPh": "Sizes, what it's for, a link to a photo…",
+    "detailsProblemPh": "Which printer and material, what happens…",
+    "nameLabel": "Your name",
+    "emailLabel": "Your email",
+    "submit": "Send",
+    "sending": "Sending…",
+    "invalid": "Fill in what it's about, your name and a valid email address.",
+    "error": "Something went wrong. Please try again later.",
+    "noteRequest": "Your name and email are never shown. If your wish goes on the wish list, only its title and details are.",
+    "noteProblem": "Problem reports are never shown publicly. I'll reply by email.",
+    "sentTitle": "Thanks, it's in!",
+    "sentBody": "I read every request. If it fits, it goes on the wish list below so others can vote too.",
+    "sentBodyProblem": "I'll look into it and reply by email.",
+    "listTitle": "Wish list",
+    "listIntro": "Vote for the designs you want most — the most-voted ones go first.",
+    "listIntroSignedOut": "Vote for the designs you want most (sign in to vote) — the most-voted ones go first.",
+    "listEmpty": "No wishes on the list yet — be the first!",
+    "statusPlanned": "Planned",
+    "statusDone": "Done",
+    "vote": "Vote",
+    "unvote": "Take back your vote",
+    "signInToVote": "Sign in to vote",
+    "votesLabel": "votes"
+  },
+  "makes": {
+    "title": "Made by buyers",
+    "intro": "Photos buyers shared of their print.",
+    "empty": "No photos yet. Printed this design? Share yours!",
+    "share": "Share your print",
+    "signInFirst": "Bought this design? Sign in to share a photo of your print.",
+    "signIn": "Sign in",
+    "ownersOnly": "Only people who have this design in their library can share a photo of it.",
+    "photo": "Photo of your print",
+    "displayName": "Name shown with it (optional)",
+    "caption": "A few words (optional)",
+    "captionPh": "e.g. printed in silk PLA",
+    "consent": "I made this photo myself and agree that 3DPIY shows it on this page (with the name above). Want it removed later? Just ask.",
+    "submit": "Send photo",
+    "sending": "Sending…",
+    "sent": "Thanks! Your photo shows here once I've had a look at it.",
+    "errorPhoto": "That photo couldn't be read. Try a JPG or PNG.",
+    "errorLimit": "You already have 3 photos of this design waiting for review.",
+    "errorInvalid": "Pick a photo and tick the box.",
+    "errorGeneric": "Something went wrong. Please try again later.",
+    "photoAlt": "A buyer's print of this design"
   }
 }

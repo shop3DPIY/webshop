@@ -101,6 +101,16 @@ export async function syncProductToPolar(productId: string): Promise<void> {
   const prices = storedPrices(row).chosen;
   const ids: TierIds = { ...(row.commerce_product_ids ?? {}) };
 
+  // A bundle says at checkout what's in it.
+  const bundleIds = (row.bundle_product_ids ?? []) as string[];
+  const { data: parts } =
+    bundleIds.length > 0
+      ? await admin.from("products").select("title").in("id", bundleIds)
+      : { data: null };
+  const contents = parts?.length
+    ? `Includes: ${parts.map((p) => p.title).join(", ")}`
+    : null;
+
   for (const tier of PRICE_TIERS) {
     const cents = prices[tier];
     const wanted =
@@ -126,7 +136,7 @@ export async function syncProductToPolar(productId: string): Promise<void> {
     const fields = [{ custom_field_id: await getWaiverFieldId(), required: true }];
     const extras = tierExtras(row.category, tier);
     const description =
-      [row.description, extras].filter(Boolean).join("\n\n") || null;
+      [row.description, contents, extras].filter(Boolean).join("\n\n") || null;
     const price = {
       amount_type: "fixed",
       price_amount: cents,

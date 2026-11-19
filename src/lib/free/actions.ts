@@ -45,7 +45,12 @@ export async function requestFreeDownload(
         email,
         locale,
         source: "free_download",
-        ...(user?.email?.toLowerCase() === email && { userId: user.id }),
+        // Signed in with this very address: already verified, no
+        // confirmation step. Anyone else confirms via the download mail.
+        ...(user?.email?.toLowerCase() === email && {
+          userId: user.id,
+          confirmed: true,
+        }),
       })
     : null;
   const token = await grantFreeDownload(email, product.id);
@@ -84,6 +89,7 @@ export async function requestFreeDownload(
     formats,
     token,
     newsletterToken: subscriber?.token ?? null,
+    newsletterPending: subscriber?.pending ?? false,
   });
   return { status: sent.ok ? "sent" : "error" };
 }

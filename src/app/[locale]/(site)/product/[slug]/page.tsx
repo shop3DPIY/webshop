@@ -6,12 +6,15 @@ import { Button } from "@/components/ui/Button";
 import { SpecList } from "@/components/product/SpecList";
 import { ProductCard } from "@/components/product/ProductCard";
 import { FeedbackCta } from "@/components/product/FeedbackCta";
+import { MakesSection } from "@/components/makes/MakesSection";
 import { Link } from "@/i18n/navigation";
 import { TrackMarker } from "@/components/system/TrackMarker";
 import { COLLECTION_CLASSNAMES, getCollection } from "@/lib/config/colors";
 import {
   getAllProducts,
+  getBundlesContaining,
   getProductBySlug,
+  getProductsByIds,
   getRelatedProducts,
 } from "@/lib/products";
 import { commerceProvider, isListed } from "@/lib/commerce";
@@ -63,7 +66,20 @@ export default async function ProductPage({
   const classes = COLLECTION_CLASSNAMES[product.category];
   const cover = product.images[0];
   const related = await getRelatedProducts(product);
+  // A bundle shows what's in it; a single design, the bundles it's in.
+  const bundleItems = await getProductsByIds(product.bundleProductIds ?? []);
+  const inBundles =
+    bundleItems.length > 0 ? [] : await getBundlesContaining(product.id);
+  const tBundle = await getTranslations("productPage.bundle");
   const checkout = commerceProvider.getCheckoutLink(product);
+  // Business designs come in several licenses (chosen at checkout) —
+  // show the lowest.
+  const priceLabel =
+    product.priceCents == null
+      ? null
+      : collection.track === "business"
+        ? tBuy("from", { price: formatEuro(product.priceCents) })
+        : formatEuro(product.priceCents);
 
   const specRows = [
     product.dimensions && {
@@ -163,8 +179,35 @@ export default async function ProductPage({
         ← {t("backToCollection")}
       </Link>
 
-      <div className="grid gap-10 lg:grid-cols-2">
-        <div className="flex flex-col gap-4">
+      {/* Phones: title and price first, then the photos, then the rest.
+          Wide screens: photos on the left, title + rest on the right. */}
+      <div className="grid gap-6 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-x-10">
+        <div className="flex flex-col gap-2 lg:col-start-2 lg:row-start-1">
+          <h1 className="font-display text-ink text-3xl font-bold sm:text-4xl">
+            {text.title}
+          </h1>
+          {/* The buy box sits below the photos on phones — the price and a
+              jump link up here keep it in the first screen. */}
+          {!product.isFree && priceLabel && checkout.mode === "redirect" && (
+            <a
+              href="#buy"
+              className="text-ink flex items-baseline gap-2 lg:hidden"
+            >
+              <span className="font-display text-xl font-bold">{priceLabel}</span>
+              <span className="text-ink/60 text-xs">{tBuy("inclVat")}</span>
+              <span className="text-ink/70 ml-auto text-sm font-semibold underline underline-offset-2">
+                {tBuy("buyNow")} ↓
+              </span>
+            </a>
+          )}
+          {product.isFree && (
+            <a href="#buy" className="text-ink text-sm font-semibold underline underline-offset-2 lg:hidden">
+              {t("free.jump")} ↓
+            </a>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-4 lg:col-start-1 lg:row-span-2 lg:row-start-1">
           {(() => {
             const badge = (
               <Badge className="bg-white/90 text-night border-white pointer-events-none absolute top-4 left-4 gap-1.5 border">
@@ -209,15 +252,8 @@ export default async function ProductPage({
           )}
         </div>
 
-        <div className="flex flex-col gap-6">
-          <div>
-            <h1 className="font-display text-ink text-3xl font-bold sm:text-4xl">
-              {text.title}
-            </h1>
-            <p className="text-ink/70 mt-3 text-base sm:text-lg">
-              {text.description}
-            </p>
-          </div>
+        <div className="flex flex-col gap-6 lg:col-start-2 lg:row-start-2">
+          <p className="text-ink/70 text-base sm:text-lg">{text.description}</p>
 
           {(product.externalLinks?.compatible?.length ?? 0) > 0 && (
             <div className="flex flex-wrap items-center gap-2 text-sm">
@@ -251,21 +287,15 @@ export default async function ProductPage({
             </p>
           )}
 
-          <div className="rounded-3xl p-6 glass">
+          <div id="buy" className="scroll-mt-24 rounded-3xl p-6 glass">
             {product.isFree ? (
               <FreeDownloadForm productId={product.id} />
             ) : checkout.mode === "redirect" && checkout.url ? (
               <div className="flex flex-col gap-4">
-                {product.priceCents != null && (
+                {priceLabel && (
                   <p className="flex items-baseline gap-2">
                     <span className="font-display text-3xl font-bold">
-                      {/* Business designs come in several licenses
-                          (chosen at checkout) — show the lowest. */}
-                      {collection.track === "business"
-                        ? tBuy("from", {
-                            price: formatEuro(product.priceCents),
-                          })
-                        : formatEuro(product.priceCents)}
+                      {priceLabel}
                     </span>
                     <span className="text-ink/60 text-sm">
                       {tBuy("inclVat")}
@@ -323,6 +353,38 @@ export default async function ProductPage({
         </div>
       </div>
 
+      {/* Buyers' photos — not for bundles (their designs have their own). */}
+      {bundleItems.length === 0 && <MakesSection productId={product.id} />}
+
+      {bundleItems.length > 0 && (
+        <div className="flex flex-col gap-6">
+          <h2 className="font-display text-ink text-2xl font-semibold">
+            {tBundle("includes", { count: bundleItems.length })}
+          </h2>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {bundleItems.map((item) => (
+              <ProductCard key={item.id} product={item} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {inBundles.length > 0 && (
+        <div className="flex flex-col gap-6">
+          <div>
+            <h2 className="font-display text-ink text-2xl font-semibold">
+              {tBundle("alsoIn")}
+            </h2>
+            <p className="text-ink/70 mt-1 text-sm">{tBundle("alsoInBody")}</p>
+          </div>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {inBundles.map((bundle) => (
+              <ProductCard key={bundle.id} product={bundle} />
+            ))}
+          </div>
+        </div>
+      )}
+
       {related.length > 0 && (
         <div className="flex flex-col gap-6">
           <h2 className="font-display text-ink text-2xl font-semibold">
@@ -336,7 +398,7 @@ export default async function ProductPage({
         </div>
       )}
 
-      <FeedbackCta productTitle={text.title} />
+      <FeedbackCta productSlug={product.slug} />
     </Container>
   );
 }

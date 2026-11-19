@@ -108,6 +108,8 @@ export interface Product {
   };
   /** Personal-license price in cents (null for free/unpriced designs) */
   priceCents?: number | null;
+  /** Non-empty: this product is a bundle of these designs */
+  bundleProductIds?: string[];
 }
 
 export interface CompatibleLink {

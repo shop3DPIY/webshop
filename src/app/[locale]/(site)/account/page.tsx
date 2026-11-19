@@ -89,9 +89,15 @@ export default async function AccountPage({
         // policy only shows published products.
         await (createAdminClient() ?? supabase!)
           .from("products")
-          .select("id, slug, title, category, download_files")
+          .select("id, slug, title, category, download_files, bundle_product_ids")
           .in("id", productIds)
       : { data: [] };
+
+  // A bundle has no files of its own — its designs are listed separately
+  // (they got their own entitlements).
+  const library = (libraryProducts ?? []).filter(
+    (p) => !((p.bundle_product_ids as string[] | null)?.length),
+  );
 
   // What each order was for (titles are stored on the order line, so this
   // still reads right if a product is renamed or deleted later).
@@ -140,9 +146,9 @@ export default async function AccountPage({
         <h2 className="font-display text-ink text-xl font-semibold">
           {t("libraryTab")}
         </h2>
-        {libraryProducts && libraryProducts.length > 0 ? (
+        {library.length > 0 ? (
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {libraryProducts.map((product) => {
+            {library.map((product) => {
               const classes =
                 COLLECTION_CLASSNAMES[product.category as CollectionSlug];
               return (

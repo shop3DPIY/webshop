@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { createClient } from "@/lib/supabase/client";
+import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 
 /**
  * Files, photos and timelapse for the Studio product form. Every file is
@@ -14,6 +15,10 @@ import { createClient } from "@/lib/supabase/client";
  *
  * Saved by persistProduct (src/lib/studio/actions.ts) from the hidden
  * fields studioDownloads / studioImages / studioTimelapse.
+ *
+ * Removing asks first. A file uploaded in this visit and removed again
+ * is deleted from Storage right away; a saved one when the form is saved
+ * (removeReplacedMedia). Unsaved forms are swept later (sweepOrphanUploads).
  */
 
 const MAX_BYTES = 50 * 1024 * 1024; // Supabase free-plan limit per file
@@ -51,6 +56,7 @@ async function upload(bucket: "product-files" | "product-images", file: File) {
     .upload(path, file, { contentType: file.type || undefined });
   if (error) throw new Error(error.message);
   return {
+    bucket,
     path,
     publicUrl: supabase.storage.from(bucket).getPublicUrl(path).data.publicUrl,
   };
@@ -72,6 +78,34 @@ export function MediaFields({
   );
   const [timelapse, setTimelapse] = useState<string | null>(existingTimelapse);
   const [status, setStatus] = useState<Record<string, Status>>({});
+  // Uploaded during this visit, not saved yet: public URL/format → path.
+  const [fresh, setFresh] = useState<Record<string, { bucket: "product-files" | "product-images"; path: string }>>({});
+  const [removing, setRemoving] = useState<
+    { kind: "photo" | "timelapse"; src: string } | null
+  >(null);
+
+  /** Deletes an unsaved upload from Storage (best effort). */
+  function discard(key: string) {
+    const f = fresh[key];
+    if (!f) return;
+    void createClient()?.storage.from(f.bucket).remove([f.path]);
+    setFresh((all) => {
+      const rest = { ...all };
+      delete rest[key];
+      return rest;
+    });
+  }
+
+  function confirmRemove() {
+    if (!removing) return;
+    if (removing.kind === "photo") {
+      setImages((list) => list.filter((x) => x !== removing.src));
+    } else {
+      setTimelapse(null);
+    }
+    discard(removing.src);
+    setRemoving(null);
+  }
 
   const setBusy = (key: string, busy: boolean, error: string | null = null) =>
     setStatus((s) => ({ ...s, [key]: { busy, error } }));
@@ -81,6 +115,9 @@ export function MediaFields({
     setBusy(format, true);
     try {
       const { path } = await upload("product-files", file);
+      // A second pick for the same format replaces the first upload.
+      discard(`download:${format}`);
+      setFresh((f) => ({ ...f, [`download:${format}`]: { bucket: "product-files", path } }));
       setDownloads((d) => [
         ...d.filter((x) => x.format !== format),
         { format, fileName: file.name, path },
@@ -100,7 +137,9 @@ export function MediaFields({
         if (/\.(heic|heif)$/i.test(file.name)) {
           throw new Error(`${file.name} is HEIC — export it as JPG first.`);
         }
-        added.push((await upload("product-images", file)).publicUrl);
+        const up = await upload("product-images", file);
+        added.push(up.publicUrl);
+        setFresh((f) => ({ ...f, [up.publicUrl]: { bucket: up.bucket, path: up.path } }));
       }
       setImages((current) => [...current, ...added]);
       setBusy("photos", false);
@@ -113,7 +152,10 @@ export function MediaFields({
     if (!file) return;
     setBusy("timelapse", true);
     try {
-      setTimelapse((await upload("product-images", file)).publicUrl);
+      const up = await upload("product-images", file);
+      if (timelapse) discard(timelapse);
+      setFresh((f) => ({ ...f, [up.publicUrl]: { bucket: up.bucket, path: up.path } }));
+      setTimelapse(up.publicUrl);
       setBusy("timelapse", false);
     } catch (e) {
       setBusy("timelapse", false, (e as Error).message);
@@ -148,6 +190,21 @@ export function MediaFields({
       />
       <input type="hidden" name="studioImages" value={JSON.stringify(images)} />
       <input type="hidden" name="studioTimelapse" value={timelapse ?? ""} />
+      {removing && (
+        <ConfirmDialog
+          labels={{
+            title:
+              removing.kind === "photo" ? "Remove this photo?" : "Remove the timelapse?",
+            body: fresh[removing.src]
+              ? "It's deleted right away."
+              : "It's deleted for good when you save the product.",
+            confirm: "Yes, remove",
+            cancel: "Cancel",
+          }}
+          onCancel={() => setRemoving(null)}
+          onConfirm={confirmRemove}
+        />
+      )}
       {anyBusy && (
         // Blocks submitting the form until every upload has finished.
         <input
@@ -252,9 +309,7 @@ export function MediaFields({
                     </button>
                     <button
                       type="button"
-                      onClick={() =>
-                        setImages((list) => list.filter((x) => x !== src))
-                      }
+                      onClick={() => setRemoving({ kind: "photo", src })}
                       className={PHOTO_BUTTON}
                       aria-label="Remove photo"
                     >
@@ -296,7 +351,7 @@ export function MediaFields({
             />
             <button
               type="button"
-              onClick={() => setTimelapse(null)}
+              onClick={() => setRemoving({ kind: "timelapse", src: timelapse })}
               className={BUTTON}
             >
               × Remove timelapse

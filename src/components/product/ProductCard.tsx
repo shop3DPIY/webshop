@@ -34,10 +34,16 @@ export function ProductCard({ product }: { product: Product }) {
           <span className={`h-2 w-2 rounded-full ${classes.bg}`} aria-hidden />
           {tCollections(`${product.category}.name`)}
         </Badge>
-        {product.isFree && (
+        {product.isFree ? (
           <Badge className="absolute top-3 right-3 bg-white/90 text-night border border-white">
             {tProductCard("free")}
           </Badge>
+        ) : (
+          (product.bundleProductIds?.length ?? 0) > 0 && (
+            <Badge className="absolute top-3 right-3 bg-white/90 text-night border border-white">
+              {tProductCard("bundle", { count: product.bundleProductIds!.length })}
+            </Badge>
+          )
         )}
       </div>
       <div className="flex flex-1 flex-col p-4">

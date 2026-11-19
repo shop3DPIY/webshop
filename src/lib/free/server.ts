@@ -66,6 +66,9 @@ const COPY = {
     download: "Download",
     news: "You're now on the 3DPIY newsletter. Change your preferences or unsubscribe any time:",
     manage: "Newsletter preferences",
+    confirm:
+      "One more step for the newsletter: confirm your signup here (without it you won't get any newsletter):",
+    confirmLink: "Confirm newsletter signup",
   },
   nl: {
     subject: (title: string) => `Je gratis download: ${title}`,
@@ -75,6 +78,9 @@ const COPY = {
     download: "Downloaden",
     news: "Je staat nu op de 3DPIY-nieuwsbrief. Voorkeuren aanpassen of afmelden kan altijd:",
     manage: "Nieuwsbriefvoorkeuren",
+    confirm:
+      "Nog één stap voor de nieuwsbrief: bevestig hier je aanmelding (zonder bevestiging krijg je geen nieuwsbrief):",
+    confirmLink: "Aanmelding bevestigen",
   },
 };
 
@@ -86,6 +92,8 @@ export async function sendFreeDownloadMail(params: {
   token: string;
   /** Set when they joined the newsletter: the mail then links to its preferences. */
   newsletterToken: string | null;
+  /** Their signup still needs confirming (double opt-in): ask for it here. */
+  newsletterPending?: boolean;
 }) {
   if (!isMailConfigured()) return { ok: false as const };
   const c = params.locale === "nl" ? COPY.nl : COPY.en;
@@ -104,7 +112,10 @@ export async function sendFreeDownloadMail(params: {
       c.heading,
       c.body(params.title),
       ...links.map((l) => `${l.label}: ${l.url}`),
-      manage && `${c.news}\n${manage}`,
+      manage &&
+        (params.newsletterPending
+          ? `${c.confirm}\n${manage}`
+          : `${c.news}\n${manage}`),
     ]
       .filter(Boolean)
       .join("\n\n"),
@@ -118,7 +129,9 @@ export async function sendFreeDownloadMail(params: {
         )
         .join("")}</p>`,
       footerHtml: manage
-        ? `${escapeHtml(c.news)} <a href="${manage}" style="color:#8c52ff">${escapeHtml(c.manage)}</a><br><br>`
+        ? params.newsletterPending
+          ? `${escapeHtml(c.confirm)} <a href="${manage}" style="color:#8c52ff">${escapeHtml(c.confirmLink)}</a><br><br>`
+          : `${escapeHtml(c.news)} <a href="${manage}" style="color:#8c52ff">${escapeHtml(c.manage)}</a><br><br>`
         : "",
     }),
   });

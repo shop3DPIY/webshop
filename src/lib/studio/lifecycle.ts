@@ -6,6 +6,8 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { trySyncProductToPolar } from "@/lib/commerce/polar/sync";
 import { requireAdmin } from "./guard";
 import { countOwners } from "./owners";
+import { publicPath } from "./storage";
+import { bundlesContaining } from "./bundles";
 
 /**
  * A design's end of life, from Studio → Edit product.
@@ -16,13 +18,6 @@ import { countOwners } from "./owners";
  *   disappears from the shop and from Polar checkouts, but buyers keep it
  *   in their library and can still download it.
  */
-
-/** Pulls "<bucket>/<path>" out of a Supabase public storage URL. */
-function publicPath(url: string, bucket: string): string | null {
-  const marker = `/storage/v1/object/public/${bucket}/`;
-  const i = url.indexOf(marker);
-  return i === -1 ? null : decodeURIComponent(url.slice(i + marker.length));
-}
 
 export async function archiveProduct(formData: FormData) {
   await requireAdmin();
@@ -89,6 +84,23 @@ export async function deleteProduct(formData: FormData) {
       ...new Set([...(bucket === "product-files" ? files : media), ...inFolder]),
     ];
     if (paths.length > 0) await admin.storage.from(bucket).remove(paths);
+  }
+
+  // Take it out of any bundle it was in.
+  for (const bundleId of await bundlesContaining(id)) {
+    const { data: bundle } = await admin
+      .from("products")
+      .select("bundle_product_ids")
+      .eq("id", bundleId)
+      .single();
+    await admin
+      .from("products")
+      .update({
+        bundle_product_ids: ((bundle?.bundle_product_ids ?? []) as string[]).filter(
+          (x) => x !== id,
+        ),
+      })
+      .eq("id", bundleId);
   }
 
   await admin.from("products").delete().eq("id", id);

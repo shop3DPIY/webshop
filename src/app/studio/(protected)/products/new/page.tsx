@@ -1,5 +1,6 @@
 import { ProductForm } from "@/components/studio/ProductForm";
 import { getPricingSettings } from "@/lib/pricing/settings";
+import { getBundleCandidates } from "@/lib/studio/bundles";
 import { isAiConfigured } from "@/lib/ai/productText";
 
 export default async function NewProductPage() {
@@ -9,6 +10,7 @@ export default async function NewProductPage() {
       <div>
         <ProductForm
           pricingSettings={await getPricingSettings()}
+          bundleCandidates={await getBundleCandidates()}
           aiAvailable={isAiConfigured()}
         />
       </div>
