@@ -7,6 +7,8 @@ import { SpecList } from "@/components/product/SpecList";
 import { ProductCard } from "@/components/product/ProductCard";
 import { FeedbackCta } from "@/components/product/FeedbackCta";
 import { MakesSection } from "@/components/makes/MakesSection";
+import { MakerWorldLink } from "@/components/product/MakerWorldLink";
+import { ColorSetupBadge } from "@/components/product/ColorSetupBadge";
 import { Link } from "@/i18n/navigation";
 import { TrackMarker } from "@/components/system/TrackMarker";
 import { COLLECTION_CLASSNAMES, getCollection } from "@/lib/config/colors";
@@ -108,6 +110,10 @@ export default async function ProductPage({
         ? tSpecs("supportYes")
         : tSpecs("supportNo"),
     },
+    product.printSettings?.colorSetup && {
+      label: tSpecs("colors"),
+      value: tSpecs(product.printSettings.colorSetup === "ams" ? "colorsAms" : "colorsNoAms"),
+    },
     product.printSettings?.compatiblePrinters?.length && {
       label: tSpecs("compatiblePrinters"),
       value: product.printSettings.compatiblePrinters.join(", "),
@@ -188,6 +194,9 @@ export default async function ProductPage({
           <h1 className="font-display text-ink text-3xl font-bold sm:text-4xl">
             {text.title}
           </h1>
+          {product.printSettings?.colorSetup && (
+            <ColorSetupBadge setup={product.printSettings.colorSetup} />
+          )}
           {/* The buy box sits below the photos on phones — the price and a
               jump link up here keep it in the first screen. */}
           {!product.isFree && priceLabel && checkout.mode === "redirect" && (
@@ -291,7 +300,12 @@ export default async function ProductPage({
 
           <div id="buy" className="scroll-mt-24 rounded-3xl p-6 glass">
             {product.isFree ? (
-              <FreeDownloadForm productId={product.id} />
+              <div className="flex flex-col gap-5">
+                <FreeDownloadForm productId={product.id} />
+                {product.externalLinks?.makerWorld && (
+                  <MakerWorldLink url={product.externalLinks.makerWorld} />
+                )}
+              </div>
             ) : checkout.mode === "redirect" && checkout.url ? (
               <div className="flex flex-col gap-4">
                 {priceLabel && (

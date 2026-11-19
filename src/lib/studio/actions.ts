@@ -95,6 +95,23 @@ function extraCategoriesFor(
     });
 }
 
+/**
+ * MakerWorld model from Studio: a model number ("123456") or a link
+ * (https://makerworld.com/en/models/123456-…). Stored as a clean link;
+ * anything else is dropped.
+ */
+function makerWorldUrl(input: string): string | undefined {
+  const value = input.trim();
+  if (/^\d{3,}$/.test(value)) return `https://makerworld.com/en/models/${value}`;
+  try {
+    const url = new URL(value);
+    if (url.protocol === "https:" && /(^|\.)makerworld\.com$/.test(url.hostname)) {
+      return url.toString();
+    }
+  } catch {}
+  return undefined;
+}
+
 /** A storage path we issued ourselves: "<folder>/<stamp>-<name>", nothing else. */
 const STORAGE_PATH_RE = /^[a-zA-Z0-9._-]+\/[a-zA-Z0-9._-]+$/;
 
@@ -289,6 +306,12 @@ export async function persistProduct(
     supportsRequired: formData.get("supportsRequired") === "on",
     instructions: String(formData.get("instructions") ?? "") || undefined,
     compatiblePrinters: splitList(formData.get("compatiblePrinters")),
+    // Only the Studio form has this field; the ingest route keeps what's set.
+    colorSetup: formData.has("colorSetup")
+      ? ["ams", "no-ams"].includes(String(formData.get("colorSetup")))
+        ? (String(formData.get("colorSetup")) as "ams" | "no-ams")
+        : undefined
+      : existing?.print_settings?.colorSetup,
   };
 
   const category = String(formData.get("category") ?? "");
@@ -330,11 +353,15 @@ export async function persistProduct(
         ? "published"
         : String(formData.get("publicationStatus") ?? "draft"),
     source_filename: String(formData.get("sourceFilename") ?? "") || null,
-    // "Compatible with" lines; other external links (Printables…) are kept.
+    // "Compatible with" lines and the MakerWorld model; other external
+    // links (Printables…) are kept.
     ...(formData.has("compatible") && {
       external_links: {
         ...(existing?.external_links ?? {}),
         compatible: parseCompatible(String(formData.get("compatible") ?? "")),
+        ...(formData.has("makerWorld") && {
+          makerWorld: makerWorldUrl(String(formData.get("makerWorld") ?? "")),
+        }),
       },
     }),
     ...pricing,

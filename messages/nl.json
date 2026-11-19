@@ -105,7 +105,9 @@
   },
   "productCard": {
     "free": "Gratis",
-    "bundle": "Bundel · {count}"
+    "bundle": "Bundel · {count}",
+    "ams": "Meerkleurig · AMS",
+    "noAms": "Geen AMS nodig"
   },
   "licenseHints": {
     "personal": "Voor eigen gebruik: print het voor jezelf, je huis of als cadeau. De prints verkopen of de bestanden delen mag niet.",
@@ -169,7 +171,10 @@
       "license": "Licentie",
       "version": "Versie",
       "lastUpdated": "Laatst bijgewerkt",
-      "relatedTitle": "Dit vind je misschien ook leuk"
+      "relatedTitle": "Dit vind je misschien ook leuk",
+      "colors": "Kleuren",
+      "colorsAms": "Meerkleurig met AMS — kan ook in één kleur geprint worden zonder AMS",
+      "colorsNoAms": "Geen AMS nodig"
     },
     "buy": {
       "buyNow": "Nu kopen",
@@ -206,6 +211,11 @@
       "includes": "In deze bundel {count, plural, one {zit # ontwerp} other {zitten # ontwerpen}}",
       "alsoIn": "Ook in een bundel",
       "alsoInBody": "Koop dit ontwerp samen met andere voordeliger."
+    },
+    "makerWorld": {
+      "title": "Of download hem in Bambu Studio",
+      "body": "Open dit ontwerp op MakerWorld (model {id}) en kies “Open in Bambu Studio” — daar staat hij klaar om te slicen.",
+      "button": "Openen op MakerWorld"
     }
   },
   "business": {

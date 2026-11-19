@@ -105,7 +105,9 @@
   },
   "productCard": {
     "free": "Free",
-    "bundle": "Bundle · {count}"
+    "bundle": "Bundle · {count}",
+    "ams": "Multicolour · AMS",
+    "noAms": "No AMS needed"
   },
   "licenseHints": {
     "personal": "For your own use: print it for yourself, your home or as a gift. Selling the prints or sharing the files isn't allowed.",
@@ -169,7 +171,10 @@
       "license": "License",
       "version": "Version",
       "lastUpdated": "Last updated",
-      "relatedTitle": "You might also like"
+      "relatedTitle": "You might also like",
+      "colors": "Colours",
+      "colorsAms": "Multicolour with AMS — can also be printed in one colour without AMS",
+      "colorsNoAms": "No AMS needed"
     },
     "buy": {
       "buyNow": "Buy now",
@@ -206,6 +211,11 @@
       "includes": "This bundle includes {count, plural, one {# design} other {# designs}}",
       "alsoIn": "Also in a bundle",
       "alsoInBody": "Get this design together with others for less."
+    },
+    "makerWorld": {
+      "title": "Or download it in Bambu Studio",
+      "body": "Open this design on MakerWorld (model {id}) and use “Open in Bambu Studio” — it's ready to slice there.",
+      "button": "Open on MakerWorld"
     }
   },
   "business": {

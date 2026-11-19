@@ -40,6 +40,7 @@ export interface Database {
             layerHeightMm?: number;
             recommendedMaterials?: string[];
             supportsRequired?: boolean;
+            colorSetup?: "ams" | "no-ams";
             instructions?: string;
             compatiblePrinters?: string[];
           } | null;

@@ -5,6 +5,7 @@ import { productText, type Product } from "@/types/product";
 import { COLLECTION_CLASSNAMES } from "@/lib/config/colors";
 import { Badge } from "@/components/ui/Badge";
 import { formatEuro } from "@/lib/pricing/calculate";
+import { ColorSetupBadge } from "./ColorSetupBadge";
 
 export function ProductCard({ product }: { product: Product }) {
   const tCollections = useTranslations("collections.items");
@@ -53,11 +54,16 @@ export function ProductCard({ product }: { product: Product }) {
         <p className="text-ink/60 mt-1 line-clamp-2 text-sm">
           {text.description}
         </p>
-        {!product.isFree && product.priceCents != null && (
-          <p className="text-ink mt-auto pt-3 text-sm font-semibold">
-            {formatEuro(product.priceCents)}
-          </p>
-        )}
+        <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-3">
+          {!product.isFree && product.priceCents != null && (
+            <p className="text-ink text-sm font-semibold">
+              {formatEuro(product.priceCents)}
+            </p>
+          )}
+          {product.printSettings?.colorSetup && (
+            <ColorSetupBadge setup={product.printSettings.colorSetup} />
+          )}
+        </div>
       </div>
     </Link>
   );

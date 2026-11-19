@@ -45,6 +45,12 @@ export interface PrintSettings {
   recommendedMaterials?: string[];
   /** Whether support material is required */
   supportsRequired?: boolean;
+  /**
+   * Colours: "ams" = multicolour with a Bambu AMS (can also be printed in
+   * one colour without it); "no-ams" = no AMS needed (single colour, or
+   * every part printed separately). Unset = not stated.
+   */
+  colorSetup?: "ams" | "no-ams";
   /** Free-form printing instructions / tips */
   instructions?: string;
   /** Printers this design is explicitly confirmed compatible with */

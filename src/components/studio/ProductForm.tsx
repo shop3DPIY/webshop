@@ -37,6 +37,7 @@ interface ExistingProduct {
     layerHeightMm?: number;
     recommendedMaterials?: string[];
     supportsRequired?: boolean;
+    colorSetup?: "ams" | "no-ams";
     instructions?: string;
     compatiblePrinters?: string[];
   } | null;
@@ -44,7 +45,7 @@ interface ExistingProduct {
   images: { src: string; alt: string }[] | null;
   timelapse_url: string | null;
   source_filename: string | null;
-  external_links: { compatible?: { label: string; url?: string }[] } | null;
+  external_links: { compatible?: { label: string; url?: string }[]; makerWorld?: string } | null;
   complexity: Complexity;
   is_set: boolean;
   part_count: number;
@@ -297,6 +298,22 @@ export function ProductForm({
               />
             </label>
 
+            <label className={LABEL}>
+              <span>
+                Colours / AMS{" "}
+                <Info text="Shown on the product page and the product card" />
+              </span>
+              <select
+                name="colorSetup"
+                defaultValue={p?.print_settings?.colorSetup ?? ""}
+                className={FIELD}
+              >
+                <option value="">Not stated</option>
+                <option value="ams">Multicolour with AMS — can also be printed in one colour</option>
+                <option value="no-ams">No AMS needed — one colour or separate parts</option>
+              </select>
+            </label>
+
             <label className="flex items-center gap-2 text-sm font-medium">
               <input
                 type="checkbox"
@@ -378,6 +395,20 @@ export function ProductForm({
                 placeholder={
                   "IKEA KALLAX | https://www.ikea.com/nl/nl/search/?q=kallax"
                 }
+              />
+            </label>
+
+            <label className={LABEL}>
+              <span>
+                MakerWorld model{" "}
+                <Info text="Model number or link. On free designs the page offers 'Download in Bambu Studio' via MakerWorld, which earns you points." />
+              </span>
+              <input
+                type="text"
+                name="makerWorld"
+                defaultValue={p?.external_links?.makerWorld ?? ""}
+                className={FIELD}
+                placeholder="e.g. 123456 or https://makerworld.com/en/models/123456"
               />
             </label>
 
