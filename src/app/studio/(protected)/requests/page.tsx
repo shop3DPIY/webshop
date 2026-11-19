@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { ConfirmSubmitButton, STUDIO_CONFIRM } from "@/components/ui/ConfirmDialog";
+import { ConfirmSubmitButton } from "@/components/ui/ConfirmDialog";
+import { STUDIO_CONFIRM } from "@/lib/studio/confirm";
 import { deleteRequest, setRequestStatus } from "@/lib/requests/admin-actions";
 
 const TABS = [

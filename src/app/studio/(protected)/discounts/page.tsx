@@ -1,5 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/admin";
-import { ConfirmSubmitButton, STUDIO_CONFIRM } from "@/components/ui/ConfirmDialog";
+import { ConfirmSubmitButton } from "@/components/ui/ConfirmDialog";
+import { STUDIO_CONFIRM } from "@/lib/studio/confirm";
 import { formatEuro } from "@/lib/pricing/calculate";
 import {
   createDiscount,
@@ -13,7 +14,7 @@ const LABEL = "flex flex-col gap-1.5 text-sm font-medium";
 
 const ERRORS: Record<string, string> = {
   "not-configured": "Polar isn't connected (POLAR_ACCESS_TOKEN).",
-  code: "The code needs at least 3 letters/digits.",
+  code: "The code needs at least 3 letters/digits (no spaces or dashes).",
   value: "Fill in a discount: a percentage from 1 to 100, or an amount in euros.",
   "not-listed": "That design isn't listed on Polar yet — save it first.",
   polar: "Polar refused the code",
@@ -84,7 +85,7 @@ export default async function StudioDiscountsPage({
         <h2 className="font-display text-lg font-semibold sm:col-span-2">New code</h2>
         <label className={LABEL}>
           Code
-          <input name="code" className={FIELD} placeholder="Empty = make one up, e.g. 3DPIY-K7QX2M" />
+          <input name="code" className={FIELD} placeholder="Letters/digits; empty = make one up" />
         </label>
         <label className={LABEL}>
           Name (shown at checkout)

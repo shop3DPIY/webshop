@@ -38,11 +38,11 @@ export async function listDiscounts(): Promise<PolarDiscount[]> {
   return list.items;
 }
 
-/** Readable random code, e.g. 3DPIY-K7QX2M (no 0/O/1/I mix-ups). */
+/** Readable random code, e.g. 3DPIYK7QX2M (no 0/O/1/I mix-ups; Polar only takes letters and digits). */
 function generateCode() {
   const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   const bytes = randomBytes(6);
-  return `3DPIY-${Array.from(bytes, (b) => alphabet[b % alphabet.length]).join("")}`;
+  return `3DPIY${Array.from(bytes, (b) => alphabet[b % alphabet.length]).join("")}`;
 }
 
 const back = (query: string): never => redirect(`/studio/discounts?${query}`);
@@ -52,7 +52,7 @@ export async function createDiscount(formData: FormData) {
   if (!isPolarConfigured()) back("error=not-configured");
 
   const code = (String(formData.get("code") ?? "").trim().toUpperCase() || generateCode())
-    .replace(/[^A-Z0-9_-]/g, "")
+    .replace(/[^A-Z0-9]/g, "")
     .slice(0, 64);
   const name = String(formData.get("name") ?? "").trim().slice(0, 100) || code;
   const kind = formData.get("type") === "fixed" ? "fixed" : "percentage";

@@ -133,5 +133,3 @@ export function ConfirmSubmitButton({
   );
 }
 
-/** Studio is English-only; these are its default dialog buttons. */
-export const STUDIO_CONFIRM = { confirm: "Yes, delete", cancel: "Cancel" };

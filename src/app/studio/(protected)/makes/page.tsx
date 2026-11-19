@@ -1,5 +1,6 @@
 import { createAdminClient } from "@/lib/supabase/admin";
-import { ConfirmSubmitButton, STUDIO_CONFIRM } from "@/components/ui/ConfirmDialog";
+import { ConfirmSubmitButton } from "@/components/ui/ConfirmDialog";
+import { STUDIO_CONFIRM } from "@/lib/studio/confirm";
 import { approveMake, deleteMake } from "@/lib/makes/admin-actions";
 import { makeImageUrl } from "@/lib/makes/server";
 
