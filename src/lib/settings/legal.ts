@@ -41,7 +41,10 @@ export async function getLegalText(doc: LegalDoc, locale: string): Promise<Legal
   const values: Record<string, string> = {
     company: b.companyName,
     owner: b.ownerName,
-    address: formatAddress(b),
+    // Country is stored in English; the Dutch texts say "Nederland".
+    address: formatAddress(
+      locale === "nl" && /netherlands/i.test(b.country) ? { ...b, country: "Nederland" } : b,
+    ),
     kvk: b.kvk,
     vat: b.vatId,
     iban: b.iban,
