@@ -63,6 +63,8 @@ export default async function ProductPage({
   const tLicense = await getTranslations("licenseTypes");
   const tLicenseHint = await getTranslations("licenseHints");
   const collection = getCollection(product.category);
+  const tCollections = await getTranslations("collections.items");
+  const collectionName = tCollections(`${product.category}.name`);
   const classes = COLLECTION_CLASSNAMES[product.category];
   const cover = product.images[0];
   const related = await getRelatedProducts(product);
@@ -146,7 +148,7 @@ export default async function ProductPage({
     name: text.title,
     description: text.description,
     sku: product.slug,
-    category: collection.name,
+    category: collectionName,
     ...(product.tags.length > 0 && { keywords: product.tags.join(", ") }),
     ...(cover && { image: `https://3dpiy.com${cover.src}` }),
     ...(checkout.mode === "redirect" &&
@@ -215,7 +217,7 @@ export default async function ProductPage({
                   className={`h-2 w-2 rounded-full ${classes.bg}`}
                   aria-hidden
                 />
-                {collection.name}
+                {collectionName}
               </Badge>
             );
             return cover ? (

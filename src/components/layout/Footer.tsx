@@ -3,7 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { BusinessNavLink } from "./BusinessNavLink";
 import { Logo } from "./Logo";
 import { Container } from "@/components/ui/Container";
-import { BUSINESS_DETAILS } from "@/lib/config/business";
+import { getBusinessDetails } from "@/lib/settings/business";
 import { NewsletterSignup } from "@/components/newsletter/NewsletterSignup";
 
 const LEGAL_LINKS = [
@@ -17,6 +17,8 @@ const LEGAL_LINKS = [
 export async function Footer() {
   const year = new Date().getFullYear();
   const t = await getTranslations("footer");
+  // KvK and VAT come from Studio → Settings.
+  const business = await getBusinessDetails();
   const tNewsletter = await getTranslations("newsletter");
   // Purple on the Shop, cyan on Serious Games — follows the track via
   // the --heading token (globals.css), so it stays right on client-side nav.
@@ -75,7 +77,7 @@ export async function Footer() {
           © {year} {t("copyright")}
         </span>
         <span>
-          {t("kvk")} {BUSINESS_DETAILS.kvk} · {t("vatId")} {BUSINESS_DETAILS.vatId}
+          {t("kvk")} {business.kvk} · {t("vatId")} {business.vatId}
         </span>
         <span>{t("digitalOnly")}</span>
       </Container>

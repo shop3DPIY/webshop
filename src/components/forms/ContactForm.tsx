@@ -4,9 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { sendContactMessage } from "@/lib/contact/actions";
 import { Button } from "@/components/ui/Button";
-import { BUSINESS_DETAILS } from "@/lib/config/business";
-
-const CONTACT_EMAIL = BUSINESS_DETAILS.contactEmail;
 
 /**
  * `defaultSubject` (from a link like the "Something wrong or missing?"
@@ -19,6 +16,7 @@ export function ContactForm({
   mailConfigured = false,
   defaultName = "",
   defaultEmail = "",
+  contactEmail,
 }: {
   defaultSubject?: string;
   /** true when the site can send mail itself (Resend); otherwise mailto */
@@ -26,6 +24,8 @@ export function ContactForm({
   /** Filled in for signed-in visitors */
   defaultName?: string;
   defaultEmail?: string;
+  /** Where the mail-app fallback writes to (Studio → Settings) */
+  contactEmail: string;
 }) {
   const t = useTranslations("contact");
   const [status, setStatus] = useState<
@@ -42,7 +42,7 @@ export function ContactForm({
       typed && topic && typed !== topic ? `${typed} (${topic})` : typed || topic;
     const message = String(data.get("message") ?? "");
     const body = `${message}\n\n— ${name} (${email})`;
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {

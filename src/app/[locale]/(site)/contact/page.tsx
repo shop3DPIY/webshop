@@ -2,11 +2,9 @@ import { getTranslations } from "next-intl/server";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { ContactForm } from "@/components/forms/ContactForm";
-import { BUSINESS_DETAILS } from "@/lib/config/business";
 import { isMailConfigured } from "@/lib/mail/send";
+import { getBusinessDetails } from "@/lib/settings/business";
 import { createClient } from "@/lib/supabase/server";
-
-const CONTACT_EMAIL = BUSINESS_DETAILS.contactEmail;
 
 export async function generateMetadata() {
   const t = await getTranslations("contact");
@@ -22,6 +20,8 @@ export default async function ContactPage({
   searchParams: Promise<{ subject?: string }>;
 }) {
   const t = await getTranslations("contact");
+  // The address from Studio → Settings.
+  const CONTACT_EMAIL = (await getBusinessDetails()).contactEmail;
   // Pre-filled by links that open the form with a subject.
   const { subject } = await searchParams;
   // Signed in: fill in name and email so the visitor doesn't have to.
@@ -65,6 +65,7 @@ export default async function ContactPage({
             mailConfigured={isMailConfigured()}
             defaultName={profile?.full_name ?? ""}
             defaultEmail={user?.email ?? ""}
+            contactEmail={CONTACT_EMAIL}
           />
         </div>
       </Container>

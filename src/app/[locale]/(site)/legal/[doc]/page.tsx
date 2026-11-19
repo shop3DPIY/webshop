@@ -1,20 +1,10 @@
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Container } from "@/components/ui/Container";
 import { BackButton } from "@/components/ui/BackButton";
-
-const LEGAL_DOCS = [
-  "privacy",
-  "cookies",
-  "terms",
-  "delivery",
-  "license",
-] as const;
-type LegalDoc = (typeof LEGAL_DOCS)[number];
-
-function isLegalDoc(doc: string): doc is LegalDoc {
-  return (LEGAL_DOCS as readonly string[]).includes(doc);
-}
+import { LegalBody } from "@/components/legal/LegalBody";
+import { DEFAULT_LEGAL_DATE, LEGAL_DOCS, isLegalDoc } from "@/content/legal";
+import { getLegalText } from "@/lib/settings/legal";
 
 export function generateStaticParams() {
   return LEGAL_DOCS.map((doc) => ({ doc }));
@@ -27,10 +17,11 @@ export async function generateMetadata({
 }) {
   const { doc } = await params;
   if (!isLegalDoc(doc)) return {};
-  const t = await getTranslations(`legal.docs.${doc}`);
-  return { title: t("title") };
+  const text = await getLegalText(doc, await getLocale());
+  return { title: text.title };
 }
 
+/** Legal pages — texts and business details come from Studio → Legal / Settings. */
 export default async function LegalDocPage({
   params,
 }: {
@@ -39,22 +30,24 @@ export default async function LegalDocPage({
   const { doc } = await params;
   if (!isLegalDoc(doc)) notFound();
 
-  const tDoc = await getTranslations(`legal.docs.${doc}`);
+  const locale = await getLocale();
   const tLegal = await getTranslations("legal");
+  const text = await getLegalText(doc, locale);
+  const updated = new Date(text.updatedAt ?? DEFAULT_LEGAL_DATE).toLocaleDateString(
+    locale === "nl" ? "nl-NL" : "en-GB",
+    { day: "numeric", month: "long", year: "numeric" },
+  );
 
   return (
     <Container panel className="flex flex-col gap-6 py-16 sm:py-24">
       <BackButton label={tLegal("back")} />
-      <h1 className="font-display text-ink text-3xl font-bold sm:text-4xl">
-        {tDoc("title")}
-      </h1>
-
-      <div className="glass rounded-2xl p-5">
-        <p className="text-sm font-semibold">{tLegal("noticeTitle")}</p>
-        <p className="text-ink/70 mt-1 text-sm">{tLegal("noticeBody")}</p>
+      <div>
+        <h1 className="font-display text-ink text-3xl font-bold sm:text-4xl">{text.title}</h1>
+        <p className="text-ink/60 mt-2 text-sm">{tLegal("updated", { date: updated })}</p>
       </div>
-
-      <p className="text-ink/70 text-base">{tLegal("placeholderBody")}</p>
+      <div className="max-w-3xl">
+        <LegalBody text={text.body} />
+      </div>
     </Container>
   );
 }

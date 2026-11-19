@@ -254,9 +254,6 @@
     "formSending": "Sending…"
   },
   "legal": {
-    "noticeTitle": "Placeholder — pending legal review",
-    "noticeBody": "This page is a structural placeholder. The content below needs to be reviewed and finalized by a qualified professional before 3DPIY launches commercially.",
-    "placeholderBody": "Final text for this page will be added here before launch.",
     "docs": {
       "privacy": {
         "title": "Privacy Policy"
@@ -274,7 +271,8 @@
         "title": "License Agreement"
       }
     },
-    "back": "Back"
+    "back": "Back",
+    "updated": "Last updated: {date}"
   },
   "freeDesignsPage": {
     "eyebrow": "Free Designs",

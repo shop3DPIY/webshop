@@ -24,11 +24,11 @@
     "description": "Elke collectie heeft zijn eigen kleur, zodat je altijd weet waar je bent.",
     "items": {
       "doll-mini": {
-        "name": "Doll & Mini",
+        "name": "Poppen & Mini",
         "tagline": "1:6 poppenmeubels en 1:12 poppenhuisminiaturen"
       },
       "home-living": {
-        "name": "Home & Living",
+        "name": "Wonen",
         "tagline": "Woondecoratie en verlichtingsontwerpen"
       },
       "ikea-hacks": {
@@ -36,11 +36,11 @@
         "tagline": "Slimme accessoires voor IKEA-meubels"
       },
       "organize": {
-        "name": "Organize",
+        "name": "Opbergen",
         "tagline": "Slimme opberg- en organisatieoplossingen"
       },
       "tech-electronics": {
-        "name": "Tech & Electronics",
+        "name": "Tech & Elektronica",
         "tagline": "Behuizingen en DIY-elektronicaprojecten"
       },
       "games": {
@@ -48,7 +48,7 @@
         "tagline": "Bordspelinserts, speelstukken en accessoires"
       },
       "kids": {
-        "name": "Kids",
+        "name": "Kinderen",
         "tagline": "Speelgoed en leuke prints voor kinderen"
       },
       "other": {
@@ -116,7 +116,7 @@
   "licenseTypes": {
     "personal": "Persoonlijk gebruik",
     "commercial": "Commercieel gebruik",
-    "enterprise": "Enterprise",
+    "enterprise": "Op maat",
     "free": "Gratis"
   },
   "productBrowser": {
@@ -254,9 +254,6 @@
     "formSending": "Versturen…"
   },
   "legal": {
-    "noticeTitle": "Placeholder — juridische beoordeling volgt nog",
-    "noticeBody": "Deze pagina is een structurele placeholder. De inhoud hieronder moet nog worden beoordeeld en afgerond door een gekwalificeerde professional voordat 3DPIY commercieel lanceert.",
-    "placeholderBody": "De definitieve tekst voor deze pagina wordt hier toegevoegd vóór de lancering.",
     "docs": {
       "privacy": {
         "title": "Privacybeleid"
@@ -274,7 +271,8 @@
         "title": "Licentieovereenkomst"
       }
     },
-    "back": "Terug"
+    "back": "Terug",
+    "updated": "Laatst bijgewerkt: {date}"
   },
   "freeDesignsPage": {
     "eyebrow": "Gratis designs",
@@ -330,7 +328,7 @@
     "wrongPassword": "Dit e-mailadres en wachtwoord horen niet bij elkaar. Probeer het opnieuw, of log in met een code per mail."
   },
   "account": {
-    "eyebrow": "My 3DPIY",
+    "eyebrow": "Mijn 3DPIY",
     "title": "Jouw account",
     "libraryTab": "Bibliotheek",
     "ordersTab": "Bestellingen",
