@@ -4,7 +4,12 @@ import { useSyncExternalStore } from "react";
 import { usePathname } from "@/i18n/navigation";
 import { TRACK_COOKIE, parseTrack, type Track } from "@/lib/config/track";
 
-const noSubscribe = () => () => {};
+/** TrackSync announces a newly picked track (?track=…) with this event. */
+export const TRACK_EVENT = "3dpiy-track";
+const subscribe = (onChange: () => void) => {
+  window.addEventListener(TRACK_EVENT, onChange);
+  return () => window.removeEventListener(TRACK_EVENT, onChange);
+};
 
 function readCookieTrack(): Track | undefined {
   const value = document.cookie.match(
@@ -23,7 +28,7 @@ function readCookieTrack(): Track | undefined {
 export function useCurrentTrack(): Track | undefined {
   const pathname = usePathname();
   const cookieTrack = useSyncExternalStore(
-    noSubscribe,
+    subscribe,
     readCookieTrack,
     () => undefined,
   );

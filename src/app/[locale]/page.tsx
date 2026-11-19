@@ -39,7 +39,7 @@ export default async function TrackChooserPage() {
 
           <div className="grid w-full gap-5 sm:grid-cols-3">
             <Link
-              href="/dolls"
+              href="/shop?track=dolls"
               data-umami-event="chooser-shop"
               className="group glass hover:bg-white/25 flex flex-col items-start gap-3 rounded-3xl p-6 text-left sm:p-8 transition-colors sm:col-span-2"
             >

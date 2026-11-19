@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { usePathname } from "@/i18n/navigation";
 import { TRACK_COOKIE, parseTrack } from "@/lib/config/track";
+import { TRACK_EVENT } from "@/hooks/useCurrentTrack";
 
 /**
  * Keeps <html data-track> (backdrop + button color, see globals.css) in
@@ -16,7 +17,11 @@ export function TrackSync() {
 
   useEffect(() => {
     let track: string | undefined;
-    if (pathname === "/dolls" || pathname.startsWith("/dolls/")) track = "dolls";
+    // "/shop?track=dolls" (the chooser's and the switcher's Shop link)
+    // picks the Shop explicitly.
+    const picked = parseTrack(new URLSearchParams(window.location.search).get("track") ?? undefined);
+    if (picked) track = picked;
+    else if (pathname === "/dolls" || pathname.startsWith("/dolls/")) track = "dolls";
     else if (pathname === "/business" || pathname.startsWith("/business/")) {
       track = "business";
     } else {
@@ -29,9 +34,9 @@ export function TrackSync() {
     // the proxy too — the header's switcher prefetching /business flipped
     // the Shop visitor's cookie to Business, so Shop/About/Contact opened
     // in the Business look.)
-    if (pathname === "/dolls" || pathname.startsWith("/dolls/") ||
-        pathname === "/business" || pathname.startsWith("/business/")) {
+    if (picked || pathname === "/business" || pathname.startsWith("/business/")) {
       document.cookie = `${TRACK_COOKIE}=${parsed}; path=/; max-age=${60 * 60 * 24 * 365}; samesite=lax`;
+      window.dispatchEvent(new Event(TRACK_EVENT));
     }
   }, [pathname]);
 

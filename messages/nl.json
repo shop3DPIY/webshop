@@ -59,7 +59,9 @@
         "name": "Serious Games",
         "tagline": "Educatieve en professionele serious-game-ontwerpen"
       }
-    }
+    },
+    "count": "{count, plural, one {# ontwerp} other {# ontwerpen}}",
+    "comingSoon": "Binnenkort"
   },
   "newAndPopular": {
     "eyebrow": "Nieuw & populair",
@@ -108,7 +110,8 @@
     "free": "Gratis",
     "bundle": "Bundel · {count}",
     "ams": "Meerkleurig · AMS",
-    "noAms": "Geen AMS nodig"
+    "noAms": "Geen AMS nodig",
+    "pattern": "Naaipatroon"
   },
   "licenseHints": {
     "personal": "Voor eigen gebruik: print het voor jezelf, je huis of als cadeau. De prints verkopen of de bestanden delen mag niet.",
@@ -147,12 +150,21 @@
   "shopPage": {
     "eyebrow": "Shop",
     "title": "Al onze ontwerpen, één printer",
-    "description": "Kies een collectie, of doorzoek hieronder alle ontwerpen — elke collectie heeft zijn eigen kleur, zodat je altijd weet waar je bent."
+    "description": "Kies een collectie, of bekijk hieronder alle ontwerpen — digitale bestanden die je zelf print.",
+    "metaTitle": "3D-printbestanden om zelf te printen — poppenmeubels, IKEA-hacks & meer",
+    "metaDescription": "Digitale 3D-printontwerpen (STL/3MF) van 3DPIY: poppenmeubels en miniaturen, IKEA-hacks, opbergen, wonen en spellen. Download en print ze zelf.",
+    "newEyebrow": "Nieuw",
+    "newTitle": "Vers van de printplaat",
+    "seeAll": "Bekijk alle ontwerpen",
+    "freeTitle": "Probeer er gratis een",
+    "freeBody": "Sommige ontwerpen zijn gratis — print er een en kijk hoe je het vindt.",
+    "freeCta": "Gratis ontwerpen"
   },
   "collectionPage": {
     "backToShop": "Alle collecties",
     "emptyTitle": "Binnenkort meer designs",
-    "emptyDescription": "Deze collectie wordt nog aangevuld terwijl 3DPIY zich voorbereidt op de lancering — kom snel nog eens kijken."
+    "emptyDescription": "Deze collectie wordt nog aangevuld terwijl 3DPIY zich voorbereidt op de lancering — kom snel nog eens kijken.",
+    "shop": "Shop"
   },
   "productPage": {
     "compatibleWith": "Past op",
@@ -249,7 +261,8 @@
       "button": "Openen op MakerWorld"
     },
     "partsTitle": "Extra onderdelen die je nodig hebt",
-    "calcLink": "Wat kost het jou om dit te printen? Reken het uit"
+    "calcLink": "Wat kost het jou om dit te printen? Reken het uit",
+    "shop": "Shop"
   },
   "business": {
     "eyebrow": "Zakelijk & opdrachten",
