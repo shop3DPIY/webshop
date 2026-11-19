@@ -1,4 +1,5 @@
-# 3DPIY
+/** The text of /llms.txt (see route.ts). */
+export const LLMS_TXT = `# 3DPIY
 
 > 3DPIY ("Print It Yourself") sells and gives away digital 3D print files (STL/3MF) designed by Carmen in the Netherlands: doll furniture and miniatures (1:6, 1:12), IKEA hacks, organisers, home items, games, and — on 3DPIY Business — serious-game designs with commercial licenses. Buyers print the designs themselves; nothing physical is shipped.
 
@@ -15,3 +16,4 @@
 - [License Agreement](https://3dpiy.com/legal/license)
 - [Terms & Conditions](https://3dpiy.com/legal/terms)
 - [Digital Delivery](https://3dpiy.com/legal/delivery)
+`;

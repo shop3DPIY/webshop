@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { getPublishedProducts } from "@/lib/products";
 import { COLLECTION_LIST } from "@/lib/config/colors";
 import { routing } from "@/i18n/routing";
+import { getSiteMode } from "@/lib/config/siteMode";
 
 const siteUrl = "https://3dpiy.com";
 
@@ -37,6 +38,9 @@ function withAlternates(path: string) {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  // sitemap.xml skips the coming-soon gate (it has a file extension):
+  // list nothing until the site is live.
+  if (getSiteMode() !== "live") return [];
   const staticEntries = STATIC_ROUTES.map((path) => withAlternates(path));
 
   const collectionEntries = COLLECTION_LIST.map((collection) =>
