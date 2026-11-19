@@ -586,3 +586,13 @@ select {
 .file-upload:hover::file-selector-button {
   background: rgb(140 82 255 / 0.45);
 }
+
+/* Sign-in: what you type shows in the button purple (also when the
+   browser fills in a saved address/password). */
+.signin-field,
+.signin-field:-webkit-autofill {
+  color: var(--action);
+  -webkit-text-fill-color: var(--action);
+  caret-color: var(--action);
+  font-weight: 500;
+}

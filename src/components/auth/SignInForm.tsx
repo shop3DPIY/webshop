@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/Button";
 // The site's field style; 16px text because smaller makes iOS Safari
 // zoom in when the field is tapped.
 const FIELD =
-  "border-line bg-paper w-full rounded-2xl border px-4 py-2.5 text-base font-normal";
+  "signin-field border-line bg-paper w-full rounded-2xl border px-4 py-2.5 text-base font-normal";
 
 /**
  * One sign-in form for everyone — customers and the admin alike — with two
