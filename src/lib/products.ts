@@ -221,3 +221,18 @@ export async function getBundlesContaining(productId: string): Promise<Product[]
     .eq("publication_status", "published");
   return withBundleImages((data as ProductRow[] | null)?.map(mapRow) ?? []);
 }
+
+/** Designs per collection (primary or extra category) — for the tiles. */
+export function collectionCounts(products: Product[]): Record<string, number> {
+  const counts: Record<string, number> = {};
+  for (const p of products) {
+    for (const slug of new Set([p.category, ...(p.extraCategories ?? [])])) {
+      counts[slug] = (counts[slug] ?? 0) + 1;
+    }
+  }
+  return counts;
+}
+
+/** Newest first (last update, then title). */
+export const newestFirst = (a: Product, b: Product) =>
+  b.lastUpdated.localeCompare(a.lastUpdated) || a.title.localeCompare(b.title);

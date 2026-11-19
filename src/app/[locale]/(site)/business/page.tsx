@@ -6,7 +6,7 @@ import { CollectionCard } from "@/components/product/CollectionCard";
 import { ProductCard } from "@/components/product/ProductCard";
 import { TrackMarker } from "@/components/system/TrackMarker";
 import { getTrackCollections, getCollection } from "@/lib/config/colors";
-import { getPublishedProducts } from "@/lib/products";
+import { collectionCounts, getPublishedProducts } from "@/lib/products";
 
 export async function generateMetadata() {
   const t = await getTranslations("businessLanding");
@@ -98,9 +98,13 @@ export default async function BusinessPage() {
             description={tCollections("description")}
             tone="purple"
           />
-          <div className="grid auto-rows-fr grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid auto-rows-fr grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
             {collections.map((collection) => (
-              <CollectionCard key={collection.slug} slug={collection.slug} />
+              <CollectionCard
+                key={collection.slug}
+                slug={collection.slug}
+                count={collectionCounts(products)[collection.slug] ?? 0}
+              />
             ))}
           </div>
         </Container>

@@ -43,7 +43,7 @@ export function TrackSwitcher({ inMenu = false }: { inMenu?: boolean }) {
 
   return (
     <Link
-      href={`/${target}`}
+      href={target === "business" ? "/business" : "/shop?track=dolls"}
       title={label}
       data-umami-event={`switch-to-${target}`}
       className="group flex items-center gap-2 text-sm font-medium text-ink"

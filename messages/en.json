@@ -59,7 +59,9 @@
         "name": "Serious Games",
         "tagline": "Educational and professional serious-game designs"
       }
-    }
+    },
+    "count": "{count, plural, one {# design} other {# designs}}",
+    "comingSoon": "Coming soon"
   },
   "newAndPopular": {
     "eyebrow": "New & popular",
@@ -108,7 +110,8 @@
     "free": "Free",
     "bundle": "Bundle · {count}",
     "ams": "Multicolour · AMS",
-    "noAms": "No AMS needed"
+    "noAms": "No AMS needed",
+    "pattern": "Sewing pattern"
   },
   "licenseHints": {
     "personal": "For your own use: print it for yourself, your home or as a gift. Selling the prints or sharing the files isn't allowed.",
@@ -147,12 +150,21 @@
   "shopPage": {
     "eyebrow": "Shop",
     "title": "All our designs, one printer",
-    "description": "Pick a collection, or search all designs below — each collection has its own color so you always know where you are."
+    "description": "Pick a collection, or browse every design below — digital files you print yourself.",
+    "metaTitle": "3D print files to print yourself — doll furniture, IKEA hacks & more",
+    "metaDescription": "Digital 3D print designs (STL/3MF) by 3DPIY: doll furniture and miniatures, IKEA hacks, storage, home and games. Download and print them yourself.",
+    "newEyebrow": "New",
+    "newTitle": "Fresh off the plate",
+    "seeAll": "See all designs",
+    "freeTitle": "Try one for free",
+    "freeBody": "Some designs are free — print one and see how you like it.",
+    "freeCta": "Free designs"
   },
   "collectionPage": {
     "backToShop": "All collections",
     "emptyTitle": "More designs coming soon",
-    "emptyDescription": "This collection is still filling up as 3DPIY prepares for launch — check back soon."
+    "emptyDescription": "This collection is still filling up as 3DPIY prepares for launch — check back soon.",
+    "shop": "Shop"
   },
   "productPage": {
     "compatibleWith": "Compatible with",
@@ -249,7 +261,8 @@
       "button": "Open on MakerWorld"
     },
     "partsTitle": "Extra parts you need",
-    "calcLink": "What does printing this cost you? Calculate it"
+    "calcLink": "What does printing this cost you? Calculate it",
+    "shop": "Shop"
   },
   "business": {
     "eyebrow": "Business & commissions",
