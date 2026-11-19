@@ -76,7 +76,11 @@ export default async function CollectionPage({
 
       <Container panel className="flex flex-col gap-8 py-16 sm:py-24">
         {products.length > 0 ? (
-          <ProductBrowser products={products} />
+          <>
+            {/* For screen readers and heading order: the cards are h3s. */}
+            <h2 className="sr-only">{tPage("designsHeading")}</h2>
+            <ProductBrowser products={products} />
+          </>
         ) : (
           <div className="rounded-3xl p-12 text-center glass">
             <h2 className="font-display text-ink text-xl font-semibold">

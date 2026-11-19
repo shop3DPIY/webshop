@@ -47,9 +47,9 @@ export async function Footer() {
         </div>
 
         <div>
-          <h4 className={`${headingColor} mb-3 text-sm font-semibold`}>
+          <h2 className={`${headingColor} mb-3 text-sm font-semibold`}>
             {t("shopHeading")}
-          </h4>
+          </h2>
           <ul className="text-ink space-y-2 text-sm">
             <li>
               <Link href="/shop#all-designs">{t("shopAll")}</Link>
@@ -68,9 +68,9 @@ export async function Footer() {
         </div>
 
         <div>
-          <h4 className={`${headingColor} mb-3 text-sm font-semibold`}>
+          <h2 className={`${headingColor} mb-3 text-sm font-semibold`}>
             {t("legalHeading")}
-          </h4>
+          </h2>
           <ul className="text-ink space-y-2 text-sm">
             {LEGAL_LINKS.map((link) => (
               <li key={link.href}>
@@ -81,9 +81,9 @@ export async function Footer() {
         </div>
 
         <div>
-          <h4 className={`${headingColor} mb-3 text-sm font-semibold`}>
+          <h2 className={`${headingColor} mb-3 text-sm font-semibold`}>
             {t("newsletterHeading")}
-          </h4>
+          </h2>
           <p className="text-ink mb-3 text-sm">{tNewsletter("description")}</p>
           <NewsletterSignup />
         </div>

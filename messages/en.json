@@ -164,7 +164,8 @@
     "backToShop": "All collections",
     "emptyTitle": "More designs coming soon",
     "emptyDescription": "This collection is still filling up as 3DPIY prepares for launch — check back soon.",
-    "shop": "Shop"
+    "shop": "Shop",
+    "designsHeading": "Designs"
   },
   "productPage": {
     "compatibleWith": "Compatible with",

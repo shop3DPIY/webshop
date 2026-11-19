@@ -253,14 +253,9 @@ export function SignInForm({
 
       {method === "password" && (
         <div className="flex flex-col gap-1.5">
-          <div className="flex items-baseline justify-between gap-3">
-            <label htmlFor="password" className="pl-4 text-sm font-medium">
-              {t("passwordLabel")}
-            </label>
-            <Link href="/auth/forgot-password" className="text-ink text-sm font-semibold underline underline-offset-2">
-              {t("forgotLink")}
-            </Link>
-          </div>
+          <label htmlFor="password" className="pl-4 text-sm font-medium">
+            {t("passwordLabel")}
+          </label>
           <div className="relative">
             <input
               id="password"
@@ -286,6 +281,10 @@ export function SignInForm({
             </button>
           </div>
           {errorText("password")}
+          {/* Under the field, so Tab goes password → show → forgot. */}
+          <Link href="/auth/forgot-password" className="text-ink self-end text-sm font-semibold underline underline-offset-2">
+            {t("forgotLink")}
+          </Link>
         </div>
       )}
 
