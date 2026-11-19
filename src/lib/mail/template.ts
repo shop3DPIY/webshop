@@ -7,6 +7,8 @@
  * repaints the colours (white button text turned dark purple on purple).
  */
 const PURPLE = "#8c52ff";
+/** Headings: the site's cyan (#5ce1e6), a touch deeper so it still reads on white. */
+const CYAN = "#3fcbd3";
 
 /** A compact pill button, like the site's (px-5 py-2.5, text-sm, semibold). */
 export function emailButton(url: string, label: string): string {
@@ -47,7 +49,7 @@ export function emailLayout({
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background:#ffffff;border-radius:24px;border:1px solid #ffffff;box-shadow:0 8px 24px rgba(140,82,255,0.12)">
 <tr><td style="padding:24px 24px 4px"><div style="font-size:12px;font-weight:bold;letter-spacing:2px;color:${PURPLE}">3DPIY</div>
-<h1 style="margin:6px 0 12px;font-size:20px;line-height:1.3;color:#14121a">${escapeHtml(heading)}</h1></td></tr>
+<h1 style="margin:6px 0 12px;font-size:22px;line-height:1.3;color:${CYAN}">${escapeHtml(heading)}</h1></td></tr>
 <tr><td style="padding:0 24px 12px;font-size:15px;line-height:1.55">${bodyHtml}</td></tr>
 <tr><td style="padding:14px 24px 22px;border-top:1px solid #f0ebf8;font-size:12px;line-height:1.5;color:#6b6478">${footerHtml}3DPIY — Print It Yourself · <a href="https://3dpiy.com" style="color:${PURPLE}">3dpiy.com</a></td></tr>
 </table></td></tr></table></body></html>`;
