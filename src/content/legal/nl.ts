@@ -107,7 +107,10 @@ Je print en gebruikt de objecten op eigen risico. Het resultaat hangt af van je 
 Op deze voorwaarden is Nederlands recht van toepassing. Woon je als consument ergens anders in de EU, dan houd je de bescherming die het dwingende consumentenrecht van je eigen land je geeft. Geschillen gaan naar de bevoegde rechter in Nederland, tenzij de wet je het recht geeft naar een rechter in je eigen land te gaan.
 
 ## Wijzigingen
-We kunnen deze voorwaarden aanpassen. De versie die gold op het moment van je aankoop blijft voor die aankoop gelden.`,
+We kunnen deze voorwaarden aanpassen. De versie die gold op het moment van je aankoop blijft voor die aankoop gelden.
+
+## Vragen?
+Mis je iets, klopt er iets niet, of heb je een vraag of opmerking? Mail {{email}} — ik kijk hoe ik je kan helpen.`,
   },
 
   delivery: {

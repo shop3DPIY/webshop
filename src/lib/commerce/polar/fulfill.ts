@@ -2,6 +2,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { PRICE_TIERS, type PriceTier } from "@/lib/pricing/calculate";
 import type { PolarOrder } from "./api";
 import { bundleContents } from "@/lib/studio/bundles";
+import { sendPurchaseMail } from "./purchaseMail";
 
 /**
  * Stores a paid Polar order as an order + order item and, when the buyer
@@ -36,22 +37,29 @@ export async function fulfillPolarOrder(
     ? await admin.from("profiles").select("id").eq("id", externalId).maybeSingle()
     : await admin.from("profiles").select("id").ilike("email", email).maybeSingle();
 
-  const { data: stored, error } = await admin
-    .from("orders")
-    .upsert(
-      {
-        external_order_id: order.id,
-        checkout_id: order.checkout_id,
-        buyer_email: email,
-        customer_id: profile?.id ?? null,
-        total_cents: order.total_amount,
-        currency: order.currency.toUpperCase(),
-        raw_payload: rawPayload,
-      },
-      { onConflict: "external_order_id" },
-    )
-    .select("id")
-    .single();
+  const row = {
+    external_order_id: order.id,
+    checkout_id: order.checkout_id,
+    buyer_email: email,
+    customer_id: profile?.id ?? null,
+    total_cents: order.total_amount,
+    currency: order.currency.toUpperCase(),
+    raw_payload: rawPayload,
+  };
+  // Insert first: only the call that actually creates the order (the
+  // webhook and the thank-you page can arrive at the same moment) sends
+  // the confirmation mail below. A duplicate updates the existing row.
+  let isNew = true;
+  let { data: stored, error } = await admin.from("orders").insert(row).select("id").single();
+  if (error?.code === "23505") {
+    isNew = false;
+    ({ data: stored, error } = await admin
+      .from("orders")
+      .update(row)
+      .eq("external_order_id", order.id)
+      .select("id")
+      .single());
+  }
   if (error || !stored) throw error ?? new Error("Could not store order");
 
   const { data: existingItem } = await admin
@@ -83,6 +91,15 @@ export async function fulfillPolarOrder(
         })),
         { onConflict: "customer_id,product_id" },
       );
+  }
+
+  if (isNew && productId) {
+    await sendPurchaseMail({
+      email,
+      productId,
+      tier,
+      locale: meta.locale === "nl" ? "nl" : "en",
+    }).catch((e) => console.error("[polar] purchase mail failed", e));
   }
 
   return { productId };

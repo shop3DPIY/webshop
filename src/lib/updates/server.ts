@@ -153,6 +153,7 @@ function updateMail(
       .filter(Boolean)
       .join("\n\n"),
     html: emailLayout({
+      locale: to.locale,
       heading: c.heading,
       bodyHtml: `<p style="margin:0 0 16px">${escapeHtml(body)}</p>
 ${note ? `<p style="margin:0 0 8px;font-weight:bold">${escapeHtml(c.note)}</p>${textToHtml(note)}` : ""}

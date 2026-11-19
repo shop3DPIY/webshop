@@ -120,6 +120,7 @@ export async function sendFreeDownloadMail(params: {
       .filter(Boolean)
       .join("\n\n"),
     html: emailLayout({
+      locale: params.locale,
       heading: c.heading,
       bodyHtml: `<p style="margin:0 0 16px">${escapeHtml(c.body(params.title))}</p>
 <p style="margin:0 0 16px">${links

@@ -21,14 +21,16 @@ function newsletterMail(params: {
   subject: string;
   message: string;
   manageLink: string;
+  locale?: string;
 }): Mail {
-  const { to, subject, message, manageLink } = params;
+  const { to, subject, message, manageLink, locale } = params;
   const footer = `<a href="${manageLink}" style="color:#8c52ff">Voorkeuren aanpassen of afmelden</a> · <a href="${manageLink}" style="color:#8c52ff">Change preferences or unsubscribe</a><br><br>`;
   return {
     to,
     subject,
     text: `${message}\n\n—\nVoorkeuren aanpassen of afmelden / Change preferences or unsubscribe:\n${manageLink}`,
     html: emailLayout({
+      locale: locale ?? "en",
       heading: subject,
       bodyHtml: textToHtml(message),
       footerHtml: footer,
@@ -98,6 +100,7 @@ export async function sendNewsletter(formData: FormData) {
         subject,
         message,
         manageLink: manageUrl(r.token, r.locale),
+        locale: r.locale,
       }),
     );
     const result = await sendBatch(chunk);

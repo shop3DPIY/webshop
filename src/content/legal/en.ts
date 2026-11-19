@@ -112,7 +112,10 @@ You print and use the objects at your own risk. Results depend on your printer, 
 Dutch law applies. If you are a consumer living elsewhere in the EU, you keep the protection that the mandatory consumer law of your own country gives you. Disputes go to the competent court in the Netherlands, unless the law gives you the right to go to a court in your own country.
 
 ## Changes
-We may change these terms. The version that applied at the moment of your purchase stays valid for that purchase.`,
+We may change these terms. The version that applied at the moment of your purchase stays valid for that purchase.
+
+## Questions?
+Missing something, something not right, or a question or remark? Mail {{email}} — I'll see how I can help.`,
   },
 
   delivery: {

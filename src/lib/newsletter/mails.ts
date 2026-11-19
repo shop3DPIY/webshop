@@ -38,6 +38,7 @@ export async function sendWelcomeMail(
     subject: c.subject,
     text: `${c.heading}\n\n${c.body}\n\n${c.manage}\n${url}\n\n${c.notYou}`,
     html: emailLayout({
+      locale,
       heading: c.heading,
       bodyHtml: `<p style="margin:0 0 16px">${escapeHtml(c.body)}</p>
 <p style="margin:0 0 16px">${escapeHtml(c.manage)}</p>
@@ -79,6 +80,7 @@ export async function sendConfirmMail(
     subject: c.subject,
     text: `${c.heading}\n\n${c.body}\n\n${c.button}: ${url}\n\n${c.notYou}`,
     html: emailLayout({
+      locale,
       heading: c.heading,
       bodyHtml: `<p style="margin:0 0 24px">${escapeHtml(c.body)}</p>
 <p style="margin:0 0 16px">${emailButton(url, c.button)}</p>

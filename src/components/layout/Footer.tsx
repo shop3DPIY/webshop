@@ -30,6 +30,20 @@ export async function Footer() {
         <div>
           <Logo />
           <p className="text-ink/70 mt-3 text-sm">{t("tagline")}</p>
+          {/* Anything wrong or missing: just mail. */}
+          <p className="text-ink/70 mt-3 text-sm">
+            {t.rich("help", {
+              email: business.contactEmail,
+              mail: (chunks) => (
+                <a
+                  href={`mailto:${business.contactEmail}`}
+                  className="text-ink font-semibold underline underline-offset-2"
+                >
+                  {chunks}
+                </a>
+              ),
+            })}
+          </p>
         </div>
 
         <div>

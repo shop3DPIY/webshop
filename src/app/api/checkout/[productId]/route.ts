@@ -67,7 +67,8 @@ export async function GET(
       success_url: `${origin}${prefix}/checkout/success?checkout_id={CHECKOUT_ID}`,
       return_url: `${origin}${prefix}/product/${product.slug}`,
       locale,
-      metadata: { product_id: product.id },
+      // locale: the confirmation mail is sent in the buyer's language.
+      metadata: { product_id: product.id, locale },
       ...(user?.email && {
         customer_email: user.email,
         external_customer_id: user.id,

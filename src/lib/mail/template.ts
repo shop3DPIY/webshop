@@ -35,15 +35,27 @@ export function textToHtml(text: string): string {
     .join("");
 }
 
+/** Under every customer mail: write back if anything is wrong. */
+const HELP = {
+  en: "Missing something, or something not right? Just reply to this email — I'll see how I can fix it.",
+  nl: "Mis je iets, of klopt er iets niet? Beantwoord gewoon deze mail — ik kijk hoe ik het kan oplossen.",
+};
+
 export function emailLayout({
   heading,
   bodyHtml,
   footerHtml = "",
+  locale,
 }: {
   heading: string;
   bodyHtml: string;
   footerHtml?: string;
+  /** Customer mails pass the reader's language: adds the "reply if anything's wrong" line. */
+  locale?: string;
 }): string {
+  const help = locale
+    ? `<p style="margin:0 0 12px;color:#14121a">${escapeHtml(locale === "nl" ? HELP.nl : HELP.en)}</p>`
+    : "";
   return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light only"><meta name="supported-color-schemes" content="light only"><style>:root{color-scheme:light only;supported-color-schemes:light only}</style></head>
 <body style="margin:0;padding:24px 12px;background:#efe6fb;background-image:linear-gradient(135deg,#fbe3f1 0%,#ece2fd 55%,#dfe9fd 100%);font-family:Helvetica,Arial,sans-serif;color:#14121a">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
@@ -51,6 +63,6 @@ export function emailLayout({
 <tr><td style="padding:24px 24px 4px"><div style="font-size:12px;font-weight:bold;letter-spacing:2px;color:${PURPLE}">3DPIY</div>
 <h1 style="margin:6px 0 12px;font-size:22px;line-height:1.3;color:${CYAN}">${escapeHtml(heading)}</h1></td></tr>
 <tr><td style="padding:0 24px 12px;font-size:15px;line-height:1.55">${bodyHtml}</td></tr>
-<tr><td style="padding:14px 24px 22px;border-top:1px solid #f0ebf8;font-size:12px;line-height:1.5;color:#6b6478">${footerHtml}3DPIY — Print It Yourself · <a href="https://3dpiy.com" style="color:${PURPLE}">3dpiy.com</a></td></tr>
+<tr><td style="padding:14px 24px 22px;border-top:1px solid #f0ebf8;font-size:12px;line-height:1.5;color:#6b6478">${help}${footerHtml}3DPIY — Print It Yourself · <a href="https://3dpiy.com" style="color:${PURPLE}">3dpiy.com</a></td></tr>
 </table></td></tr></table></body></html>`;
 }
