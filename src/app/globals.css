@@ -269,9 +269,7 @@ body {
       transparent 80%
     ),
     linear-gradient(135deg, #f8b8da 0%, #d9bfff 50%, #b2d0ff 100%);
-  /* Trial 2026-11-19: the same glows over a deeper base and with a fuller
-     purple centre, so white text stands out more. Back to the lighter one:
-     --backdrop: var(--backdrop-glow). */
+  /* Deeper variant (tried 2026-11-19, too strong) — kept for reference. */
   --backdrop-glow-deep:
     radial-gradient(60% 55% at 0% 0%, rgb(240 60 145 / 0.9), transparent 75%),
     radial-gradient(50% 50% at 45% 0%, rgb(245 105 45 / 0.8), transparent 75%),
@@ -282,7 +280,9 @@ body {
     radial-gradient(65% 55% at 50% 50%, rgb(150 70 235 / 0.55), transparent 80%),
     radial-gradient(45% 40% at 30% 40%, rgb(230 60 145 / 0.35), transparent 80%),
     linear-gradient(135deg, #de85bb 0%, #b088ea 50%, #7fa4ec 100%);
-  /* Trial: in between — the pastel glows, a base halfway to the deep one. */
+  /* The Shop backdrop since 2026-11-19 (Carmen): the pastel glows over a
+     base halfway between --backdrop-glow (lighter) and
+     --backdrop-glow-deep (darker, "te heftig"). */
   --backdrop-glow-mid:
     radial-gradient(60% 55% at 0% 0%, rgb(255 79 160 / 0.85), transparent 75%),
     radial-gradient(50% 50% at 45% 0%, rgb(255 122 61 / 0.75), transparent 75%),
