@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { isLegalDoc } from "@/content/legal";
+import { isTextDoc } from "@/content/legal";
 import { getLegalSource } from "@/lib/settings/legal";
 import { resetLegalDocument, saveLegalDocument } from "@/lib/settings/admin-actions";
 import { ConfirmSubmitButton } from "@/components/ui/ConfirmDialog";
@@ -17,7 +17,7 @@ export default async function StudioLegalDocPage({
   searchParams: Promise<{ saved?: string; reset?: string; error?: string }>;
 }) {
   const { doc } = await params;
-  if (!isLegalDoc(doc)) notFound();
+  if (!isTextDoc(doc)) notFound();
   const { saved, reset, error } = await searchParams;
   const source = await getLegalSource(doc);
 
@@ -26,15 +26,15 @@ export default async function StudioLegalDocPage({
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <Link href="/studio/legal" className="text-ink hover:text-ink text-sm">
-            ← Legal
+            ← Texts
           </Link>
           <h1 className="font-display mt-1 text-2xl font-bold">{source.en.title}</h1>
         </div>
         <div className="flex gap-2">
-          <a href={`/legal/${doc}`} target="_blank" className="border-line hover:bg-mist rounded-full border px-4 py-2 text-sm font-semibold">
+          <a href={doc.startsWith("faq") ? "/faq" : `/legal/${doc}`} target="_blank" className="border-line hover:bg-mist rounded-full border px-4 py-2 text-sm font-semibold">
             View EN ↗
           </a>
-          <a href={`/nl/legal/${doc}`} target="_blank" className="border-line hover:bg-mist rounded-full border px-4 py-2 text-sm font-semibold">
+          <a href={doc.startsWith("faq") ? "/nl/faq" : `/nl/legal/${doc}`} target="_blank" className="border-line hover:bg-mist rounded-full border px-4 py-2 text-sm font-semibold">
             View NL ↗
           </a>
         </div>
@@ -60,7 +60,7 @@ export default async function StudioLegalDocPage({
       <div className="text-ink max-w-4xl rounded-3xl p-5 text-sm glass">
         <p className="font-semibold">How to write it</p>
         <p className="mt-1">
-          <code>## Heading</code> · <code>- bullet</code> · an empty line starts a new
+          <code>## Heading</code> (in a FAQ: every <code>##</code> line is a question) · <code>- bullet</code> · an empty line starts a new
           paragraph · <code>**bold**</code> · <code>[link text](/legal/terms)</code>. Email
           addresses become links by themselves.
         </p>

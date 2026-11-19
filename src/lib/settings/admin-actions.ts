@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { requireAdmin } from "@/lib/studio/guard";
-import { isLegalDoc } from "@/content/legal";
+import { isTextDoc } from "@/content/legal";
 import { BUSINESS_FIELDS } from "./business";
 
 /** Footer, contact and legal pages use these everywhere: refresh them all. */
@@ -36,7 +36,7 @@ export async function saveLegalDocument(formData: FormData) {
   const admin = createAdminClient();
   if (!admin) throw new Error("Supabase admin client not configured");
   const slug = String(formData.get("slug") ?? "");
-  if (!isLegalDoc(slug)) redirect("/studio/legal");
+  if (!isTextDoc(slug)) redirect("/studio/legal");
   const field = (name: string, max: number) =>
     String(formData.get(name) ?? "").replace(/\r\n/g, "\n").trim().slice(0, max);
   const row = {
@@ -62,7 +62,7 @@ export async function resetLegalDocument(formData: FormData) {
   const admin = createAdminClient();
   if (!admin) throw new Error("Supabase admin client not configured");
   const slug = String(formData.get("slug") ?? "");
-  if (!isLegalDoc(slug)) redirect("/studio/legal");
+  if (!isTextDoc(slug)) redirect("/studio/legal");
   if (formData.get("confirm") === "on") {
     await admin.from("legal_documents").delete().eq("slug", slug);
     refreshSite();

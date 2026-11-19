@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { getApprovedMakes } from "@/lib/makes/server";
 import { MakeShare } from "./MakeShare";
+import { Link } from "@/i18n/navigation";
 
 /** Product page: buyers' photos of their print, plus "share yours". */
 export async function MakesSection({ productId }: { productId: string }) {
@@ -38,8 +39,11 @@ export async function MakesSection({ productId }: { productId: string }) {
           ))}
         </div>
       )}
-      <div>
+      <div className="flex flex-wrap items-center gap-4">
         <MakeShare productId={productId} />
+        <Link href="/makes" className="text-ink text-sm font-semibold underline underline-offset-2">
+          {t("seeAll")} →
+        </Link>
       </div>
     </section>
   );

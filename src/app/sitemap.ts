@@ -14,6 +14,8 @@ const STATIC_ROUTES = [
   "/free-designs",
   "/requests",
   "/tools/3d-print-cost-calculator",
+  "/faq",
+  "/makes",
   "/business",
   "/about",
   "/contact",

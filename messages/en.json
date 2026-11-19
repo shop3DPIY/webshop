@@ -86,6 +86,8 @@
     "shopFree": "Free designs",
     "shopRequests": "Wish list & requests",
     "shopCalculator": "3D print price calculator",
+    "shopMakes": "Made by buyers",
+    "shopFaq": "FAQ",
     "shopBusiness": "Business",
     "legalHeading": "Legal",
     "legalPrivacy": "Privacy",
@@ -576,7 +578,8 @@
     "errorLimit": "You already have 3 photos of this design waiting for review.",
     "errorInvalid": "Pick a photo and tick the box.",
     "errorGeneric": "Something went wrong. Please try again later.",
-    "photoAlt": "A buyer's print of this design"
+    "photoAlt": "A buyer's print of this design",
+    "seeAll": "See all buyer photos"
   },
   "calculator": {
     "eyebrow": "Tools",
@@ -838,5 +841,21 @@
         "a": "Only if the license allows it. Most free and personal licenses don't. 3DPIY Business sells commercial licenses that let you sell physical prints."
       }
     }
+  },
+  "faqPage": {
+    "eyebrow": "Help",
+    "title": "Frequently asked questions",
+    "intro": "About buying, downloading, printing and licenses. Can't find your answer? Just mail me.",
+    "shop": "Shop",
+    "business": "Business",
+    "metaTitle": "FAQ — buying and printing 3D designs",
+    "metaDescription": "Answers about 3DPIY's digital 3D print files: printers, STL vs 3MF, downloads, licenses, updates, refunds and business use."
+  },
+  "makesPage": {
+    "eyebrow": "Community",
+    "title": "Made by buyers",
+    "description": "Photos buyers shared of what they printed. Bought a design? Share yours on its page.",
+    "empty": "No photos yet — the first ones will appear here soon.",
+    "photoAlt": "A buyer's print of {title}"
   }
 }

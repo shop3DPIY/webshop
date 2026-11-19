@@ -1,19 +1,20 @@
 import Link from "next/link";
-import { LEGAL_DOCS } from "@/content/legal";
+import { TEXT_DOCS } from "@/content/legal";
 import { getLegalSource } from "@/lib/settings/legal";
 
 /** The five legal pages; each opens an editor with English and Dutch. */
 export default async function StudioLegalPage() {
   const docs = await Promise.all(
-    LEGAL_DOCS.map(async (doc) => ({ doc, source: await getLegalSource(doc) })),
+    TEXT_DOCS.map(async (doc) => ({ doc, source: await getLegalSource(doc) })),
   );
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="font-display text-2xl font-bold">Legal</h1>
+        <h1 className="font-display text-2xl font-bold">Texts</h1>
         <p className="text-ink mt-1 max-w-2xl text-sm">
-          The legal pages in the footer. Pages you haven&apos;t edited show the
-          default text. Business details (KvK, address…) come from Settings.
+          The legal pages and the FAQs (Shop and Business). Pages you
+          haven&apos;t edited show the default text. Business details (KvK,
+          address…) come from Settings.
         </p>
       </div>
       <div className="divide-line divide-y rounded-3xl glass">

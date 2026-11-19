@@ -1,6 +1,6 @@
 import "server-only";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { DEFAULT_LEGAL, LEGAL_DOCS, type LegalDoc } from "@/content/legal";
+import { DEFAULT_LEGAL, LEGAL_DOCS, type LegalDoc, type TextDoc } from "@/content/legal";
 import { formatAddress, getBusinessDetails } from "./business";
 
 /**
@@ -19,7 +19,7 @@ export interface LegalText {
   updatedAt: string | null;
 }
 
-export async function getLegalSource(doc: LegalDoc) {
+export async function getLegalSource(doc: TextDoc) {
   const admin = createAdminClient();
   const { data } = admin
     ? await admin.from("legal_documents").select("*").eq("slug", doc).maybeSingle()
@@ -34,7 +34,7 @@ export async function getLegalSource(doc: LegalDoc) {
 }
 
 /** The text for the site, in the visitor's language, placeholders filled. */
-export async function getLegalText(doc: LegalDoc, locale: string): Promise<LegalText> {
+export async function getLegalText(doc: TextDoc, locale: string): Promise<LegalText> {
   const source = await getLegalSource(doc);
   const text = locale === "nl" ? source.nl : source.en;
   const b = await getBusinessDetails();

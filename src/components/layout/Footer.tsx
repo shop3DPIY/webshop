@@ -63,6 +63,12 @@ export async function Footer() {
             <li>
               <Link href="/tools/3d-print-cost-calculator">{t("shopCalculator")}</Link>
             </li>
+            <li>
+              <Link href="/makes">{t("shopMakes")}</Link>
+            </li>
+            <li>
+              <Link href="/faq">{t("shopFaq")}</Link>
+            </li>
             <BusinessNavLink asListItem label={t("shopBusiness")} />
           </ul>
         </div>
