@@ -179,7 +179,8 @@
       "loading": "One moment…",
       "from": "from {price}",
       "inclVat": "incl. VAT",
-      "digitalNote": "Digital file (STL/3MF) to print yourself — no physical product is shipped."
+      "digitalNote": "Digital file (STL/3MF) to print yourself — no physical product is shipped.",
+      "withdrawalNote": "Downloads start right after payment, so there is no 14-day withdrawal period: at checkout you agree to that, otherwise the purchase can't go through. <terms>Terms</terms>"
     },
     "free": {
       "intro": "Leave your email and we'll send you the download link straight away.",

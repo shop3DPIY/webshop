@@ -310,6 +310,16 @@ export default async function ProductPage({
                   loadingLabel={tBuy("loading")}
                   productSlug={product.slug}
                 />
+                {/* Said before paying, not only in Polar's checkbox. */}
+                <p className="text-ink/60 text-xs">
+                  {tBuy.rich("withdrawalNote", {
+                    terms: (chunks) => (
+                      <Link href="/legal/terms" className="underline underline-offset-2">
+                        {chunks}
+                      </Link>
+                    ),
+                  })}
+                </p>
               </div>
             ) : (
               <>
