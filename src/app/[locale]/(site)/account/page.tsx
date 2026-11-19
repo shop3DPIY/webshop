@@ -9,7 +9,7 @@ import { BackendNotConnected } from "@/components/system/BackendNotConnected";
 import { SignOutButton } from "@/components/account/SignOutButton";
 import { ProfileSettingsForm } from "@/components/account/ProfileSettingsForm";
 import { AccountNewsletter } from "@/components/newsletter/AccountNewsletter";
-import { Link } from "@/i18n/navigation";
+import { Link, redirect } from "@/i18n/navigation";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { createClient } from "@/lib/supabase/server";
 import {
@@ -44,19 +44,9 @@ export default async function AccountPage({
     data: { user },
   } = await supabase!.auth.getUser();
 
-  if (!user) {
-    return (
-      <Container
-        panel
-        className="flex flex-col items-center gap-6 py-24 text-center"
-      >
-        <SectionHeading as="h1" title={t("title")} />
-        <Button href="/auth/sign-in" size="lg">
-          {t("signIn")}
-        </Button>
-      </Container>
-    );
-  }
+  // Signed out: straight to the sign-in screen (it also links to
+  // creating an account) instead of a page with just a button.
+  if (!user) return redirect({ href: "/auth/sign-in", locale: await getLocale() });
 
   const [{ data: profile }, { data: entitlementRows }, { data: orders }] =
     await Promise.all([
