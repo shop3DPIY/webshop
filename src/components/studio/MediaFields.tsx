@@ -27,6 +27,7 @@ const DOWNLOAD_FORMATS = [
   { format: "3MF", accept: ".3mf", label: "3MF file" },
   { format: "ZIP", accept: ".zip", label: "ZIP file" },
   { format: "PDF", accept: ".pdf", label: "Instructions PDF" },
+  { format: "PATTERN", accept: ".pdf", label: "Sewing pattern PDF (dolls)" },
 ] as const;
 
 const BUTTON =

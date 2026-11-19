@@ -136,7 +136,7 @@ export function Calculator({
   const router = useRouter();
   const full = mode === "full";
   const [inputs, setInputs] = useState<CalcInputs>(() =>
-    withDefaults(full ? initial : { ...DEFAULT_INPUTS, ...SIMPLE_BASE, platformId: "none", feePct: 0, feeFixed: 0, listingFee: 0 }),
+    withDefaults(full ? initial : { ...DEFAULT_INPUTS, ...SIMPLE_BASE, platformId: "none", feePct: 0, feeFixed: 0, listingFee: 0, ...initial }),
   );
   const [name, setName] = useState(savedName ?? "");
   const [saveState, setSaveState] = useState<"idle" | "saved" | "error">("idle");

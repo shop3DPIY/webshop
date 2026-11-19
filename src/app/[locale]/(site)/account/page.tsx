@@ -1,6 +1,7 @@
 import { createAdminClient } from "@/lib/supabase/admin";
 import { getLocale, getTranslations } from "next-intl/server";
 import { formatEuro } from "@/lib/pricing/calculate";
+import { formatLabel } from "@/lib/fileFormats";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
@@ -114,7 +115,8 @@ export default async function AccountPage({
       .filter((item) => item.order_id === orderId && item.title)
       .map((item) => item.title)
       .join(", ");
-  const dateLocale = (await getLocale()) === "nl" ? "nl-NL" : "en-GB";
+  const locale = await getLocale();
+  const dateLocale = locale === "nl" ? "nl-NL" : "en-GB";
 
   return (
     <Container panel className="flex flex-col gap-14 py-16 sm:py-24">
@@ -175,7 +177,7 @@ export default async function AccountPage({
                         variant="secondary"
                         size="md"
                       >
-                        {t("download")} ({file.format})
+                        {t("download")} ({formatLabel(file.format, locale)})
                       </Button>
                     ))}
                   </div>

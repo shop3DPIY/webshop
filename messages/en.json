@@ -175,7 +175,15 @@
       "relatedTitle": "You might also like",
       "colors": "Colours",
       "colorsAms": "Multicolour with AMS — can also be printed in one colour without AMS",
-      "colorsNoAms": "No AMS needed"
+      "colorsNoAms": "No AMS needed",
+      "printTech": "Printer type",
+      "printTechFdm": "FDM (filament)",
+      "printTechResin": "Resin",
+      "nozzle": "Nozzle",
+      "printTime": "Print time",
+      "hoursValue": "{hours} h",
+      "filament": "Filament",
+      "infill": "Infill"
     },
     "buy": {
       "buyNow": "Buy now",
@@ -187,7 +195,8 @@
       "from": "from {price}",
       "inclVat": "incl. VAT",
       "digitalNote": "Digital file (STL/3MF) to print yourself — no physical product is shipped.",
-      "withdrawalNote": "Downloads start right after payment, so there is no 14-day withdrawal period: at checkout you agree to that, otherwise the purchase can't go through. <terms>Terms</terms>"
+      "withdrawalNote": "Downloads start right after payment, so there is no 14-day withdrawal period: at checkout you agree to that, otherwise the purchase can't go through. <terms>Terms</terms>",
+      "digitalNotePattern": "Digital sewing pattern (PDF) to print and sew yourself — no physical product is shipped."
     },
     "free": {
       "intro": "Leave your email and we'll send you the download link straight away.",
@@ -217,7 +226,9 @@
       "title": "Or download it in Bambu Studio",
       "body": "Open this design on MakerWorld (model {id}) and use “Open in Bambu Studio” — it's ready to slice there.",
       "button": "Open on MakerWorld"
-    }
+    },
+    "partsTitle": "Extra parts you need",
+    "calcLink": "What does printing this cost you? Calculate it"
   },
   "business": {
     "eyebrow": "Business & commissions",

@@ -38,6 +38,12 @@ interface ExistingProduct {
     recommendedMaterials?: string[];
     supportsRequired?: boolean;
     colorSetup?: "ams" | "no-ams";
+    printTech?: "fdm" | "resin";
+    nozzleMm?: number;
+    printTimeHours?: number;
+    filamentGrams?: number;
+    infillPct?: number;
+    requiredParts?: { qty: number; name: string; url?: string }[];
     instructions?: string;
     compatiblePrinters?: string[];
   } | null;
@@ -55,6 +61,7 @@ interface ExistingProduct {
   price_unlimited_cents: number | null;
   price_overrides: PriceTier[] | null;
   bundle_product_ids: string[] | null;
+  product_kind: "print" | "pattern" | null;
 }
 
 const FIELD =
@@ -118,7 +125,16 @@ export function ProductForm({
               aiAvailable={aiAvailable}
             />
 
-            <section className="grid gap-4 sm:grid-cols-3">
+            <section className="grid gap-4 sm:grid-cols-2">
+              <label className={LABEL}>
+                <span>
+                  Type <Info text="A sewing pattern hides the printing details on the product page; upload it as 'Sewing pattern PDF'" />
+                </span>
+                <select name="productKind" defaultValue={p?.product_kind ?? "print"} className={FIELD}>
+                  <option value="print">3D print design</option>
+                  <option value="pattern">Sewing pattern (dolls)</option>
+                </select>
+              </label>
               <label className={LABEL}>
                 Collection
                 <select
@@ -295,6 +311,51 @@ export function ProductForm({
                 name="compatiblePrinters"
                 defaultValue={p?.print_settings?.compatiblePrinters?.join(", ")}
                 className={FIELD}
+              />
+            </label>
+
+            <section className="grid gap-4 sm:grid-cols-3">
+              <label className={LABEL}>
+                Printer type
+                <select name="printTech" defaultValue={p?.print_settings?.printTech ?? "fdm"} className={FIELD}>
+                  <option value="fdm">FDM (filament)</option>
+                  <option value="resin">Resin (SLA/MSLA)</option>
+                </select>
+              </label>
+              <label className={LABEL}>
+                Nozzle (mm)
+                <input type="text" inputMode="decimal" name="nozzleMm" defaultValue={p?.print_settings?.nozzleMm ?? 0.4} className={FIELD} />
+              </label>
+              <label className={LABEL}>
+                Infill (%)
+                <input type="text" inputMode="decimal" name="infillPct" defaultValue={p?.print_settings?.infillPct} placeholder="e.g. 15" className={FIELD} />
+              </label>
+              <label className={LABEL}>
+                <span>
+                  Print time (hours){" "}
+                  <Info text="All parts together, as the slicer says. Shown on the page and used by the cost calculator link." />
+                </span>
+                <input type="text" inputMode="decimal" name="printTimeHours" defaultValue={p?.print_settings?.printTimeHours} placeholder="e.g. 3,5" className={FIELD} />
+              </label>
+              <label className={LABEL}>
+                Filament (grams)
+                <input type="text" inputMode="decimal" name="filamentGrams" defaultValue={p?.print_settings?.filamentGrams} placeholder="e.g. 85" className={FIELD} />
+              </label>
+            </section>
+
+            <label className={LABEL}>
+              <span>
+                Extra parts needed{" "}
+                <Info text="One per line: 4x magnet 6×2 mm | link (link optional). For electronics, screws, magnets, inserts…" />
+              </span>
+              <textarea
+                name="requiredParts"
+                rows={3}
+                defaultValue={(p?.print_settings?.requiredParts ?? [])
+                  .map((part) => `${part.qty}x ${part.name}${part.url ? ` | ${part.url}` : ""}`)
+                  .join("\n")}
+                className={FIELD}
+                placeholder={"4x magnet 6×2 mm\n1x ESP32 D1 mini | https://…"}
               />
             </label>
 

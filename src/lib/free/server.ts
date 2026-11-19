@@ -3,6 +3,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { isMailConfigured, sendMail } from "@/lib/mail/send";
 import { emailButton, emailLayout, escapeHtml } from "@/lib/mail/template";
 import { manageUrl } from "@/lib/newsletter/server";
+import { formatLabel } from "@/lib/fileFormats";
 
 /**
  * Free designs need an email address: leaving it on a free design's page
@@ -101,7 +102,7 @@ export async function sendFreeDownloadMail(params: {
     ? manageUrl(params.newsletterToken, params.locale)
     : null;
   const links = params.formats.map((format) => ({
-    label: params.formats.length > 1 ? `${c.download} (${format})` : c.download,
+    label: params.formats.length > 1 ? `${c.download} (${formatLabel(format, params.locale)})` : c.download,
     url: freeDownloadUrl(params.token, format),
   }));
 

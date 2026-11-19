@@ -175,7 +175,15 @@
       "relatedTitle": "Dit vind je misschien ook leuk",
       "colors": "Kleuren",
       "colorsAms": "Meerkleurig met AMS — kan ook in één kleur geprint worden zonder AMS",
-      "colorsNoAms": "Geen AMS nodig"
+      "colorsNoAms": "Geen AMS nodig",
+      "printTech": "Printertype",
+      "printTechFdm": "FDM (filament)",
+      "printTechResin": "Resin",
+      "nozzle": "Nozzle",
+      "printTime": "Printtijd",
+      "hoursValue": "{hours} uur",
+      "filament": "Filament",
+      "infill": "Infill"
     },
     "buy": {
       "buyNow": "Nu kopen",
@@ -187,7 +195,8 @@
       "from": "vanaf {price}",
       "inclVat": "incl. btw",
       "digitalNote": "Digitaal bestand (STL/3MF) om zelf te printen — er wordt geen fysiek product gestuurd.",
-      "withdrawalNote": "Je kunt direct na betaling downloaden, daarom is er geen bedenktijd van 14 dagen: bij het afrekenen ga je daarmee akkoord, anders kan de aankoop niet doorgaan. <terms>Voorwaarden</terms>"
+      "withdrawalNote": "Je kunt direct na betaling downloaden, daarom is er geen bedenktijd van 14 dagen: bij het afrekenen ga je daarmee akkoord, anders kan de aankoop niet doorgaan. <terms>Voorwaarden</terms>",
+      "digitalNotePattern": "Digitaal naaipatroon (PDF) om zelf te printen en naaien — er wordt geen fysiek product gestuurd."
     },
     "free": {
       "intro": "Laat je e-mailadres achter, dan mailen we je meteen de downloadlink.",
@@ -217,7 +226,9 @@
       "title": "Of download hem in Bambu Studio",
       "body": "Open dit ontwerp op MakerWorld (model {id}) en kies “Open in Bambu Studio” — daar staat hij klaar om te slicen.",
       "button": "Openen op MakerWorld"
-    }
+    },
+    "partsTitle": "Extra onderdelen die je nodig hebt",
+    "calcLink": "Wat kost het jou om dit te printen? Reken het uit"
   },
   "business": {
     "eyebrow": "Zakelijk & opdrachten",

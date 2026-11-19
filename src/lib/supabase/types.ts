@@ -41,6 +41,12 @@ export interface Database {
             recommendedMaterials?: string[];
             supportsRequired?: boolean;
             colorSetup?: "ams" | "no-ams";
+            printTech?: "fdm" | "resin";
+            nozzleMm?: number;
+            printTimeHours?: number;
+            filamentGrams?: number;
+            infillPct?: number;
+            requiredParts?: { qty: number; name: string; url?: string }[];
             instructions?: string;
             compatiblePrinters?: string[];
           } | null;
@@ -69,6 +75,7 @@ export interface Database {
           price_overrides: ("personal" | "small" | "unlimited")[];
           /** Non-empty = a bundle of these designs, see 0016 */
           bundle_product_ids: string[];
+          product_kind: "print" | "pattern";
           created_at: string;
           updated_at: string;
         };

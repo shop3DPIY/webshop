@@ -45,6 +45,7 @@ interface ProductRow {
   external_links: Product["externalLinks"] | null;
   price_cents: number | null;
   bundle_product_ids: string[] | null;
+  product_kind: "print" | "pattern" | null;
 }
 
 function mapRow(row: ProductRow): Product {
@@ -73,6 +74,7 @@ function mapRow(row: ProductRow): Product {
     externalLinks: row.external_links ?? undefined,
     priceCents: row.price_cents,
     bundleProductIds: row.bundle_product_ids ?? [],
+    productKind: row.product_kind ?? "print",
   };
 }
 
@@ -107,7 +109,7 @@ async function withBundleImages(products: Product[]): Promise<Product[]> {
 }
 
 const PRODUCT_COLUMNS =
-  "id, slug, title, description, title_nl, description_nl, category, extra_categories, tags, images, timelapse_url, download_files, dimensions, print_settings, version, last_updated, license_type, is_free, commerce_product_ids, publication_status, related_product_ids, external_links, price_cents, bundle_product_ids";
+  "id, slug, title, description, title_nl, description_nl, category, extra_categories, tags, images, timelapse_url, download_files, dimensions, print_settings, version, last_updated, license_type, is_free, commerce_product_ids, publication_status, related_product_ids, external_links, price_cents, bundle_product_ids, product_kind";
 
 export async function getAllProducts(): Promise<Product[]> {
   if (!isSupabaseConfigured()) return FALLBACK_PRODUCTS;

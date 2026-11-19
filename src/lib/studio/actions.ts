@@ -96,6 +96,48 @@ function extraCategoriesFor(
 }
 
 /**
+ * Printer type, nozzle, print time, filament, infill and extra parts from
+ * the Studio form. A form without these fields (the ingest route) keeps
+ * what was stored. Parts: one per line, "4x magnet 6×2 mm | https://…".
+ */
+function printDetailsFromForm(
+  formData: FormData,
+  existing: Record<string, unknown> | null | undefined,
+) {
+  if (!formData.has("printTech")) {
+    const keep = ["printTech", "nozzleMm", "printTimeHours", "filamentGrams", "infillPct", "requiredParts"];
+    return Object.fromEntries(keep.filter((k) => existing?.[k] !== undefined).map((k) => [k, existing![k]]));
+  }
+  const num = (key: string) => {
+    const n = Number(String(formData.get(key) ?? "").replace(",", "."));
+    return String(formData.get(key) ?? "").trim() && Number.isFinite(n) && n > 0 ? n : undefined;
+  };
+  const requiredParts = String(formData.get("requiredParts") ?? "")
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .slice(0, 30)
+    .map((line) => {
+      const [left, link] = line.split("|").map((x) => x.trim());
+      const m = left.match(/^(\d+)\s*[x×]\s*(.+)$/i);
+      const url = link && /^https?:\/\//.test(link) ? link.slice(0, 500) : undefined;
+      return {
+        qty: m ? Number(m[1]) : 1,
+        name: (m ? m[2] : left).slice(0, 120),
+        ...(url && { url }),
+      };
+    });
+  return {
+    printTech: formData.get("printTech") === "resin" ? "resin" : "fdm",
+    nozzleMm: num("nozzleMm"),
+    printTimeHours: num("printTimeHours"),
+    filamentGrams: num("filamentGrams"),
+    infillPct: num("infillPct"),
+    requiredParts,
+  };
+}
+
+/**
  * MakerWorld model from Studio: a model number ("123456") or a link
  * (https://makerworld.com/en/models/123456-…). Stored as a clean link;
  * anything else is dropped.
@@ -171,7 +213,7 @@ function parseStudioMedia(formData: FormData) {
     ) ?? []
   ).filter(
     (d) =>
-      ["STL", "3MF", "ZIP", "PDF"].includes(d?.format) &&
+      ["STL", "3MF", "ZIP", "PDF", "PATTERN"].includes(d?.format) &&
       typeof d.fileName === "string" &&
       STORAGE_PATH_RE.test(d.path),
   );
@@ -306,6 +348,7 @@ export async function persistProduct(
     supportsRequired: formData.get("supportsRequired") === "on",
     instructions: String(formData.get("instructions") ?? "") || undefined,
     compatiblePrinters: splitList(formData.get("compatiblePrinters")),
+    ...printDetailsFromForm(formData, existing?.print_settings),
     // Only the Studio form has this field; the ingest route keeps what's set.
     colorSetup: formData.has("colorSetup")
       ? ["ams", "no-ams"].includes(String(formData.get("colorSetup")))
@@ -347,6 +390,9 @@ export async function persistProduct(
     version: String(formData.get("version") ?? "1.0.0"),
     license_type: String(formData.get("licenseType") ?? "personal"),
     is_free: formData.get("isFree") === "on",
+    ...(formData.has("productKind") && {
+      product_kind: formData.get("productKind") === "pattern" ? "pattern" : "print",
+    }),
     // "Set live" button: saves and publishes in one go.
     publication_status:
       formData.get("setLive") === "1"

@@ -6,6 +6,7 @@ import { Link } from "@/i18n/navigation";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import { confirmCheckout } from "@/lib/commerce/polar/checkout";
+import { formatLabel } from "@/lib/fileFormats";
 
 export async function generateMetadata() {
   const t = await getTranslations("checkoutSuccess");
@@ -97,7 +98,7 @@ export default async function CheckoutSuccessPage({
                   href={`/api/checkout/download/${checkoutId}/${file.format}${group.id ? `?p=${group.id}` : ""}`}
                   size="lg"
                 >
-                  {tAccount("download")} ({file.format})
+                  {tAccount("download")} ({formatLabel(file.format, locale)})
                 </Button>
               ))}
             </div>

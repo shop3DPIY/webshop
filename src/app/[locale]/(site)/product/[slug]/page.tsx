@@ -25,6 +25,7 @@ import { BuyButton } from "@/components/product/BuyButton";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { formatEuro } from "@/lib/pricing/calculate";
 import { productText } from "@/types/product";
+import { formatLabel } from "@/lib/fileFormats";
 
 export async function generateStaticParams() {
   const products = await getAllProducts();
@@ -85,38 +86,53 @@ export default async function ProductPage({
         ? tBuy("from", { price: formatEuro(product.priceCents) })
         : formatEuro(product.priceCents);
 
+  // Sewing patterns have no printing details.
+  const isPattern = product.productKind === "pattern";
+  const ps = isPattern ? undefined : product.printSettings;
+  const nl = locale === "nl";
+  const num = (n: number) => String(n).replace(".", nl ? "," : ".");
+
   const specRows = [
+    !isPattern && {
+      label: tSpecs("printTech"),
+      value: tSpecs(ps?.printTech === "resin" ? "printTechResin" : "printTechFdm"),
+    },
+    ps?.nozzleMm && { label: tSpecs("nozzle"), value: `${num(ps.nozzleMm)} mm` },
+    ps?.printTimeHours && {
+      label: tSpecs("printTime"),
+      value: tSpecs("hoursValue", { hours: num(ps.printTimeHours) }),
+    },
+    ps?.filamentGrams && { label: tSpecs("filament"), value: `${num(ps.filamentGrams)} g` },
+    ps?.infillPct && { label: tSpecs("infill"), value: `${num(ps.infillPct)}%` },
     product.dimensions && {
       label: tSpecs("dimensions"),
       value: `${product.dimensions.width} × ${product.dimensions.depth} × ${product.dimensions.height} mm`,
     },
     product.downloadFiles.length > 0 && {
       label: tSpecs("downloadFiles"),
-      value: [...new Set(product.downloadFiles.map((f) => f.format))].join(
+      value: [...new Set(product.downloadFiles.map((f) => formatLabel(f.format, locale)))].join(
         ", ",
       ),
     },
-    product.printSettings?.layerHeightMm && {
+    ps?.layerHeightMm && {
       label: tSpecs("layerHeight"),
-      value: `${product.printSettings.layerHeightMm} mm`,
+      value: `${num(ps.layerHeightMm)} mm`,
     },
-    product.printSettings?.recommendedMaterials?.length && {
+    ps?.recommendedMaterials?.length && {
       label: tSpecs("recommendedMaterials"),
-      value: product.printSettings.recommendedMaterials.join(", "),
+      value: ps.recommendedMaterials.join(", "),
     },
-    product.printSettings?.supportsRequired !== undefined && {
+    ps?.supportsRequired !== undefined && {
       label: tSpecs("supportsRequired"),
-      value: product.printSettings.supportsRequired
-        ? tSpecs("supportYes")
-        : tSpecs("supportNo"),
+      value: ps.supportsRequired ? tSpecs("supportYes") : tSpecs("supportNo"),
     },
-    product.printSettings?.colorSetup && {
+    ps?.colorSetup && {
       label: tSpecs("colors"),
-      value: tSpecs(product.printSettings.colorSetup === "ams" ? "colorsAms" : "colorsNoAms"),
+      value: tSpecs(ps.colorSetup === "ams" ? "colorsAms" : "colorsNoAms"),
     },
-    product.printSettings?.compatiblePrinters?.length && {
+    ps?.compatiblePrinters?.length && {
       label: tSpecs("compatiblePrinters"),
-      value: product.printSettings.compatiblePrinters.join(", "),
+      value: ps.compatiblePrinters.join(", "),
     },
     {
       label: tSpecs("license"),
@@ -194,9 +210,7 @@ export default async function ProductPage({
           <h1 className="font-display text-ink text-3xl font-bold sm:text-4xl">
             {text.title}
           </h1>
-          {product.printSettings?.colorSetup && (
-            <ColorSetupBadge setup={product.printSettings.colorSetup} />
-          )}
+          {ps?.colorSetup && <ColorSetupBadge setup={ps.colorSetup} />}
           {/* The buy box sits below the photos on phones — the price and a
               jump link up here keep it in the first screen. */}
           {!product.isFree && priceLabel && checkout.mode === "redirect" && (
@@ -292,6 +306,34 @@ export default async function ProductPage({
             </div>
           )}
 
+          {(ps?.requiredParts?.length ?? 0) > 0 && (
+            <div className="flex flex-col gap-2 rounded-3xl p-5 glass">
+              <h2 className="font-display text-ink text-base font-semibold">{t("partsTitle")}</h2>
+              <ul className="text-ink/80 flex flex-col gap-1 text-sm">
+                {ps!.requiredParts!.map((part, i) => (
+                  <li key={i}>
+                    {part.qty}× {part.url ? (
+                      <a href={part.url} target="_blank" rel="noopener noreferrer nofollow" className="underline underline-offset-2">
+                        {part.name} ↗
+                      </a>
+                    ) : (
+                      part.name
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {ps?.printTimeHours && ps.filamentGrams && (
+            <Link
+              href={`/tools/3d-print-cost-calculator?grams=${ps.filamentGrams}&hours=${ps.printTimeHours}`}
+              className="text-ink/70 hover:text-ink w-fit text-sm underline underline-offset-2"
+            >
+              🧮 {t("calcLink")}
+            </Link>
+          )}
+
           {product.printSettings?.instructions && (
             <p className="text-ink/70 text-sm">
               {product.printSettings.instructions}
@@ -355,7 +397,7 @@ export default async function ProductPage({
             {/* Said once here for every design, so descriptions don't
                 each have to repeat it. */}
             <p className="text-ink/60 border-line mt-4 border-t pt-4 text-xs">
-              {tBuy("digitalNote")}
+              {isPattern ? tBuy("digitalNotePattern") : tBuy("digitalNote")}
             </p>
           </div>
 

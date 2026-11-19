@@ -26,7 +26,15 @@ export async function generateMetadata() {
  * and FAQ (with structured data) so search engines and AI assistants can
  * read and quote it; the full version lives in the account.
  */
-export default async function CalculatorPage() {
+export default async function CalculatorPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ grams?: string; hours?: string }>;
+}) {
+  // From a product page: start with that design's filament and print time.
+  const { grams, hours } = await searchParams;
+  const g = Number(grams);
+  const h = Number(hours);
   const t = await getTranslations("calculatorPage");
   const locale = await getLocale();
   const url = `https://3dpiy.com${locale === "nl" ? "/nl" : ""}${PATH}`;
@@ -60,7 +68,13 @@ export default async function CalculatorPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SectionHeading as="h1" eyebrow={t("eyebrow")} title={t("title")} description={t("intro")} />
 
-      <Calculator mode="simple" />
+      <Calculator
+        mode="simple"
+        initial={{
+          ...(g > 0 && g < 100000 && { materials: [{ name: "", grams: g, pricePerKg: 20 }] }),
+          ...(h > 0 && h < 1000 && { printHours: h }),
+        }}
+      />
 
       <section className="grid gap-8 lg:grid-cols-2">
         <div className="flex flex-col gap-3">

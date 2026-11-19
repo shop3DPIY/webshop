@@ -11,7 +11,7 @@ import type { CollectionSlug } from "@/lib/config/colors";
  * matching this shape.
  */
 
-export type FileFormat = "STL" | "3MF";
+export type FileFormat = "STL" | "3MF" | "ZIP" | "PDF" | "PATTERN";
 
 export type LicenseType =
   | "personal"
@@ -51,6 +51,17 @@ export interface PrintSettings {
    * every part printed separately). Unset = not stated.
    */
   colorSetup?: "ams" | "no-ams";
+  /** Printing technology the design is made for (default FDM) */
+  printTech?: "fdm" | "resin";
+  /** Nozzle the design was printed and tested with, e.g. 0.4 */
+  nozzleMm?: number;
+  /** Total print time of all parts, in hours (also feeds the calculator) */
+  printTimeHours?: number;
+  /** Total filament for all parts, in grams */
+  filamentGrams?: number;
+  infillPct?: number;
+  /** Extra parts to buy: magnets, screws, electronics… */
+  requiredParts?: RequiredPart[];
   /** Free-form printing instructions / tips */
   instructions?: string;
   /** Printers this design is explicitly confirmed compatible with */
@@ -114,8 +125,16 @@ export interface Product {
   };
   /** Personal-license price in cents (null for free/unpriced designs) */
   priceCents?: number | null;
+  /** A 3D print design, or a sewing pattern (dolls) — see migration 0020 */
+  productKind?: "print" | "pattern";
   /** Non-empty: this product is a bundle of these designs */
   bundleProductIds?: string[];
+}
+
+export interface RequiredPart {
+  qty: number;
+  name: string;
+  url?: string;
 }
 
 export interface CompatibleLink {
