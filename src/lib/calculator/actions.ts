@@ -1,0 +1,63 @@
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { createClient } from "@/lib/supabase/server";
+import { withDefaults, type CalcInputs } from "./calc";
+
+/**
+ * Saved calculations (migration 0018). Uses the visitor's own session:
+ * row-level security only lets people read and change their own rows.
+ */
+
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+async function currentUser() {
+  const supabase = await createClient();
+  const user = supabase ? (await supabase.auth.getUser()).data.user : null;
+  return { supabase, user };
+}
+
+export async function saveCalculation(input: {
+  id: string | null;
+  name: string;
+  inputs: CalcInputs;
+  priceCents: number;
+}): Promise<{ ok: true; id: string } | { ok: false }> {
+  const { supabase, user } = await currentUser();
+  if (!supabase || !user) return { ok: false };
+  const row = {
+    name: input.name.slice(0, 120),
+    // Re-validated, so only known fields with sane types are stored.
+    inputs: withDefaults(input.inputs),
+    price_cents: Number.isFinite(input.priceCents) ? Math.round(input.priceCents) : null,
+    updated_at: new Date().toISOString(),
+  };
+  if (input.id && UUID_RE.test(input.id)) {
+    const { error } = await supabase
+      .from("calculations")
+      .update(row)
+      .eq("id", input.id)
+      .eq("user_id", user.id);
+    if (error) return { ok: false };
+    revalidatePath("/account/calculator");
+    return { ok: true, id: input.id };
+  }
+  const { data, error } = await supabase
+    .from("calculations")
+    .insert({ ...row, user_id: user.id })
+    .select("id")
+    .single();
+  if (error || !data) return { ok: false };
+  revalidatePath("/account/calculator");
+  return { ok: true, id: data.id };
+}
+
+/** Delete one saved calculation (the button asks to confirm first). */
+export async function deleteCalculation(formData: FormData) {
+  const { supabase, user } = await currentUser();
+  const id = String(formData.get("id") ?? "");
+  if (supabase && user && formData.get("confirm") === "on" && UUID_RE.test(id)) {
+    await supabase.from("calculations").delete().eq("id", id).eq("user_id", user.id);
+  }
+  revalidatePath("/account/calculator");
+}

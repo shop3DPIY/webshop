@@ -142,6 +142,14 @@ export default async function AccountPage({
         </div>
       )}
 
+      <Link
+        href="/account/calculator"
+        className="hover:bg-mist flex items-center justify-between gap-4 rounded-3xl p-5 glass transition-colors"
+      >
+        <span className="font-display text-ink text-base font-semibold">🧮 {t("calculatorLink")}</span>
+        <span aria-hidden>→</span>
+      </Link>
+
       <section className="flex flex-col gap-6">
         <h2 className="font-display text-ink text-xl font-semibold">
           {t("libraryTab")}

@@ -83,6 +83,7 @@
     "shopAll": "All designs",
     "shopFree": "Free designs",
     "shopRequests": "Wish list & requests",
+    "shopCalculator": "3D print price calculator",
     "shopBusiness": "Business",
     "legalHeading": "Legal",
     "legalPrivacy": "Privacy",
@@ -358,7 +359,8 @@
     "adminBannerTitle": "You're signed in as an admin",
     "adminBannerBody": "This is the customer view. To add products, upload files, and manage orders, use 3DPIY Studio instead.",
     "adminBannerCta": "Open 3DPIY Studio",
-    "orderFallbackTitle": "Order"
+    "orderFallbackTitle": "Order",
+    "calculatorLink": "Price calculator"
   },
   "trackChooser": {
     "eyebrow": "Independent digital design studio",
@@ -521,5 +523,223 @@
     "errorInvalid": "Pick a photo and tick the box.",
     "errorGeneric": "Something went wrong. Please try again later.",
     "photoAlt": "A buyer's print of this design"
+  },
+  "calculator": {
+    "eyebrow": "Tools",
+    "fullTitle": "Full 3D print price calculator",
+    "fullIntro": "Every cost that goes into a print — including the ones most makers forget — and the price you should ask. Save as many calculations as you like.",
+    "signInBody": "The full calculator — design costs, machine wear, platform fees, packaging, overhead and saved calculations — is free with a 3DPIY account.",
+    "signIn": "Sign in",
+    "signUp": "Create a free account",
+    "backToSimple": "Or use the quick calculator",
+    "toAccount": "My account",
+    "savedTitle": "Your calculations",
+    "newCalc": "New calculation",
+    "untitled": "Untitled",
+    "delete": "Delete",
+    "deleteTitle": "Delete “{name}”?",
+    "deleteBody": "This calculation is deleted for good.",
+    "deleteConfirm": "Yes, delete",
+    "cancel": "Cancel",
+    "s": {
+      "print": "The print",
+      "printIntro": "Everything for one plate. Several items on one plate? Fill in how many — the costs are split.",
+      "printer": "Printer & power",
+      "printerIntro": "Your printer wears out and uses electricity; failed prints cost everything again.",
+      "time": "Your time",
+      "timeIntro": "Your work is a cost too — otherwise you're working for free.",
+      "design": "Design",
+      "designIntro": "Designing, a bought license and test prints are paid back over everything you expect to sell.",
+      "extras": "Extras, packaging & shipping",
+      "extrasIntro": "Magnets, screws, inserts, paint, glue… per item.",
+      "overhead": "Fixed monthly costs",
+      "overheadIntro": "Software, website, insurance, workspace, subscriptions — spread over what you sell.",
+      "selling": "Selling",
+      "sellingIntro": "Where you sell, VAT and the profit you want."
+    },
+    "itemsPerPlate": "Items per plate",
+    "itemsPerPlateHint": "How many come off one print",
+    "printHours": "Print time",
+    "hours": "hours",
+    "wasteGrams": "Waste per plate",
+    "wasteGramsHint": "AMS purge, prime tower, brim, supports you throw away",
+    "materials": "Filament",
+    "materialName": "Material / colour",
+    "grams": "Filament used",
+    "pricePerKg": "Filament price",
+    "addMaterial": "Add colour / material",
+    "materialsHint": "Grams for the whole plate — the slicer shows them per filament.",
+    "printerPrice": "Printer price",
+    "printerLifeHours": "Expected life",
+    "printerLifeHint": "Print hours before it's worn out or replaced (often 3,000–8,000)",
+    "maintenancePerHour": "Maintenance",
+    "maintenanceHint": "Nozzles, build plates, belts, lubricant — per print hour",
+    "powerWatts": "Average power",
+    "powerHint": "Bambu P1S/X1 ≈ 100–150 W while printing",
+    "kwhPrice": "Electricity price",
+    "failurePct": "Failed prints",
+    "failureHint": "Share of prints you have to redo",
+    "hourlyRate": "Your hourly rate",
+    "hourlyRateHint": "What an hour of your time is worth",
+    "prepMinutes": "Preparation per plate",
+    "prepHint": "Slicing, cleaning the plate, starting and checking",
+    "postMinutes": "Finishing per item",
+    "postHint": "Removing supports, sanding, painting, assembling",
+    "packMinutes": "Packing per item",
+    "packHint": "Packing, label, bringing it to the post",
+    "designHours": "Design time",
+    "designHoursHint": "Hours you spent designing this product",
+    "designLicenseCost": "Bought license / file",
+    "designLicenseHint": "e.g. a commercial license for someone else's design",
+    "prototypeCost": "Test prints & prototypes",
+    "prototypeHint": "Filament and time for the versions before it was right",
+    "designUnits": "Expected sales",
+    "designUnitsHint": "Design costs are spread over this many items",
+    "extraName": "e.g. magnets 6×2 mm (×4)",
+    "extraCost": "Cost per item",
+    "addExtra": "Add extra",
+    "remove": "Remove",
+    "packagingCost": "Packaging",
+    "packagingHint": "Box, bubble wrap, tape, sticker, card",
+    "shippingCost": "Postage you pay",
+    "shippingCharged": "Shipping the customer pays",
+    "shippingChargedHint": "Platform fees are charged on this too",
+    "overheadPerMonth": "Fixed costs per month",
+    "overheadHint": "Software, website, insurance, workspace…",
+    "itemsPerMonth": "Items sold per month",
+    "platform": "Where you sell",
+    "platforms": {
+      "none": "No platform fees",
+      "etsy": "Etsy (Netherlands)",
+      "etsyAds": "Etsy with Offsite Ads",
+      "webshop": "Own webshop (payment costs)",
+      "custom": "Custom"
+    },
+    "feePct": "Platform fee",
+    "feeFixed": "Fixed fee per order",
+    "listingFee": "Listing fee per sale",
+    "feesNote": "Platform fees change now and then — check the current rates of your platform.",
+    "returnsPct": "Returns & discount reserve",
+    "returnsHint": "Refunds, discounts, lost parcels",
+    "vat": "VAT",
+    "vatKor": "No VAT (small business scheme / KOR)",
+    "vat21": "21% VAT",
+    "vat9": "9% VAT",
+    "profitMode": "Profit as",
+    "profitMargin": "% of revenue",
+    "profitAmount": "Amount per item",
+    "marginPct": "Margin",
+    "profitPerItem": "Profit per item",
+    "rounding": "Round the price",
+    "round99": "Up to .99 (€12.99)",
+    "round50": "Up to 50 cents (€12.50)",
+    "roundNone": "Don't round",
+    "price": "Asking price",
+    "priceNoVat": "No VAT charged",
+    "priceInclVat": "Incl. {vat} VAT",
+    "costPrice": "Cost price",
+    "platformFees": "Platform fees",
+    "returnsReserve": "Returns reserve",
+    "profit": "Your profit",
+    "perHour": "Earned per hour of your work",
+    "breakEven": "Design paid back after",
+    "items": "{n} sold",
+    "breakdown": "Cost price per item",
+    "lines": {
+      "material": "Filament",
+      "waste": "Waste & purge",
+      "energy": "Electricity",
+      "machine": "Printer wear & maintenance",
+      "failures": "Failed prints",
+      "labour": "Your time",
+      "design": "Design",
+      "extras": "Extras",
+      "packaging": "Packaging",
+      "shipping": "Shipping (net)",
+      "overhead": "Fixed costs"
+    },
+    "impossible": "With these fees and this margin no price can make a profit. Lower the margin or the fees.",
+    "name": "Name",
+    "namePlaceholder": "e.g. Kallax insert, red",
+    "save": "Save",
+    "saveNew": "Save calculation",
+    "saveCopy": "Save as new",
+    "saved": "Saved",
+    "saveError": "Couldn't save. Try again.",
+    "fullTeaser": "Want the full picture? The free full calculator adds design costs, printer wear, packaging, platform fees, fixed costs — and saves your calculations.",
+    "openFull": "Open the full calculator"
+  },
+  "calculatorPage": {
+    "eyebrow": "Free tool",
+    "title": "3D print cost & price calculator",
+    "metaTitle": "3D Print Cost & Price Calculator (free)",
+    "metaDescription": "Free 3D print cost calculator: filament, electricity, your time, platform fees and VAT — and the price to sell your 3D prints for on Etsy or your own shop.",
+    "intro": "What does a 3D print really cost, and what should you ask for it? Fill in filament, print time and your time — the calculator gives the cost price and a selling price that still leaves you a profit after platform fees and VAT.",
+    "howTitle": "How the price is calculated",
+    "howBody": "First the cost price per item: filament (grams × price per kg), electricity (power × print time × kWh price), printer wear, failed prints and your own time. Then the selling price is calculated backwards, so that what's left after VAT and platform fees is exactly the profit you want.",
+    "formula": "price = (cost price + fixed fees + profit) ÷ ((1 − margin) ÷ (1 + VAT) − platform %)",
+    "howBody2": "Selling on Etsy? Etsy charges a transaction fee, payment processing and a listing fee on every sale — choose Etsy and they're included. Prices are rounded up to .99 by default.",
+    "forgottenTitle": "Costs most makers forget",
+    "forgotten": {
+      "waste": {
+        "title": "Waste and purge",
+        "body": "multicolour prints with an AMS throw away filament with every colour change — sometimes more than the model itself."
+      },
+      "failures": {
+        "title": "Failed prints",
+        "body": "if 1 in 20 prints fails, every print costs 5% more."
+      },
+      "machine": {
+        "title": "Printer wear",
+        "body": "a printer lasts a few thousand print hours, and nozzles and build plates wear out."
+      },
+      "design": {
+        "title": "Design time and test prints",
+        "body": "hours of designing and the versions before it was right should be earned back."
+      },
+      "fees": {
+        "title": "Platform fees on shipping",
+        "body": "Etsy charges its percentage on the shipping the customer pays too."
+      },
+      "time": {
+        "title": "Your own time",
+        "body": "removing supports, sanding, packing and going to the post office add up."
+      },
+      "overhead": {
+        "title": "Fixed costs",
+        "body": "software, website, insurance and subscriptions are part of every item you sell."
+      },
+      "returns": {
+        "title": "Returns and discounts",
+        "body": "a small reserve keeps a refund or a lost parcel from eating your profit."
+      }
+    },
+    "faqTitle": "Frequently asked questions",
+    "faq": {
+      "q1": {
+        "q": "How much does it cost to 3D print something?",
+        "a": "For a typical PLA print the filament is often only €0.50–€3; electricity is a few cents per hour. The real costs are your time, failed prints, printer wear, packaging and platform fees — which is why the cost price is usually several times the filament cost."
+      },
+      "q2": {
+        "q": "How do I calculate the price to sell a 3D print for?",
+        "a": "Add up the cost price per item (filament, electricity, wear, failed prints, your time, extras and packaging), choose the profit you want, and work back from VAT and platform fees. This calculator does that for you."
+      },
+      "q3": {
+        "q": "What does Etsy charge per sale?",
+        "a": "In the Netherlands roughly 6.5% transaction fee plus about 4% + €0.30 payment processing, and a listing fee of about €0.19 per sale; Offsite Ads can add up to 15%. Fees change, so check Etsy's current rates."
+      },
+      "q4": {
+        "q": "Do I have to charge VAT on 3D prints?",
+        "a": "In the Netherlands you charge 21% VAT unless you use the small business scheme (KOR, up to €20,000 turnover a year). Choose the option that applies to you; this is not tax advice."
+      },
+      "q5": {
+        "q": "How much electricity does a 3D printer use?",
+        "a": "A Bambu Lab P1S or X1 uses about 100–150 W on average while printing — at €0.30 per kWh that's roughly 3–5 cents per print hour."
+      },
+      "q6": {
+        "q": "May I sell prints of designs I downloaded?",
+        "a": "Only if the license allows it. Most free and personal licenses don't. 3DPIY Business sells commercial licenses that let you sell physical prints."
+      }
+    }
   }
 }

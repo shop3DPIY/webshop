@@ -83,6 +83,7 @@
     "shopAll": "Alle designs",
     "shopFree": "Gratis designs",
     "shopRequests": "Wensenlijstje & verzoeken",
+    "shopCalculator": "3D-print prijscalculator",
     "shopBusiness": "Zakelijk",
     "legalHeading": "Juridisch",
     "legalPrivacy": "Privacy",
@@ -358,7 +359,8 @@
     "adminBannerTitle": "Je bent ingelogd als admin",
     "adminBannerBody": "Dit is de klantweergave. Om producten toe te voegen, bestanden te uploaden en bestellingen te beheren, gebruik je 3DPIY Studio.",
     "adminBannerCta": "Open 3DPIY Studio",
-    "orderFallbackTitle": "Bestelling"
+    "orderFallbackTitle": "Bestelling",
+    "calculatorLink": "Prijscalculator"
   },
   "trackChooser": {
     "eyebrow": "Onafhankelijke digitale designstudio",
@@ -521,5 +523,223 @@
     "errorInvalid": "Kies een foto en vink het vakje aan.",
     "errorGeneric": "Er ging iets mis. Probeer het later nog eens.",
     "photoAlt": "Een print van dit ontwerp door een koper"
+  },
+  "calculator": {
+    "eyebrow": "Tools",
+    "fullTitle": "Uitgebreide 3D-print prijscalculator",
+    "fullIntro": "Alle kosten van een print — ook de kosten die de meeste makers vergeten — en de prijs die je zou moeten vragen. Bewaar zoveel berekeningen als je wilt.",
+    "signInBody": "De uitgebreide calculator — ontwerpkosten, slijtage, platformkosten, verpakking, vaste lasten en opgeslagen berekeningen — is gratis met een 3DPIY-account.",
+    "signIn": "Inloggen",
+    "signUp": "Gratis account maken",
+    "backToSimple": "Of gebruik de snelle calculator",
+    "toAccount": "Mijn account",
+    "savedTitle": "Je berekeningen",
+    "newCalc": "Nieuwe berekening",
+    "untitled": "Naamloos",
+    "delete": "Verwijderen",
+    "deleteTitle": "“{name}” verwijderen?",
+    "deleteBody": "Deze berekening wordt definitief verwijderd.",
+    "deleteConfirm": "Ja, verwijderen",
+    "cancel": "Annuleren",
+    "s": {
+      "print": "De print",
+      "printIntro": "Alles voor één printplaat. Meerdere stuks op één plaat? Vul in hoeveel — de kosten worden verdeeld.",
+      "printer": "Printer & stroom",
+      "printerIntro": "Je printer slijt en gebruikt stroom; een mislukte print kost alles opnieuw.",
+      "time": "Je tijd",
+      "timeIntro": "Jouw werk is ook een kostenpost — anders werk je gratis.",
+      "design": "Ontwerp",
+      "designIntro": "Ontwerpen, een gekochte licentie en testprints verdien je terug over alles wat je verwacht te verkopen.",
+      "extras": "Extra's, verpakking & verzending",
+      "extrasIntro": "Magneten, schroeven, inserts, verf, lijm… per stuk.",
+      "overhead": "Vaste kosten per maand",
+      "overheadIntro": "Software, website, verzekering, werkplek, abonnementen — verdeeld over wat je verkoopt.",
+      "selling": "Verkopen",
+      "sellingIntro": "Waar je verkoopt, btw en de winst die je wilt."
+    },
+    "itemsPerPlate": "Stuks per printplaat",
+    "itemsPerPlateHint": "Hoeveel er van één print komen",
+    "printHours": "Printtijd",
+    "hours": "uur",
+    "wasteGrams": "Afval per plaat",
+    "wasteGramsHint": "AMS-purge, prime tower, brim, supports die je weggooit",
+    "materials": "Filament",
+    "materialName": "Materiaal / kleur",
+    "grams": "Filamentverbruik",
+    "pricePerKg": "Filamentprijs",
+    "addMaterial": "Kleur / materiaal toevoegen",
+    "materialsHint": "Grammen voor de hele plaat — de slicer toont ze per filament.",
+    "printerPrice": "Prijs printer",
+    "printerLifeHours": "Verwachte levensduur",
+    "printerLifeHint": "Printuren tot hij versleten is of vervangen wordt (vaak 3.000–8.000)",
+    "maintenancePerHour": "Onderhoud",
+    "maintenanceHint": "Nozzles, printplaten, riemen, smeermiddel — per printuur",
+    "powerWatts": "Gemiddeld vermogen",
+    "powerHint": "Bambu P1S/X1 ≈ 100–150 W tijdens het printen",
+    "kwhPrice": "Stroomprijs",
+    "failurePct": "Mislukte prints",
+    "failureHint": "Deel van de prints dat je opnieuw moet doen",
+    "hourlyRate": "Je uurtarief",
+    "hourlyRateHint": "Wat een uur van jouw tijd waard is",
+    "prepMinutes": "Voorbereiding per plaat",
+    "prepHint": "Slicen, plaat schoonmaken, starten en controleren",
+    "postMinutes": "Afwerking per stuk",
+    "postHint": "Supports verwijderen, schuren, verven, in elkaar zetten",
+    "packMinutes": "Inpakken per stuk",
+    "packHint": "Inpakken, label, naar de post brengen",
+    "designHours": "Ontwerptijd",
+    "designHoursHint": "Uren die je aan het ontwerp van dit product besteedde",
+    "designLicenseCost": "Gekochte licentie / bestand",
+    "designLicenseHint": "bijv. een commerciële licentie voor een ontwerp van iemand anders",
+    "prototypeCost": "Testprints & prototypes",
+    "prototypeHint": "Filament en tijd voor de versies voordat het goed was",
+    "designUnits": "Verwachte verkoop",
+    "designUnitsHint": "De ontwerpkosten worden over zoveel stuks verdeeld",
+    "extraName": "bijv. magneten 6×2 mm (×4)",
+    "extraCost": "Kosten per stuk",
+    "addExtra": "Extra toevoegen",
+    "remove": "Verwijderen",
+    "packagingCost": "Verpakking",
+    "packagingHint": "Doos, noppenfolie, tape, sticker, kaartje",
+    "shippingCost": "Porto die jij betaalt",
+    "shippingCharged": "Verzendkosten die de klant betaalt",
+    "shippingChargedHint": "Ook hierover rekent het platform kosten",
+    "overheadPerMonth": "Vaste kosten per maand",
+    "overheadHint": "Software, website, verzekering, werkplek…",
+    "itemsPerMonth": "Verkochte stuks per maand",
+    "platform": "Waar je verkoopt",
+    "platforms": {
+      "none": "Geen platformkosten",
+      "etsy": "Etsy (Nederland)",
+      "etsyAds": "Etsy met Offsite Ads",
+      "webshop": "Eigen webshop (betaalkosten)",
+      "custom": "Zelf invullen"
+    },
+    "feePct": "Platformkosten",
+    "feeFixed": "Vaste kosten per bestelling",
+    "listingFee": "Listingkosten per verkoop",
+    "feesNote": "Platformen passen hun tarieven af en toe aan — controleer de actuele tarieven van jouw platform.",
+    "returnsPct": "Reserve retour & korting",
+    "returnsHint": "Terugbetalingen, kortingen, kwijtgeraakte pakketjes",
+    "vat": "Btw",
+    "vatKor": "Geen btw (kleineondernemersregeling / KOR)",
+    "vat21": "21% btw",
+    "vat9": "9% btw",
+    "profitMode": "Winst als",
+    "profitMargin": "% van de omzet",
+    "profitAmount": "Bedrag per stuk",
+    "marginPct": "Marge",
+    "profitPerItem": "Winst per stuk",
+    "rounding": "Prijs afronden",
+    "round99": "Naar boven op ,99 (€ 12,99)",
+    "round50": "Naar boven op 50 cent (€ 12,50)",
+    "roundNone": "Niet afronden",
+    "price": "Verkoopprijs",
+    "priceNoVat": "Zonder btw",
+    "priceInclVat": "Inclusief {vat} btw",
+    "costPrice": "Kostprijs",
+    "platformFees": "Platformkosten",
+    "returnsReserve": "Reserve retour",
+    "profit": "Je winst",
+    "perHour": "Verdiend per uur werk",
+    "breakEven": "Ontwerp terugverdiend na",
+    "items": "{n} verkocht",
+    "breakdown": "Kostprijs per stuk",
+    "lines": {
+      "material": "Filament",
+      "waste": "Afval & purge",
+      "energy": "Stroom",
+      "machine": "Slijtage & onderhoud printer",
+      "failures": "Mislukte prints",
+      "labour": "Je tijd",
+      "design": "Ontwerp",
+      "extras": "Extra's",
+      "packaging": "Verpakking",
+      "shipping": "Verzending (netto)",
+      "overhead": "Vaste kosten"
+    },
+    "impossible": "Met deze kosten en deze marge levert geen enkele prijs winst op. Verlaag de marge of de platformkosten.",
+    "name": "Naam",
+    "namePlaceholder": "bijv. Kallax-inzet, rood",
+    "save": "Opslaan",
+    "saveNew": "Berekening opslaan",
+    "saveCopy": "Opslaan als nieuw",
+    "saved": "Opgeslagen",
+    "saveError": "Opslaan lukte niet. Probeer het opnieuw.",
+    "fullTeaser": "Wil je het complete plaatje? De gratis uitgebreide calculator rekent ook ontwerpkosten, slijtage, verpakking, platformkosten en vaste lasten mee — en bewaart je berekeningen.",
+    "openFull": "Open de uitgebreide calculator"
+  },
+  "calculatorPage": {
+    "eyebrow": "Gratis tool",
+    "title": "3D-print kostprijs- en verkoopprijscalculator",
+    "metaTitle": "3D-print kosten en verkoopprijs berekenen (gratis calculator)",
+    "metaDescription": "Gratis 3D-print calculator: filament, stroom, je tijd, platformkosten en btw — en de prijs waarvoor je je 3D-prints verkoopt op Etsy of in je eigen shop.",
+    "intro": "Wat kost een 3D-print echt, en wat moet je ervoor vragen? Vul filament, printtijd en je eigen tijd in — de calculator geeft de kostprijs en een verkoopprijs waarbij je na platformkosten en btw nog winst overhoudt.",
+    "howTitle": "Zo wordt de prijs berekend",
+    "howBody": "Eerst de kostprijs per stuk: filament (grammen × prijs per kilo), stroom (vermogen × printtijd × kWh-prijs), slijtage van de printer, mislukte prints en je eigen tijd. Daarna wordt de verkoopprijs terug gerekend, zodat er na btw en platformkosten precies de winst overblijft die je wilt.",
+    "formula": "prijs = (kostprijs + vaste kosten + winst) ÷ ((1 − marge) ÷ (1 + btw) − platform %)",
+    "howBody2": "Verkoop je op Etsy? Etsy rekent per verkoop transactiekosten, betaalkosten en listingkosten — kies Etsy en ze worden meegerekend. Prijzen worden standaard naar boven afgerond op ,99.",
+    "forgottenTitle": "Kosten die de meeste makers vergeten",
+    "forgotten": {
+      "waste": {
+        "title": "Afval en purge",
+        "body": "meerkleurige prints met een AMS gooien bij elke kleurwissel filament weg — soms meer dan het model zelf."
+      },
+      "failures": {
+        "title": "Mislukte prints",
+        "body": "mislukt 1 op de 20 prints, dan kost elke print 5% meer."
+      },
+      "machine": {
+        "title": "Slijtage van de printer",
+        "body": "een printer gaat een paar duizend printuren mee, en nozzles en printplaten slijten."
+      },
+      "design": {
+        "title": "Ontwerptijd en testprints",
+        "body": "uren ontwerpen en de versies voordat het goed was, moet je terugverdienen."
+      },
+      "fees": {
+        "title": "Platformkosten over verzending",
+        "body": "Etsy rekent zijn percentage ook over de verzendkosten die de klant betaalt."
+      },
+      "time": {
+        "title": "Je eigen tijd",
+        "body": "supports verwijderen, schuren, inpakken en naar de post: het telt op."
+      },
+      "overhead": {
+        "title": "Vaste kosten",
+        "body": "software, website, verzekering en abonnementen horen bij elk product dat je verkoopt."
+      },
+      "returns": {
+        "title": "Retouren en kortingen",
+        "body": "met een kleine reserve eet een terugbetaling of kwijtgeraakt pakketje je winst niet op."
+      }
+    },
+    "faqTitle": "Veelgestelde vragen",
+    "faq": {
+      "q1": {
+        "q": "Wat kost het om iets te 3D-printen?",
+        "a": "Voor een gewone PLA-print kost het filament vaak maar €0,50–€3; stroom is een paar cent per uur. De echte kosten zitten in je tijd, mislukte prints, slijtage, verpakking en platformkosten — daarom is de kostprijs meestal een paar keer zo hoog als het filament."
+      },
+      "q2": {
+        "q": "Hoe bereken ik de verkoopprijs van een 3D-print?",
+        "a": "Tel de kostprijs per stuk op (filament, stroom, slijtage, mislukte prints, je tijd, extra's en verpakking), kies de winst die je wilt, en reken terug vanaf btw en platformkosten. Deze calculator doet dat voor je."
+      },
+      "q3": {
+        "q": "Wat rekent Etsy per verkoop?",
+        "a": "In Nederland ongeveer 6,5% transactiekosten plus zo'n 4% + €0,30 betaalkosten, en ongeveer €0,19 listingkosten per verkoop; Offsite Ads kan daar tot 15% bovenop doen. Tarieven veranderen, dus controleer de actuele tarieven van Etsy."
+      },
+      "q4": {
+        "q": "Moet ik btw rekenen over 3D-prints?",
+        "a": "In Nederland reken je 21% btw, tenzij je de kleineondernemersregeling (KOR, tot €20.000 omzet per jaar) gebruikt. Kies wat voor jou geldt; dit is geen belastingadvies."
+      },
+      "q5": {
+        "q": "Hoeveel stroom gebruikt een 3D-printer?",
+        "a": "Een Bambu Lab P1S of X1 gebruikt tijdens het printen gemiddeld zo'n 100–150 W — bij €0,30 per kWh is dat ongeveer 3–5 cent per printuur."
+      },
+      "q6": {
+        "q": "Mag ik prints verkopen van ontwerpen die ik heb gedownload?",
+        "a": "Alleen als de licentie dat toestaat. De meeste gratis en persoonlijke licenties staan het niet toe. 3DPIY Business verkoopt commerciële licenties waarmee je fysieke prints mag verkopen."
+      }
+    }
   }
 }
