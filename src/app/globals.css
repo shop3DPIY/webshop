@@ -32,8 +32,8 @@
   /* Glass neutrals — white text on white glass over the banner gradient */
   --ink: #ffffff;
   --night: #14121a;
-  --paper: rgb(255 255 255 / 0.15);
-  --mist: rgb(255 255 255 / 0.08);
+  --paper: rgb(255 255 255 / 0.2);
+  --mist: rgb(255 255 255 / 0.1);
   --line: rgb(255 255 255 / 0.3);
   --accent: #0b7f86;
 
@@ -340,7 +340,14 @@ body::before {
   border-width: 1px;
   border-color: var(--line);
   background-color: var(--glass-fill, var(--paper));
-  @apply shadow-xl backdrop-blur-lg;
+  /* Strong blur: the colourful backdrop becomes a calm wash behind text. */
+  @apply shadow-xl backdrop-blur-2xl;
+}
+
+/* White text on light glass: a very soft purple shadow keeps letters
+   readable where the backdrop behind is pale. Not in dark mode. */
+:root:not(.dark) .glass {
+  text-shadow: 0 1px 2px rgb(50 10 90 / 0.5), 0 0 8px rgb(50 10 90 / 0.25);
 }
 
 /* Glass inside glass (a tile on a panel) is clearer, so the white doesn't
@@ -586,39 +593,12 @@ select {
   background: rgb(140 82 255 / 0.45);
 }
 
-/* Solid form card (sign-in): a near-opaque card with dark text, so labels,
-   fields and links stay readable on the bright backdrop. It redefines the
-   glass tokens inside the card only — the rest of the site keeps white
-   glass. Dark mode gets the reverse: a dark card with white text. */
-.solid-card {
-  --ink: #1e1530;
-  --paper: rgb(255 255 255 / 0.9);
-  --mist: rgb(30 21 48 / 0.06);
-  --line: rgb(30 21 48 / 0.45);
-  color: var(--ink);
-  background-color: rgb(255 255 255 / 0.82);
-  border: 1px solid rgb(255 255 255 / 0.9);
-  box-shadow: 0 20px 50px rgb(60 20 110 / 0.18);
-  backdrop-filter: blur(24px);
-}
-.dark .solid-card {
-  --ink: #ffffff;
-  --paper: rgb(255 255 255 / 0.08);
-  --mist: rgb(255 255 255 / 0.06);
-  --line: rgb(255 255 255 / 0.55);
-  background-color: rgb(20 18 26 / 0.82);
-  border-color: rgb(255 255 255 / 0.18);
-}
-/* Fields on the solid card: a clear border, and a purple focus ring. */
-.solid-card :is(input:not([type="checkbox"], [type="radio"], [type="hidden"])):focus,
-.dark .solid-card :is(input:not([type="checkbox"], [type="radio"], [type="hidden"])):focus {
+/* Sign-in card: a purple focus ring on the fields, so the active field is
+   clear on the frosted glass. */
+.auth-card :is(input:not([type="checkbox"], [type="radio"], [type="hidden"])):focus {
   border-color: #8c52ff;
-  background-color: var(--paper);
-  box-shadow: 0 0 0 3px rgb(140 82 255 / 0.45);
+  box-shadow: 0 0 0 3px rgb(140 82 255 / 0.55);
 }
-.solid-card a:focus-visible,
-.solid-card button:focus-visible {
-  outline: 2.5px solid #8c52ff;
-  outline-offset: 3px;
-  filter: none;
+.auth-card input:not([type="checkbox"], [type="radio"], [type="hidden"]) {
+  border-color: rgb(255 255 255 / 0.6);
 }

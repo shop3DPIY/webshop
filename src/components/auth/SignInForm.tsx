@@ -175,7 +175,7 @@ export function SignInForm({
       : {};
   const errorText = (name: string) =>
     fieldError?.name === name && (
-      <span id={`${name}-error`} className="text-sm font-medium text-red-700 dark:text-red-300">
+      <span id={`${name}-error`} className="pl-4 text-sm font-semibold text-red-100">
         {fieldError.message}
       </span>
     );
@@ -209,7 +209,7 @@ export function SignInForm({
 
       {codeSentTo ? (
         <>
-          <p className="text-ink/85 text-sm">
+          <p className="text-ink text-sm">
             {t("codeSent", { email: codeSentTo })}
           </p>
           {codeRound > 0 && status !== "error" && (
@@ -320,7 +320,7 @@ export function SignInForm({
         </button>
       )}
 
-      <div className="text-ink/75 flex items-center gap-3 text-xs font-semibold uppercase" aria-hidden>
+      <div className="text-ink flex items-center gap-3 text-xs font-semibold uppercase" aria-hidden>
         <span className="bg-line h-px flex-1" />
         {t("or")}
         <span className="bg-line h-px flex-1" />
