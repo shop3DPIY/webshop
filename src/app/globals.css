@@ -32,8 +32,9 @@
   /* Glass neutrals — white text on white glass over the banner gradient */
   --ink: #ffffff;
   --night: #14121a;
-  --paper: rgb(255 255 255 / 0.2);
-  --mist: rgb(255 255 255 / 0.1);
+  /* More see-through (2026-11-19, Carmen): was 20% / 10%. */
+  --paper: rgb(255 255 255 / 0.1);
+  --mist: rgb(255 255 255 / 0.05);
   --line: rgb(255 255 255 / 0.3);
   --accent: #0b7f86;
 
