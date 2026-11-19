@@ -106,7 +106,7 @@ export default async function CheckoutSuccessPage({
         ))}
       </div>
 
-      <p className="text-ink/60 max-w-md text-sm">
+      <p className="text-ink max-w-md text-sm">
         {user
           ? t("inLibrary")
           : t("keepIt", { email: result.email })}{" "}

@@ -20,7 +20,7 @@ export function NewsletterSignup() {
   );
 
   if (state.status === "ok") {
-    return <p className="text-ink/80 text-sm">{t("ok")}</p>;
+    return <p className="text-ink text-sm">{t("ok")}</p>;
   }
 
   return (
@@ -59,7 +59,7 @@ export function NewsletterSignup() {
         <p className="text-xs text-red-200">{t("error")}</p>
       )}
       {/* Kept to one line on phones: a shorter NL text, a hair smaller */}
-      <p className="text-ink/60 text-[11px] sm:text-xs">
+      <p className="text-ink text-[11px] sm:text-xs">
         {t.rich("consent", {
           privacy: (chunks) => (
             <Link

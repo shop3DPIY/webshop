@@ -60,7 +60,7 @@ export default async function StudioDiscountsPage({
     <div className="flex flex-col gap-8">
       <div>
         <h1 className="font-display text-2xl font-bold">Discounts</h1>
-        <p className="text-ink/60 mt-1 max-w-2xl text-sm">
+        <p className="text-ink mt-1 max-w-2xl text-sm">
           Codes buyers type in at checkout. They&apos;re created in Polar
           {isProduction ? "" : " (sandbox — test codes)"}; one use per order.
         </p>
@@ -138,7 +138,7 @@ export default async function StudioDiscountsPage({
         {loadError && <p className="text-sm text-red-200">Couldn&apos;t load from Polar: {loadError}</p>}
         <div className="divide-line divide-y rounded-3xl glass">
           {discounts.length === 0 ? (
-            <p className="text-ink/60 p-8 text-center text-sm">No codes yet.</p>
+            <p className="text-ink p-8 text-center text-sm">No codes yet.</p>
           ) : (
             discounts.map((d) => {
               const ended = d.ends_at && new Date(d.ends_at) < new Date();
@@ -154,7 +154,7 @@ export default async function StudioDiscountsPage({
                         </span>
                       )}
                     </p>
-                    <p className="text-ink/60">
+                    <p className="text-ink">
                       {d.name} · used {d.redemptions_count}
                       {d.max_redemptions != null ? ` of ${d.max_redemptions}` : ""}×
                       {d.ends_at &&

@@ -121,7 +121,7 @@ export default async function AccountPage({
             <p className="font-display text-ink text-base font-semibold">
               {t("adminBannerTitle")}
             </p>
-            <p className="text-ink/70 mt-1 text-sm">{t("adminBannerBody")}</p>
+            <p className="text-ink mt-1 text-sm">{t("adminBannerBody")}</p>
           </div>
           {/* Plain <a>, not the i18n-aware Button/Link: /studio lives
               outside the [locale] route tree entirely. */}
@@ -178,7 +178,7 @@ export default async function AccountPage({
         ) : (
           <div className="rounded-3xl p-10 text-center glass">
             <p className="font-medium">{t("libraryEmptyTitle")}</p>
-            <p className="text-ink/60 mt-1 text-sm">{t("libraryEmptyBody")}</p>
+            <p className="text-ink mt-1 text-sm">{t("libraryEmptyBody")}</p>
             <Link
               href="/shop"
               className="text-ink mt-4 inline-block text-sm font-medium"
@@ -204,7 +204,7 @@ export default async function AccountPage({
                   <p className="font-medium">
                     {titlesFor(order.id) || t("orderFallbackTitle")}
                   </p>
-                  <p className="text-ink/60">
+                  <p className="text-ink">
                     {new Date(order.created_at).toLocaleDateString(dateLocale, {
                       day: "numeric",
                       month: "long",
@@ -225,7 +225,7 @@ export default async function AccountPage({
         ) : (
           <div className="rounded-3xl p-10 text-center glass">
             <p className="font-medium">{t("ordersEmptyTitle")}</p>
-            <p className="text-ink/60 mt-1 text-sm">{t("ordersEmptyBody")}</p>
+            <p className="text-ink mt-1 text-sm">{t("ordersEmptyBody")}</p>
           </div>
         )}
       </section>

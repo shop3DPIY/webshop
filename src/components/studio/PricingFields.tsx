@@ -218,7 +218,7 @@ export function PricingFields({
       </label>
 
       {isFree && (
-        <p className="text-ink/70 text-sm">
+        <p className="text-ink text-sm">
           Free design: the prices below aren&apos;t used — visitors get it for
           their email address, and it isn&apos;t listed on Polar.
         </p>
@@ -242,7 +242,7 @@ export function PricingFields({
               <input type="hidden" name={`price_${tier}_mode`} value={mode} />
               <div className="min-w-40 flex-1">
                 <p className="font-medium">{TIER_LABEL[tier]}</p>
-                <p className="text-ink/60 text-xs">
+                <p className="text-ink text-xs">
                   Calculated: {formatEuro(calc)}
                   {overridden && (
                     <span className="border-brand-purple bg-brand-purple/15 ml-2 rounded-full border px-2 py-0.5 font-semibold">
@@ -253,26 +253,26 @@ export function PricingFields({
                 {(() => {
                   const gross = mode === "calc" ? calc : parseEuroToCents(value);
                   return gross != null && gross > 0 ? (
-                    <p className="text-ink/60 text-xs">
+                    <p className="text-ink text-xs">
                       You keep ≈ {formatEuro(estimateNetCents(gross))} (after
                       21% VAT and Polar fees)
                     </p>
                   ) : null;
                 })()}
                 {mode === "keep" && (
-                  <p className="text-ink/60 text-xs">
+                  <p className="text-ink text-xs">
                     Keeps its current price (from before a price table change).
                   </p>
                 )}
                 {tier === "unlimited" && result.customFromCents !== null && (
-                  <p className="text-ink/60 text-xs">
+                  <p className="text-ink text-xs">
                     Businesses: custom work from{" "}
                     {formatEuro(result.customFromCents)} via contact
                   </p>
                 )}
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-ink/60">€</span>
+                <span className="text-ink">€</span>
                 <input
                   type="text"
                   inputMode="decimal"
@@ -302,7 +302,7 @@ export function PricingFields({
       </div>
 
       {sellableTiers(category).length < PRICE_TIERS.length && (
-        <p className="text-ink/60 text-xs">
+        <p className="text-ink text-xs">
           Shop designs are sold for personal use only — commercial licenses
           are sold on 3DPIY Business.
         </p>
@@ -324,7 +324,7 @@ export function PricingFields({
         ),
       )}
 
-      <p className="text-ink/60 text-xs">
+      <p className="text-ink text-xs">
         {result.inSubscription
           ? "Included in the All-Access subscription."
           : "Not included in the All-Access subscription."}{" "}

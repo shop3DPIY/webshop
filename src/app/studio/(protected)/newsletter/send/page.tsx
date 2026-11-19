@@ -39,14 +39,14 @@ export default async function SendNewsletterPage({
       <div>
         <Link
           href="/studio/newsletter"
-          className="text-ink/60 hover:text-ink text-sm"
+          className="text-ink hover:text-ink text-sm"
         >
           ← Newsletter
         </Link>
         <h1 className="font-display mt-2 text-2xl font-bold">
           Send a newsletter
         </h1>
-        <p className="text-ink/60 mt-1 text-sm">
+        <p className="text-ink mt-1 text-sm">
           {count ?? 0} subscribed. Every mail gets the subscriber&apos;s own
           “change preferences or unsubscribe” link at the bottom. Send a test to
           yourself first. Resend&apos;s free plan has a daily sending limit —

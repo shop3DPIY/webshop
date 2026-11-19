@@ -89,7 +89,7 @@ export function MakeShare({ productId }: { productId: string }) {
   }
   if (step === "signIn") {
     return (
-      <p className="text-ink/70 text-sm">
+      <p className="text-ink text-sm">
         {t("signInFirst")}{" "}
         <Link
           href={`/auth/sign-in?next=${encodeURIComponent(pathname)}`}
@@ -100,7 +100,7 @@ export function MakeShare({ productId }: { productId: string }) {
       </p>
     );
   }
-  if (step === "notOwner") return <p className="text-ink/70 text-sm">{t("ownersOnly")}</p>;
+  if (step === "notOwner") return <p className="text-ink text-sm">{t("ownersOnly")}</p>;
   if (step === "sent") {
     return (
       <p role="status" className="text-ink text-sm font-medium">

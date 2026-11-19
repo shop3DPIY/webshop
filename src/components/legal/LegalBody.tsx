@@ -50,7 +50,7 @@ function inline(text: string): ReactNode[] {
 export function LegalBody({ text }: { text: string }) {
   const blocks = text.replace(/\r\n/g, "\n").split(/\n\s*\n/);
   return (
-    <div className="text-ink/80 flex flex-col gap-4 text-base leading-relaxed">
+    <div className="text-ink flex flex-col gap-4 text-base leading-relaxed">
       {blocks.map((block, i) => {
         const lines = block.split("\n").filter((l) => l.trim());
         if (lines.length === 0) return null;

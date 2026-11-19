@@ -63,7 +63,7 @@ export function ConfirmDialog({
         <h2 id="confirm-title" className="font-display text-lg font-semibold">
           ⚠️ {labels.title}
         </h2>
-        {labels.body && <div className="text-ink/75 text-sm">{labels.body}</div>}
+        {labels.body && <div className="text-ink text-sm">{labels.body}</div>}
         <div className="flex flex-wrap justify-end gap-3 pt-2">
           <button ref={cancelRef} type="button" onClick={onCancel} className={CANCEL}>
             {labels.cancel}

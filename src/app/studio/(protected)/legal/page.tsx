@@ -11,7 +11,7 @@ export default async function StudioLegalPage() {
     <div className="flex flex-col gap-6">
       <div>
         <h1 className="font-display text-2xl font-bold">Legal</h1>
-        <p className="text-ink/60 mt-1 max-w-2xl text-sm">
+        <p className="text-ink mt-1 max-w-2xl text-sm">
           The legal pages in the footer. Pages you haven&apos;t edited show the
           default text. Business details (KvK, address…) come from Settings.
         </p>
@@ -24,9 +24,9 @@ export default async function StudioLegalPage() {
             className="hover:bg-mist flex items-center justify-between gap-4 p-5 text-sm transition-colors first:rounded-t-3xl last:rounded-b-3xl"
           >
             <span className="font-semibold">
-              {source.en.title} <span className="text-ink/60 font-normal">· {source.nl.title}</span>
+              {source.en.title} <span className="text-ink font-normal">· {source.nl.title}</span>
             </span>
-            <span className="text-ink/60 text-xs">
+            <span className="text-ink text-xs">
               {source.edited
                 ? `Edited ${new Date(source.updatedAt!).toLocaleDateString("nl-NL", { dateStyle: "medium" })}`
                 : "Default text"}

@@ -210,7 +210,7 @@ export function SignInForm({
 
       {codeSentTo ? (
         <>
-          <p className="text-ink/80 text-sm">
+          <p className="text-ink text-sm">
             {t("codeSent", { email: codeSentTo })}
           </p>
           {codeRound > 0 && status !== "error" && (
@@ -276,7 +276,7 @@ export function SignInForm({
               onClick={() => setShowPassword((v) => !v)}
               aria-label={showPassword ? t("hidePassword") : t("showPassword")}
               aria-pressed={showPassword}
-              className="text-ink/80 hover:text-ink absolute top-1/2 right-1 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full"
+              className="text-ink hover:text-ink absolute top-1/2 right-1 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full"
             >
               <svg aria-hidden width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                 <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
@@ -321,7 +321,7 @@ export function SignInForm({
         </button>
       )}
 
-      <div className="text-ink/60 flex items-center gap-3 text-xs font-semibold uppercase" aria-hidden>
+      <div className="text-ink flex items-center gap-3 text-xs font-semibold uppercase" aria-hidden>
         <span className="bg-line h-px flex-1" />
         {t("or")}
         <span className="bg-line h-px flex-1" />

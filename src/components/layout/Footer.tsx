@@ -29,9 +29,9 @@ export async function Footer() {
       <Container className="grid gap-10 px-7 py-12 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <Logo />
-          <p className="text-ink/70 mt-3 text-sm">{t("tagline")}</p>
+          <p className="text-ink mt-3 text-sm">{t("tagline")}</p>
           {/* Anything wrong or missing: just mail. */}
-          <p className="text-ink/70 mt-3 text-sm">
+          <p className="text-ink mt-3 text-sm">
             {t.rich("help", {
               email: business.contactEmail,
               mail: (chunks) => (
@@ -84,12 +84,12 @@ export async function Footer() {
           <h4 className={`${headingColor} mb-3 text-sm font-semibold`}>
             {t("newsletterHeading")}
           </h4>
-          <p className="text-ink/70 mb-3 text-sm">{tNewsletter("description")}</p>
+          <p className="text-ink mb-3 text-sm">{tNewsletter("description")}</p>
           <NewsletterSignup />
         </div>
       </Container>
 
-      <Container className="border-line text-ink/60 flex flex-col gap-2 border-t px-7 pt-6 pb-14 sm:pb-6 text-xs sm:flex-row sm:justify-between">
+      <Container className="border-line text-ink flex flex-col gap-2 border-t px-7 pt-6 pb-14 sm:pb-6 text-xs sm:flex-row sm:justify-between">
         <span>
           © {year} {t("copyright")}
         </span>

@@ -66,12 +66,12 @@ export default async function RequestsPage({
           <h2 id="wishlist" className="font-display text-ink text-2xl font-semibold">
             {t("listTitle")}
           </h2>
-          <p className="text-ink/70 mt-1 text-sm">
+          <p className="text-ink mt-1 text-sm">
             {user ? t("listIntro") : t("listIntroSignedOut")}
           </p>
         </div>
         {requests.length === 0 ? (
-          <p className="text-ink/60 rounded-3xl p-6 text-sm glass">{t("listEmpty")}</p>
+          <p className="text-ink rounded-3xl p-6 text-sm glass">{t("listEmpty")}</p>
         ) : (
           <ul className="flex flex-col gap-3">
             {requests.map((r) => (
@@ -93,7 +93,7 @@ export default async function RequestsPage({
                     )}
                   </p>
                   {r.details && (
-                    <p className="text-ink/70 mt-1 text-sm whitespace-pre-line">{r.details}</p>
+                    <p className="text-ink mt-1 text-sm whitespace-pre-line">{r.details}</p>
                   )}
                 </div>
               </li>

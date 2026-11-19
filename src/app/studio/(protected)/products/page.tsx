@@ -113,7 +113,7 @@ export default async function StudioProductsPage({
         ))}
       </nav>
       {tab === "archived" && (
-        <p className="text-ink/60 text-sm">
+        <p className="text-ink text-sm">
           Offline designs aren&apos;t in the shop or on Polar any more; buyers
           still have them in their library.
         </p>
@@ -134,14 +134,14 @@ export default async function StudioProductsPage({
             >
               <div>
                 <p className="font-medium">{product.title}</p>
-                <p className="text-ink/60">
+                <p className="text-ink">
                   {product.category} · v{product.version}
                 </p>
                 {product.is_free ? (
-                  <p className="text-ink/60 text-xs">Free</p>
+                  <p className="text-ink text-xs">Free</p>
                 ) : (
                   product.price_cents != null && (
-                    <p className="text-ink/60 text-xs">
+                    <p className="text-ink text-xs">
                       P {formatEuro(product.price_cents)} · S{" "}
                       {product.price_small_cents != null
                         ? formatEuro(product.price_small_cents)
@@ -173,7 +173,7 @@ export default async function StudioProductsPage({
             </Link>
           ))
         ) : (
-          <p className="text-ink/60 p-8 text-center text-sm">Nothing here.</p>
+          <p className="text-ink p-8 text-center text-sm">Nothing here.</p>
         )}
       </div>
     </div>

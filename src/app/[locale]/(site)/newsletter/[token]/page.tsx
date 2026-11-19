@@ -54,7 +54,7 @@ export default async function ManageNewsletterPage({
             <h1 className="font-display text-ink text-2xl font-bold">
               {t("notFoundTitle")}
             </h1>
-            <p className="text-ink/70">{t("notFoundBody")}</p>
+            <p className="text-ink">{t("notFoundBody")}</p>
           </>
         ) : subscriber.status === "pending" ? (
           // Double opt-in: a button, not the link itself, confirms — mail
@@ -63,7 +63,7 @@ export default async function ManageNewsletterPage({
             <h1 className="font-display text-ink text-2xl font-bold">
               {t("confirmTitle")}
             </h1>
-            <p className="text-ink/70">
+            <p className="text-ink">
               {t("confirmBody", { email: subscriber.email })}
             </p>
             <form action={confirmNewsletter}>
@@ -77,7 +77,7 @@ export default async function ManageNewsletterPage({
             <h1 className="font-display text-ink text-2xl font-bold">
               {t("unsubscribedTitle")}
             </h1>
-            <p className="text-ink/70">{t("unsubscribedBody")}</p>
+            <p className="text-ink">{t("unsubscribedBody")}</p>
             <form action={resubscribeToNewsletter}>
               <input type="hidden" name="token" value={token} />
               <input type="hidden" name="locale" value={locale} />
@@ -90,7 +90,7 @@ export default async function ManageNewsletterPage({
               <h1 className="font-display text-ink text-2xl font-bold">
                 {t("manageTitle")}
               </h1>
-              <p className="text-ink/70 mt-2">
+              <p className="text-ink mt-2">
                 {t("manageIntro", { email: subscriber.email })}
               </p>
             </div>

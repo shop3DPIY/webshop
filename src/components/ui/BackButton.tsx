@@ -20,7 +20,7 @@ export function BackButton({ label }: { label: string }) {
         if (cameFromUs && window.history.length > 1) router.back();
         else router.push("/shop");
       }}
-      className="text-ink/60 hover:text-ink w-fit text-sm font-medium"
+      className="text-ink hover:text-ink w-fit text-sm font-medium"
     >
       ← {label}
     </button>

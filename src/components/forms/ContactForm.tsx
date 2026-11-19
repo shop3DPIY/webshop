@@ -150,7 +150,7 @@ export function ContactForm({
       >
         {status === "sending" ? t("formSending") : t("formSubmit")}
       </Button>
-      <p className="text-ink/60 text-xs">
+      <p className="text-ink text-xs">
         {mailConfigured ? t("formNoteDirect") : t("formNote")}
       </p>
     </form>

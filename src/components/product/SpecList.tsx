@@ -17,7 +17,7 @@ export function SpecList({ rows }: { rows: SpecRow[] }) {
           key={row.label}
           className="flex justify-between gap-6 py-3 text-sm"
         >
-          <dt className="text-ink/60">{row.label}</dt>
+          <dt className="text-ink">{row.label}</dt>
           <dd className="text-right font-medium">
             {row.hint ? (
               <SpecHint value={row.value} hint={row.hint} />

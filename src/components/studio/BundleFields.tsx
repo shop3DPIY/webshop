@@ -100,7 +100,7 @@ export function BundleFields({
       </label>
       {on && (
         <>
-          <p className="text-ink/60 text-sm">
+          <p className="text-ink text-sm">
             Buyers get every design below in their library. A bundle needs no
             files of its own. Only designs from the same track as the
             collection above can go in.
@@ -128,10 +128,10 @@ export function BundleFields({
                   <span className="flex-1">
                     {c.title}
                     {c.status !== "published" && (
-                      <span className="text-ink/50"> ({c.status})</span>
+                      <span className="text-ink"> ({c.status})</span>
                     )}
                   </span>
-                  <span className="text-ink/60 text-xs">
+                  <span className="text-ink text-xs">
                     {c.prices.personal != null ? formatEuro(c.prices.personal) : "—"}
                   </span>
                 </label>
@@ -157,7 +157,7 @@ export function BundleFields({
                     onChange={(e) => setTyped((t) => ({ ...t, [tier]: e.target.value }))}
                     className={FIELD}
                   />
-                  <span className="text-ink/60 text-xs font-normal">
+                  <span className="text-ink text-xs font-normal">
                     {suggestion != null
                       ? `Separately ${formatEuro(sum(tier))} → suggested ${formatEuro(suggestion)} (−${Math.round(BUNDLE_DISCOUNT * 100)}%). Leave empty to use the suggestion.`
                       : "Pick designs first."}

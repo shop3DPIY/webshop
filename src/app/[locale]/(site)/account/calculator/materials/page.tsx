@@ -82,7 +82,7 @@ export default async function MaterialsPage() {
     <Container panel className="flex flex-col gap-8 py-12 sm:py-16">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <SectionHeading as="h1" eyebrow={t("eyebrow")} title={t("myMaterials")} description={t("myMaterialsIntro")} />
-        <Link href="/account/calculator" className="text-ink/70 hover:text-ink text-sm">
+        <Link href="/account/calculator" className="text-ink hover:text-ink text-sm">
           ← {t("fullTitle")}
         </Link>
       </div>
@@ -96,7 +96,7 @@ export default async function MaterialsPage() {
               <div key={item.id} className="border-line flex flex-col gap-2 border-b pb-4">
                 {row(item, kind)}
                 <div className="flex items-center justify-between gap-3">
-                  <span className="text-ink/60 text-xs">
+                  <span className="text-ink text-xs">
                     {kind === "filament"
                       ? t("libPerKg", { price: EUR.format(pricePerKg(item)) })
                       : t("libPerPiece", { price: EUR.format(pricePerPiece(item)) })}
@@ -104,7 +104,7 @@ export default async function MaterialsPage() {
                   <form action={deleteLibraryItem}>
                     <input type="hidden" name="id" value={item.id} />
                     <ConfirmSubmitButton
-                      className="text-ink/60 hover:text-ink text-xs underline"
+                      className="text-ink hover:text-ink text-xs underline"
                       labels={{
                         title: t("deleteTitle", { name: item.name }),
                         body: t("libDeleteBody"),

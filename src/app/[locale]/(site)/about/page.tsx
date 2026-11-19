@@ -24,7 +24,7 @@ export default async function AboutPage() {
           <h2 className="font-display text-ink text-xl font-semibold">
             {t("introTitle")}
           </h2>
-          <p className="text-ink/70 mt-3 text-base sm:text-lg">
+          <p className="text-ink mt-3 text-base sm:text-lg">
             {t("introBody")}
           </p>
         </div>
@@ -32,7 +32,7 @@ export default async function AboutPage() {
           <h2 className="font-display text-ink text-xl font-semibold">
             {t("makerTitle")}
           </h2>
-          <p className="text-ink/70 mt-3 text-base sm:text-lg">
+          <p className="text-ink mt-3 text-base sm:text-lg">
             {t("makerBody")}
           </p>
         </div>

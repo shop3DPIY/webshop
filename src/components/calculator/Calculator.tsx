@@ -96,12 +96,12 @@ function NumberField({
           className={`${FIELD} ${suffix ? "pr-14" : ""}`}
         />
         {suffix && (
-          <span className="text-ink/50 pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-xs">
+          <span className="text-ink pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-xs">
             {suffix}
           </span>
         )}
       </span>
-      {hint && <span className="text-ink/55 text-xs font-normal">{hint}</span>}
+      {hint && <span className="text-ink text-xs font-normal">{hint}</span>}
     </label>
   );
 }
@@ -111,7 +111,7 @@ function Section({ title, intro, children }: { title: string; intro?: string; ch
     <section className="flex flex-col gap-4 rounded-3xl p-5 glass sm:p-6">
       <div>
         <h3 className="font-display text-ink text-lg font-semibold">{title}</h3>
-        {intro && <p className="text-ink/60 mt-1 text-sm">{intro}</p>}
+        {intro && <p className="text-ink mt-1 text-sm">{intro}</p>}
       </div>
       {children}
     </section>
@@ -277,7 +277,7 @@ export function Calculator({
             ↻ {t("refreshPrices")}
           </button>
         )}
-        {library.length === 0 && <span className="text-ink/60 text-xs">{t("myMaterialsHint")}</span>}
+        {library.length === 0 && <span className="text-ink text-xs">{t("myMaterialsHint")}</span>}
       </div>
       <Section title={t("s.print")} intro={t("s.printIntro")}>
         <div className="grid gap-3 sm:grid-cols-3">
@@ -316,7 +316,7 @@ export function Calculator({
           >
             + {t("addMaterial")}
           </button>
-          <p className="text-ink/55 text-xs">{t("materialsHint")}</p>
+          <p className="text-ink text-xs">{t("materialsHint")}</p>
         </div>
       </Section>
 
@@ -385,7 +385,7 @@ export function Calculator({
                     <NumberField label={t("packSize")} value={l.packSize} onChange={(v) => setSupply(i, { packSize: v })} suffix={t("pieces")} />
                     <NumberField label={t("perItem")} value={l.perItem} onChange={(v) => setSupply(i, { perItem: v })} suffix={t("pieces")} />
                   </div>
-                  <p className="text-ink/60 text-xs">{t("supplyPerItem", { cost: euro(supplyCost(l)) })}</p>
+                  <p className="text-ink text-xs">{t("supplyPerItem", { cost: euro(supplyCost(l)) })}</p>
                 </div>
               ))}
               <button
@@ -420,7 +420,7 @@ export function Calculator({
           <NumberField label={t("listingFee")} value={inputs.listingFee} onChange={(v) => { set("listingFee", v); set("platformId", "custom"); }} suffix="€" />
           <NumberField label={t("returnsPct")} hint={t("returnsHint")} value={inputs.returnsPct} onChange={(v) => set("returnsPct", v)} suffix="%" />
         </div>
-        <p className="text-ink/55 text-xs">{t("feesNote")}</p>
+        <p className="text-ink text-xs">{t("feesNote")}</p>
         {profitFields}
         <label className={LABEL}>
           {t("rounding")}
@@ -457,42 +457,42 @@ export function Calculator({
       ) : (
         <>
           <div>
-            <p className="text-ink/60 text-xs font-semibold tracking-wide uppercase">{t("price")}</p>
+            <p className="text-ink text-xs font-semibold tracking-wide uppercase">{t("price")}</p>
             <p className="font-display text-ink text-4xl font-bold">{euro(result.price)}</p>
-            <p className="text-ink/60 text-xs">
+            <p className="text-ink text-xs">
               {inputs.vatMode === "kor" ? t("priceNoVat") : t("priceInclVat", { vat: euro(result.vat) })}
             </p>
           </div>
           <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-            <dt className="text-ink/70">{t("costPrice")}</dt>
+            <dt className="text-ink">{t("costPrice")}</dt>
             <dd className="text-right font-semibold">{euro(result.costPrice)}</dd>
-            <dt className="text-ink/70">{t("platformFees")}</dt>
+            <dt className="text-ink">{t("platformFees")}</dt>
             <dd className="text-right">{euro(result.platformFees)}</dd>
             {result.returnsReserve > 0 && (
               <>
-                <dt className="text-ink/70">{t("returnsReserve")}</dt>
+                <dt className="text-ink">{t("returnsReserve")}</dt>
                 <dd className="text-right">{euro(result.returnsReserve)}</dd>
               </>
             )}
             <dt className="text-ink font-semibold">{t("profit")}</dt>
             <dd className="text-right font-semibold">
-              {euro(result.profit)} <span className="text-ink/60 font-normal">({result.marginPct.toFixed(0)}%)</span>
+              {euro(result.profit)} <span className="text-ink font-normal">({result.marginPct.toFixed(0)}%)</span>
             </dd>
             {result.earningsPerHour !== null && (
               <>
-                <dt className="text-ink/70">{t("perHour")}</dt>
+                <dt className="text-ink">{t("perHour")}</dt>
                 <dd className="text-right">{euro(result.earningsPerHour)}</dd>
               </>
             )}
             {full && result.designBreakEven !== null && (
               <>
-                <dt className="text-ink/70">{t("breakEven")}</dt>
+                <dt className="text-ink">{t("breakEven")}</dt>
                 <dd className="text-right">{t("items", { n: result.designBreakEven })}</dd>
               </>
             )}
           </dl>
           <div className="flex flex-col gap-1.5">
-            <p className="text-ink/60 text-xs font-semibold tracking-wide uppercase">{t("breakdown")}</p>
+            <p className="text-ink text-xs font-semibold tracking-wide uppercase">{t("breakdown")}</p>
             {result.lines
               .filter((l) => Math.abs(l.amount) >= 0.005)
               .map((l) => (
@@ -544,7 +544,7 @@ export function Calculator({
         </div>
       ) : (
         <div className="border-line flex flex-col gap-2 border-t pt-4 text-sm">
-          <p className="text-ink/70">{t("fullTeaser")}</p>
+          <p className="text-ink">{t("fullTeaser")}</p>
           {/* The full calculator starts from what's filled in here. */}
           <Link
             href={`/account/calculator?draft=${encodeURIComponent(JSON.stringify(draftOf(inputs)))}`}

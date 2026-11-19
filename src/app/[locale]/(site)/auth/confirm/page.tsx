@@ -48,7 +48,7 @@ export default async function ConfirmPage({
         </h1>
         {token_hash && otpType ? (
           <>
-            <p className="text-ink/70 text-sm">
+            <p className="text-ink text-sm">
               {otpType === "recovery" ? t("confirmBodyReset") : t("confirmBody")}
             </p>
             <ConfirmEmailLink tokenHash={token_hash} type={otpType} next={safeNext} />

@@ -25,7 +25,7 @@ export default async function StudioOrdersPage() {
                 <p className="font-medium">
                   {order.order_items?.map((i) => i.title).join(", ") || "Order"}
                 </p>
-                <p className="text-ink/60">
+                <p className="text-ink">
                   {order.buyer_email} ·{" "}
                   {new Date(order.created_at).toLocaleString("nl-NL", {
                     dateStyle: "medium",
@@ -33,7 +33,7 @@ export default async function StudioOrdersPage() {
                   })}
                 </p>
                 {/* Polar's order id, to look the order up in Polar. */}
-                <p className="text-ink/40 text-xs">
+                <p className="text-ink text-xs">
                   Polar {order.external_order_id}
                 </p>
               </div>
@@ -54,7 +54,7 @@ export default async function StudioOrdersPage() {
             </div>
           ))
         ) : (
-          <p className="text-ink/60 p-8 text-center text-sm">
+          <p className="text-ink p-8 text-center text-sm">
             No orders yet — these sync in automatically from Polar once
             it&apos;s configured.
           </p>

@@ -51,7 +51,7 @@ export function ProductCard({ product }: { product: Product }) {
         <h3 className="font-display text-ink text-base font-semibold">
           {text.title}
         </h3>
-        <p className="text-ink/60 mt-1 line-clamp-2 text-sm">
+        <p className="text-ink mt-1 line-clamp-2 text-sm">
           {text.description}
         </p>
         <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-3">

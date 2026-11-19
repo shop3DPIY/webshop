@@ -13,7 +13,7 @@ export async function MakesSection({ productId }: { productId: string }) {
         <h2 id="makes-title" className="font-display text-ink text-2xl font-semibold">
           {t("title")}
         </h2>
-        <p className="text-ink/70 mt-1 text-sm">
+        <p className="text-ink mt-1 text-sm">
           {makes.length > 0 ? t("intro") : t("empty")}
         </p>
       </div>
@@ -31,7 +31,7 @@ export async function MakesSection({ productId }: { productId: string }) {
               <figcaption className="px-1 pb-1 text-xs">
                 {m.caption && <span className="text-ink block">{m.caption}</span>}
                 {m.displayName && (
-                  <span className="text-ink/60">— {m.displayName}</span>
+                  <span className="text-ink">— {m.displayName}</span>
                 )}
               </figcaption>
             </figure>

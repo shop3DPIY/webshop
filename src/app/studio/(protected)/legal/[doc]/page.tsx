@@ -25,7 +25,7 @@ export default async function StudioLegalDocPage({
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <Link href="/studio/legal" className="text-ink/60 hover:text-ink text-sm">
+          <Link href="/studio/legal" className="text-ink hover:text-ink text-sm">
             ← Legal
           </Link>
           <h1 className="font-display mt-1 text-2xl font-bold">{source.en.title}</h1>
@@ -57,7 +57,7 @@ export default async function StudioLegalDocPage({
         </p>
       )}
 
-      <div className="text-ink/70 max-w-4xl rounded-3xl p-5 text-sm glass">
+      <div className="text-ink max-w-4xl rounded-3xl p-5 text-sm glass">
         <p className="font-semibold">How to write it</p>
         <p className="mt-1">
           <code>## Heading</code> · <code>- bullet</code> · an empty line starts a new

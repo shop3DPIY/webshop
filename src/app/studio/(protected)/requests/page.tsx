@@ -83,7 +83,7 @@ export default async function StudioRequestsPage({
 
       <div className="divide-line divide-y rounded-3xl glass">
         {shown.length === 0 ? (
-          <p className="text-ink/60 p-8 text-center text-sm">Nothing here.</p>
+          <p className="text-ink p-8 text-center text-sm">Nothing here.</p>
         ) : (
           shown.map((r) => (
             <div key={r.id} className="flex flex-col gap-3 p-5 text-sm lg:flex-row lg:items-start lg:justify-between">
@@ -100,19 +100,19 @@ export default async function StudioRequestsPage({
                   </span>
                   {r.title}
                   {r.kind === "request" && r.status !== "new" && (
-                    <span className="text-ink/60 font-normal">· 👍 {r.votes}</span>
+                    <span className="text-ink font-normal">· 👍 {r.votes}</span>
                   )}
                 </p>
                 {r.product && (
-                  <p className="text-ink/70 mt-1">
+                  <p className="text-ink mt-1">
                     About:{" "}
                     <a href={`/product/${r.product.slug}`} target="_blank" className="underline">
                       {r.product.title}
                     </a>
                   </p>
                 )}
-                {r.details && <p className="text-ink/80 mt-1 whitespace-pre-line">{r.details}</p>}
-                <p className="text-ink/60 mt-1">
+                {r.details && <p className="text-ink mt-1 whitespace-pre-line">{r.details}</p>}
+                <p className="text-ink mt-1">
                   {r.name} ·{" "}
                   <a href={`mailto:${r.email}?subject=${encodeURIComponent(`Re: ${r.title}`)}`} className="underline">
                     {r.email}

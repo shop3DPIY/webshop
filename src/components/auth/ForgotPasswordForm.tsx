@@ -35,7 +35,7 @@ export function ForgotPasswordForm() {
     return (
       <div className="rounded-3xl p-8 text-center glass">
         <h2 className="font-display text-lg font-semibold">{t("checkEmailTitle")}</h2>
-        <p className="text-ink/70 mt-2 text-sm">{t("checkEmailBody")}</p>
+        <p className="text-ink mt-2 text-sm">{t("checkEmailBody")}</p>
       </div>
     );
   }

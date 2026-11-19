@@ -55,7 +55,7 @@ export default async function BusinessPage() {
               {tHero("titleLine1")}{" "}
               <span className="text-brand-purple">{tHero("titleLine2")}</span>
             </h1>
-            <p className="max-w-xl text-lg text-ink/70">
+            <p className="max-w-xl text-lg text-ink">
               {tHero("description")}
             </p>
             <div className="flex flex-wrap items-center gap-3">
@@ -83,7 +83,7 @@ export default async function BusinessPage() {
                 <h3 className="font-display text-ink text-lg font-semibold">
                   {license.title}
                 </h3>
-                <p className="text-ink/70 mt-2 text-sm">{license.body}</p>
+                <p className="text-ink mt-2 text-sm">{license.body}</p>
               </div>
             ))}
           </div>
@@ -122,7 +122,7 @@ export default async function BusinessPage() {
             </div>
           ) : (
             <div className="rounded-3xl p-12 text-center glass">
-              <p className="text-ink/60 text-sm">{tHero("emptyCatalogNote")}</p>
+              <p className="text-ink text-sm">{tHero("emptyCatalogNote")}</p>
             </div>
           )}
         </Container>
@@ -135,7 +135,7 @@ export default async function BusinessPage() {
             description={tBusiness("commissionsBody")}
             tone="purple"
           />
-          <ul className="text-ink/70 space-y-2 text-sm">
+          <ul className="text-ink space-y-2 text-sm">
             {bullets.map((bullet) => (
               <li key={bullet} className="flex gap-2">
                 <span className="text-heading" aria-hidden>
@@ -150,7 +150,7 @@ export default async function BusinessPage() {
               {tBusiness("cta")}
             </Button>
           </div>
-          <p className="text-ink/60 text-xs">{tBusiness("legalNotice")}</p>
+          <p className="text-ink text-xs">{tBusiness("legalNotice")}</p>
         </Container>
       </section>
     </>

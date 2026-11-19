@@ -83,7 +83,7 @@ export default async function DollsPage() {
               eyebrow={tAbout("eyebrow")}
               title={tAbout("title")}
             />
-            <p className="text-ink/70 mt-4 text-base sm:text-lg">
+            <p className="text-ink mt-4 text-base sm:text-lg">
               {tAbout("description")}
             </p>
           </div>
@@ -91,7 +91,7 @@ export default async function DollsPage() {
             <h3 className="font-display text-ink text-lg font-semibold">
               {tFreeDownloads("title")}
             </h3>
-            <p className="text-ink/70 mt-2 text-sm">
+            <p className="text-ink mt-2 text-sm">
               {tFreeDownloads("description")}
             </p>
             <Button href="/free-designs" className="mt-4">

@@ -175,7 +175,7 @@ export function MediaFields({
 
   const note = (key: string) => {
     const s = status[key];
-    if (s?.busy) return <span className="text-ink/70 text-xs">Uploading…</span>;
+    if (s?.busy) return <span className="text-ink text-xs">Uploading…</span>;
     if (s?.error)
       return <span className="text-xs text-red-200">{s.error}</span>;
     return null;
@@ -282,7 +282,7 @@ export function MediaFields({
 
       <section className="flex flex-col gap-3">
         <h2 className="font-display text-lg font-semibold">Files</h2>
-        <p className="text-ink/60 text-sm">
+        <p className="text-ink text-sm">
           {existingDownloads.length > 0
             ? `Currently: ${existingDownloads.map((f) => `${f.format} (${f.fileName})`).join(", ")}. A new file of the same format replaces it.`
             : "Upload at least one file. Stored privately — only entitled customers get a download link."}
@@ -304,7 +304,7 @@ export function MediaFields({
                 />
                 {note(format) ??
                   (picked && (
-                    <span className="text-ink/70 pl-4 text-xs">
+                    <span className="text-ink pl-4 text-xs">
                       ✓ {picked.fileName} uploaded
                     </span>
                   ))}
@@ -323,13 +323,13 @@ export function MediaFields({
           >
             ✨ Fill in print details from the 3MF
           </button>
-          {fillNote && <span className="text-ink/70 text-xs">{fillNote}</span>}
+          {fillNote && <span className="text-ink text-xs">{fillNote}</span>}
         </div>
       )}
 
       <section className="flex flex-col gap-3">
         <h2 className="font-display text-lg font-semibold">Photos</h2>
-        <p className="text-ink/60 text-sm">
+        <p className="text-ink text-sm">
           The first photo is the cover. Use the arrows to reorder, × to remove.
           JPG, PNG or WebP.
         </p>
@@ -409,7 +409,7 @@ export function MediaFields({
 
       <section className="flex flex-col gap-3">
         <h2 className="font-display text-lg font-semibold">Timelapse</h2>
-        <p className="text-ink/60 text-sm">
+        <p className="text-ink text-sm">
           One video, shown on the product page. MP4 works best; max 50 MB.
         </p>
         {timelapse && (

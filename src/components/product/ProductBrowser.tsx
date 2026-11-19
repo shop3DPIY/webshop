@@ -181,7 +181,7 @@ export function ProductBrowser({
           </div>
         )}
 
-        <p className="text-ink/60 text-xs" aria-live="polite">
+        <p className="text-ink text-xs" aria-live="polite">
           {t("count", { count: shown.length })}
           {filtered && (
             <>

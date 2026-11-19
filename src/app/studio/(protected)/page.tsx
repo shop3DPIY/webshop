@@ -39,7 +39,7 @@ export default async function StudioDashboardPage() {
     <div className="flex flex-col gap-10">
       <div>
         <h1 className="font-display text-2xl font-bold">Dashboard</h1>
-        <p className="text-ink/60 mt-1 text-sm">
+        <p className="text-ink mt-1 text-sm">
           Welcome back{profile?.full_name ? `, ${profile.full_name}` : ""} —
           you&apos;re managing 3DPIY as an admin. This is not what customers
           see.
@@ -51,7 +51,7 @@ export default async function StudioDashboardPage() {
           <p className="font-display text-lg font-semibold">
             {drafts.length} new product(s) waiting to go live
           </p>
-          <p className="text-ink/60 text-sm">
+          <p className="text-ink text-sm">
             New uploads from the ingest folder arrive here as drafts. Check
             the texts, photos and prices, then set Status to Published.
           </p>
@@ -63,7 +63,7 @@ export default async function StudioDashboardPage() {
                   className="hover:text-brand-purple flex justify-between gap-4 py-2 text-sm"
                 >
                   <span className="font-medium">{d.title}</span>
-                  <span className="text-ink/60">
+                  <span className="text-ink">
                     {d.category} · {new Date(d.created_at).toLocaleDateString("nl-NL")}
                   </span>
                 </Link>
@@ -80,7 +80,7 @@ export default async function StudioDashboardPage() {
             href={stat.href}
             className="hover:bg-mist rounded-3xl p-6 glass"
           >
-            <p className="text-ink/60 text-sm">{stat.label}</p>
+            <p className="text-ink text-sm">{stat.label}</p>
             <p className="font-display mt-1 text-3xl font-bold">{stat.value}</p>
           </Link>
         ))}
