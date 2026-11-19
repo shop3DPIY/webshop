@@ -29,8 +29,9 @@
   --font-heading: var(--font-fredoka);
   --font-body: var(--font-inter);
 
-  /* Glass neutrals — white text on white glass over the banner gradient */
-  --ink: #ffffff;
+  /* Glass neutrals — dark purple text on white glass (light mode); dark
+     mode keeps white text (see .dark). Trial 2026-11-19: was #ffffff. */
+  --ink: #2a1846;
   --night: #14121a;
   --paper: rgb(255 255 255 / 0.2);
   --mist: rgb(255 255 255 / 0.1);
@@ -113,6 +114,7 @@
 }
 
 .dark {
+  --ink: #ffffff;
   /* Dark mode: light white glass on the near-black backdrop */
   --paper: rgb(255 255 255 / 0.07);
   --mist: rgb(255 255 255 / 0.04);
