@@ -282,7 +282,18 @@ body {
     radial-gradient(65% 55% at 50% 50%, rgb(150 70 235 / 0.55), transparent 80%),
     radial-gradient(45% 40% at 30% 40%, rgb(230 60 145 / 0.35), transparent 80%),
     linear-gradient(135deg, #de85bb 0%, #b088ea 50%, #7fa4ec 100%);
-  --backdrop: var(--backdrop-glow-deep);
+  /* Trial: in between — the pastel glows, a base halfway to the deep one. */
+  --backdrop-glow-mid:
+    radial-gradient(60% 55% at 0% 0%, rgb(255 79 160 / 0.85), transparent 75%),
+    radial-gradient(50% 50% at 45% 0%, rgb(255 122 61 / 0.75), transparent 75%),
+    radial-gradient(50% 50% at 90% 10%, rgb(255 201 61 / 0.85), transparent 75%),
+    radial-gradient(55% 55% at 100% 60%, rgb(47 142 255 / 0.78), transparent 75%),
+    radial-gradient(60% 55% at 0% 100%, rgb(47 191 113 / 0.78), transparent 75%),
+    radial-gradient(60% 60% at 65% 100%, rgb(139 92 246 / 0.8), transparent 75%),
+    radial-gradient(65% 55% at 50% 50%, rgb(170 90 245 / 0.47), transparent 80%),
+    radial-gradient(45% 40% at 30% 40%, rgb(245 70 152 / 0.3), transparent 80%),
+    linear-gradient(135deg, #eb9fcb 0%, #c4a6f5 50%, #98baf5 100%);
+  --backdrop: var(--backdrop-glow-mid);
 
   --action: #8c52ff;
   --action-text: #ffffff;
