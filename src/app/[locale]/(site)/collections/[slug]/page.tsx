@@ -125,8 +125,13 @@ export default async function CollectionPage({
         )}
 
         {collectionText.body && (
-          <section className="border-line max-w-3xl border-t pt-8">
-            <LegalBody text={collectionText.body} />
+          <section className="rounded-3xl p-6 glass sm:p-8">
+            <h2 className="font-display text-ink mb-3 text-xl font-semibold">
+              {tPage("aboutCollection", { name: t("name") })}
+            </h2>
+            <div className="max-w-3xl">
+              <LegalBody text={collectionText.body} />
+            </div>
           </section>
         )}
 

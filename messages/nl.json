@@ -171,7 +171,8 @@
     "designsHeading": "Ontwerpen",
     "scaleBarbie": "1:6 · Barbie",
     "scaleDollhouse": "1:12 · Poppenhuis",
-    "alsoHere": "Ook in {name}"
+    "alsoHere": "Ook in {name}",
+    "aboutCollection": "Over {name}"
   },
   "productPage": {
     "compatibleWith": "Past op",
@@ -240,7 +241,7 @@
     },
     "free": {
       "intro": "Laat je e-mailadres achter, dan mailen we je meteen de downloadlink.",
-      "placeholder": "jij@email.nl",
+      "placeholder": "jij@email.com",
       "consent": "Schrijf me ook in voor de 3DPIY-nieuwsbrief (nieuwe ontwerpen en tips — afmelden kan altijd).",
       "submit": "Mail mij de download",
       "sentTitle": "Kijk in je inbox!",
@@ -292,7 +293,7 @@
     "introTitle": "Waarom 3DPIY bestaat",
     "introBody": "3DPIY ontstond uit een simpel idee: als je een 3D-printer hebt, hoef je geen genoegen te nemen met generieke bestanden. Elk ontwerp hier is vanaf nul gemodelleerd, test-geprint en verbeterd voordat het online komt — dingen die je echt gebruikt of waar je graag mee speelt, niet alleen iets dat mooi oogt in een render.",
     "makerTitle": "Hoi, ik ben Carmen",
-    "makerBody": "Ik kom uit Nederland en werk al sinds mijn zestiende met CNC-frezen — nauwkeurig technisch tekenen zit er dus wel in. Via werk en studie leerde ik SolidWorks, en later leerde ik mezelf Nomad aan om schattige poppetjes te boetseren. 3DPIY is waar die twee kanten samenkomen: technisch waar het moet passen, speels waar het kan.\n\nIn april 2023 kocht ik mijn eerste 3D-printer en ik was meteen verkocht. Nog geen jaar later kwam de eerste Bambu Lab, en sindsdien staan mijn printers zelden stil. Sinds kort combineer ik prints ook met elektronica — er gaan dus vast nog meer dingen knipperen.\n\n3DPIY ben ik gewoon zelf: ik ontwerp, test-print en beschrijf elk bestand voordat het online komt, van een handige IKEA-oplossing tot meubels voor Barbie.",
+    "makerBody": "Ik kom uit Nederland en werk al sinds mijn zestiende met CNC-frezen — nauwkeurig technisch tekenen zit er dus wel in. Via werk en studie leerde ik SolidWorks, en later leerde ik mezelf Nomad aan om schattige poppetjes te boetseren. 3DPIY is waar die twee kanten samenkomen: technisch waar het moet passen, speels waar het kan.\n\nBegin 2023 kocht ik mijn eerste 3D-printer en ik was meteen verkocht. In 2024 kwam de eerste Bambu Lab, en sindsdien staan mijn printers zelden stil. Sinds kort experimenteer ik ook met elektronica — er gaan dus vast nog meer dingen knipperen.\n\n3DPIY ben ik gewoon zelf: ik ontwerp, test-print en beschrijf elk bestand voordat het online komt, van een handige IKEA-oplossing tot meubels voor Barbie.",
     "valuesTitle": "Waar 3DPIY voor staat",
     "values": [
       "In eigen beheer ontworpen en getest — niets wordt gepubliceerd zonder een echte testprint",
@@ -392,7 +393,7 @@
     "noAccountForEmail": "Er is nog geen account met dit e-mailadres. Controleer op typfouten, of maak een account aan.",
     "wrongPassword": "Dit e-mailadres en wachtwoord horen niet bij elkaar. Probeer het opnieuw, of log in met een code per mail.",
     "welcomeBack": "Welkom terug! Log in om je downloads, berekeningen en wensen te zien.",
-    "emailPlaceholder": "jij@email.nl",
+    "emailPlaceholder": "jij@email.com",
     "showPassword": "Wachtwoord tonen",
     "hidePassword": "Wachtwoord verbergen",
     "or": "of",
@@ -448,7 +449,7 @@
   },
   "newsletter": {
     "submit": "Aanmelden",
-    "placeholder": "jij@email.nl",
+    "placeholder": "jij@email.com",
     "description": "Nieuwe designs en tips in je inbox. Je ontvangt alle categorieën — in elke mail kun je dat aanpassen of je afmelden.",
     "ok": "Bijna klaar! Kijk in je inbox en klik op de link in de mail om je aanmelding te bevestigen.",
     "invalid": "Dat lijkt geen geldig e-mailadres.",

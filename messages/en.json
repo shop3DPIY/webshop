@@ -171,7 +171,8 @@
     "designsHeading": "Designs",
     "scaleBarbie": "1:6 · Barbie",
     "scaleDollhouse": "1:12 · Dollhouse",
-    "alsoHere": "Also in {name}"
+    "alsoHere": "Also in {name}",
+    "aboutCollection": "About {name}"
   },
   "productPage": {
     "compatibleWith": "Compatible with",
@@ -292,7 +293,7 @@
     "introTitle": "Why 3DPIY exists",
     "introBody": "3DPIY started from a simple idea: if you own a 3D printer, you shouldn't have to settle for generic files. Every design here is modelled from scratch, test-printed and improved before it's released — things you'll actually use or love to play with, not just something that looks good in a render.",
     "makerTitle": "Hi, I'm Carmen",
-    "makerBody": "I'm from the Netherlands and I've been working in CNC milling since I was 16 — so precise, technical drawing is in my blood. Through work and study I learned SolidWorks, and later taught myself Nomad to sculpt cute little characters. 3DPIY is where those two sides meet: technical where it has to fit, playful where it can.\n\nIn April 2023 I bought my first 3D printer and was hooked straight away. Less than a year later the first Bambu Lab arrived, and since then my printers rarely stand still. Lately I've started combining prints with electronics too — so expect a few more blinking things.\n\n3DPIY is just me: I design, test-print and describe every file myself before it goes online, from a handy IKEA fix to furniture for Barbie.",
+    "makerBody": "I'm from the Netherlands and I've been working in CNC milling since I was 16 — so precise, technical drawing is in my blood. Through work and study I learned SolidWorks, and later taught myself Nomad to sculpt cute little characters. 3DPIY is where those two sides meet: technical where it has to fit, playful where it can.\n\nIn early 2023 I bought my first 3D printer and was hooked straight away. In 2024 the first Bambu Lab arrived, and since then my printers rarely stand still. Lately I've been experimenting with electronics too — so expect a few blinking things.\n\n3DPIY is just me: I design, test-print and describe every file myself before it goes online, from a handy IKEA fix to furniture for Barbie.",
     "valuesTitle": "What 3DPIY stands for",
     "values": [
       "Designed and tested in-house — nothing published without a real test print",
