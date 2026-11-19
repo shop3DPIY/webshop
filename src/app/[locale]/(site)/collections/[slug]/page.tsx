@@ -1,10 +1,11 @@
 import { TrackMarker } from "@/components/system/TrackMarker";
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { CollectionIcon } from "@/components/product/CollectionIcon";
 import { Container } from "@/components/ui/Container";
 import { ProductBrowser } from "@/components/product/ProductBrowser";
 import { FeedbackCta } from "@/components/product/FeedbackCta";
-import { Link } from "@/i18n/navigation";
 import {
   COLLECTION_LIST,
   COLLECTION_CLASSNAMES,
@@ -56,16 +57,13 @@ export default async function CollectionPage({
           <div
             className={`glass flex flex-col gap-4 rounded-xl px-8 py-10 sm:px-12 ${classes.border}`}
           >
-            <Link
-              href="/shop"
-              className="text-ink hover:text-brand-purple text-sm font-medium"
-            >
-              ← {tPage("backToShop")}
-            </Link>
-            <span
-              className={`inline-flex h-12 w-12 items-center justify-center rounded-full ${classes.bg}`}
-              aria-hidden
+            <Breadcrumbs
+              locale={await getLocale()}
+              items={[{ label: tPage("shop"), href: "/shop" }, { label: t("name") }]}
             />
+            <span className={`inline-flex h-12 w-12 items-center justify-center rounded-full text-white ${classes.bg}`}>
+              <CollectionIcon slug={slug} className="h-6 w-6" />
+            </span>
             <h1
               className={`font-display text-ink text-3xl font-bold sm:text-5xl`}
             >

@@ -10,6 +10,7 @@ import { MakesSection } from "@/components/makes/MakesSection";
 import { MakerWorldLink } from "@/components/product/MakerWorldLink";
 import { ColorSetupBadge } from "@/components/product/ColorSetupBadge";
 import { Link } from "@/i18n/navigation";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { TrackMarker } from "@/components/system/TrackMarker";
 import { COLLECTION_CLASSNAMES, getCollection } from "@/lib/config/colors";
 import {
@@ -208,12 +209,14 @@ export default async function ProductPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Link
-        href={`/collections/${product.category}`}
-        className="text-ink hover:text-ink text-sm font-medium"
-      >
-        ← {t("backToCollection")}
-      </Link>
+      <Breadcrumbs
+        locale={locale}
+        items={[
+          { label: t("shop"), href: "/shop" },
+          { label: collectionName, href: `/collections/${product.category}` },
+          { label: text.title },
+        ]}
+      />
 
       {/* Phones: title and price first, then the photos, then the rest.
           Wide screens: photos on the left, title + rest on the right. */}
