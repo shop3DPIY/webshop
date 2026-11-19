@@ -76,6 +76,36 @@ function mapRow(row: ProductRow): Product {
   };
 }
 
+/**
+ * A bundle without photos of its own shows the cover photos of the
+ * designs inside it (cards, product page gallery). One extra query, only
+ * when such a bundle is in the list.
+ */
+async function withBundleImages(products: Product[]): Promise<Product[]> {
+  const needy = products.filter(
+    (p) => p.images.length === 0 && (p.bundleProductIds?.length ?? 0) > 0,
+  );
+  if (needy.length === 0 || !isSupabaseConfigured()) return products;
+  const ids = [...new Set(needy.flatMap((p) => p.bundleProductIds!))];
+  const { data } = await createPublicClient()!
+    .from("products")
+    .select("id, images")
+    .in("id", ids);
+  const covers = new Map(
+    (data ?? []).map((row) => [row.id as string, (row.images as Product["images"])?.[0]]),
+  );
+  return products.map((p) =>
+    needy.includes(p)
+      ? {
+          ...p,
+          images: p.bundleProductIds!
+            .map((id) => covers.get(id))
+            .filter((img): img is Product["images"][number] => Boolean(img)),
+        }
+      : p,
+  );
+}
+
 const PRODUCT_COLUMNS =
   "id, slug, title, description, title_nl, description_nl, category, extra_categories, tags, images, timelapse_url, download_files, dimensions, print_settings, version, last_updated, license_type, is_free, commerce_product_ids, publication_status, related_product_ids, external_links, price_cents, bundle_product_ids";
 
@@ -83,7 +113,7 @@ export async function getAllProducts(): Promise<Product[]> {
   if (!isSupabaseConfigured()) return FALLBACK_PRODUCTS;
   const supabase = createPublicClient();
   const { data } = await supabase!.from("products").select(PRODUCT_COLUMNS);
-  return (data as ProductRow[] | null)?.map(mapRow) ?? [];
+  return withBundleImages((data as ProductRow[] | null)?.map(mapRow) ?? []);
 }
 
 export async function getPublishedProducts(): Promise<Product[]> {
@@ -95,7 +125,7 @@ export async function getPublishedProducts(): Promise<Product[]> {
     .from("products")
     .select(PRODUCT_COLUMNS)
     .eq("publication_status", "published");
-  return (data as ProductRow[] | null)?.map(mapRow) ?? [];
+  return withBundleImages((data as ProductRow[] | null)?.map(mapRow) ?? []);
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | undefined> {
@@ -108,7 +138,7 @@ export async function getProductBySlug(slug: string): Promise<Product | undefine
     .select(PRODUCT_COLUMNS)
     .eq("slug", slug)
     .maybeSingle();
-  return data ? mapRow(data as ProductRow) : undefined;
+  return data ? (await withBundleImages([mapRow(data as ProductRow)]))[0] : undefined;
 }
 
 export async function getProductsByCategory(category: CollectionSlug): Promise<Product[]> {
@@ -126,7 +156,7 @@ export async function getProductsByCategory(category: CollectionSlug): Promise<P
     // Primary category, or listed as one of the extra categories.
     .or(`category.eq.${category},extra_categories.cs.{${category}}`)
     .eq("publication_status", "published");
-  return (data as ProductRow[] | null)?.map(mapRow) ?? [];
+  return withBundleImages((data as ProductRow[] | null)?.map(mapRow) ?? []);
 }
 
 export async function getFreeProducts(): Promise<Product[]> {
@@ -139,7 +169,7 @@ export async function getFreeProducts(): Promise<Product[]> {
     .select(PRODUCT_COLUMNS)
     .eq("is_free", true)
     .eq("publication_status", "published");
-  return (data as ProductRow[] | null)?.map(mapRow) ?? [];
+  return withBundleImages((data as ProductRow[] | null)?.map(mapRow) ?? []);
 }
 
 export async function getRelatedProducts(product: Product): Promise<Product[]> {
@@ -157,7 +187,7 @@ export async function getRelatedProducts(product: Product): Promise<Product[]> {
     .select(PRODUCT_COLUMNS)
     .in("id", product.relatedProductIds)
     .eq("publication_status", "published");
-  return (data as ProductRow[] | null)?.map(mapRow) ?? [];
+  return withBundleImages((data as ProductRow[] | null)?.map(mapRow) ?? []);
 }
 
 /** Published designs by id, in the given order (e.g. a bundle's contents). */
@@ -172,7 +202,7 @@ export async function getProductsByIds(ids: string[]): Promise<Product[]> {
     .select(PRODUCT_COLUMNS)
     .in("id", ids)
     .eq("publication_status", "published");
-  const found = (data as ProductRow[] | null)?.map(mapRow) ?? [];
+  const found = await withBundleImages((data as ProductRow[] | null)?.map(mapRow) ?? []);
   return ids
     .map((id) => found.find((p) => p.id === id))
     .filter((p): p is Product => Boolean(p));
@@ -187,5 +217,5 @@ export async function getBundlesContaining(productId: string): Promise<Product[]
     .select(PRODUCT_COLUMNS)
     .contains("bundle_product_ids", [productId])
     .eq("publication_status", "published");
-  return (data as ProductRow[] | null)?.map(mapRow) ?? [];
+  return withBundleImages((data as ProductRow[] | null)?.map(mapRow) ?? []);
 }

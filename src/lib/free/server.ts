@@ -1,7 +1,7 @@
 import "server-only";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { isMailConfigured, sendMail } from "@/lib/mail/send";
-import { emailLayout, escapeHtml } from "@/lib/mail/template";
+import { emailButton, emailLayout, escapeHtml } from "@/lib/mail/template";
 import { manageUrl } from "@/lib/newsletter/server";
 
 /**
@@ -122,10 +122,10 @@ export async function sendFreeDownloadMail(params: {
     html: emailLayout({
       heading: c.heading,
       bodyHtml: `<p style="margin:0 0 16px">${escapeHtml(c.body(params.title))}</p>
-<p style="margin:0 0 24px">${links
+<p style="margin:0 0 16px">${links
         .map(
           (l) =>
-            `<a href="${l.url}" style="display:inline-block;margin:0 8px 8px 0;background:#8c52ff;color:#fff;text-decoration:none;padding:12px 20px;border-radius:999px;font-weight:bold">${escapeHtml(l.label)}</a>`,
+            emailButton(l.url, l.label),
         )
         .join("")}</p>`,
       footerHtml: manage

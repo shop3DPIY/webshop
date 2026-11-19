@@ -1,6 +1,6 @@
 import "server-only";
 import { sendMail } from "@/lib/mail/send";
-import { emailLayout, escapeHtml } from "@/lib/mail/template";
+import { emailButton, emailLayout, escapeHtml } from "@/lib/mail/template";
 import { manageUrl } from "./server";
 
 const COPY = {
@@ -10,7 +10,7 @@ const COPY = {
     body: "Leuk dat je erbij bent. Je ontvangt nieuws over nieuwe designs uit alle categorieën.",
     manage:
       "Liever alleen bepaalde categorieën, of toch geen nieuwsbrief? Via deze link pas je het aan of meld je je af:",
-    link: "Voorkeuren aanpassen of afmelden",
+    link: "Inschrijving beheren",
     notYou:
       "Heb je je niet zelf aangemeld? Klik dan op de link hierboven en meld je af.",
   },
@@ -20,7 +20,7 @@ const COPY = {
     body: "Glad to have you. You'll hear about new designs from every category.",
     manage:
       "Prefer only certain categories, or no newsletter after all? Change it or unsubscribe here:",
-    link: "Change preferences or unsubscribe",
+    link: "Manage subscription",
     notYou: "Didn't sign up yourself? Use the link above to unsubscribe.",
   },
 };
@@ -41,7 +41,7 @@ export async function sendWelcomeMail(
       heading: c.heading,
       bodyHtml: `<p style="margin:0 0 16px">${escapeHtml(c.body)}</p>
 <p style="margin:0 0 16px">${escapeHtml(c.manage)}</p>
-<p style="margin:0 0 24px"><a href="${url}" style="display:inline-block;background:#8c52ff;color:#fff;text-decoration:none;padding:12px 20px;border-radius:999px;font-weight:bold">${escapeHtml(c.link)}</a></p>
+<p style="margin:0 0 16px">${emailButton(url, c.link)}</p>
 <p style="margin:0;color:#6b6478;font-size:13px">${escapeHtml(c.notYou)}</p>`,
     }),
   });
@@ -81,7 +81,7 @@ export async function sendConfirmMail(
     html: emailLayout({
       heading: c.heading,
       bodyHtml: `<p style="margin:0 0 24px">${escapeHtml(c.body)}</p>
-<p style="margin:0 0 24px"><a href="${url}" style="display:inline-block;background:#8c52ff;color:#fff;text-decoration:none;padding:12px 20px;border-radius:999px;font-weight:bold">${escapeHtml(c.button)}</a></p>
+<p style="margin:0 0 16px">${emailButton(url, c.button)}</p>
 <p style="margin:0;color:#6b6478;font-size:13px">${escapeHtml(c.notYou)}</p>`,
     }),
   });

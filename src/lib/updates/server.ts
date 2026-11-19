@@ -2,7 +2,7 @@ import "server-only";
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { isMailConfigured, sendBatch, type Mail } from "@/lib/mail/send";
-import { emailLayout, escapeHtml, textToHtml } from "@/lib/mail/template";
+import { emailButton, emailLayout, escapeHtml, textToHtml } from "@/lib/mail/template";
 import { bundlesContaining } from "@/lib/studio/bundles";
 
 /**
@@ -156,7 +156,7 @@ function updateMail(
       heading: c.heading,
       bodyHtml: `<p style="margin:0 0 16px">${escapeHtml(body)}</p>
 ${note ? `<p style="margin:0 0 8px;font-weight:bold">${escapeHtml(c.note)}</p>${textToHtml(note)}` : ""}
-<p style="margin:0 0 24px"><a href="${library}" style="display:inline-block;background:#8c52ff;color:#fff;text-decoration:none;padding:12px 20px;border-radius:999px;font-weight:bold">${escapeHtml(c.button)}</a></p>
+<p style="margin:0 0 16px">${emailButton(library, c.button)}</p>
 <p style="margin:0;color:#6b6478;font-size:13px">${escapeHtml(c.guest)}</p>`,
       footerHtml: `${escapeHtml(c.optOut)} <a href="${optOut}" style="color:#8c52ff">${escapeHtml(c.optOutLink)}</a><br><br>`,
     }),
