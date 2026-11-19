@@ -81,7 +81,7 @@ function Info({ text }: { text: string }) {
     <span
       title={text}
       aria-label={text}
-      className="text-ink/60 hover:text-ink cursor-help font-normal"
+      className="text-ink hover:text-ink cursor-help font-normal"
     >
       ⓘ
     </span>
@@ -549,7 +549,7 @@ export function ProductForm({
               />
             </label>
 
-            <p className="text-ink/60 text-xs">
+            <p className="text-ink text-xs">
               Polar: saving lists this product automatically, one Polar product
               per license with the prices above (free and archived products are
               taken off).{" "}

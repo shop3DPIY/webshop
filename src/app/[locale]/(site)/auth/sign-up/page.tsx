@@ -24,7 +24,7 @@ export default async function SignUpPage() {
           {isSupabaseConfigured() ? <SignUpForm /> : <BackendNotConnected />}
         </div>
 
-        <p className="text-ink/60 mt-6 text-center text-sm">
+        <p className="text-ink mt-6 text-center text-sm">
           {t("haveAccount")}{" "}
           <Link href="/auth/sign-in" className="text-ink font-semibold underline underline-offset-2">
             {t("signInLink")}

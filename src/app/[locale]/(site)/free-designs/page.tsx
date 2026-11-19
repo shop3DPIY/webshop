@@ -31,7 +31,7 @@ export default async function FreeDesignsPage() {
           <h2 className="font-display text-ink text-xl font-semibold">
             {t("emptyTitle")}
           </h2>
-          <p className="text-ink/60 mt-2 text-sm">{t("emptyDescription")}</p>
+          <p className="text-ink mt-2 text-sm">{t("emptyDescription")}</p>
         </div>
       )}
     </Container>

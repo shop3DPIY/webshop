@@ -38,7 +38,7 @@ export default async function StudioMakesPage() {
           </a>
         )}
         {m.caption && <p>{m.caption}</p>}
-        <p className="text-ink/60 text-xs">
+        <p className="text-ink text-xs">
           {m.display_name || "(no name)"} · {m.email} ·{" "}
           {new Date(m.created_at).toLocaleDateString("nl-NL", { dateStyle: "medium" })}
         </p>
@@ -78,7 +78,7 @@ export default async function StudioMakesPage() {
       <section className="flex flex-col gap-4">
         <h2 className="font-display text-lg font-semibold">Waiting for review ({pending.length})</h2>
         {pending.length === 0 ? (
-          <p className="text-ink/60 text-sm">Nothing to review.</p>
+          <p className="text-ink text-sm">Nothing to review.</p>
         ) : (
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">{pending.map(card)}</div>
         )}
@@ -86,7 +86,7 @@ export default async function StudioMakesPage() {
       <section className="flex flex-col gap-4">
         <h2 className="font-display text-lg font-semibold">On the site ({approved.length})</h2>
         {approved.length === 0 ? (
-          <p className="text-ink/60 text-sm">No approved photos yet.</p>
+          <p className="text-ink text-sm">No approved photos yet.</p>
         ) : (
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">{approved.map(card)}</div>
         )}

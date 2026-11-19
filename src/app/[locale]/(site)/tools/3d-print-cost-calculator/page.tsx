@@ -79,13 +79,13 @@ export default async function CalculatorPage({
       <section className="grid gap-8 lg:grid-cols-2">
         <div className="flex flex-col gap-3">
           <h2 className="font-display text-ink text-2xl font-semibold">{t("howTitle")}</h2>
-          <p className="text-ink/75">{t("howBody")}</p>
-          <p className="text-ink/75 rounded-2xl p-4 font-mono text-sm glass">{t("formula")}</p>
-          <p className="text-ink/75">{t("howBody2")}</p>
+          <p className="text-ink">{t("howBody")}</p>
+          <p className="text-ink rounded-2xl p-4 font-mono text-sm glass">{t("formula")}</p>
+          <p className="text-ink">{t("howBody2")}</p>
         </div>
         <div className="flex flex-col gap-3">
           <h2 className="font-display text-ink text-2xl font-semibold">{t("forgottenTitle")}</h2>
-          <ul className="text-ink/75 flex list-disc flex-col gap-2 pl-5">
+          <ul className="text-ink flex list-disc flex-col gap-2 pl-5">
             {FORGOTTEN_KEYS.map((k) => (
               <li key={k}>
                 <strong className="text-ink">{t(`forgotten.${k}.title`)}:</strong> {t(`forgotten.${k}.body`)}
@@ -101,7 +101,7 @@ export default async function CalculatorPage({
           {FAQ_KEYS.map((k) => (
             <details key={k} className="rounded-2xl p-4 glass">
               <summary className="text-ink cursor-pointer font-semibold">{t(`faq.${k}.q`)}</summary>
-              <p className="text-ink/75 mt-2">{t(`faq.${k}.a`)}</p>
+              <p className="text-ink mt-2">{t(`faq.${k}.a`)}</p>
             </details>
           ))}
         </div>

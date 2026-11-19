@@ -99,7 +99,7 @@ export default async function StudioCustomersPage() {
     <div className="flex flex-col gap-6">
       <div>
         <h1 className="font-display text-2xl font-bold">Customers</h1>
-        <p className="text-ink/60 mt-1 text-sm">
+        <p className="text-ink mt-1 text-sm">
           Everyone with an account, a purchase (also without an account) or a
           free download. Click someone to see what they got, per order.
         </p>
@@ -114,7 +114,7 @@ export default async function StudioCustomersPage() {
                 <summary className="flex cursor-pointer list-none flex-wrap items-center justify-between gap-3">
                   <div>
                     <p className="font-medium">{c.name || c.email}</p>
-                    <p className="text-ink/60">{c.email}</p>
+                    <p className="text-ink">{c.email}</p>
                   </div>
                   <div className="flex flex-wrap items-center gap-2 text-xs">
                     {c.orders.length > 0 && (
@@ -135,7 +135,7 @@ export default async function StudioCustomersPage() {
                     <span className="border-line rounded-full border px-3 py-1">
                       {c.hasAccount ? "Has account" : "No account"}
                     </span>
-                    <span className="text-ink/60">since {date(c.since)}</span>
+                    <span className="text-ink">since {date(c.since)}</span>
                     <span className="font-display ml-2 min-w-20 text-right text-base font-bold">
                       {formatEuro(spent)}
                     </span>
@@ -145,7 +145,7 @@ export default async function StudioCustomersPage() {
                 <div className="mt-4 flex flex-col gap-3">
                   {c.orders.map((o) => (
                     <div key={o.id} className="rounded-2xl p-4 glass">
-                      <p className="text-ink/60 mb-2 text-xs">
+                      <p className="text-ink mb-2 text-xs">
                         Order of {date(o.date)}
                         {o.totalCents != null && ` · ${formatEuro(o.totalCents)}`}
                       </p>
@@ -162,7 +162,7 @@ export default async function StudioCustomersPage() {
                             ) : (
                               <span>{l.title}</span>
                             )}
-                            <span className="text-ink/60">
+                            <span className="text-ink">
                               {l.tier ? (TIER[l.tier] ?? l.tier) : ""}
                               {l.cents != null && ` · ${formatEuro(l.cents)}`}
                             </span>
@@ -173,26 +173,26 @@ export default async function StudioCustomersPage() {
                   ))}
                   {c.free.length > 0 && (
                     <div className="rounded-2xl p-4 glass">
-                      <p className="text-ink/60 mb-2 text-xs">Free downloads</p>
+                      <p className="text-ink mb-2 text-xs">Free downloads</p>
                       <ul className="flex flex-col gap-1">
                         {c.free.map((f) => (
                           <li key={f.productId} className="flex justify-between gap-4">
                             <span className="font-medium">{f.title}</span>
-                            <span className="text-ink/60">{date(f.date)}</span>
+                            <span className="text-ink">{date(f.date)}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
                   )}
                   {c.orders.length === 0 && c.free.length === 0 && (
-                    <p className="text-ink/60">Account only — nothing bought yet.</p>
+                    <p className="text-ink">Account only — nothing bought yet.</p>
                   )}
                 </div>
               </details>
             );
           })
         ) : (
-          <p className="text-ink/60 p-8 text-center text-sm">No customers yet.</p>
+          <p className="text-ink p-8 text-center text-sm">No customers yet.</p>
         )}
       </div>
     </div>

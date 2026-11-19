@@ -31,7 +31,7 @@ export default async function UpdatesUnsubscribePage({
         <h1 className="font-display text-ink text-2xl font-bold">
           {!valid ? t("invalidTitle") : done ? t("doneTitle") : t("title")}
         </h1>
-        <p className="text-ink/70">
+        <p className="text-ink">
           {!valid
             ? t("invalidBody")
             : done

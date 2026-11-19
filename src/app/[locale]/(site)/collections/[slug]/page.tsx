@@ -71,7 +71,7 @@ export default async function CollectionPage({
             >
               {t("name")}
             </h1>
-            <p className="text-ink/70 max-w-xl text-lg">{t("tagline")}</p>
+            <p className="text-ink max-w-xl text-lg">{t("tagline")}</p>
           </div>
         </Container>
       </section>
@@ -84,7 +84,7 @@ export default async function CollectionPage({
             <h2 className="font-display text-ink text-xl font-semibold">
               {tPage("emptyTitle")}
             </h2>
-            <p className="text-ink/60 mt-2 text-sm">
+            <p className="text-ink mt-2 text-sm">
               {tPage("emptyDescription")}
             </p>
           </div>

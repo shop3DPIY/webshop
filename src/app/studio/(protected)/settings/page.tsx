@@ -33,7 +33,7 @@ export default async function StudioSettingsPage({
     <div className="flex flex-col gap-6">
       <div>
         <h1 className="font-display text-2xl font-bold">Settings</h1>
-        <p className="text-ink/60 mt-1 max-w-2xl text-sm">
+        <p className="text-ink mt-1 max-w-2xl text-sm">
           Business details. The footer shows the KvK number and VAT ID; the
           legal texts fill in the rest automatically. Saving updates the whole
           site straight away.
@@ -54,7 +54,7 @@ export default async function StudioSettingsPage({
           <label key={f.key} className={`${LABEL} ${f.wide ? "sm:col-span-2" : ""}`}>
             {f.label}
             <input name={f.key} defaultValue={b[f.key]} className={FIELD} />
-            {f.hint && <span className="text-ink/60 text-xs font-normal">{f.hint}</span>}
+            {f.hint && <span className="text-ink text-xs font-normal">{f.hint}</span>}
           </label>
         ))}
         <button

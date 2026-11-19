@@ -1,5 +1,4 @@
 import { getTranslations } from "next-intl/server";
-import { Container } from "@/components/ui/Container";
 import { SignInForm } from "@/components/auth/SignInForm";
 import { BackendNotConnected } from "@/components/system/BackendNotConnected";
 import { Link } from "@/i18n/navigation";
@@ -10,6 +9,7 @@ export async function generateMetadata() {
   return { title: t("signInTitle"), robots: { index: false, follow: false } };
 }
 
+/** A narrow frosted-glass card, centred. */
 export default async function SignInPage({
   searchParams,
 }: {
@@ -19,14 +19,15 @@ export default async function SignInPage({
   const { next, confirmed } = await searchParams;
 
   return (
-    <Container panel className="flex flex-col gap-8 py-16 sm:py-24">
-      <div className="mx-auto w-full max-w-sm">
+    <section className="flex min-h-[calc(100svh-5rem)] items-center justify-center px-4 py-10">
+      <div className="glass w-full max-w-[440px] rounded-3xl p-6 sm:p-10">
         <h1 className="font-display text-ink text-center text-2xl font-bold">
           {t("signInTitle")}
         </h1>
+        <p className="text-ink mt-2 text-center text-sm">{t("welcomeBack")}</p>
 
         {confirmed && (
-          <p className="border-line bg-mist mt-6 rounded-2xl border p-4 text-center text-sm">
+          <p role="status" className="border-line bg-mist mt-6 rounded-2xl border p-4 text-center text-sm">
             {t("emailConfirmed")}
           </p>
         )}
@@ -39,18 +40,13 @@ export default async function SignInPage({
           )}
         </div>
 
-        <div className="mt-6 flex flex-col items-center gap-2 text-sm">
-          <Link href="/auth/forgot-password" className="text-ink font-semibold underline underline-offset-2">
-            {t("forgotLink")}
+        <p className="border-line text-ink mt-8 border-t pt-6 text-center text-sm">
+          {t("noAccount")}{" "}
+          <Link href="/auth/sign-up" className="text-ink font-semibold underline underline-offset-2">
+            {t("signUpLink")}
           </Link>
-          <p className="text-ink/60">
-            {t("noAccount")}{" "}
-            <Link href="/auth/sign-up" className="text-ink font-semibold underline underline-offset-2">
-              {t("signUpLink")}
-            </Link>
-          </p>
-        </div>
+        </p>
       </div>
-    </Container>
+    </section>
   );
 }

@@ -42,12 +42,12 @@ export function SpecHint({
         className="cursor-help underline decoration-dotted underline-offset-4"
       >
         {value}{" "}
-        <span aria-hidden className="text-ink/60">
+        <span aria-hidden className="text-ink">
           {open ? "×" : "ⓘ"}
         </span>
       </button>
       {open && (
-        <span className="text-ink/70 mt-2 block max-w-xs text-left text-xs font-normal">
+        <span className="text-ink mt-2 block max-w-xs text-left text-xs font-normal">
           {hint.text}{" "}
           <Link href={hint.href} className="underline underline-offset-2">
             {hint.linkLabel}

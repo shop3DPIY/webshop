@@ -43,7 +43,7 @@ export default async function LegalDocPage({
       <BackButton label={tLegal("back")} />
       <div>
         <h1 className="font-display text-ink text-3xl font-bold sm:text-4xl">{text.title}</h1>
-        <p className="text-ink/60 mt-2 text-sm">{tLegal("updated", { date: updated })}</p>
+        <p className="text-ink mt-2 text-sm">{tLegal("updated", { date: updated })}</p>
       </div>
       <div className="max-w-3xl">
         <LegalBody text={text.body} />

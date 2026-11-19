@@ -35,7 +35,7 @@ export default async function NotifyBuyersPage({
     <div className="flex max-w-2xl flex-col gap-6">
       <div>
         <h1 className="font-display text-2xl font-bold">Notify buyers</h1>
-        <p className="text-ink/60 mt-1 text-sm">
+        <p className="text-ink mt-1 text-sm">
           {product.title} · v{product.version}
         </p>
       </div>
@@ -56,7 +56,7 @@ export default async function NotifyBuyersPage({
           <strong>{recipients.length}</strong> buyer(s) own this design and
           get update mails (people who opted out are left out).
         </p>
-        <p className="text-ink/60">
+        <p className="text-ink">
           {product.update_notified_version
             ? `Last update mail: v${product.update_notified_version}.`
             : "No update mail sent for this design yet."}

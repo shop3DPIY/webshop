@@ -32,7 +32,7 @@ export default async function TrackChooserPage() {
             <h1 className="font-display text-xl font-bold text-ink sm:text-2xl">
               {t("title")}
             </h1>
-            <p className="text-sm text-ink/80 sm:text-base">
+            <p className="text-sm text-ink sm:text-base">
               {t("description")}
             </p>
           </div>
@@ -46,7 +46,7 @@ export default async function TrackChooserPage() {
               <h2 className="font-display text-2xl font-semibold text-ink">
                 {t("dollsTitle")}
               </h2>
-              <p className="text-sm text-ink/80">{t("dollsDescription")}</p>
+              <p className="text-sm text-ink">{t("dollsDescription")}</p>
               <ul className="grid w-full grid-cols-2 gap-2">
                 {shopCollections.map((c) => (
                   <li
@@ -81,7 +81,7 @@ export default async function TrackChooserPage() {
               <h2 className="font-display text-2xl font-semibold text-ink">
                 {t("businessTitle")}
               </h2>
-              <p className="text-sm text-ink/80">
+              <p className="text-sm text-ink">
                 {t("businessDescription")}
               </p>
               <ul className="grid w-full grid-cols-1 gap-2">

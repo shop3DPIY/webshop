@@ -41,7 +41,7 @@ export function InvolvesFields({ initial }: { initial: string[] | null }) {
           </label>
         ))}
       </div>
-      <p className="text-ink/60 text-xs">
+      <p className="text-ink text-xs">
         {touched ? (
           <button type="button" onClick={() => { setTouched(false); setTicked([]); }} className="underline">
             Back to Auto

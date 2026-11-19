@@ -31,7 +31,7 @@ export function FreeDownloadForm({
         <p className="font-display text-ink text-lg font-semibold">
           {t("sentTitle")}
         </p>
-        <p className="text-ink/70 text-sm">{t("sentBody")}</p>
+        <p className="text-ink text-sm">{t("sentBody")}</p>
       </div>
     );
   }
@@ -48,7 +48,7 @@ export function FreeDownloadForm({
         className="hidden"
         aria-hidden="true"
       />
-      <p className="text-ink/80 text-sm">{t("intro")}</p>
+      <p className="text-ink text-sm">{t("intro")}</p>
       <input
         type="email"
         name="email"
@@ -59,7 +59,7 @@ export function FreeDownloadForm({
         aria-label={t("placeholder")}
         className="border-line bg-paper w-full rounded-full border px-4 py-2.5 text-sm"
       />
-      <label className="text-ink/80 flex items-start gap-2 text-xs">
+      <label className="text-ink flex items-start gap-2 text-xs">
         <input
           type="checkbox"
           name="newsletter"

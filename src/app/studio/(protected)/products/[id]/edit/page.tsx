@@ -54,7 +54,7 @@ export default async function EditProductPage({
         </h2>
         {owners > 0 ? (
           <>
-            <p className="text-ink/70 text-sm">
+            <p className="text-ink text-sm">
               {owners} purchase(s)/download(s) — this design can&apos;t be
               deleted. Taking it offline removes it from the shop and from
               Polar; buyers keep it in their library and can still download
@@ -82,7 +82,7 @@ export default async function EditProductPage({
         ) : (
           <form action={deleteProduct} className="flex flex-col gap-3">
             <input type="hidden" name="id" value={product.id} />
-            <p className="text-ink/70 text-sm">
+            <p className="text-ink text-sm">
               Nobody has bought or downloaded this design yet, so it can be
               deleted for good: the product, its files and photos, and its
               Polar listing. This can&apos;t be undone.

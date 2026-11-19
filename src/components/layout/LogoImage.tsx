@@ -38,7 +38,7 @@ export function LogoImage({
     <>
       <Image
         src={MAIN}
-        alt="3DPIY"
+        alt=""
         width={345}
         height={237}
         priority={priority}
@@ -46,7 +46,8 @@ export function LogoImage({
       />
       <Image
         src={DARK_SG}
-        alt="3DPIY"
+        alt=""
+        aria-hidden
         width={345}
         height={237}
         priority={priority}

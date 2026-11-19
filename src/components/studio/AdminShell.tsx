@@ -59,7 +59,7 @@ export function AdminShell({
               >
                 ← View site
               </a>
-              <span className="text-ink/60 hidden text-sm sm:inline">
+              <span className="text-ink hidden text-sm sm:inline">
                 Signed in as {adminName || adminEmail}
               </span>
               <StudioSignOutButton />
@@ -70,7 +70,7 @@ export function AdminShell({
               <Link
                 key={item.href}
                 href={item.href}
-                className="text-ink/70 hover:text-ink flex items-center gap-1.5 text-sm font-medium"
+                className="text-ink hover:text-ink flex items-center gap-1.5 text-sm font-medium"
               >
                 {item.label}
                 {item.href === "/studio/products" && draftCount > 0 && (

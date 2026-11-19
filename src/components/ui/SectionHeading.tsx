@@ -28,7 +28,7 @@ export function SectionHeading({
         {title}
       </Heading>
       {description && (
-        <p className="text-ink/70 mt-3 max-w-2xl text-base sm:text-lg">
+        <p className="text-ink mt-3 max-w-2xl text-base sm:text-lg">
           {description}
         </p>
       )}

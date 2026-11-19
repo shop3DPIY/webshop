@@ -210,7 +210,7 @@ export default async function ProductPage({
       />
       <Link
         href={`/collections/${product.category}`}
-        className="text-ink/60 hover:text-ink text-sm font-medium"
+        className="text-ink hover:text-ink text-sm font-medium"
       >
         ← {t("backToCollection")}
       </Link>
@@ -249,8 +249,8 @@ export default async function ProductPage({
               className="text-ink flex items-baseline gap-2 lg:hidden"
             >
               <span className="font-display text-xl font-bold">{priceLabel}</span>
-              <span className="text-ink/60 text-xs">{tBuy("inclVat")}</span>
-              <span className="text-ink/70 ml-auto text-sm font-semibold underline underline-offset-2">
+              <span className="text-ink text-xs">{tBuy("inclVat")}</span>
+              <span className="text-ink ml-auto text-sm font-semibold underline underline-offset-2">
                 {tBuy("buyNow")} ↓
               </span>
             </a>
@@ -308,11 +308,11 @@ export default async function ProductPage({
         </div>
 
         <div className="flex flex-col gap-6 lg:col-start-2 lg:row-start-2">
-          <p className="text-ink/70 text-base sm:text-lg">{text.description}</p>
+          <p className="text-ink text-base sm:text-lg">{text.description}</p>
 
           {(product.externalLinks?.compatible?.length ?? 0) > 0 && (
             <div className="flex flex-wrap items-center gap-2 text-sm">
-              <span className="text-ink/60">{t("compatibleWith")}:</span>
+              <span className="text-ink">{t("compatibleWith")}:</span>
               {product.externalLinks!.compatible!.map((link) =>
                 link.url ? (
                   <a
@@ -339,7 +339,7 @@ export default async function ProductPage({
           {(ps?.requiredParts?.length ?? 0) > 0 && (
             <div className="flex flex-col gap-2 rounded-3xl p-5 glass">
               <h2 className="font-display text-ink text-base font-semibold">{t("partsTitle")}</h2>
-              <ul className="text-ink/80 flex flex-col gap-1 text-sm">
+              <ul className="text-ink flex flex-col gap-1 text-sm">
                 {ps!.requiredParts!.map((part, i) => (
                   <li key={i}>
                     {part.qty}× {part.url ? (
@@ -358,14 +358,14 @@ export default async function ProductPage({
           {ps?.printTimeHours && ps.filamentGrams && (
             <Link
               href={`/tools/3d-print-cost-calculator?grams=${ps.filamentGrams}&hours=${ps.printTimeHours}`}
-              className="text-ink/70 hover:text-ink w-fit text-sm underline underline-offset-2"
+              className="text-ink hover:text-ink w-fit text-sm underline underline-offset-2"
             >
               🧮 {t("calcLink")}
             </Link>
           )}
 
           {product.printSettings?.instructions && (
-            <p className="text-ink/70 text-sm">
+            <p className="text-ink text-sm">
               {product.printSettings.instructions}
             </p>
           )}
@@ -385,7 +385,7 @@ export default async function ProductPage({
                     <span className="font-display text-3xl font-bold">
                       {priceLabel}
                     </span>
-                    <span className="text-ink/60 text-sm">
+                    <span className="text-ink text-sm">
                       {tBuy("inclVat")}
                     </span>
                   </p>
@@ -397,7 +397,7 @@ export default async function ProductPage({
                   productSlug={product.slug}
                 />
                 {/* Said before paying, not only in Polar's checkbox. */}
-                <p className="text-ink/60 text-xs">
+                <p className="text-ink text-xs">
                   {tBuy.rich("withdrawalNote", {
                     terms: (chunks) => (
                       <Link href="/legal/terms" className="underline underline-offset-2">
@@ -417,7 +417,7 @@ export default async function ProductPage({
                 >
                   {tBuy("comingSoon")}
                 </Button>
-                <p className="text-ink/60 mt-3 text-xs">
+                <p className="text-ink mt-3 text-xs">
                   {isListed(product)
                     ? tBuy("comingSoonNote")
                     : tBuy("notListedNote")}
@@ -426,7 +426,7 @@ export default async function ProductPage({
             )}
             {/* Said once here for every design, so descriptions don't
                 each have to repeat it. */}
-            <p className="text-ink/60 border-line mt-4 border-t pt-4 text-xs">
+            <p className="text-ink border-line mt-4 border-t pt-4 text-xs">
               {isPattern ? tBuy("digitalNotePattern") : tBuy("digitalNote")}
             </p>
           </div>
@@ -473,7 +473,7 @@ export default async function ProductPage({
             <h2 className="font-display text-ink text-2xl font-semibold">
               {tBundle("alsoIn")}
             </h2>
-            <p className="text-ink/70 mt-1 text-sm">{tBundle("alsoInBody")}</p>
+            <p className="text-ink mt-1 text-sm">{tBundle("alsoInBody")}</p>
           </div>
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {inBundles.map((bundle) => (

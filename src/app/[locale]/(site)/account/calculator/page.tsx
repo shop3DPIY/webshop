@@ -45,7 +45,7 @@ export default async function AccountCalculatorPage({
           >{t("signIn")}</Button>
           <Button href="/auth/sign-up" variant="secondary" size="lg">{t("signUp")}</Button>
         </div>
-        <Link href="/tools/3d-print-cost-calculator" className="text-ink/70 text-sm underline">
+        <Link href="/tools/3d-print-cost-calculator" className="text-ink text-sm underline">
           {t("backToSimple")}
         </Link>
       </Container>
@@ -70,7 +70,7 @@ export default async function AccountCalculatorPage({
     <Container panel className="flex flex-col gap-10 py-12 sm:py-16">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <SectionHeading as="h1" eyebrow={t("eyebrow")} title={t("fullTitle")} description={t("fullIntro")} />
-        <Link href="/account" className="text-ink/70 hover:text-ink text-sm">
+        <Link href="/account" className="text-ink hover:text-ink text-sm">
           ← {t("toAccount")}
         </Link>
       </div>
@@ -88,7 +88,7 @@ export default async function AccountCalculatorPage({
               <li key={c.id} className={`flex flex-wrap items-center justify-between gap-3 p-4 text-sm ${c.id === id ? "bg-brand-purple/15" : ""}`}>
                 <Link href={`/account/calculator?id=${c.id}`} className="min-w-0 flex-1">
                   <span className="text-ink font-semibold">{c.name || t("untitled")}</span>
-                  <span className="text-ink/60 ml-2">
+                  <span className="text-ink ml-2">
                     {c.price_cents != null && `${EUR.format(c.price_cents / 100)} · `}
                     {new Date(c.updated_at).toLocaleDateString(dateLocale, { day: "numeric", month: "short", year: "numeric" })}
                   </span>

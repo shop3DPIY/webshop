@@ -32,8 +32,8 @@
   /* Glass neutrals — white text on white glass over the banner gradient */
   --ink: #ffffff;
   --night: #14121a;
-  --paper: rgb(255 255 255 / 0.15);
-  --mist: rgb(255 255 255 / 0.08);
+  --paper: rgb(255 255 255 / 0.2);
+  --mist: rgb(255 255 255 / 0.1);
   --line: rgb(255 255 255 / 0.3);
   --accent: #0b7f86;
 
@@ -340,7 +340,8 @@ body::before {
   border-width: 1px;
   border-color: var(--line);
   background-color: var(--glass-fill, var(--paper));
-  @apply shadow-xl backdrop-blur-lg;
+  /* Strong blur: the colourful backdrop becomes a calm wash behind text. */
+  @apply shadow-xl backdrop-blur-2xl;
 }
 
 /* Glass inside glass (a tile on a panel) is clearer, so the white doesn't

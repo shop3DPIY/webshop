@@ -10,7 +10,7 @@ export function MakerWorldLink({ url }: { url: string }) {
   return (
     <div className="border-line flex flex-col gap-2 border-t pt-5">
       <p className="text-ink text-sm font-semibold">{t("title")}</p>
-      <p className="text-ink/70 text-sm">{t("body", { id: id ? `#${id}` : "" })}</p>
+      <p className="text-ink text-sm">{t("body", { id: id ? `#${id}` : "" })}</p>
       <a
         href={url}
         target="_blank"

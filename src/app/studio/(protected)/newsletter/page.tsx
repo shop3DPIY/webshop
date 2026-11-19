@@ -34,7 +34,7 @@ export default async function StudioNewsletterPage() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="font-display text-2xl font-bold">Newsletter</h1>
-          <p className="text-ink/60 mt-1 max-w-2xl text-sm">
+          <p className="text-ink mt-1 max-w-2xl text-sm">
             {active.length} subscribed ·{" "}
             {subscribers.filter((r) => r.status === "pending").length} waiting
             for confirmation ·{" "}
@@ -62,7 +62,7 @@ export default async function StudioNewsletterPage() {
 
       <div className="divide-line divide-y rounded-3xl glass">
         {subscribers.length === 0 && (
-          <p className="text-ink/60 p-8 text-center text-sm">
+          <p className="text-ink p-8 text-center text-sm">
             No subscribers yet.
           </p>
         )}
@@ -73,7 +73,7 @@ export default async function StudioNewsletterPage() {
           >
             <div>
               <p className="font-medium">{r.email}</p>
-              <p className="text-ink/60 text-xs">
+              <p className="text-ink text-xs">
                 {categoryNames(r)} · {r.locale.toUpperCase()} · via {r.source} ·{" "}
                 {new Date(r.created_at).toLocaleDateString("nl-NL")}
               </p>

@@ -32,7 +32,8 @@ const SwitchIcon = () => (
   </svg>
 );
 
-export function TrackSwitcher() {
+/** `inMenu`: in the phone menu there is room, so the label always shows. */
+export function TrackSwitcher({ inMenu = false }: { inMenu?: boolean }) {
   const t = useTranslations("nav");
   const current = useCurrentTrack() ?? "dolls";
   const target = current === "dolls" ? "business" : "dolls";
@@ -50,10 +51,14 @@ export function TrackSwitcher() {
       {/* Spelled out so both sides are easy to find, except where the header
           is tight (phones, and md before lg when the center nav appears);
           there the icon alone (plus the title/aria text) keeps the room. */}
-      <span className="group-hover:text-brand-purple sr-only whitespace-nowrap transition-colors sm:not-sr-only md:sr-only lg:not-sr-only">
+      <span
+        className={`group-hover:text-brand-purple whitespace-nowrap transition-colors ${
+          inMenu ? "" : "sr-only sm:not-sr-only md:sr-only lg:not-sr-only"
+        }`}
+      >
         {label}
       </span>
-      <span className="border-line bg-mist group-hover:border-brand-purple group-hover:bg-brand-purple/45 group-hover:text-white flex h-9 w-9 shrink-0 items-center justify-center rounded-full border transition-colors">
+      <span className="border-line bg-mist group-hover:border-brand-purple group-hover:bg-brand-purple/45 group-hover:text-white flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-colors md:h-9 md:w-9">
         <SwitchIcon />
       </span>
     </Link>

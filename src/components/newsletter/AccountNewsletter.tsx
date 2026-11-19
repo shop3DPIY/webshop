@@ -25,7 +25,7 @@ export async function AccountNewsletter({
         <h3 className="font-display text-ink text-lg font-semibold">
           {t("accountTitle")}
         </h3>
-        <p className="text-ink/70 mt-1 text-sm">
+        <p className="text-ink mt-1 text-sm">
           {subscribed
             ? t("accountSubscribed", { email })
             : t("accountNotSubscribed")}

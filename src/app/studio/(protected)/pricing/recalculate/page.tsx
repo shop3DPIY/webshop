@@ -61,14 +61,14 @@ export default async function RecalculatePage({
       <div>
         <Link
           href="/studio/pricing"
-          className="text-ink/60 hover:text-ink text-sm"
+          className="text-ink hover:text-ink text-sm"
         >
           ← Pricing
         </Link>
         <h1 className="font-display mt-2 text-2xl font-bold">
           Recalculate prices
         </h1>
-        <p className="text-ink/60 mt-1 max-w-2xl text-sm">
+        <p className="text-ink mt-1 max-w-2xl text-sm">
           Current price → new price from the saved price table (P = Personal, S
           = Small, U = Unlimited). Ticked products get the new prices;
           hand-typed prices on them are replaced too. Polar is updated
@@ -85,7 +85,7 @@ export default async function RecalculatePage({
       <form action={applyRecalculation} className="flex flex-col gap-6">
         <div className="divide-line divide-y rounded-3xl glass">
           {rows.length === 0 && (
-            <p className="text-ink/60 p-8 text-center text-sm">
+            <p className="text-ink p-8 text-center text-sm">
               No products yet.
             </p>
           )}
@@ -109,10 +109,10 @@ export default async function RecalculatePage({
                   </span>
                 )}
                 {!r.changed && (
-                  <span className="text-ink/60 ml-2 text-xs">unchanged</span>
+                  <span className="text-ink ml-2 text-xs">unchanged</span>
                 )}
               </span>
-              <span className="text-ink/80 flex flex-wrap gap-4">
+              <span className="text-ink flex flex-wrap gap-4">
                 {PRICE_TIERS.map((t) => (
                   <span key={t} className="whitespace-nowrap">
                     {TIER_SHORT[t]}:{" "}

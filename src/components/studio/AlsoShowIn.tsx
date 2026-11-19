@@ -46,14 +46,14 @@ export function AlsoShowIn({
   return (
     <fieldset ref={ref} className="flex flex-col gap-3">
       <legend className="text-sm font-medium">Also show in</legend>
-      <p className="text-ink/60 text-xs">
+      <p className="text-ink text-xs">
         Extra collections this product also appears in. The main collection
         (chosen above) is marked &ldquo;main&rdquo;; change it with the
         Collection menu. Collections on the other track can&apos;t be combined.
       </p>
       {groups.map((group) => (
         <div key={group.track} className="flex flex-col gap-2">
-          <span className="text-ink/60 text-xs font-semibold uppercase">
+          <span className="text-ink text-xs font-semibold uppercase">
             {group.label}
           </span>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -101,7 +101,7 @@ export function AlsoShowIn({
                   <span className="min-w-0">
                     {c.name}
                     {isMain && (
-                      <span className="text-ink/70 ml-1 text-xs font-normal">
+                      <span className="text-ink ml-1 text-xs font-normal">
                         (main)
                       </span>
                     )}

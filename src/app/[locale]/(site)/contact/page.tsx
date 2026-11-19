@@ -48,7 +48,7 @@ export default async function ContactPage({
             title={t("title")}
             description={t("description")}
           />
-          <p className="text-ink/70 text-sm">
+          <p className="text-ink text-sm">
             {t("emailFallbackLabel")}{" "}
             <a
               href={`mailto:${CONTACT_EMAIL}`}

@@ -18,7 +18,7 @@ export async function FeedbackCta({ productSlug }: { productSlug?: string }) {
         <h2 className="font-display text-ink text-lg font-semibold">
           {t("title")}
         </h2>
-        <p className="text-ink/70 mt-1 text-sm">{t("body")}</p>
+        <p className="text-ink mt-1 text-sm">{t("body")}</p>
       </div>
       <Button href={href} variant="secondary" className="shrink-0">
         {t("cta")}

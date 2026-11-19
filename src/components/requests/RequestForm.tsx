@@ -43,7 +43,7 @@ export function RequestForm({
     return (
       <div ref={sentRef} role="status" className="flex flex-col gap-2">
         <p className="text-ink text-base font-semibold">{t("sentTitle")}</p>
-        <p className="text-ink/70 text-sm">
+        <p className="text-ink text-sm">
           {kind === "problem" ? t("sentBodyProblem") : t("sentBody")}
         </p>
       </div>
@@ -81,7 +81,7 @@ export function RequestForm({
       </fieldset>
 
       {product && (
-        <p className="text-ink/70 text-sm">
+        <p className="text-ink text-sm">
           {t("about")} <span className="text-ink font-semibold">{product.title}</span>
         </p>
       )}
@@ -126,7 +126,7 @@ export function RequestForm({
       <Button type="submit" size="lg" className="mt-1" disabled={pending}>
         {pending ? t("sending") : t("submit")}
       </Button>
-      <p className="text-ink/60 text-xs">
+      <p className="text-ink text-xs">
         {kind === "problem" ? t("noteProblem") : t("noteRequest")}
       </p>
     </form>

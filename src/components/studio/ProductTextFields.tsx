@@ -171,7 +171,7 @@ export function ProductTextFields({
         >
           {busy ? "Writing…" : "✨ Text with AI"}
         </button>
-        <span className="text-ink/60 text-xs">
+        <span className="text-ink text-xs">
           {aiAvailable
             ? "Type anything — Dutch, English or keywords — and get English + Dutch in the 3DPIY style."
             : "AI isn't set up: add ANTHROPIC_API_KEY to the environment variables."}
@@ -184,18 +184,18 @@ export function ProductTextFields({
           <p className="text-sm font-semibold">Suggestion</p>
           <div className="grid gap-4 text-sm sm:grid-cols-2">
             <div>
-              <p className="text-ink/60 text-xs uppercase">English</p>
+              <p className="text-ink text-xs uppercase">English</p>
               <p className="mt-1 font-semibold">{suggestion.title}</p>
-              <p className="text-ink/80 mt-1">{suggestion.description}</p>
+              <p className="text-ink mt-1">{suggestion.description}</p>
             </div>
             <div>
-              <p className="text-ink/60 text-xs uppercase">Dutch</p>
+              <p className="text-ink text-xs uppercase">Dutch</p>
               <p className="mt-1 font-semibold">{suggestion.titleNl}</p>
-              <p className="text-ink/80 mt-1">{suggestion.descriptionNl}</p>
+              <p className="text-ink mt-1">{suggestion.descriptionNl}</p>
             </div>
           </div>
           {suggestion.tags && suggestion.tags.length > 0 && (
-            <p className="text-ink/70 text-xs">
+            <p className="text-ink text-xs">
               <span className="font-semibold">Tags:</span>{" "}
               {suggestion.tags.join(", ")}
             </p>

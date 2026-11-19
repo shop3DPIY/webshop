@@ -218,7 +218,7 @@ export function PricingSettingsForm({
     <div className="flex flex-col gap-8">
       <div className="overflow-x-auto rounded-3xl glass">
         <table className="w-full min-w-[64rem] text-left text-sm">
-          <thead className="text-ink/60 text-xs uppercase">
+          <thead className="text-ink text-xs uppercase">
             <tr className="border-line border-b">
               <th className="p-4 font-semibold">Category</th>
               <th className="p-4 font-semibold">Base price</th>
@@ -309,7 +309,7 @@ export function PricingSettingsForm({
                       className="h-4 w-4"
                     />
                   </td>
-                  <td className="text-ink/80 p-4 whitespace-nowrap">
+                  <td className="text-ink p-4 whitespace-nowrap">
                     {preview
                       ? `${formatEuro(preview.personalCents)} / ${formatEuro(preview.smallCents)} / ${formatEuro(preview.unlimitedCents)}`
                       : "—"}
@@ -321,7 +321,7 @@ export function PricingSettingsForm({
         </table>
       </div>
 
-      <p className="text-ink/60 -mt-4 text-xs">
+      <p className="text-ink -mt-4 text-xs">
         Small × / Unlimited ×: a category&apos;s own license factors. Leave
         blank to use the general factors below. Ends in 9: license prices
         €40 → €39, €150 → €149. Shop designs are sold for personal use only;
@@ -337,7 +337,7 @@ export function PricingSettingsForm({
           >
             {label}
             <span className="flex items-center gap-2">
-              {money && <span className="text-ink/60">€</span>}
+              {money && <span className="text-ink">€</span>}
               <input
                 type="text"
                 inputMode="decimal"
