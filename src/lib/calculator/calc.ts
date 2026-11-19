@@ -12,13 +12,30 @@ export interface MaterialLine {
   /** Grams for the whole plate (all items on it) */
   grams: number;
   pricePerKg: number;
+  /** Picked from "My materials" (calc_library) — for refreshing prices */
+  libraryId?: string;
 }
 
-export interface ExtraLine {
+export type SupplyKind = "extra" | "packaging" | "marketing";
+export const SUPPLY_KINDS: SupplyKind[] = ["extra", "packaging", "marketing"];
+
+/**
+ * Anything bought in packs and used per item: magnets, screws, paint
+ * (extra); boxes, paper, tape (packaging); flyers, stickers, cards
+ * (marketing). Cost per item = packPrice ÷ packSize × perItem — e.g. 25
+ * boxes for €12.99, 1 per item = €0.52.
+ */
+export interface SupplyLine {
   name: string;
-  /** Cost per item (magnets, screws, paint, inserts…) */
-  cost: number;
+  kind: SupplyKind;
+  packPrice: number;
+  packSize: number;
+  perItem: number;
+  libraryId?: string;
 }
+
+export const supplyCost = (l: SupplyLine) =>
+  l.packSize > 0 ? (Math.max(0, l.packPrice) / l.packSize) * Math.max(0, l.perItem) : 0;
 
 export type VatMode = "vat21" | "vat9" | "kor";
 export type RoundMode = "none" | "99" | "50";
@@ -80,8 +97,7 @@ export interface CalcInputs {
   /** Test prints and prototypes before it was right (paid back over designUnits) */
   prototypeCost: number;
 
-  extras: ExtraLine[];
-  packagingCost: number;
+  supplies: SupplyLine[];
   /** What the postage costs you per order */
   shippingCost: number;
   /** What the customer pays you for shipping */
@@ -126,8 +142,7 @@ export const DEFAULT_INPUTS: CalcInputs = {
   designLicenseCost: 0,
   designUnits: 50,
   prototypeCost: 0,
-  extras: [],
-  packagingCost: 0.5,
+  supplies: [{ name: "", kind: "packaging", packPrice: 12.99, packSize: 25, perItem: 1 }],
   shippingCost: 0,
   shippingCharged: 0,
   overheadPerMonth: 0,
@@ -159,12 +174,29 @@ export function withDefaults(input: Partial<CalcInputs> | null | undefined): Cal
     }
   }
   const result = out as unknown as CalcInputs;
+  const id = (v: unknown) => (typeof v === "string" && v ? { libraryId: v } : {});
   result.materials = (result.materials ?? [])
     .filter((m) => m && typeof m === "object")
-    .map((m) => ({ name: String(m.name ?? ""), grams: num(m.grams), pricePerKg: num(m.pricePerKg) }));
-  result.extras = (result.extras ?? [])
-    .filter((e) => e && typeof e === "object")
-    .map((e) => ({ name: String(e.name ?? ""), cost: num(e.cost) }));
+    .map((m) => ({ name: String(m.name ?? ""), grams: num(m.grams), pricePerKg: num(m.pricePerKg), ...id(m.libraryId) }));
+  // Calculations saved before supplies existed had "extras" (cost per
+  // item) and one "packagingCost": turn those into supply lines.
+  const old = input as { extras?: { name?: unknown; cost?: unknown }[]; packagingCost?: unknown } | null | undefined;
+  if (!Array.isArray(input?.supplies) && (old?.extras || typeof old?.packagingCost === "number")) {
+    result.supplies = [
+      ...(old?.extras ?? []).map((e) => ({ name: String(e?.name ?? ""), kind: "extra" as const, packPrice: num(e?.cost), packSize: 1, perItem: 1 })),
+      ...(num(old?.packagingCost) > 0 ? [{ name: "", kind: "packaging" as const, packPrice: num(old?.packagingCost), packSize: 1, perItem: 1 }] : []),
+    ];
+  }
+  result.supplies = (result.supplies ?? [])
+    .filter((l) => l && typeof l === "object")
+    .map((l) => ({
+      name: String(l.name ?? ""),
+      kind: SUPPLY_KINDS.includes(l.kind) ? l.kind : "extra",
+      packPrice: num(l.packPrice),
+      packSize: num(l.packSize) || 1,
+      perItem: num(l.perItem),
+      ...id(l.libraryId),
+    }));
   if (!(result.vatMode in VAT_RATES)) result.vatMode = "kor";
   return result;
 }
@@ -233,8 +265,11 @@ export function calculate(raw: Partial<CalcInputs>): CalcResult {
   const designTotal = pos(i.designHours) * pos(i.hourlyRate) + pos(i.designLicenseCost) + pos(i.prototypeCost);
   const design = designTotal / Math.max(1, i.designUnits);
 
-  const extras = i.extras.reduce((s, e) => s + pos(e.cost), 0);
-  const packaging = pos(i.packagingCost);
+  const supplies = (kind: SupplyKind) =>
+    i.supplies.filter((l) => l.kind === kind).reduce((s, l) => s + supplyCost(l), 0);
+  const extras = supplies("extra");
+  const packaging = supplies("packaging");
+  const marketing = supplies("marketing");
   // Postage you pay minus what the customer pays for it (can be negative).
   const shipping = pos(i.shippingCost) - pos(i.shippingCharged);
   const overhead = pos(i.overheadPerMonth) / Math.max(1, i.itemsPerMonth);
@@ -249,6 +284,7 @@ export function calculate(raw: Partial<CalcInputs>): CalcResult {
     { key: "design", amount: design },
     { key: "extras", amount: extras },
     { key: "packaging", amount: packaging },
+    { key: "marketing", amount: marketing },
     { key: "shipping", amount: shipping },
     { key: "overhead", amount: overhead },
   ];

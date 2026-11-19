@@ -12,7 +12,7 @@ const bare = {
   prepMinutes: 0,
   postMinutes: 0,
   packMinutes: 0,
-  packagingCost: 0,
+  supplies: [],
   feePct: 0,
   feeFixed: 0,
   listingFee: 0,
@@ -56,6 +56,25 @@ describe("calculate", () => {
 
   it("flags settings that can never make a profit", () => {
     expect(calculate({ ...bare, feePct: 60, profitMode: "margin", profitValue: 50 }).impossible).toBe(true);
+  });
+
+  it("costs supplies bought in packs per item", () => {
+    const r = calculate({ ...bare, supplies: [
+      { name: "box", kind: "packaging", packPrice: 12.99, packSize: 25, perItem: 1 },
+      { name: "flyer", kind: "marketing", packPrice: 20, packSize: 100, perItem: 1 },
+      { name: "magnet", kind: "extra", packPrice: 5, packSize: 100, perItem: 4 },
+    ] });
+    expect(r.lines.find((l) => l.key === "packaging")!.amount).toBeCloseTo(0.5196);
+    expect(r.lines.find((l) => l.key === "marketing")!.amount).toBeCloseTo(0.2);
+    expect(r.lines.find((l) => l.key === "extras")!.amount).toBeCloseTo(0.2);
+  });
+
+  it("turns old extras/packaging into supply lines", () => {
+    const i = withDefaults({ extras: [{ name: "magnet", cost: 0.4 }], packagingCost: 0.5 } as never);
+    expect(i.supplies).toEqual([
+      { name: "magnet", kind: "extra", packPrice: 0.4, packSize: 1, perItem: 1 },
+      { name: "", kind: "packaging", packPrice: 0.5, packSize: 1, perItem: 1 },
+    ]);
   });
 
   it("fills in missing or broken saved inputs", () => {

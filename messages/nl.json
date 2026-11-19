@@ -550,8 +550,8 @@
       "timeIntro": "Jouw werk is ook een kostenpost — anders werk je gratis.",
       "design": "Ontwerp",
       "designIntro": "Ontwerpen, een gekochte licentie en testprints verdien je terug over alles wat je verwacht te verkopen.",
-      "extras": "Extra's, verpakking & verzending",
-      "extrasIntro": "Magneten, schroeven, inserts, verf, lijm… per stuk.",
+      "extras": "Extra's, verpakking, reclame & verzending",
+      "extrasIntro": "Alles wat je per pak koopt: prijs van het pak ÷ aantal erin × hoeveel je per stuk gebruikt. 25 dozen voor € 12,99, 1 per stuk = € 0,52.",
       "overhead": "Vaste kosten per maand",
       "overheadIntro": "Software, website, verzekering, werkplek, abonnementen — verdeeld over wat je verkoopt.",
       "selling": "Verkopen",
@@ -595,12 +595,7 @@
     "prototypeHint": "Filament en tijd voor de versies voordat het goed was",
     "designUnits": "Verwachte verkoop",
     "designUnitsHint": "De ontwerpkosten worden over zoveel stuks verdeeld",
-    "extraName": "bijv. magneten 6×2 mm (×4)",
-    "extraCost": "Kosten per stuk",
-    "addExtra": "Extra toevoegen",
     "remove": "Verwijderen",
-    "packagingCost": "Verpakking",
-    "packagingHint": "Doos, noppenfolie, tape, sticker, kaartje",
     "shippingCost": "Porto die jij betaalt",
     "shippingCharged": "Verzendkosten die de klant betaalt",
     "shippingChargedHint": "Ook hierover rekent het platform kosten",
@@ -656,7 +651,8 @@
       "extras": "Extra's",
       "packaging": "Verpakking",
       "shipping": "Verzending (netto)",
-      "overhead": "Vaste kosten"
+      "overhead": "Vaste kosten",
+      "marketing": "Reclame"
     },
     "impossible": "Met deze kosten en deze marge levert geen enkele prijs winst op. Verlaag de marge of de platformkosten.",
     "name": "Naam",
@@ -667,7 +663,54 @@
     "saved": "Opgeslagen",
     "saveError": "Opslaan lukte niet. Probeer het opnieuw.",
     "fullTeaser": "Wil je het complete plaatje? De gratis uitgebreide calculator rekent ook ontwerpkosten, slijtage, verpakking, platformkosten en vaste lasten mee — en bewaart je berekeningen.",
-    "openFull": "Open de uitgebreide calculator"
+    "openFull": "Open de uitgebreide calculator",
+    "supplyKinds": {
+      "extra": "Extra's (magneten, schroeven, verf…)",
+      "packaging": "Verpakking",
+      "marketing": "Reclame (flyers, stickers, kaartjes)"
+    },
+    "supplyPlaceholders": {
+      "extra": "bijv. magneten 6×2 mm",
+      "packaging": "bijv. verzenddoos",
+      "marketing": "bijv. flyer"
+    },
+    "supplyName": "Naam",
+    "packPrice": "Prijs per pak",
+    "packSize": "Aantal in pak",
+    "perItem": "Gebruik per stuk",
+    "pieces": "st.",
+    "supplyPerItem": "= {cost} per stuk",
+    "addSupply": {
+      "extra": "Extra toevoegen",
+      "packaging": "Verpakking toevoegen",
+      "marketing": "Reclame toevoegen"
+    },
+    "pickFromList": "Kies uit mijn materialen…",
+    "myMaterials": "Mijn materialen",
+    "myMaterialsHint": "Sla je filament en materialen één keer op en kies ze dan hier.",
+    "myMaterialsIntro": "Je filament (per verkoper, met je eigen prijs of korting) en alles wat je per pak koopt. Kies ze in de calculator; pas je hier een prijs aan, dan werk je je berekeningen met één klik bij.",
+    "refreshPrices": "Prijzen bijwerken uit mijn materialen",
+    "libName": "Naam",
+    "libNamePh": {
+      "filament": "bijv. Bambu PLA Basic zwart",
+      "extra": "bijv. magneten 6×2 mm",
+      "packaging": "bijv. verzenddoos 20×15×10",
+      "marketing": "bijv. flyer A6"
+    },
+    "libSupplier": "Verkoper",
+    "libSupplierPh": "bijv. Bambu Lab, Amazon",
+    "libSpoolPrice": "Prijs per spoel",
+    "libSpoolGrams": "Gewicht spoel (g)",
+    "libAdd": "Toevoegen",
+    "libKinds": {
+      "filament": "Filament",
+      "packaging": "Verpakking",
+      "extra": "Extra's",
+      "marketing": "Reclame"
+    },
+    "libPerKg": "{price} per kilo",
+    "libPerPiece": "{price} per stuk",
+    "libDeleteBody": "Hij verdwijnt uit je lijst. Opgeslagen berekeningen houden hun prijzen."
   },
   "calculatorPage": {
     "eyebrow": "Gratis tool",

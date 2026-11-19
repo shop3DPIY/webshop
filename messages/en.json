@@ -550,8 +550,8 @@
       "timeIntro": "Your work is a cost too — otherwise you're working for free.",
       "design": "Design",
       "designIntro": "Designing, a bought license and test prints are paid back over everything you expect to sell.",
-      "extras": "Extras, packaging & shipping",
-      "extrasIntro": "Magnets, screws, inserts, paint, glue… per item.",
+      "extras": "Extras, packaging, marketing & shipping",
+      "extrasIntro": "Anything you buy in packs: price of the pack ÷ number in it × how many you use per item. 25 boxes for €12.99, 1 per item = €0.52.",
       "overhead": "Fixed monthly costs",
       "overheadIntro": "Software, website, insurance, workspace, subscriptions — spread over what you sell.",
       "selling": "Selling",
@@ -595,12 +595,7 @@
     "prototypeHint": "Filament and time for the versions before it was right",
     "designUnits": "Expected sales",
     "designUnitsHint": "Design costs are spread over this many items",
-    "extraName": "e.g. magnets 6×2 mm (×4)",
-    "extraCost": "Cost per item",
-    "addExtra": "Add extra",
     "remove": "Remove",
-    "packagingCost": "Packaging",
-    "packagingHint": "Box, bubble wrap, tape, sticker, card",
     "shippingCost": "Postage you pay",
     "shippingCharged": "Shipping the customer pays",
     "shippingChargedHint": "Platform fees are charged on this too",
@@ -656,7 +651,8 @@
       "extras": "Extras",
       "packaging": "Packaging",
       "shipping": "Shipping (net)",
-      "overhead": "Fixed costs"
+      "overhead": "Fixed costs",
+      "marketing": "Marketing"
     },
     "impossible": "With these fees and this margin no price can make a profit. Lower the margin or the fees.",
     "name": "Name",
@@ -667,7 +663,54 @@
     "saved": "Saved",
     "saveError": "Couldn't save. Try again.",
     "fullTeaser": "Want the full picture? The free full calculator adds design costs, printer wear, packaging, platform fees, fixed costs — and saves your calculations.",
-    "openFull": "Open the full calculator"
+    "openFull": "Open the full calculator",
+    "supplyKinds": {
+      "extra": "Extras (magnets, screws, paint…)",
+      "packaging": "Packaging",
+      "marketing": "Marketing (flyers, stickers, cards)"
+    },
+    "supplyPlaceholders": {
+      "extra": "e.g. magnets 6×2 mm",
+      "packaging": "e.g. shipping box",
+      "marketing": "e.g. flyer"
+    },
+    "supplyName": "Name",
+    "packPrice": "Pack price",
+    "packSize": "In the pack",
+    "perItem": "Used per item",
+    "pieces": "pcs",
+    "supplyPerItem": "= {cost} per item",
+    "addSupply": {
+      "extra": "Add extra",
+      "packaging": "Add packaging",
+      "marketing": "Add marketing"
+    },
+    "pickFromList": "Pick from my materials…",
+    "myMaterials": "My materials",
+    "myMaterialsHint": "Save your filaments and supplies once, then pick them here.",
+    "myMaterialsIntro": "Your filaments (per seller, with your own price or discount) and everything you buy in packs. Pick them in the calculator; change a price here and update your calculations with one click.",
+    "refreshPrices": "Update prices from my materials",
+    "libName": "Name",
+    "libNamePh": {
+      "filament": "e.g. Bambu PLA Basic black",
+      "extra": "e.g. magnets 6×2 mm",
+      "packaging": "e.g. shipping box 20×15×10",
+      "marketing": "e.g. flyer A6"
+    },
+    "libSupplier": "Seller",
+    "libSupplierPh": "e.g. Bambu Lab, Amazon",
+    "libSpoolPrice": "Spool price",
+    "libSpoolGrams": "Spool weight (g)",
+    "libAdd": "Add",
+    "libKinds": {
+      "filament": "Filament",
+      "packaging": "Packaging",
+      "extra": "Extras",
+      "marketing": "Marketing"
+    },
+    "libPerKg": "{price} per kg",
+    "libPerPiece": "{price} per piece",
+    "libDeleteBody": "It's removed from your list. Saved calculations keep their prices."
   },
   "calculatorPage": {
     "eyebrow": "Free tool",

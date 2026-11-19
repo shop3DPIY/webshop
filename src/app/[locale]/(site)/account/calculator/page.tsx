@@ -7,6 +7,7 @@ import { Calculator } from "@/components/calculator/Calculator";
 import { ConfirmSubmitButton } from "@/components/ui/ConfirmDialog";
 import { deleteCalculation } from "@/lib/calculator/actions";
 import { createClient } from "@/lib/supabase/server";
+import { toLibraryItem } from "@/lib/calculator/library";
 import { DEFAULT_INPUTS, withDefaults, type CalcInputs } from "@/lib/calculator/calc";
 
 export async function generateMetadata() {
@@ -57,6 +58,12 @@ export default async function AccountCalculatorPage({
     .eq("user_id", user.id)
     .order("updated_at", { ascending: false });
   const current = id ? saved?.find((c) => c.id === id) : undefined;
+  const { data: libraryRows } = await supabase!
+    .from("calc_library")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("name");
+  const library = (libraryRows ?? []).map(toLibraryItem);
   const dateLocale = locale === "nl" ? "nl-NL" : "en-GB";
 
   return (
@@ -112,6 +119,7 @@ export default async function AccountCalculatorPage({
         initial={(current?.inputs as Partial<CalcInputs> | undefined) ?? draftInputs}
         savedId={current?.id ?? null}
         savedName={current?.name ?? ""}
+        library={library}
       />
     </Container>
   );

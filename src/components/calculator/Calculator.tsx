@@ -9,9 +9,17 @@ import {
   PLATFORM_PRESETS,
   withDefaults,
   type CalcInputs,
-  type ExtraLine,
+  supplyCost,
+  SUPPLY_KINDS,
   type MaterialLine,
+  type SupplyKind,
+  type SupplyLine,
 } from "@/lib/calculator/calc";
+import {
+  libraryLabel,
+  pricePerKg,
+  type LibraryItem,
+} from "@/lib/calculator/library";
 import { saveCalculation } from "@/lib/calculator/actions";
 
 /**
@@ -37,9 +45,8 @@ const euro = (v: number) => EUR.format(Number.isFinite(v) ? v : 0);
 const SIMPLE_BASE: Partial<CalcInputs> = {
   prepMinutes: 0,
   packMinutes: 0,
-  packagingCost: 0,
   returnsPct: 0,
-  extras: [],
+  supplies: [],
   designHours: 0,
   designLicenseCost: 0,
   prototypeCost: 0,
@@ -116,11 +123,14 @@ export function Calculator({
   initial,
   savedId,
   savedName,
+  library = [],
 }: {
   mode: "simple" | "full";
   initial?: Partial<CalcInputs> | null;
   savedId?: string | null;
   savedName?: string;
+  /** "My materials" to pick filament and supplies from */
+  library?: LibraryItem[];
 }) {
   const t = useTranslations("calculator");
   const router = useRouter();
@@ -140,8 +150,53 @@ export function Calculator({
 
   const setMaterial = (index: number, patch: Partial<MaterialLine>) =>
     set("materials", inputs.materials.map((m, i) => (i === index ? { ...m, ...patch } : m)));
-  const setExtra = (index: number, patch: Partial<ExtraLine>) =>
-    set("extras", inputs.extras.map((e, i) => (i === index ? { ...e, ...patch } : e)));
+  const setSupply = (index: number, patch: Partial<SupplyLine>) =>
+    set("supplies", inputs.supplies.map((l, i) => (i === index ? { ...l, ...patch } : l)));
+
+  const filaments = library.filter((item) => item.kind === "filament");
+  const libraryById = new Map(library.map((item) => [item.id, item]));
+  // Lines picked from "My materials" whose price there has changed since.
+  const outdated =
+    inputs.materials.some((m) => {
+      const item = m.libraryId && libraryById.get(m.libraryId);
+      return item && pricePerKg(item) !== m.pricePerKg;
+    }) ||
+    inputs.supplies.some((l) => {
+      const item = l.libraryId && libraryById.get(l.libraryId);
+      return item && (item.price !== l.packPrice || item.packSize !== l.packSize);
+    });
+  const refreshFromLibrary = () => {
+    setInputs((i) => ({
+      ...i,
+      materials: i.materials.map((m) => {
+        const item = m.libraryId && libraryById.get(m.libraryId);
+        return item ? { ...m, name: item.name, pricePerKg: pricePerKg(item) } : m;
+      }),
+      supplies: i.supplies.map((l) => {
+        const item = l.libraryId && libraryById.get(l.libraryId);
+        return item ? { ...l, name: item.name, packPrice: item.price, packSize: item.packSize } : l;
+      }),
+    }));
+    setSaveState("idle");
+  };
+
+  /** "Pick from my list" select; "" keeps typing by hand. */
+  const pick = (items: LibraryItem[], value: string | undefined, onPick: (item: LibraryItem | null) => void) =>
+    items.length > 0 && (
+      <select
+        value={value ?? ""}
+        onChange={(e) => onPick(libraryById.get(e.target.value) ?? null)}
+        aria-label={t("pickFromList")}
+        className={`${FIELD} text-xs`}
+      >
+        <option value="">{t("pickFromList")}</option>
+        {items.map((item) => (
+          <option key={item.id} value={item.id}>
+            {libraryLabel(item)}
+          </option>
+        ))}
+      </select>
+    );
 
   const choosePlatform = (id: string) => {
     const preset = PLATFORM_PRESETS.find((p) => p.id === id);
@@ -213,6 +268,17 @@ export function Calculator({
 
   const form = full ? (
     <div className="flex flex-col gap-5">
+      <div className="flex flex-wrap items-center gap-3 text-sm">
+        <Link href="/account/calculator/materials" className="border-line hover:bg-mist rounded-full border px-4 py-1.5 font-semibold">
+          📦 {t("myMaterials")}
+        </Link>
+        {outdated && (
+          <button type="button" onClick={refreshFromLibrary} className="border-brand-purple bg-brand-purple/25 rounded-full border px-4 py-1.5 font-semibold">
+            ↻ {t("refreshPrices")}
+          </button>
+        )}
+        {library.length === 0 && <span className="text-ink/60 text-xs">{t("myMaterialsHint")}</span>}
+      </div>
       <Section title={t("s.print")} intro={t("s.printIntro")}>
         <div className="grid gap-3 sm:grid-cols-3">
           <NumberField label={t("itemsPerPlate")} hint={t("itemsPerPlateHint")} value={inputs.itemsPerPlate} onChange={(v) => set("itemsPerPlate", v)} />
@@ -225,6 +291,9 @@ export function Calculator({
             <div key={i} className="grid grid-cols-[1fr_1fr_1fr_auto] items-end gap-2">
               <label className={LABEL}>
                 <span className="sr-only">{t("materialName")}</span>
+                {pick(filaments, m.libraryId, (item) =>
+                  setMaterial(i, item ? { name: item.name, pricePerKg: pricePerKg(item), libraryId: item.id } : { libraryId: undefined }),
+                )}
                 <input value={m.name} onChange={(e) => setMaterial(i, { name: e.target.value })} placeholder={t("materialName")} className={FIELD} />
               </label>
               <NumberField label={<span className="sr-only">{t("grams")}</span>} value={m.grams} onChange={(v) => setMaterial(i, { grams: v })} suffix="g" />
@@ -281,31 +350,55 @@ export function Calculator({
       </Section>
 
       <Section title={t("s.extras")} intro={t("s.extrasIntro")}>
-        <div className="flex flex-col gap-2">
-          {inputs.extras.map((e, i) => (
-            <div key={i} className="grid grid-cols-[2fr_1fr_auto] items-end gap-2">
-              <input value={e.name} onChange={(ev) => setExtra(i, { name: ev.target.value })} placeholder={t("extraName")} aria-label={t("extraName")} className={FIELD} />
-              <NumberField label={<span className="sr-only">{t("extraCost")}</span>} value={e.cost} onChange={(v) => setExtra(i, { cost: v })} suffix="€" />
+        {SUPPLY_KINDS.map((kind: SupplyKind) => {
+          const lines = inputs.supplies.map((l, i) => ({ l, i })).filter(({ l }) => l.kind === kind);
+          const options = library.filter((item) => item.kind === kind);
+          return (
+            <div key={kind} className="flex flex-col gap-2">
+              <p className="text-sm font-semibold">{t(`supplyKinds.${kind}`)}</p>
+              {lines.map(({ l, i }) => (
+                <div key={i} className="border-line flex flex-col gap-2 rounded-2xl border p-3">
+                  <div className="grid grid-cols-[1fr_auto] items-end gap-2">
+                    <div className="flex flex-col gap-1">
+                      {pick(options, l.libraryId, (item) =>
+                        setSupply(i, item ? { name: item.name, packPrice: item.price, packSize: item.packSize, libraryId: item.id } : { libraryId: undefined }),
+                      )}
+                      <input
+                        value={l.name}
+                        onChange={(e) => setSupply(i, { name: e.target.value })}
+                        placeholder={t(`supplyPlaceholders.${kind}`)}
+                        aria-label={t("supplyName")}
+                        className={FIELD}
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => set("supplies", inputs.supplies.filter((_, j) => j !== i))}
+                      aria-label={t("remove")}
+                      className="border-line hover:bg-mist mb-0.5 h-9 w-9 rounded-full border text-sm"
+                    >
+                      ×
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-3 gap-2">
+                    <NumberField label={t("packPrice")} value={l.packPrice} onChange={(v) => setSupply(i, { packPrice: v })} suffix="€" />
+                    <NumberField label={t("packSize")} value={l.packSize} onChange={(v) => setSupply(i, { packSize: v })} suffix={t("pieces")} />
+                    <NumberField label={t("perItem")} value={l.perItem} onChange={(v) => setSupply(i, { perItem: v })} suffix={t("pieces")} />
+                  </div>
+                  <p className="text-ink/60 text-xs">{t("supplyPerItem", { cost: euro(supplyCost(l)) })}</p>
+                </div>
+              ))}
               <button
                 type="button"
-                onClick={() => set("extras", inputs.extras.filter((_, j) => j !== i))}
-                aria-label={t("remove")}
-                className="border-line hover:bg-mist mb-0.5 h-9 w-9 rounded-full border text-sm"
+                onClick={() => set("supplies", [...inputs.supplies, { name: "", kind, packPrice: 0, packSize: 1, perItem: 1 }])}
+                className="border-line hover:bg-mist w-fit rounded-full border px-3 py-1.5 text-xs font-semibold"
               >
-                ×
+                + {t(`addSupply.${kind}`)}
               </button>
             </div>
-          ))}
-          <button
-            type="button"
-            onClick={() => set("extras", [...inputs.extras, { name: "", cost: 0 }])}
-            className="border-line hover:bg-mist w-fit rounded-full border px-3 py-1.5 text-xs font-semibold"
-          >
-            + {t("addExtra")}
-          </button>
-        </div>
-        <div className="grid gap-3 sm:grid-cols-3">
-          <NumberField label={t("packagingCost")} hint={t("packagingHint")} value={inputs.packagingCost} onChange={(v) => set("packagingCost", v)} suffix="€" />
+          );
+        })}
+        <div className="grid gap-3 sm:grid-cols-2">
           <NumberField label={t("shippingCost")} value={inputs.shippingCost} onChange={(v) => set("shippingCost", v)} suffix="€" />
           <NumberField label={t("shippingCharged")} hint={t("shippingChargedHint")} value={inputs.shippingCharged} onChange={(v) => set("shippingCharged", v)} suffix="€" />
         </div>

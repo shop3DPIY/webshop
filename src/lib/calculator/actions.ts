@@ -64,3 +64,45 @@ export async function deleteCalculation(formData: FormData) {
   }
   revalidatePath(CALC_ROUTE, "page");
 }
+
+const MATERIALS_ROUTE = "/[locale]/(site)/account/calculator/materials";
+const KINDS = ["filament", "extra", "packaging", "marketing"];
+
+/** "My materials": add or change one filament / supply. */
+export async function saveLibraryItem(formData: FormData) {
+  const { supabase, user } = await currentUser();
+  if (!supabase || !user) return;
+  const id = String(formData.get("id") ?? "");
+  const kind = String(formData.get("kind") ?? "");
+  const number = (key: string) => {
+    const n = Number(String(formData.get(key) ?? "").replace(",", "."));
+    return Number.isFinite(n) && n >= 0 ? Math.round(n * 100) / 100 : 0;
+  };
+  const row = {
+    kind,
+    name: String(formData.get("name") ?? "").trim().slice(0, 120),
+    supplier: String(formData.get("supplier") ?? "").trim().slice(0, 120),
+    price: number("price"),
+    pack_size: number("packSize") || 1,
+    updated_at: new Date().toISOString(),
+  };
+  if (!row.name || !KINDS.includes(kind)) return;
+  if (UUID_RE.test(id)) {
+    await supabase.from("calc_library").update(row).eq("id", id).eq("user_id", user.id);
+  } else {
+    await supabase.from("calc_library").insert({ ...row, user_id: user.id });
+  }
+  revalidatePath(MATERIALS_ROUTE, "page");
+  revalidatePath(CALC_ROUTE, "page");
+}
+
+/** Remove one item from "My materials" (asked to confirm first). */
+export async function deleteLibraryItem(formData: FormData) {
+  const { supabase, user } = await currentUser();
+  const id = String(formData.get("id") ?? "");
+  if (supabase && user && formData.get("confirm") === "on" && UUID_RE.test(id)) {
+    await supabase.from("calc_library").delete().eq("id", id).eq("user_id", user.id);
+  }
+  revalidatePath(MATERIALS_ROUTE, "page");
+  revalidatePath(CALC_ROUTE, "page");
+}
